@@ -258,7 +258,9 @@ def resolve(typedef: str) -> tuple[str, bool, bool]:
     return name, is_readonly, is_unsafe
 
 if __name__ == "__main__":
-    with open("gdextension_interface.json", "r") as file:
-        interface = GDExtensionInterface(json.load(file))
-    with open("../Source/GDExtensionInterface.cs", "w") as file:
-        file.writelines(interface.generate())
+    # with open("gdextension_interface.json", "r") as file:
+    #     interface = GDExtensionInterface(json.load(file))
+    # with open("../Source/GDExtensionInterface.cs", "w") as file:
+    #     file.writelines(interface.generate())
+    with open("extension_api.json", "r") as file:
+        print(*json.load(file), sep="\n")
