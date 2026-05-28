@@ -220,6 +220,19 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         function_name: str = "GDExtensionInterface" + self.name.title().replace("_", "")
         yield f"global using unsafe {function_name} = {self.expand(types)};\n"
 
+class ExtensionAPI:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.header: Any = data["header"]
+        self.builtin_class_sizes: Any = data["builtin_class_sizes"]
+        self.builtin_class_member_offsets: Any = data["builtin_class_member_offsets"]
+        self.global_constants: Any = data["global_constants"]
+        self.global_enums: Any = data["global_enums"]
+        self.utility_functions: Any = data["utility_functions"]
+        self.builtin_classes: Any = data["builtin_classes"]
+        self.classes: Any = data["classes"]
+        self.singletons: Any = data["singletons"]
+        self.native_structures: Any = data["native_structures"]
+
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
     is_unsafe: bool = typedef.endswith("*")
@@ -263,4 +276,5 @@ if __name__ == "__main__":
     # with open("../Source/GDExtensionInterface.cs", "w") as file:
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
-        print(*json.load(file), sep="\n")
+        api = ExtensionAPI(json.load(file))
+        print(*api.header, sep="\n")
