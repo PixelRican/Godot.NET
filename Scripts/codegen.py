@@ -223,7 +223,9 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
 class ExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
         self.header: ExtensionAPIHeader = ExtensionAPIHeader(data["header"])
-        self.builtin_class_sizes: Any = data["builtin_class_sizes"]
+        self.builtin_class_sizes: list[ExtensionAPIBuiltinClassSize] = [
+            ExtensionAPIBuiltinClassSize(element) for element in data["builtin_class_sizes"]
+        ]
         self.builtin_class_member_offsets: Any = data["builtin_class_member_offsets"]
         self.global_constants: Any = data["global_constants"]
         self.global_enums: Any = data["global_enums"]
@@ -242,6 +244,18 @@ class ExtensionAPIHeader:
         self.version_build: str = data["version_build"]
         self.version_full_name: str = data["version_full_name"]
         self.precision: str = data["precision"]
+
+class ExtensionAPIBuiltinClassSize:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.build_configuration: str = data["build_configuration"]
+        self.sizes: list[ExtensionAPIBuiltinClassSizeInfo] = [
+            ExtensionAPIBuiltinClassSizeInfo(element) for element in data["sizes"]
+        ]
+
+class ExtensionAPIBuiltinClassSizeInfo:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.size: int = data["size"]
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -287,4 +301,10 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-        print(*vars(api.header).items(), sep="\n")
+        print("builtin_class_sizes")
+        for builtin_class_size in api.builtin_class_sizes:
+            print("\tbuild_configuration")
+            print(f"\t\t{builtin_class_size.build_configuration}")
+            print("\tsizes")
+            for size in builtin_class_size.sizes:
+                print(f"\t\t{vars(size)}")
