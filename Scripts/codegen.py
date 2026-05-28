@@ -222,7 +222,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
 
 class ExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.header: Any = data["header"]
+        self.header: ExtensionAPIHeader = ExtensionAPIHeader(data["header"])
         self.builtin_class_sizes: Any = data["builtin_class_sizes"]
         self.builtin_class_member_offsets: Any = data["builtin_class_member_offsets"]
         self.global_constants: Any = data["global_constants"]
@@ -232,6 +232,16 @@ class ExtensionAPI:
         self.classes: Any = data["classes"]
         self.singletons: Any = data["singletons"]
         self.native_structures: Any = data["native_structures"]
+
+class ExtensionAPIHeader:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.version_major: int = data["version_major"]
+        self.version_minor: int = data["version_minor"]
+        self.version_patch: int = data["version_patch"]
+        self.version_status: str = data["version_status"]
+        self.version_build: str = data["version_build"]
+        self.version_full_name: str = data["version_full_name"]
+        self.precision: str = data["precision"]
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -277,4 +287,4 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-        print(*api.header, sep="\n")
+        print(*vars(api.header).items(), sep="\n")
