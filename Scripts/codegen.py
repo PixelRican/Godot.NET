@@ -248,11 +248,11 @@ class ExtensionAPIHeader:
 class ExtensionAPIBuiltinClassSize:
     def __init__(self, data: dict[str, Any]) -> None:
         self.build_configuration: str = data["build_configuration"]
-        self.sizes: list[ExtensionAPIBuiltinClassSizeInfo] = [
-            ExtensionAPIBuiltinClassSizeInfo(element) for element in data["sizes"]
+        self.sizes: list[ExtensionAPIBuiltinClassSizeRecord] = [
+            ExtensionAPIBuiltinClassSizeRecord(element) for element in data["sizes"]
         ]
 
-class ExtensionAPIBuiltinClassSizeInfo:
+class ExtensionAPIBuiltinClassSizeRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.size: int = data["size"]
