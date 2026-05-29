@@ -222,12 +222,12 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
 
 class ExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.header: ExtensionAPIHeader = ExtensionAPIHeader(data["header"])
-        self.builtin_class_sizes: list[ExtensionAPIBuiltinClassSize] = [
-            ExtensionAPIBuiltinClassSize(element) for element in data["builtin_class_sizes"]
+        self.header: ExtensionHeader = ExtensionHeader(data["header"])
+        self.builtin_class_sizes: list[ExtensionBuiltinClassSize] = [
+            ExtensionBuiltinClassSize(element) for element in data["builtin_class_sizes"]
         ]
-        self.builtin_class_member_offsets: list[ExtensionAPIBuiltinClassMemberOffset] = [
-            ExtensionAPIBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
+        self.builtin_class_member_offsets: list[ExtensionBuiltinClassMemberOffset] = [
+            ExtensionBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
         ]
         self.global_constants: Any = data["global_constants"]
         self.global_enums: Any = data["global_enums"]
@@ -237,7 +237,7 @@ class ExtensionAPI:
         self.singletons: Any = data["singletons"]
         self.native_structures: Any = data["native_structures"]
 
-class ExtensionAPIHeader:
+class ExtensionHeader:
     def __init__(self, data: dict[str, Any]) -> None:
         self.version_major: int = data["version_major"]
         self.version_minor: int = data["version_minor"]
@@ -247,33 +247,33 @@ class ExtensionAPIHeader:
         self.version_full_name: str = data["version_full_name"]
         self.precision: str = data["precision"]
 
-class ExtensionAPIBuiltinClassSize:
+class ExtensionBuiltinClassSize:
     def __init__(self, data: dict[str, Any]) -> None:
         self.build_configuration: str = data["build_configuration"]
-        self.sizes: list[ExtensionAPIBuiltinClassSizeRecord] = [
-            ExtensionAPIBuiltinClassSizeRecord(element) for element in data["sizes"]
+        self.sizes: list[ExtensionBuiltinClassSizeRecord] = [
+            ExtensionBuiltinClassSizeRecord(element) for element in data["sizes"]
         ]
 
-class ExtensionAPIBuiltinClassSizeRecord:
+class ExtensionBuiltinClassSizeRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.size: int = data["size"]
 
-class ExtensionAPIBuiltinClassMemberOffset:
+class ExtensionBuiltinClassMemberOffset:
     def __init__(self, data: dict[str, Any]) -> None:
         self.build_configuration: str = data["build_configuration"]
-        self.classes: list[ExtensionAPIBuiltinClassMemberOffsetGrouping] = [
-            ExtensionAPIBuiltinClassMemberOffsetGrouping(element) for element in data["classes"]
+        self.classes: list[ExtensionBuiltinClassMemberOffsetGrouping] = [
+            ExtensionBuiltinClassMemberOffsetGrouping(element) for element in data["classes"]
         ]
 
-class ExtensionAPIBuiltinClassMemberOffsetGrouping:
+class ExtensionBuiltinClassMemberOffsetGrouping:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.members: list[ExtensionAPIBuiltinClassMemberOffsetRecord] = [
-            ExtensionAPIBuiltinClassMemberOffsetRecord(element) for element in data["members"]
+        self.members: list[ExtensionBuiltinClassMemberOffsetRecord] = [
+            ExtensionBuiltinClassMemberOffsetRecord(element) for element in data["members"]
         ]
 
-class ExtensionAPIBuiltinClassMemberOffsetRecord:
+class ExtensionBuiltinClassMemberOffsetRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.member: str = data["member"]
         self.offset: int = data["offset"]
