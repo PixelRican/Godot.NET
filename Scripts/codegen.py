@@ -226,7 +226,9 @@ class ExtensionAPI:
         self.builtin_class_sizes: list[ExtensionAPIBuiltinClassSize] = [
             ExtensionAPIBuiltinClassSize(element) for element in data["builtin_class_sizes"]
         ]
-        self.builtin_class_member_offsets: Any = data["builtin_class_member_offsets"]
+        self.builtin_class_member_offsets: list[ExtensionAPIBuiltinClassMemberOffset] = [
+            ExtensionAPIBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
+        ]
         self.global_constants: Any = data["global_constants"]
         self.global_enums: Any = data["global_enums"]
         self.utility_functions: Any = data["utility_functions"]
@@ -256,6 +258,26 @@ class ExtensionAPIBuiltinClassSizeRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.size: int = data["size"]
+
+class ExtensionAPIBuiltinClassMemberOffset:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.build_configuration: str = data["build_configuration"]
+        self.classes: list[ExtensionAPIBuiltinClassMemberOffsetGrouping] = [
+            ExtensionAPIBuiltinClassMemberOffsetGrouping(element) for element in data["classes"]
+        ]
+
+class ExtensionAPIBuiltinClassMemberOffsetGrouping:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.members: list[ExtensionAPIBuiltinClassMemberOffsetRecord] = [
+            ExtensionAPIBuiltinClassMemberOffsetRecord(element) for element in data["members"]
+        ]
+
+class ExtensionAPIBuiltinClassMemberOffsetRecord:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.member: str = data["member"]
+        self.offset: int = data["offset"]
+        self.meta: str = data["meta"]
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -301,10 +323,7 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-        print("builtin_class_sizes")
-        for builtin_class_size in api.builtin_class_sizes:
-            print("\tbuild_configuration")
-            print(f"\t\t{builtin_class_size.build_configuration}")
-            print("\tsizes")
-            for size in builtin_class_size.sizes:
-                print(f"\t\t{vars(size)}")
+        for offset in api.builtin_class_member_offsets:
+            for _class in offset.classes:
+                for member in _class.members:
+                    print(vars(member))
