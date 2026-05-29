@@ -229,8 +229,8 @@ class ExtensionAPI:
         self.builtin_class_member_offsets: list[ExtensionBuiltinClassMemberOffset] = [
             ExtensionBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
         ]
+        self.global_constants: list = data["global_constants"]
         # TODO: Define types for the following objects.
-        self.global_constants: Any = data["global_constants"]
         self.global_enums: Any = data["global_enums"]
         self.utility_functions: Any = data["utility_functions"]
         self.builtin_classes: Any = data["builtin_classes"]
@@ -324,7 +324,5 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-        for offset in api.builtin_class_member_offsets:
-            for _class in offset.classes:
-                for member in _class.members:
-                    print(vars(member))
+    for constant in api.global_constants:
+        print(constant)
