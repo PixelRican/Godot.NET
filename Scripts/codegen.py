@@ -231,7 +231,9 @@ class ExtensionAPI:
         ]
         self.global_constants: list = data["global_constants"]
         # TODO: Define types for the following objects.
-        self.global_enums: Any = data["global_enums"]
+        self.global_enums: list[ExtensionGlobalEnum] = [
+            ExtensionGlobalEnum(element) for element in data["global_enums"]
+        ]
         self.utility_functions: Any = data["utility_functions"]
         self.builtin_classes: Any = data["builtin_classes"]
         self.classes: Any = data["classes"]
@@ -280,6 +282,19 @@ class ExtensionBuiltinClassMemberOffsetRecord:
         self.offset: int = data["offset"]
         self.meta: str = data["meta"]
 
+class ExtensionGlobalEnum:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.is_bitfield: bool = data["is_bitfield"]
+        self.values: list[ExtensionGlobalEnumValue] = [
+            ExtensionGlobalEnumValue(element) for element in data["values"]
+        ]
+
+class ExtensionGlobalEnumValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.value: int = data["value"]
+
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
     is_unsafe: bool = typedef.endswith("*")
@@ -324,5 +339,9 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-    for constant in api.global_constants:
-        print(constant)
+    for enum in api.global_enums:
+        print("name:", enum.name)
+        print("is_bitfield:", enum.is_bitfield)
+        print("values:")
+        for value in enum.values:
+            print("\t", vars(value))
