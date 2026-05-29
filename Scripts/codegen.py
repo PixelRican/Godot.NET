@@ -229,6 +229,7 @@ class ExtensionAPI:
         self.builtin_class_member_offsets: list[ExtensionBuiltinClassMemberOffset] = [
             ExtensionBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
         ]
+        # TODO: Define types for the following objects.
         self.global_constants: Any = data["global_constants"]
         self.global_enums: Any = data["global_enums"]
         self.utility_functions: Any = data["utility_functions"]
