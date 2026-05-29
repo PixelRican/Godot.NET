@@ -233,8 +233,10 @@ class ExtensionAPI:
         self.global_enums: list[ExtensionGlobalEnum] = [
             ExtensionGlobalEnum(element) for element in data["global_enums"]
         ]
+        self.utility_functions: list[ExtensionUtilityFunction] = [
+            ExtensionUtilityFunction(element) for element in data["utility_functions"]
+        ]
         # TODO: Define types for the following objects.
-        self.utility_functions: Any = data["utility_functions"]
         self.builtin_classes: Any = data["builtin_classes"]
         self.classes: Any = data["classes"]
         self.singletons: Any = data["singletons"]
@@ -295,6 +297,25 @@ class ExtensionGlobalEnumValue:
         self.name: str = data["name"]
         self.value: int = data["value"]
 
+class ExtensionUtilityFunction:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.return_type: str | None = data.get("return_type")
+        self.category: str = data["category"]
+        self.is_vararg: bool = data["is_vararg"]
+        self.hash: int = data["hash"]
+        self.arguments: list[ExtensionUtilityFunctionArgument] | None = None
+        arguments: list[dict[str, Any]] | None = data.get("arguments")
+        if arguments:
+            self.arguments = [
+                ExtensionUtilityFunctionArgument(element) for element in arguments
+            ]
+
+class ExtensionUtilityFunctionArgument:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
     is_unsafe: bool = typedef.endswith("*")
@@ -339,9 +360,8 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-    for enum in api.global_enums:
-        print("name:", enum.name)
-        print("is_bitfield:", enum.is_bitfield)
-        print("values:")
-        for value in enum.values:
-            print("\t", vars(value))
+    for function in api.utility_functions:
+        print(vars(function))
+        if function.arguments:
+            for argument in function.arguments:
+                print(f"\t{vars(argument)}")
