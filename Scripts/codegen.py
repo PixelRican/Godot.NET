@@ -236,8 +236,10 @@ class ExtensionAPI:
         self.utility_functions: list[ExtensionUtilityFunction] = [
             ExtensionUtilityFunction(element) for element in data["utility_functions"]
         ]
+        self.builtin_classes: list[ExtensionBuiltinClass] = [
+            ExtensionBuiltinClass(element) for element in data["builtin_classes"]
+        ]
         # TODO: Define types for the following objects.
-        self.builtin_classes: Any = data["builtin_classes"]
         self.classes: Any = data["classes"]
         self.singletons: Any = data["singletons"]
         self.native_structures: Any = data["native_structures"]
@@ -316,6 +318,98 @@ class ExtensionUtilityFunctionArgument:
         self.name: str = data["name"]
         self.type: str = data["type"]
 
+class ExtensionBuiltinClass:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.is_keyed: bool = data["is_keyed"]
+        self.operators: list[ExtensionBuiltinClassOperator] = [
+            ExtensionBuiltinClassOperator(element) for element in data["operators"]
+        ]
+        self.constructors: list[ExtensionBuiltinClassConstructor] = [
+            ExtensionBuiltinClassConstructor(element) for element in data["constructors"]
+        ]
+        self.has_destructor: bool = data["has_destructor"]
+        self.indexing_return_type: str | None = data.get("indexing_return_type")
+        self.methods: list[ExtensionBuiltinClassMethod] | None = None
+        self.constants: list[ExtensionBuiltinClassConstant] | None = None
+        self.enums: list[ExtensionBuiltinClassEnum] | None = None
+        methods: list[dict[str, Any]] | None = data.get("methods")
+        constants: list[dict[str, Any]] | None = data.get("constants")
+        enums: list[dict[str, Any]] | None = data.get("enums")
+        if methods:
+            self.methods = [
+                ExtensionBuiltinClassMethod(element) for element in methods
+            ]
+        if constants:
+            self.constants = [
+                ExtensionBuiltinClassConstant(element) for element in constants
+            ]
+        if enums:
+            self.enums = [
+                ExtensionBuiltinClassEnum(element) for element in enums
+            ]
+
+class ExtensionBuiltinClassOperator:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.right_type: str | None = data.get("right_type")
+        self.return_type: str = data["return_type"]
+
+class ExtensionBuiltinClassConstructor:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.index: int = data["index"]
+        self.arguments: list[ExtensionBuiltinClassConstructorArgument] | None = None
+        arguments: list[dict[str, Any]] | None = data.get("arguments")
+        if arguments:
+            self.arguments = [
+                ExtensionBuiltinClassConstructorArgument(element) for element in arguments
+            ]
+
+class ExtensionBuiltinClassConstructorArgument:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+
+class ExtensionBuiltinClassMethod:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.return_type: str | None = data.get("return_type")
+        self.is_vararg: bool = data["is_vararg"]
+        self.is_const: bool = data["is_const"]
+        self.is_static: bool = data["is_static"]
+        self.hash: int = data["hash"]
+        self.arguments: list | None = None
+        self.hash_compatibility: int = data["hash"]
+        arguments: list[dict[str, Any]] | None = data.get("arguments")
+        if arguments:
+            self.arguments = [
+                ExtensionBuiltinClassMethodArgument(element) for element in arguments
+            ]
+
+class ExtensionBuiltinClassMethodArgument:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+        self.default_value: str | float | int | bool | None = data.get("default_value")
+
+class ExtensionBuiltinClassConstant:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+        self.value: str = data["value"]
+
+class ExtensionBuiltinClassEnum:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.values: list[ExtensionBuiltinClassEnumValue] = [
+            ExtensionBuiltinClassEnumValue(element) for element in data["values"]
+        ]
+
+class ExtensionBuiltinClassEnumValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.value: int = data["value"]
+
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
     is_unsafe: bool = typedef.endswith("*")
@@ -360,8 +454,3 @@ if __name__ == "__main__":
     #     file.writelines(interface.generate())
     with open("extension_api.json", "r") as file:
         api = ExtensionAPI(json.load(file))
-    for function in api.utility_functions:
-        print(vars(function))
-        if function.arguments:
-            for argument in function.arguments:
-                print(f"\t{vars(argument)}")
