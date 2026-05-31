@@ -242,8 +242,10 @@ class ExtensionAPI:
         self.classes: list[ExtensionClass] = [
             ExtensionClass(element) for element in data["classes"]
         ]
+        self.singletons: list[ExtensionSingleton] = [
+            ExtensionSingleton(element) for element in data["singletons"]
+        ]
         # TODO: Define types for the following objects.
-        self.singletons: Any = data["singletons"]
         self.native_structures: Any = data["native_structures"]
 
 class ExtensionHeader:
@@ -523,6 +525,11 @@ class ExtensionClassConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
+
+class ExtensionSingleton:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
