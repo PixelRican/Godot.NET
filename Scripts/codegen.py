@@ -239,8 +239,10 @@ class ExtensionAPI:
         self.builtin_classes: list[ExtensionBuiltinClass] = [
             ExtensionBuiltinClass(element) for element in data["builtin_classes"]
         ]
+        self.classes: list[ExtensionClass] = [
+            ExtensionClass(element) for element in data["classes"]
+        ]
         # TODO: Define types for the following objects.
-        self.classes: Any = data["classes"]
         self.singletons: Any = data["singletons"]
         self.native_structures: Any = data["native_structures"]
 
@@ -406,6 +408,118 @@ class ExtensionBuiltinClassEnum:
         ]
 
 class ExtensionBuiltinClassEnumValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.value: int = data["value"]
+
+class ExtensionClass:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.is_refcounted: bool = data["is_refcounted"]
+        self.is_instantiable: bool = data["is_instantiable"]
+        self.inherits: str | None = data.get("inherits")
+        self.api_type: str = data["api_type"]
+        self.enums: list[ExtensionClassEnum] | None = None
+        self.methods: list[ExtensionClassMethod] | None = None
+        self.properties: list[ExtensionClassProperty] | None = None
+        self.signals: list[ExtensionClassSignal] | None = None
+        self.constants: list[ExtensionClassConstant] | None = None
+        enums: list[dict[str, Any]] | None = data.get("enums")
+        methods: list[dict[str, Any]] | None = data.get("methods")
+        properties: list[dict[str, Any]] | None = data.get("properties")
+        signals: list[dict[str, Any]] | None = data.get("signals")
+        constants: list[dict[str, Any]] | None = data.get("constants")
+        if enums:
+            self.enums = [
+                ExtensionClassEnum(element) for element in enums
+            ]
+        if methods:
+            self.methods = [
+                ExtensionClassMethod(element) for element in methods
+            ]
+        if properties:
+            self.properties = [
+                ExtensionClassProperty(element) for element in properties
+            ]
+        if signals:
+            self.signals = [
+                ExtensionClassSignal(element) for element in signals
+            ]
+        if constants:
+            self.constants = [
+                ExtensionClassConstant(element) for element in constants
+            ]
+
+class ExtensionClassEnum:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.values: list[ExtensionClassEnumValue] = [
+            ExtensionClassEnumValue(element) for element in data["values"]
+        ]
+        self.is_bitfield: bool = data["is_bitfield"]
+
+class ExtensionClassEnumValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.value: int = data["value"]
+
+class ExtensionClassMethod:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.is_const: bool = data["is_const"]
+        self.is_vararg: bool = data["is_vararg"]
+        self.is_static: bool = data["is_static"]
+        self.is_virtual: bool = data["is_virtual"]
+        self.hash: int = data["hash"]
+        self.hash_compatibility: list[int] | None = data.get("hash_compatibility")
+        self.return_value: ExtensionClassMethodReturnValue | None = None
+        self.arguments: list[ExtensionClassMethodArgument] | None = None
+        self.is_required: bool | None = data.get("is_required")
+        return_value: dict[str, Any] | None = data.get("return_value")
+        arguments: list[dict[str, Any]] | None = data.get("arguments")
+        if return_value:
+            self.return_value = ExtensionClassMethodReturnValue(return_value)
+        if arguments:
+            self.arguments = [
+                ExtensionClassMethodArgument(element) for element in arguments
+            ]
+
+class ExtensionClassMethodReturnValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.type: str = data["type"]
+        self.meta: str | None = data.get("meta")
+
+class ExtensionClassMethodArgument:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+        self.default_value: str | float | int | bool | None = data.get("default_value")
+        self.meta: str | None = data.get("meta")
+
+class ExtensionClassProperty:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+        self.setter: str | None = data.get("setter")
+        self.getter: str | None = data.get("getter")
+        self.index: int | None = data.get("index")
+
+class ExtensionClassSignal:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.arguments: list[ExtensionClassSignalArgument] | None = None
+        arguments: list[dict[str, Any]] | None = data.get("arguments")
+        if arguments:
+            self.arguments = [
+                ExtensionClassSignalArgument(element) for element in arguments
+            ]
+
+class ExtensionClassSignalArgument:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+
+class ExtensionClassConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
