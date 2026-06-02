@@ -48,7 +48,7 @@ class Interface:
         yield "using System;\n"
         yield "using System.Runtime.InteropServices;\n"
         yield "\n"
-        yield "namespace Godot;\n"
+        yield "namespace Godot.NET;\n"
         for element in local_section:
             yield "\n"
             for line in element.generate(types):
@@ -85,7 +85,7 @@ class Enum(Type):
         self.is_bitfield: bool | None = data.get("is_bitfield")
 
     def expand(self, types: dict[str, Enum]) -> str:
-        return "Godot." + self.name
+        return "Godot.NET." + self.name
 
     def generate(self, types: dict[str, Type]) -> Iterator[str]:
         if self.is_bitfield:
@@ -140,7 +140,7 @@ class Struct(Type):
         ]
 
     def expand(self, types: dict[str, Type]) -> str:
-        return "Godot." + self.name
+        return "Godot.NET." + self.name
 
     def generate(self, types: dict[str, Type]) -> Iterator[str]:
         yield "[StructLayout(LayoutKind.Sequential)]\n"
