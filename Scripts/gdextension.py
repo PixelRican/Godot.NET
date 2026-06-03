@@ -1,223 +1,34 @@
 ﻿from itertools import chain
 from typing import Any, Iterator
 
-class Interface:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.copyright: list[str] = data["_copyright"]
-        self.schema: str = data["$schema"]
-        self.format_version: int = data["format_version"]
-        self.types: list[Type] = []
-        self.interface: list[InterfaceFunction] = []
-        for type_data in data["types"]:
-            name: str = type_data["name"]
-            kind: str = type_data["kind"]
-            match kind:
-                case "enum":
-                    self.types.append(Enum(type_data))
-                case "handle":
-                    self.types.append(Handle(type_data))
-                case "alias":
-                    self.types.append(Alias(type_data))
-                case "struct":
-                    self.types.append(Struct(type_data))
-                case "function":
-                    self.types.append(Function(type_data))
-                case _:
-                    raise ValueError(f"'{name}' has invalid kind '{kind}.'")
-        for interface_data in data["interface"]:
-            self.interface.append(InterfaceFunction(interface_data))
-
-    def generate(self) -> Iterator[str]:
-        types: dict[str, Type] = {}
-        global_section: list[Type] = []
-        local_section: list[Type] = []
-        for element in self.types:
-            types[element.name] = element
-            match element.kind:
-                case "handle" | "alias" | "function":
-                    global_section.append(element)
-                case "enum" | "struct":
-                    local_section.append(element)
-        for line in self.copyright:
-            yield line + "\n"
-        yield "\n"
-        for element in chain(global_section, self.interface):
-            for line in element.generate(types):
-                yield line
-        yield "\n"
-        yield "using System;\n"
-        yield "using System.Runtime.InteropServices;\n"
-        yield "\n"
-        yield "namespace Godot.NET;\n"
-        for element in local_section:
-            yield "\n"
-            for line in element.generate(types):
-                yield line
-
-class Type:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"]
-        self.kind: str | None  = data.get("kind")
-        self.description: list[str] | None = data.get("description")
-        self.deprecated: Deprecated | None = None
-        deprecated: dict[str, Any] | None = data.get("deprecated")
-        if deprecated:
-            self.deprecated = Deprecated(deprecated)
-
-    def expand(self, types: dict[str, Type]) -> str:
-        raise NotImplementedError()
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        raise NotImplementedError()
-
-class Deprecated:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.since: str = data["since"]
-        self.message: str | None = data.get("message")
-        self.replacement: str | None = data.get("replacement")
-
-class Enum(Type):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.values: list[EnumValue] = [
-            EnumValue(value) for value in data["values"]
-        ]
-        self.is_bitfield: bool | None = data.get("is_bitfield")
-
-    def expand(self, types: dict[str, Enum]) -> str:
-        return "Godot.NET." + self.name
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        if self.is_bitfield:
-            yield "[Flags]\n"
-        yield f"public enum {self.name}\n"
-        yield "{\n"
-        for member in self.values:
-            member_name: str = member.name.title().replace("Gde", "GDE", 1).replace("_", "")
-            member_value: int = member.value
-            yield f"    {member_name} = {member_value},\n"
-        yield "}\n"
-
-class EnumValue:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"]
-        self.value: int = data["value"]
-        self.description: list[str] | None = data.get("description")
-
-class Handle(Type):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.parent: str | None = data.get("parent")
-        self.is_const: bool | None = data.get("is_const")
-        self.is_uninitialized: bool | None = data.get("is_uninitialized")
-
-    def expand(self, types: dict[str, Type]) -> str:
-        return "void*"
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        yield f"global using unsafe {self.name} = void*;\n"
-
-class Alias(Type):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.type: str = data["type"]
-
-    def expand(self, types: dict[str, Type]) -> str:
-        typedef: Type | None = types.get(self.type)
-        if typedef:
-            return typedef.expand(types)
-        alias_type, _, _ = resolve(self.type)
-        return alias_type
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        yield f"global using {self.name} = {self.expand(types)};\n"
-
-class Struct(Type):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.members: list[StructMember] = [
-            StructMember(member) for member in data["members"]
-        ]
-
-    def expand(self, types: dict[str, Type]) -> str:
-        return "Godot.NET." + self.name
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"public struct {self.name}\n"
-        yield "{\n"
-        for member in self.members:
-            member_name: str = member.name.title().replace("_", "")
-            member_type, is_readonly, is_unsafe = resolve(member.type)
-            modifiers: list[str] = ["public"]
-            if is_readonly:
-                modifiers.append("readonly")
-            if is_unsafe or isinstance(types.get(member_type), (Handle, Function)):
-                modifiers.append("unsafe")
-            yield f"    {" ".join(modifiers)} {member_type} {member_name};\n"
-        yield "}\n"
-
-class StructMember:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"]
-        self.type: str = data["type"]
-        self.description: list[str] | None = data.get("description")
-
-class Function(Type):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.arguments: list[FunctionArgument] = [
-            FunctionArgument(argument) for argument in data["arguments"]
-        ]
-        self.return_value: FunctionReturnValue | None = None
-        return_value: dict[str, Any] | None = data.get("return_value")
-        if return_value:
-            self.return_value = FunctionReturnValue(return_value)
-
-    def expand(self, types: dict[str, Type]) -> str:
-        type_parameters: list[str] = []
-        for argument in self.arguments:
-            argument_type, _, is_unsafe = resolve(argument.type)
-            split: int = len(argument_type) - is_unsafe
-            typedef: Type | None = types.get(argument_type[:split])
-            if typedef:
-                argument_type = typedef.expand(types) + argument_type[split:]
-            type_parameters.append(argument_type)
-        if self.return_value:
-            return_value_type, _, is_unsafe = resolve(self.return_value.type)
-            split: int = len(return_value_type) - is_unsafe
-            typedef: Type | None = types.get(return_value_type[:split])
-            if typedef:
-                return_value_type = typedef.expand(types) + return_value_type[split:]
-            type_parameters.append(return_value_type)
-        else:
-            type_parameters.append("void")
-        return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        yield f"global using unsafe {self.name} = {self.expand(types)};\n"
-
-class FunctionReturnValue:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.type: str = data["type"]
-        self.description: list[str] | None = data.get("description")
-
-class FunctionArgument:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.type: str = data["type"]
-        self.name: str | None = data.get("name")
-        self.description: list[str] | None = data.get("description")
-
-class InterfaceFunction(Function):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.since: str = data["since"]
-        self.see: list[str] | None = data.get("see")
-        self.legacy_type_name: str | None = data.get("legacy_type_name")
-
-    def generate(self, types: dict[str, Type]) -> Iterator[str]:
-        function_name: str = "GDExtensionInterface" + self.name.title().replace("_", "")
-        yield f"global using unsafe {function_name} = {self.expand(types)};\n"
+def generate(data: dict[str, Any]) -> None:
+    typedefs: dict[str, dict[str, Any]] = {}
+    global_section: list[dict[str, Any]] = []
+    local_section: list[dict[str, Any]] = []
+    for typedef in data["types"]:
+        typedefs[typedef["name"]] = typedef
+        match typedef["kind"]:
+            case "handle" | "alias" | "function":
+                global_section.append(typedef)
+            case "enum" | "struct":
+                local_section.append(typedef)
+    with open("../Source/GDExtensionInterface.cs", "w") as file:
+        for line in data["_copyright"]:
+            file.write(line)
+            file.write("\n")
+        file.write("\n")
+        for typedef in global_section:
+            generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
+            file.writelines(generator.generate(typedef, typedefs))
+        file.write("\n")
+        file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        for typedef in local_section:
+            generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
+            file.write("\n")
+            file.writelines(generator.generate(typedef, typedefs))
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -255,3 +66,111 @@ def resolve(typedef: str) -> tuple[str, bool, bool]:
     if is_unsafe:
         name += "*"
     return name, is_readonly, is_unsafe
+
+class TypeGenerator:
+    @staticmethod
+    def get(kind: str) -> type[TypeGenerator]:
+        match kind:
+            case "enum":
+                return EnumGenerator
+            case "handle":
+                return HandleGenerator
+            case "alias":
+                return AliasGenerator
+            case "struct":
+                return StructGenerator
+            case "function":
+                return FunctionGenerator
+            case _:
+                raise ValueError(f"Invalid kind '{kind}.'")
+
+    @staticmethod
+    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+        raise NotImplementedError()
+
+    @staticmethod
+    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        raise NotImplementedError()
+
+class EnumGenerator(TypeGenerator):
+    @staticmethod
+    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+        return "Godot.NET." + data["name"]
+
+    @staticmethod
+    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        if data.get("is_bitfield"):
+            yield "[Flags]\n"
+        yield f"internal enum {data["name"]}\n"
+        yield "{\n"
+        for value in data["values"]:
+            yield f"    {value["name"]} = {value["value"]},\n"
+        yield "}\n"
+
+class HandleGenerator(TypeGenerator):
+    @staticmethod
+    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+        return "void*"
+
+    @staticmethod
+    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        yield f"global using unsafe {data["name"]} = void*;\n"
+
+class AliasGenerator(TypeGenerator):
+    @staticmethod
+    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+        typedef: dict[str, Any] | None = typedefs.get(data["type"])
+        if typedef:
+            generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
+            return generator.expand(typedef, typedefs)
+        alias_type, _, _ = resolve(data["type"])
+        return alias_type
+
+    @staticmethod
+    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        yield f"global using {data["name"]} = {AliasGenerator.expand(data, typedefs)};\n"
+
+class StructGenerator(TypeGenerator):
+    @staticmethod
+    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+        return "Godot.NET." + data["name"]
+
+    @staticmethod
+    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        yield "[StructLayout(LayoutKind.Sequential)]\n"
+        yield f"internal struct {data["name"]}\n"
+        yield "{\n"
+        for member in data["members"]:
+            member_name: str = member["name"]
+            if member_name == "string":
+                member_name = "@string"
+            member_type, is_readonly, is_unsafe = resolve(member["type"])
+            modifiers: list[str] = ["public"]
+            if is_readonly:
+                modifiers.append("readonly")
+            if is_unsafe:
+                modifiers.append("unsafe")
+            else:
+                typedef: dict[str, Any] | None = typedefs.get(member["type"])
+                if typedef and typedef["kind"] in ("handle", "function"):
+                    modifiers.append("unsafe")
+            yield f"    {" ".join(modifiers)} {member_type} {member_name};\n"
+        yield "}\n"
+
+class FunctionGenerator(TypeGenerator):
+    @staticmethod
+    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+        type_parameters: list[str] = []
+        for argument in chain(data["arguments"], [data.get("return_value") or {"type" : "void"}]):
+            argument_type, _, is_unsafe = resolve(argument["type"])
+            split: int = len(argument_type) - is_unsafe
+            typedef: dict[str, Any] | None = typedefs.get(argument_type[:split])
+            if typedef:
+                generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
+                argument_type = generator.expand(typedef, typedefs) + argument_type[split:]
+            type_parameters.append(argument_type)
+        return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+
+    @staticmethod
+    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        yield f"global using unsafe {data["name"]} = {FunctionGenerator.expand(data, typedefs)};\n"
