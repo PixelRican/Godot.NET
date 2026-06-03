@@ -16,6 +16,8 @@ def generate(data: dict[str, Any]) -> None:
     for typedef in data["types"]:
         match typedef["kind"]:
             case "enum":
+                with open("../Source/GlobalUsings.cs", "a") as file:
+                    file.write(f"global using static Godot.NET.{typedef["name"]};\n")
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
                     _copyright()
                     file.writelines(EnumGenerator.generate(typedef, typedefs))
