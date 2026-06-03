@@ -2,33 +2,36 @@
 from typing import Any, Iterator
 
 def generate(data: dict[str, Any]) -> None:
-    typedefs: dict[str, dict[str, Any]] = {}
-    global_section: list[dict[str, Any]] = []
-    local_section: list[dict[str, Any]] = []
-    for typedef in data["types"]:
-        typedefs[typedef["name"]] = typedef
-        match typedef["kind"]:
-            case "handle" | "alias" | "function":
-                global_section.append(typedef)
-            case "enum" | "struct":
-                local_section.append(typedef)
-    with open("../Source/GDExtensionInterface.cs", "w") as file:
+    def _copyright():
         for line in data["_copyright"]:
             file.write(line)
             file.write("\n")
         file.write("\n")
-        for typedef in global_section:
-            generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
-            file.writelines(generator.generate(typedef, typedefs))
-        file.write("\n")
-        file.write("using System;\n")
-        file.write("using System.Runtime.InteropServices;\n")
-        file.write("\n")
-        file.write("namespace Godot.NET;\n")
-        for typedef in local_section:
-            generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
-            file.write("\n")
-            file.writelines(generator.generate(typedef, typedefs))
+
+    typedefs: dict[str, dict[str, Any]] = {
+        typedef["name"] : typedef for typedef in data["types"]
+    }
+    with open("../Source/GlobalUsings.cs", "w") as file:
+        _copyright()
+    for typedef in data["types"]:
+        match typedef["kind"]:
+            case "enum":
+                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+                    _copyright()
+                    file.writelines(EnumGenerator.generate(typedef, typedefs))
+            case "handle":
+                with open("../Source/GlobalUsings.cs", "a") as file:
+                    file.writelines(HandleGenerator.generate(typedef, typedefs))
+            case "alias":
+                with open("../Source/GlobalUsings.cs", "a") as file:
+                    file.writelines(AliasGenerator.generate(typedef, typedefs))
+            case "struct":
+                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+                    _copyright()
+                    file.writelines(StructGenerator.generate(typedef, typedefs))
+            case "function":
+                with open("../Source/GlobalUsings.cs", "a") as file:
+                    file.writelines(FunctionGenerator.generate(typedef, typedefs))
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -100,6 +103,11 @@ class EnumGenerator(TypeGenerator):
     @staticmethod
     def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
         if data.get("is_bitfield"):
+            yield "using System;\n"
+            yield "\n"
+        yield "namespace Godot.NET;\n"
+        yield "\n"
+        if data.get("is_bitfield"):
             yield "[Flags]\n"
         yield f"internal enum {data["name"]}\n"
         yield "{\n"
@@ -137,6 +145,10 @@ class StructGenerator(TypeGenerator):
 
     @staticmethod
     def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        yield "using System.Runtime.InteropServices;\n"
+        yield "\n"
+        yield "namespace Godot.NET;\n"
+        yield "\n"
         yield "[StructLayout(LayoutKind.Sequential)]\n"
         yield f"internal struct {data["name"]}\n"
         yield "{\n"
