@@ -1,20 +1,4 @@
-﻿from itertools import chain
-from typing import Any, Iterator
-
-def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-    match data["kind"]:
-        case "enum":
-            return EnumGenerator.expand(data, typedefs)
-        case "handle":
-            return HandleGenerator.expand(data, typedefs)
-        case "alias":
-            return AliasGenerator.expand(data, typedefs)
-        case "struct":
-            return StructGenerator.expand(data, typedefs)
-        case "function":
-            return FunctionGenerator.expand(data, typedefs)
-        case _:
-            raise ValueError(f"'data' has Invalid kind '{data['kind']}.'")
+﻿from typing import Any, Iterator
 
 def generate(data: dict[str, Any]) -> None:
     def _copyright():
@@ -23,34 +7,28 @@ def generate(data: dict[str, Any]) -> None:
             file.write("\n")
         file.write("\n")
 
-    typedefs: dict[str, dict[str, Any]] = {
-        typedef["name"] : typedef for typedef in data["types"]
-    }
-    with open("../Source/GlobalUsings.cs", "w") as file:
-        _copyright()
     for typedef in data["types"]:
         match typedef["kind"]:
             case "enum":
-                with open("../Source/GlobalUsings.cs", "a") as file:
-                    file.write(f"global using static Godot.NET.{typedef["name"]};\n")
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
                     _copyright()
-                    file.writelines(EnumGenerator.generate(typedef, typedefs))
+                    file.writelines(EnumGenerator.generate(typedef))
             case "handle":
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
                     _copyright()
-                    file.writelines(HandleGenerator.generate(typedef, typedefs))
+                    file.writelines(HandleGenerator.generate(typedef))
             case "alias":
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
                     _copyright()
-                    file.writelines(AliasGenerator.generate(typedef, typedefs))
+                    file.writelines(AliasGenerator.generate(typedef))
             case "struct":
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
                     _copyright()
-                    file.writelines(StructGenerator.generate(typedef, typedefs))
+                    file.writelines(StructGenerator.generate(typedef))
             case "function":
-                with open("../Source/GlobalUsings.cs", "a") as file:
-                    file.writelines(FunctionGenerator.generate(typedef, typedefs))
+                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+                    _copyright()
+                    file.writelines(FunctionGenerator.generate(typedef))
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -89,22 +67,9 @@ def resolve(typedef: str) -> tuple[str, bool, bool]:
         name += "*"
     return name, is_readonly, is_unsafe
 
-class TypeGenerator:
+class EnumGenerator:
     @staticmethod
-    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        raise NotImplementedError()
-
-    @staticmethod
-    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
-        raise NotImplementedError()
-
-class EnumGenerator(TypeGenerator):
-    @staticmethod
-    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        return "Godot.NET." + data["name"]
-
-    @staticmethod
-    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+    def generate(data: dict[str, Any]) -> Iterator[str]:
         if data.get("is_bitfield"):
             yield "using System;\n"
             yield "\n"
@@ -118,13 +83,9 @@ class EnumGenerator(TypeGenerator):
             yield f"    {value["name"]} = {value["value"]},\n"
         yield "}\n"
 
-class HandleGenerator(TypeGenerator):
+class HandleGenerator:
     @staticmethod
-    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        return "Godot.NET." + data["name"]
-
-    @staticmethod
-    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+    def generate(data: dict[str, Any]) -> Iterator[str]:
         data_name: str = data["name"]
         data_parent: str | None = data.get("parent")
         yield "using System.Runtime.InteropServices;\n"
@@ -153,13 +114,9 @@ class HandleGenerator(TypeGenerator):
             yield "    }\n"
         yield "}\n"
 
-class AliasGenerator(TypeGenerator):
+class AliasGenerator:
     @staticmethod
-    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        return "Godot.NET." + data["name"]
-
-    @staticmethod
-    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+    def generate(data: dict[str, Any]) -> Iterator[str]:
         data_name: str = data["name"]
         data_type, _, _ = resolve(data["type"])
         yield "using System.Runtime.InteropServices;\n"
@@ -182,13 +139,9 @@ class AliasGenerator(TypeGenerator):
         yield "    }\n"
         yield "}\n"
 
-class StructGenerator(TypeGenerator):
+class StructGenerator:
     @staticmethod
-    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        return "Godot.NET." + data["name"]
-
-    @staticmethod
-    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+    def generate(data: dict[str, Any]) -> Iterator[str]:
         deprecated: dict[str, Any] | None = data.get("deprecated")
         if deprecated:
             yield "using System;\n"
@@ -211,26 +164,38 @@ class StructGenerator(TypeGenerator):
                 modifiers.append("readonly")
             if is_unsafe:
                 modifiers.append("unsafe")
-            else:
-                typedef: dict[str, Any] | None = typedefs.get(member["type"])
-                if typedef and typedef["kind"] in ("handle", "function"):
-                    modifiers.append("unsafe")
             yield f"    {" ".join(modifiers)} {member_type} {member_name};\n"
         yield "}\n"
 
-class FunctionGenerator(TypeGenerator):
+class FunctionGenerator:
     @staticmethod
-    def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+    def generate(data: dict[str, Any]) -> Iterator[str]:
         type_parameters: list[str] = []
-        for argument in chain(data["arguments"], [data.get("return_value") or {"type" : "void"}]):
-            argument_type, _, is_unsafe = resolve(argument["type"])
-            split: int = len(argument_type) - is_unsafe
-            typedef: dict[str, Any] | None = typedefs.get(argument_type[:split])
-            if typedef:
-                argument_type = expand(typedef, typedefs) + argument_type[split:]
+        for argument in data["arguments"]:
+            argument_type, _, _ = resolve(argument["type"])
             type_parameters.append(argument_type)
-        return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-
-    @staticmethod
-    def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
-        yield f"global using unsafe {data["name"]} = {FunctionGenerator.expand(data, typedefs)};\n"
+        return_value: dict[str, Any] | None = data.get("return_value")
+        if return_value:
+            return_value_type, _, _ = resolve(return_value["type"])
+            type_parameters.append(return_value_type)
+        data_name: str = data["name"]
+        data_type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+        yield "using System.Runtime.InteropServices;\n"
+        yield "\n"
+        yield "namespace Godot.NET;\n"
+        yield "\n"
+        yield "[StructLayout(LayoutKind.Sequential)]\n"
+        yield f"public readonly unsafe struct {data_name}\n"
+        yield "{\n"
+        yield f"    private readonly {data_type} _method;\n"
+        yield "\n"
+        yield f"    public {data_name}({data_type} method)\n"
+        yield "    {\n"
+        yield "        _method = method;\n"
+        yield "    }\n"
+        yield "\n"
+        yield f"    public {data_type} Method\n"
+        yield "    {\n"
+        yield "        get => _method;\n"
+        yield "    }\n"
+        yield "}\n"

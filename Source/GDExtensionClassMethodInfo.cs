@@ -33,10 +33,10 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassMethodInfo
 {
-    public unsafe GDExtensionStringNamePtr name;
+    public GDExtensionStringNamePtr name;
     public unsafe void* method_userdata;
-    public unsafe GDExtensionClassMethodCall call_func;
-    public unsafe GDExtensionClassMethodPtrCall ptrcall_func;
+    public GDExtensionClassMethodCall call_func;
+    public GDExtensionClassMethodPtrCall ptrcall_func;
     public uint method_flags;
     public GDExtensionBool has_return_value;
     public unsafe GDExtensionPropertyInfo* return_value_info;

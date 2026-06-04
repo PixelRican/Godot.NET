@@ -37,19 +37,19 @@ public struct GDExtensionClassCreationInfo
 {
     public GDExtensionBool is_virtual;
     public GDExtensionBool is_abstract;
-    public unsafe GDExtensionClassSet set_func;
-    public unsafe GDExtensionClassGet get_func;
-    public unsafe GDExtensionClassGetPropertyList get_property_list_func;
-    public unsafe GDExtensionClassFreePropertyList free_property_list_func;
-    public unsafe GDExtensionClassPropertyCanRevert property_can_revert_func;
-    public unsafe GDExtensionClassPropertyGetRevert property_get_revert_func;
-    public unsafe GDExtensionClassNotification notification_func;
-    public unsafe GDExtensionClassToString to_string_func;
-    public unsafe GDExtensionClassReference reference_func;
-    public unsafe GDExtensionClassUnreference unreference_func;
-    public unsafe GDExtensionClassCreateInstance create_instance_func;
-    public unsafe GDExtensionClassFreeInstance free_instance_func;
-    public unsafe GDExtensionClassGetVirtual get_virtual_func;
-    public unsafe GDExtensionClassGetRID get_rid_func;
+    public GDExtensionClassSet set_func;
+    public GDExtensionClassGet get_func;
+    public GDExtensionClassGetPropertyList get_property_list_func;
+    public GDExtensionClassFreePropertyList free_property_list_func;
+    public GDExtensionClassPropertyCanRevert property_can_revert_func;
+    public GDExtensionClassPropertyGetRevert property_get_revert_func;
+    public GDExtensionClassNotification notification_func;
+    public GDExtensionClassToString to_string_func;
+    public GDExtensionClassReference reference_func;
+    public GDExtensionClassUnreference unreference_func;
+    public GDExtensionClassCreateInstance create_instance_func;
+    public GDExtensionClassFreeInstance free_instance_func;
+    public GDExtensionClassGetVirtual get_virtual_func;
+    public GDExtensionClassGetRID get_rid_func;
     public unsafe void* class_userdata;
 }

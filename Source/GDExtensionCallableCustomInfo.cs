@@ -38,11 +38,11 @@ public struct GDExtensionCallableCustomInfo
     public unsafe void* callable_userdata;
     public unsafe void* token;
     public GDObjectInstanceID object_id;
-    public unsafe GDExtensionCallableCustomCall call_func;
-    public unsafe GDExtensionCallableCustomIsValid is_valid_func;
-    public unsafe GDExtensionCallableCustomFree free_func;
-    public unsafe GDExtensionCallableCustomHash hash_func;
-    public unsafe GDExtensionCallableCustomEqual equal_func;
-    public unsafe GDExtensionCallableCustomLessThan less_than_func;
-    public unsafe GDExtensionCallableCustomToString to_string_func;
+    public GDExtensionCallableCustomCall call_func;
+    public GDExtensionCallableCustomIsValid is_valid_func;
+    public GDExtensionCallableCustomFree free_func;
+    public GDExtensionCallableCustomHash hash_func;
+    public GDExtensionCallableCustomEqual equal_func;
+    public GDExtensionCallableCustomLessThan less_than_func;
+    public GDExtensionCallableCustomToString to_string_func;
 }

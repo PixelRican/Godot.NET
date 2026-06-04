@@ -35,6 +35,6 @@ public struct GDExtensionInitialization
 {
     public GDExtensionInitializationLevel minimum_initialization_level;
     public unsafe void* userdata;
-    public unsafe GDExtensionInitializeCallback initialize;
-    public unsafe GDExtensionDeinitializeCallback deinitialize;
+    public GDExtensionInitializeCallback initialize;
+    public GDExtensionDeinitializeCallback deinitialize;
 }

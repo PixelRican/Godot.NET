@@ -34,9 +34,9 @@ namespace Godot.NET;
 public struct GDExtensionPropertyInfo
 {
     public GDExtensionVariantType type;
-    public unsafe GDExtensionStringNamePtr name;
-    public unsafe GDExtensionStringNamePtr class_name;
+    public GDExtensionStringNamePtr name;
+    public GDExtensionStringNamePtr class_name;
     public uint hint;
-    public unsafe GDExtensionStringPtr hint_string;
+    public GDExtensionStringPtr hint_string;
     public uint usage;
 }

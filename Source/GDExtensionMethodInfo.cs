@@ -33,7 +33,7 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionMethodInfo
 {
-    public unsafe GDExtensionStringNamePtr name;
+    public GDExtensionStringNamePtr name;
     public GDExtensionPropertyInfo return_value;
     public uint flags;
     public int id;
