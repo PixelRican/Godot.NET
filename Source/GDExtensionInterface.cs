@@ -209,7 +209,7 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> s_editorRegisterGetClassesUsedCallback;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> s_registerMainLoopCallbacks;
 
-    [Obsolete("Deprecated since Godot 4.5. Use get_godot_version2 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.GetGodotVersion2 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionGodotVersion*, void> GetGodotVersion
     {
         get => s_getGodotVersion;
@@ -220,19 +220,19 @@ public static unsafe class GDExtensionInterface
         get => s_getGodotVersion2;
     }
 
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_alloc2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemAlloc2 instead.")]
     public static delegate* unmanaged[Cdecl]<nuint, void*> MemAlloc
     {
         get => s_memAlloc;
     }
 
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_realloc2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemRealloc2 instead.")]
     public static delegate* unmanaged[Cdecl]<void*, nuint, void*> MemRealloc
     {
         get => s_memRealloc;
     }
 
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_free2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemFree2 instead.")]
     public static delegate* unmanaged[Cdecl]<void*, void> MemFree
     {
         get => s_memFree;
@@ -558,7 +558,7 @@ public static unsafe class GDExtensionInterface
         get => s_stringNewWithLatin1CharsAndLen;
     }
 
-    [Obsolete("Deprecated since Godot 4.3. Use string_new_with_utf8_chars_and_len2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf8CharsAndLen2 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> StringNewWithUtf8CharsAndLen
     {
         get => s_stringNewWithUtf8CharsAndLen;
@@ -569,7 +569,7 @@ public static unsafe class GDExtensionInterface
         get => s_stringNewWithUtf8CharsAndLen2;
     }
 
-    [Obsolete("Deprecated since Godot 4.3. Use string_new_with_utf16_chars_and_len2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf16CharsAndLen2 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, void> StringNewWithUtf16CharsAndLen
     {
         get => s_stringNewWithUtf16CharsAndLen;
@@ -921,13 +921,13 @@ public static unsafe class GDExtensionInterface
         get => s_refSetObject;
     }
 
-    [Obsolete("Deprecated since Godot 4.2. Use script_instance_create3 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ScriptInstanceCreate3 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate
     {
         get => s_scriptInstanceCreate;
     }
 
-    [Obsolete("Deprecated since Godot 4.3. Use script_instance_create3 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ScriptInstanceCreate3 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate2
     {
         get => s_scriptInstanceCreate2;
@@ -958,7 +958,7 @@ public static unsafe class GDExtensionInterface
         get => s_objectSetScriptInstance;
     }
 
-    [Obsolete("Deprecated since Godot 4.3. Use callable_custom_create2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.CallableCustomCreate2 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo*, void> CallableCustomCreate
     {
         get => s_callableCustomCreate;
@@ -974,7 +974,7 @@ public static unsafe class GDExtensionInterface
         get => s_callableCustomGetUserdata;
     }
 
-    [Obsolete("Deprecated since Godot 4.4. Use classdb_construct_object2 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbConstructObject2 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> ClassdbConstructObject
     {
         get => s_classdbConstructObject;
@@ -995,25 +995,25 @@ public static unsafe class GDExtensionInterface
         get => s_classdbGetClassTag;
     }
 
-    [Obsolete("Deprecated since Godot 4.2. Use classdb_register_extension_class5 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void> ClassdbRegisterExtensionClass
     {
         get => s_classdbRegisterExtensionClass;
     }
 
-    [Obsolete("Deprecated since Godot 4.3. Use classdb_register_extension_class5 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2*, void> ClassdbRegisterExtensionClass2
     {
         get => s_classdbRegisterExtensionClass2;
     }
 
-    [Obsolete("Deprecated since Godot 4.4. Use classdb_register_extension_class5 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void> ClassdbRegisterExtensionClass3
     {
         get => s_classdbRegisterExtensionClass3;
     }
 
-    [Obsolete("Deprecated since Godot 4.5. Use classdb_register_extension_class5 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
     public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void> ClassdbRegisterExtensionClass4
     {
         get => s_classdbRegisterExtensionClass4;

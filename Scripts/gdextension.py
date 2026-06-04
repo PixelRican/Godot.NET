@@ -94,6 +94,8 @@ def obsolete(data: dict[str, Any]) -> str:
     if message:
         sentence.append(message)
     if replace_with:
+        if "_" in replace_with:
+            replace_with = "GDExtensionInterface." + replace_with.title().replace("_", "")
         sentence.append(f"Use {replace_with} instead.")
     return f"[Obsolete(\"{" ".join(sentence)}\")]\n"
 
