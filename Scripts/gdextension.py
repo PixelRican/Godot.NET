@@ -1,33 +1,22 @@
 ﻿from typing import Any, Iterator
 
 def generate(data: dict[str, Any]) -> None:
-    def _copyright():
-        for line in data["_copyright"]:
-            file.write(line)
-            file.write("\n")
-        file.write("\n")
-
     for typedef in data["types"]:
-        match typedef["kind"]:
-            case "enum":
-                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
-                    _copyright()
+        with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+            for line in data["_copyright"]:
+                file.write(line)
+                file.write("\n")
+            file.write("\n")
+            match typedef["kind"]:
+                case "enum":
                     file.writelines(EnumGenerator.generate(typedef))
-            case "handle":
-                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
-                    _copyright()
+                case "handle":
                     file.writelines(HandleGenerator.generate(typedef))
-            case "alias":
-                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
-                    _copyright()
+                case "alias":
                     file.writelines(AliasGenerator.generate(typedef))
-            case "struct":
-                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
-                    _copyright()
+                case "struct":
                     file.writelines(StructGenerator.generate(typedef))
-            case "function":
-                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
-                    _copyright()
+                case "function":
                     file.writelines(FunctionGenerator.generate(typedef))
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
@@ -178,6 +167,8 @@ class FunctionGenerator:
         if return_value:
             return_value_type, _, _ = resolve(return_value["type"])
             type_parameters.append(return_value_type)
+        else:
+            type_parameters.append("void")
         data_name: str = data["name"]
         data_type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
         yield "using System.Runtime.InteropServices;\n"

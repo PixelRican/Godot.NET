@@ -33,14 +33,14 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionWorkerThreadPoolGroupTask
 {
-    private readonly delegate* unmanaged[Cdecl]<void*, uint> _method;
+    private readonly delegate* unmanaged[Cdecl]<void*, uint, void> _method;
 
-    public GDExtensionWorkerThreadPoolGroupTask(delegate* unmanaged[Cdecl]<void*, uint> method)
+    public GDExtensionWorkerThreadPoolGroupTask(delegate* unmanaged[Cdecl]<void*, uint, void> method)
     {
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, uint> Method
+    public delegate* unmanaged[Cdecl]<void*, uint, void> Method
     {
         get => _method;
     }

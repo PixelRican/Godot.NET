@@ -33,14 +33,14 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassToString
 {
-    private readonly delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr> _method;
+    private readonly delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr, void> _method;
 
-    public GDExtensionClassToString(delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr> method)
+    public GDExtensionClassToString(delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr, void> method)
     {
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr> Method
+    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr, void> Method
     {
         get => _method;
     }

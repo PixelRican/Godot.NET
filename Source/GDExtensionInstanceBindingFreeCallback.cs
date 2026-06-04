@@ -33,14 +33,14 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionInstanceBindingFreeCallback
 {
-    private readonly delegate* unmanaged[Cdecl]<void*, void*, void*> _method;
+    private readonly delegate* unmanaged[Cdecl]<void*, void*, void*, void> _method;
 
-    public GDExtensionInstanceBindingFreeCallback(delegate* unmanaged[Cdecl]<void*, void*, void*> method)
+    public GDExtensionInstanceBindingFreeCallback(delegate* unmanaged[Cdecl]<void*, void*, void*, void> method)
     {
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, void*, void*> Method
+    public delegate* unmanaged[Cdecl]<void*, void*, void*, void> Method
     {
         get => _method;
     }
