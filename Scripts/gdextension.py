@@ -40,7 +40,8 @@ def generate(data: dict[str, Any]) -> None:
                 with open("../Source/GlobalUsings.cs", "a") as file:
                     file.writelines(HandleGenerator.generate(typedef, typedefs))
             case "alias":
-                with open("../Source/GlobalUsings.cs", "a") as file:
+                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+                    _copyright()
                     file.writelines(AliasGenerator.generate(typedef, typedefs))
             case "struct":
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
@@ -128,15 +129,26 @@ class HandleGenerator(TypeGenerator):
 class AliasGenerator(TypeGenerator):
     @staticmethod
     def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        typedef: dict[str, Any] | None = typedefs.get(data["type"])
-        if typedef:
-            return expand(typedef, typedefs)
-        alias_type, _, _ = resolve(data["type"])
-        return alias_type
+        return "Godot.NET." + data["name"]
 
     @staticmethod
     def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
-        yield f"global using {data["name"]} = {AliasGenerator.expand(data, typedefs)};\n"
+        data_name: str = data["name"]
+        data_type, _, _ = resolve(data["type"])
+        yield "using System.Runtime.InteropServices;\n"
+        yield "\n"
+        yield "namespace Godot.NET;\n"
+        yield "\n"
+        yield "[StructLayout(LayoutKind.Sequential)]\n"
+        yield f"public readonly struct {data_name}\n"
+        yield "{\n"
+        yield f"    public readonly {data_type} Value;\n"
+        yield "\n"
+        yield f"    public {data_name}({data_type} value)\n"
+        yield "    {\n"
+        yield "        Value = value;\n"
+        yield "    }\n"
+        yield "}\n"
 
 class StructGenerator(TypeGenerator):
     @staticmethod
