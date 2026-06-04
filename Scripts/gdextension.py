@@ -46,7 +46,10 @@ def generate(data: dict[str, Any]) -> None:
         file.write("public static unsafe class GDExtensionInterface\n")
         file.write("{\n")
         for interface_data in data["interface"]:
-            file.write(f"    private static {function(interface_data)} {interface_data["name"]};\n")
+            interface_name: str = interface_data["name"].title().replace("_", "")
+            interface_name = f"s_{interface_name[0].lower()}{interface_name[1:]}"
+            interface_type: str = function(interface_data)
+            file.write(f"    private static {interface_type} {interface_name};\n")
         file.write("}\n")
 
 def obsolete(data: dict[str, Any]) -> str:
