@@ -33,7 +33,7 @@ def obsolete(data: dict[str, Any]) -> str:
         f"Use {replace_with} instead."
     ]
     if message:
-        sentence.append(message)
+        sentence.append(f"Reason: {message}")
     return f"[Obsolete(\"{" ".join(sentence)}\")]\n"
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
