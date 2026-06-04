@@ -209,6 +209,901 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> s_editorRegisterGetClassesUsedCallback;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> s_registerMainLoopCallbacks;
 
+    [Obsolete("Deprecated since Godot 4.5. Use get_godot_version2 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionGodotVersion*, void> GetGodotVersion
+    {
+        get => s_getGodotVersion;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionGodotVersion2*, void> GetGodotVersion2
+    {
+        get => s_getGodotVersion2;
+    }
+
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_alloc2 instead.")]
+    public static delegate* unmanaged[Cdecl]<nuint, void*> MemAlloc
+    {
+        get => s_memAlloc;
+    }
+
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_realloc2 instead.")]
+    public static delegate* unmanaged[Cdecl]<void*, nuint, void*> MemRealloc
+    {
+        get => s_memRealloc;
+    }
+
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_free2 instead.")]
+    public static delegate* unmanaged[Cdecl]<void*, void> MemFree
+    {
+        get => s_memFree;
+    }
+
+    public static delegate* unmanaged[Cdecl]<nuint, GDExtensionBool, void*> MemAlloc2
+    {
+        get => s_memAlloc2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<void*, nuint, GDExtensionBool, void*> MemRealloc2
+    {
+        get => s_memRealloc2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void> MemFree2
+    {
+        get => s_memFree2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> PrintError
+    {
+        get => s_printError;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> PrintErrorWithMessage
+    {
+        get => s_printErrorWithMessage;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> PrintWarning
+    {
+        get => s_printWarning;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> PrintWarningWithMessage
+    {
+        get => s_printWarningWithMessage;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> PrintScriptError
+    {
+        get => s_printScriptError;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> PrintScriptErrorWithMessage
+    {
+        get => s_printScriptErrorWithMessage;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong> GetNativeStructSize
+    {
+        get => s_getNativeStructSize;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr, void> VariantNewCopy
+    {
+        get => s_variantNewCopy;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void> VariantNewNil
+    {
+        get => s_variantNewNil;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void> VariantDestroy
+    {
+        get => s_variantDestroy;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> VariantCall
+    {
+        get => s_variantCall;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> VariantCallStatic
+    {
+        get => s_variantCallStatic;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantEvaluate
+    {
+        get => s_variantEvaluate;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> VariantSet
+    {
+        get => s_variantSet;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> VariantSetNamed
+    {
+        get => s_variantSetNamed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> VariantSetKeyed
+    {
+        get => s_variantSetKeyed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool*, void> VariantSetIndexed
+    {
+        get => s_variantSetIndexed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantGet
+    {
+        get => s_variantGet;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantGetNamed
+    {
+        get => s_variantGetNamed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantGetKeyed
+    {
+        get => s_variantGetKeyed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool*, void> VariantGetIndexed
+    {
+        get => s_variantGetIndexed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool> VariantIterInit
+    {
+        get => s_variantIterInit;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool*, GDExtensionBool> VariantIterNext
+    {
+        get => s_variantIterNext;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantIterGet
+    {
+        get => s_variantIterGet;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt> VariantHash
+    {
+        get => s_variantHash;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt> VariantRecursiveHash
+    {
+        get => s_variantRecursiveHash;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool> VariantHashCompare
+    {
+        get => s_variantHashCompare;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionBool> VariantBooleanize
+    {
+        get => s_variantBooleanize;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool, void> VariantDuplicate
+    {
+        get => s_variantDuplicate;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionStringPtr, void> VariantStringify
+    {
+        get => s_variantStringify;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantType> VariantGetType
+    {
+        get => s_variantGetType;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionBool> VariantHasMethod
+    {
+        get => s_variantHasMethod;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool> VariantHasMember
+    {
+        get => s_variantHasMember;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool> VariantHasKey
+    {
+        get => s_variantHasKey;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> VariantGetObjectInstanceId
+    {
+        get => s_variantGetObjectInstanceId;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void> VariantGetTypeName
+    {
+        get => s_variantGetTypeName;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> VariantCanConvert
+    {
+        get => s_variantCanConvert;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> VariantCanConvertStrict
+    {
+        get => s_variantCanConvertStrict;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc> GetVariantFromTypeConstructor
+    {
+        get => s_getVariantFromTypeConstructor;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc> GetVariantToTypeConstructor
+    {
+        get => s_getVariantToTypeConstructor;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantGetInternalPtrFunc> VariantGetPtrInternalGetter
+    {
+        get => s_variantGetPtrInternalGetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, GDExtensionPtrOperatorEvaluator> VariantGetPtrOperatorEvaluator
+    {
+        get => s_variantGetPtrOperatorEvaluator;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod> VariantGetPtrBuiltinMethod
+    {
+        get => s_variantGetPtrBuiltinMethod;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, GDExtensionPtrConstructor> VariantGetPtrConstructor
+    {
+        get => s_variantGetPtrConstructor;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor> VariantGetPtrDestructor
+    {
+        get => s_variantGetPtrDestructor;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr*, int, GDExtensionCallError*, void> VariantConstruct
+    {
+        get => s_variantConstruct;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter> VariantGetPtrSetter
+    {
+        get => s_variantGetPtrSetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrGetter> VariantGetPtrGetter
+    {
+        get => s_variantGetPtrGetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter> VariantGetPtrIndexedSetter
+    {
+        get => s_variantGetPtrIndexedSetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedGetter> VariantGetPtrIndexedGetter
+    {
+        get => s_variantGetPtrIndexedGetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedSetter> VariantGetPtrKeyedSetter
+    {
+        get => s_variantGetPtrKeyedSetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedGetter> VariantGetPtrKeyedGetter
+    {
+        get => s_variantGetPtrKeyedGetter;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker> VariantGetPtrKeyedChecker
+    {
+        get => s_variantGetPtrKeyedChecker;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void> VariantGetConstantValue
+    {
+        get => s_variantGetConstantValue;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction> VariantGetPtrUtilityFunction
+    {
+        get => s_variantGetPtrUtilityFunction;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> StringNewWithLatin1Chars
+    {
+        get => s_stringNewWithLatin1Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> StringNewWithUtf8Chars
+    {
+        get => s_stringNewWithUtf8Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, void> StringNewWithUtf16Chars
+    {
+        get => s_stringNewWithUtf16Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> StringNewWithUtf32Chars
+    {
+        get => s_stringNewWithUtf32Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void> StringNewWithWideChars
+    {
+        get => s_stringNewWithWideChars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> StringNewWithLatin1CharsAndLen
+    {
+        get => s_stringNewWithLatin1CharsAndLen;
+    }
+
+    [Obsolete("Deprecated since Godot 4.3. Use string_new_with_utf8_chars_and_len2 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> StringNewWithUtf8CharsAndLen
+    {
+        get => s_stringNewWithUtf8CharsAndLen;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt> StringNewWithUtf8CharsAndLen2
+    {
+        get => s_stringNewWithUtf8CharsAndLen2;
+    }
+
+    [Obsolete("Deprecated since Godot 4.3. Use string_new_with_utf16_chars_and_len2 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, void> StringNewWithUtf16CharsAndLen
+    {
+        get => s_stringNewWithUtf16CharsAndLen;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, GDExtensionBool, GDExtensionInt> StringNewWithUtf16CharsAndLen2
+    {
+        get => s_stringNewWithUtf16CharsAndLen2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> StringNewWithUtf32CharsAndLen
+    {
+        get => s_stringNewWithUtf32CharsAndLen;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void> StringNewWithWideCharsAndLen
+    {
+        get => s_stringNewWithWideCharsAndLen;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> StringToLatin1Chars
+    {
+        get => s_stringToLatin1Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> StringToUtf8Chars
+    {
+        get => s_stringToUtf8Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, ushort*, GDExtensionInt, GDExtensionInt> StringToUtf16Chars
+    {
+        get => s_stringToUtf16Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt> StringToUtf32Chars
+    {
+        get => s_stringToUtf32Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt> StringToWideChars
+    {
+        get => s_stringToWideChars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*> StringOperatorIndex
+    {
+        get => s_stringOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*> StringOperatorIndexConst
+    {
+        get => s_stringOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void> StringOperatorPlusEqString
+    {
+        get => s_stringOperatorPlusEqString;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void> StringOperatorPlusEqChar
+    {
+        get => s_stringOperatorPlusEqChar;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void> StringOperatorPlusEqCstr
+    {
+        get => s_stringOperatorPlusEqCstr;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, char*, void> StringOperatorPlusEqWcstr
+    {
+        get => s_stringOperatorPlusEqWcstr;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void> StringOperatorPlusEqC32Str
+    {
+        get => s_stringOperatorPlusEqC32Str;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> StringResize
+    {
+        get => s_stringResize;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void> StringNameNewWithLatin1Chars
+    {
+        get => s_stringNameNewWithLatin1Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, void> StringNameNewWithUtf8Chars
+    {
+        get => s_stringNameNewWithUtf8Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void> StringNameNewWithUtf8CharsAndLen
+    {
+        get => s_stringNameNewWithUtf8CharsAndLen;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, nuint, GDExtensionInt> XmlParserOpenBuffer
+    {
+        get => s_xmlParserOpenBuffer;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, ulong, void> FileAccessStoreBuffer
+    {
+        get => s_fileAccessStoreBuffer;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, byte*, ulong, ulong> FileAccessGetBuffer
+    {
+        get => s_fileAccessGetBuffer;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> ImagePtrw
+    {
+        get => s_imagePtrw;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> ImagePtr
+    {
+        get => s_imagePtr;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long> WorkerThreadPoolAddNativeGroupTask
+    {
+        get => s_workerThreadPoolAddNativeGroupTask;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> WorkerThreadPoolAddNativeTask
+    {
+        get => s_workerThreadPoolAddNativeTask;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, byte*> PackedByteArrayOperatorIndex
+    {
+        get => s_packedByteArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, byte*> PackedByteArrayOperatorIndexConst
+    {
+        get => s_packedByteArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, float*> PackedFloat32ArrayOperatorIndex
+    {
+        get => s_packedFloat32ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*> PackedFloat32ArrayOperatorIndexConst
+    {
+        get => s_packedFloat32ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*> PackedFloat64ArrayOperatorIndex
+    {
+        get => s_packedFloat64ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, double*> PackedFloat64ArrayOperatorIndexConst
+    {
+        get => s_packedFloat64ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, int*> PackedInt32ArrayOperatorIndex
+    {
+        get => s_packedInt32ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, int*> PackedInt32ArrayOperatorIndexConst
+    {
+        get => s_packedInt32ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, long*> PackedInt64ArrayOperatorIndex
+    {
+        get => s_packedInt64ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*> PackedInt64ArrayOperatorIndexConst
+    {
+        get => s_packedInt64ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionStringPtr> PackedStringArrayOperatorIndex
+    {
+        get => s_packedStringArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionStringPtr> PackedStringArrayOperatorIndexConst
+    {
+        get => s_packedStringArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector2ArrayOperatorIndex
+    {
+        get => s_packedVector2ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector2ArrayOperatorIndexConst
+    {
+        get => s_packedVector2ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector3ArrayOperatorIndex
+    {
+        get => s_packedVector3ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector3ArrayOperatorIndexConst
+    {
+        get => s_packedVector3ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector4ArrayOperatorIndex
+    {
+        get => s_packedVector4ArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector4ArrayOperatorIndexConst
+    {
+        get => s_packedVector4ArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedColorArrayOperatorIndex
+    {
+        get => s_packedColorArrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedColorArrayOperatorIndexConst
+    {
+        get => s_packedColorArrayOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr> ArrayOperatorIndex
+    {
+        get => s_arrayOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr> ArrayOperatorIndexConst
+    {
+        get => s_arrayOperatorIndexConst;
+    }
+
+    [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> ArrayRef
+    {
+        get => s_arrayRef;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> ArraySetTyped
+    {
+        get => s_arraySetTyped;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> DictionaryOperatorIndex
+    {
+        get => s_dictionaryOperatorIndex;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> DictionaryOperatorIndexConst
+    {
+        get => s_dictionaryOperatorIndexConst;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> DictionarySetTyped
+    {
+        get => s_dictionarySetTyped;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> ObjectMethodBindCall
+    {
+        get => s_objectMethodBindCall;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ObjectMethodBindPtrcall
+    {
+        get => s_objectMethodBindPtrcall;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void> ObjectDestroy
+    {
+        get => s_objectDestroy;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> GlobalGetSingleton
+    {
+        get => s_globalGetSingleton;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, GDExtensionInstanceBindingCallbacks*, void*> ObjectGetInstanceBinding
+    {
+        get => s_objectGetInstanceBinding;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void> ObjectSetInstanceBinding
+    {
+        get => s_objectSetInstanceBinding;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void> ObjectFreeInstanceBinding
+    {
+        get => s_objectFreeInstanceBinding;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> ObjectSetInstance
+    {
+        get => s_objectSetInstance;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr, GDExtensionBool> ObjectGetClassName
+    {
+        get => s_objectGetClassName;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr> ObjectCastTo
+    {
+        get => s_objectCastTo;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr> ObjectGetInstanceFromId
+    {
+        get => s_objectGetInstanceFromId;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDObjectInstanceID> ObjectGetInstanceId
+    {
+        get => s_objectGetInstanceId;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr, GDExtensionBool> ObjectHasScriptMethod
+    {
+        get => s_objectHasScriptMethod;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> ObjectCallScriptMethod
+    {
+        get => s_objectCallScriptMethod;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr> RefGetObject
+    {
+        get => s_refGetObject;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionRefPtr, GDExtensionObjectPtr, void> RefSetObject
+    {
+        get => s_refSetObject;
+    }
+
+    [Obsolete("Deprecated since Godot 4.2. Use script_instance_create3 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate
+    {
+        get => s_scriptInstanceCreate;
+    }
+
+    [Obsolete("Deprecated since Godot 4.3. Use script_instance_create3 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate2
+    {
+        get => s_scriptInstanceCreate2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate3
+    {
+        get => s_scriptInstanceCreate3;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr> PlaceholderScriptInstanceCreate
+    {
+        get => s_placeholderScriptInstanceCreate;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> PlaceholderScriptInstanceUpdate
+    {
+        get => s_placeholderScriptInstanceUpdate;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr> ObjectGetScriptInstance
+    {
+        get => s_objectGetScriptInstance;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void> ObjectSetScriptInstance
+    {
+        get => s_objectSetScriptInstance;
+    }
+
+    [Obsolete("Deprecated since Godot 4.3. Use callable_custom_create2 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo*, void> CallableCustomCreate
+    {
+        get => s_callableCustomCreate;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void> CallableCustomCreate2
+    {
+        get => s_callableCustomCreate2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> CallableCustomGetUserdata
+    {
+        get => s_callableCustomGetUserdata;
+    }
+
+    [Obsolete("Deprecated since Godot 4.4. Use classdb_construct_object2 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> ClassdbConstructObject
+    {
+        get => s_classdbConstructObject;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> ClassdbConstructObject2
+    {
+        get => s_classdbConstructObject2;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> ClassdbGetMethodBind
+    {
+        get => s_classdbGetMethodBind;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> ClassdbGetClassTag
+    {
+        get => s_classdbGetClassTag;
+    }
+
+    [Obsolete("Deprecated since Godot 4.2. Use classdb_register_extension_class5 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void> ClassdbRegisterExtensionClass
+    {
+        get => s_classdbRegisterExtensionClass;
+    }
+
+    [Obsolete("Deprecated since Godot 4.3. Use classdb_register_extension_class5 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2*, void> ClassdbRegisterExtensionClass2
+    {
+        get => s_classdbRegisterExtensionClass2;
+    }
+
+    [Obsolete("Deprecated since Godot 4.4. Use classdb_register_extension_class5 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void> ClassdbRegisterExtensionClass3
+    {
+        get => s_classdbRegisterExtensionClass3;
+    }
+
+    [Obsolete("Deprecated since Godot 4.5. Use classdb_register_extension_class5 instead.")]
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void> ClassdbRegisterExtensionClass4
+    {
+        get => s_classdbRegisterExtensionClass4;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void> ClassdbRegisterExtensionClass5
+    {
+        get => s_classdbRegisterExtensionClass5;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void> ClassdbRegisterExtensionClassMethod
+    {
+        get => s_classdbRegisterExtensionClassMethod;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void> ClassdbRegisterExtensionClassVirtualMethod
+    {
+        get => s_classdbRegisterExtensionClassVirtualMethod;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void> ClassdbRegisterExtensionClassIntegerConstant
+    {
+        get => s_classdbRegisterExtensionClassIntegerConstant;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, void> ClassdbRegisterExtensionClassProperty
+    {
+        get => s_classdbRegisterExtensionClassProperty;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void> ClassdbRegisterExtensionClassPropertyIndexed
+    {
+        get => s_classdbRegisterExtensionClassPropertyIndexed;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> ClassdbRegisterExtensionClassPropertyGroup
+    {
+        get => s_classdbRegisterExtensionClassPropertyGroup;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> ClassdbRegisterExtensionClassPropertySubgroup
+    {
+        get => s_classdbRegisterExtensionClassPropertySubgroup;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionInt, void> ClassdbRegisterExtensionClassSignal
+    {
+        get => s_classdbRegisterExtensionClassSignal;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, void> ClassdbUnregisterExtensionClass
+    {
+        get => s_classdbUnregisterExtensionClass;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void> GetLibraryPath
+    {
+        get => s_getLibraryPath;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> EditorAddPlugin
+    {
+        get => s_editorAddPlugin;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> EditorRemovePlugin
+    {
+        get => s_editorRemovePlugin;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, void> EditorHelpLoadXmlFromUtf8Chars
+    {
+        get => s_editorHelpLoadXmlFromUtf8Chars;
+    }
+
+    public static delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void> EditorHelpLoadXmlFromUtf8CharsAndLen
+    {
+        get => s_editorHelpLoadXmlFromUtf8CharsAndLen;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> EditorRegisterGetClassesUsedCallback
+    {
+        get => s_editorRegisterGetClassesUsedCallback;
+    }
+
+    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> RegisterMainLoopCallbacks
+    {
+        get => s_registerMainLoopCallbacks;
+    }
+
     public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)
     {
         if (getProcAddress.Method == null)

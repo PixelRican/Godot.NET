@@ -54,6 +54,16 @@ def generate(data: dict[str, Any]) -> None:
             field_type: str = function(interface_data)
             fields.append((interface_name, field_name, field_type))
             file.write(f"    private static {field_type} {field_name};\n")
+        for interface_data, field in zip(data["interface"], fields):
+            _, field_name, field_type = field
+            interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
+            file.write("\n")
+            if interface_deprecated:
+                file.write("    " + obsolete(interface_deprecated))
+            file.write(f"    public static {field_type} {field_name[2].upper() + field_name[3:]}\n")
+            file.write("    {\n")
+            file.write(f"        get => {field_name};\n")
+            file.write("    }\n")
         file.write("\n")
         file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
         file.write("    {\n")
@@ -78,14 +88,13 @@ def generate(data: dict[str, Any]) -> None:
 
 def obsolete(data: dict[str, Any]) -> str:
     since: str = data["since"]
-    replace_with: str = data["replace_with"]
     message: str | None = data.get("message")
-    sentence: list[str] = [
-        f"Deprecated since Godot {since}.",
-        f"Use {replace_with} instead."
-    ]
+    replace_with: str | None = data.get("replace_with")
+    sentence: list[str] = [f"Deprecated since Godot {since}."]
     if message:
-        sentence.append(f"Reason: {message}")
+        sentence.append(message)
+    if replace_with:
+        sentence.append(f"Use {replace_with} instead.")
     return f"[Obsolete(\"{" ".join(sentence)}\")]\n"
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
