@@ -33,10 +33,15 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct GDExtensionBool
 {
-    public readonly byte Value;
+    private readonly byte _value;
 
     public GDExtensionBool(byte value)
     {
-        Value = value;
+        _value = value;
+    }
+
+    public byte Value
+    {
+        get => _value;
     }
 }

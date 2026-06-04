@@ -33,10 +33,15 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct GDExtensionInt
 {
-    public readonly long Value;
+    private readonly long _value;
 
     public GDExtensionInt(long value)
     {
-        Value = value;
+        _value = value;
+    }
+
+    public long Value
+    {
+        get => _value;
     }
 }

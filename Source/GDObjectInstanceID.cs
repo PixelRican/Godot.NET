@@ -33,10 +33,15 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct GDObjectInstanceID
 {
-    public readonly ulong Value;
+    private readonly ulong _value;
 
     public GDObjectInstanceID(ulong value)
     {
-        Value = value;
+        _value = value;
+    }
+
+    public ulong Value
+    {
+        get => _value;
     }
 }

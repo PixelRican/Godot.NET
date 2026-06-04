@@ -33,10 +33,15 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct GDExtensionClassCreationInfo5
 {
-    public readonly GDExtensionClassCreationInfo4 Value;
+    private readonly GDExtensionClassCreationInfo4 _value;
 
     public GDExtensionClassCreationInfo5(GDExtensionClassCreationInfo4 value)
     {
-        Value = value;
+        _value = value;
+    }
+
+    public GDExtensionClassCreationInfo4 Value
+    {
+        get => _value;
     }
 }
