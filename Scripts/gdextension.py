@@ -1,4 +1,4 @@
-﻿from io import TextIOWrapper
+﻿from io import IOBase
 from typing import Any
 
 def generate(data: dict[str, Any]) -> None:
@@ -75,7 +75,7 @@ def resolve(typedef: str) -> tuple[str, bool, bool]:
 
 class EnumGenerator:
     @staticmethod
-    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         data_is_bitfield: bool | None = data.get("is_bitfield")
@@ -98,7 +98,7 @@ class EnumGenerator:
 
 class HandleGenerator:
     @staticmethod
-    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         data_parent: str | None = data.get("parent")
@@ -134,7 +134,7 @@ class HandleGenerator:
 
 class AliasGenerator:
     @staticmethod
-    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
         data_type, _, _ = resolve(data["type"])
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
@@ -164,7 +164,7 @@ class AliasGenerator:
 
 class StructGenerator:
     @staticmethod
-    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_deprecated:
@@ -193,7 +193,7 @@ class StructGenerator:
 
 class FunctionGenerator:
     @staticmethod
-    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
         type_parameters: list[str] = []
         for argument in data["arguments"]:
             argument_type, _, _ = resolve(argument["type"])
