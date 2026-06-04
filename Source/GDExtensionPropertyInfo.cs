@@ -33,10 +33,10 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionPropertyInfo
 {
-    public GDExtensionVariantType type;
-    public GDExtensionStringNamePtr name;
-    public GDExtensionStringNamePtr class_name;
-    public uint hint;
-    public GDExtensionStringPtr hint_string;
-    public uint usage;
+    public GDExtensionVariantType Type;
+    public GDExtensionStringNamePtr Name;
+    public GDExtensionStringNamePtr ClassName;
+    public uint Hint;
+    public GDExtensionStringPtr HintString;
+    public uint Usage;
 }

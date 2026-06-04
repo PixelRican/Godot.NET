@@ -33,7 +33,7 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionMainLoopCallbacks
 {
-    public GDExtensionMainLoopStartupCallback startup_func;
-    public GDExtensionMainLoopShutdownCallback shutdown_func;
-    public GDExtensionMainLoopFrameCallback frame_func;
+    public GDExtensionMainLoopStartupCallback StartupFunc;
+    public GDExtensionMainLoopShutdownCallback ShutdownFunc;
+    public GDExtensionMainLoopFrameCallback FrameFunc;
 }

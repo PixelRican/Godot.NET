@@ -30,11 +30,11 @@ namespace Godot.NET;
 
 public enum GDExtensionCallErrorType
 {
-    GDEXTENSION_CALL_OK = 0,
-    GDEXTENSION_CALL_ERROR_INVALID_METHOD = 1,
-    GDEXTENSION_CALL_ERROR_INVALID_ARGUMENT = 2,
-    GDEXTENSION_CALL_ERROR_TOO_MANY_ARGUMENTS = 3,
-    GDEXTENSION_CALL_ERROR_TOO_FEW_ARGUMENTS = 4,
-    GDEXTENSION_CALL_ERROR_INSTANCE_IS_NULL = 5,
-    GDEXTENSION_CALL_ERROR_METHOD_NOT_CONST = 6,
+    GDExtensionCallOk = 0,
+    GDExtensionCallErrorInvalidMethod = 1,
+    GDExtensionCallErrorInvalidArgument = 2,
+    GDExtensionCallErrorTooManyArguments = 3,
+    GDExtensionCallErrorTooFewArguments = 4,
+    GDExtensionCallErrorInstanceIsNull = 5,
+    GDExtensionCallErrorMethodNotConst = 6,
 }

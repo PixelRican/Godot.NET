@@ -33,11 +33,11 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassVirtualMethodInfo
 {
-    public GDExtensionStringNamePtr name;
-    public uint method_flags;
-    public GDExtensionPropertyInfo return_value;
-    public GDExtensionClassMethodArgumentMetadata return_value_metadata;
-    public uint argument_count;
-    public unsafe GDExtensionPropertyInfo* arguments;
-    public unsafe GDExtensionClassMethodArgumentMetadata* arguments_metadata;
+    public GDExtensionStringNamePtr Name;
+    public uint MethodFlags;
+    public GDExtensionPropertyInfo ReturnValue;
+    public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
+    public uint ArgumentCount;
+    public unsafe GDExtensionPropertyInfo* Arguments;
+    public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
 }

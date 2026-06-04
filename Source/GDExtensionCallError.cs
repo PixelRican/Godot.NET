@@ -33,7 +33,7 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionCallError
 {
-    public GDExtensionCallErrorType error;
-    public int argument;
-    public int expected;
+    public GDExtensionCallErrorType Error;
+    public int Argument;
+    public int Expected;
 }

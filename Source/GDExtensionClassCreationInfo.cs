@@ -35,21 +35,21 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassCreationInfo
 {
-    public GDExtensionBool is_virtual;
-    public GDExtensionBool is_abstract;
-    public GDExtensionClassSet set_func;
-    public GDExtensionClassGet get_func;
-    public GDExtensionClassGetPropertyList get_property_list_func;
-    public GDExtensionClassFreePropertyList free_property_list_func;
-    public GDExtensionClassPropertyCanRevert property_can_revert_func;
-    public GDExtensionClassPropertyGetRevert property_get_revert_func;
-    public GDExtensionClassNotification notification_func;
-    public GDExtensionClassToString to_string_func;
-    public GDExtensionClassReference reference_func;
-    public GDExtensionClassUnreference unreference_func;
-    public GDExtensionClassCreateInstance create_instance_func;
-    public GDExtensionClassFreeInstance free_instance_func;
-    public GDExtensionClassGetVirtual get_virtual_func;
-    public GDExtensionClassGetRID get_rid_func;
-    public unsafe void* class_userdata;
+    public GDExtensionBool IsVirtual;
+    public GDExtensionBool IsAbstract;
+    public GDExtensionClassSet SetFunc;
+    public GDExtensionClassGet GetFunc;
+    public GDExtensionClassGetPropertyList GetPropertyListFunc;
+    public GDExtensionClassFreePropertyList FreePropertyListFunc;
+    public GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
+    public GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
+    public GDExtensionClassNotification NotificationFunc;
+    public GDExtensionClassToString ToStringFunc;
+    public GDExtensionClassReference ReferenceFunc;
+    public GDExtensionClassUnreference UnreferenceFunc;
+    public GDExtensionClassCreateInstance CreateInstanceFunc;
+    public GDExtensionClassFreeInstance FreeInstanceFunc;
+    public GDExtensionClassGetVirtual GetVirtualFunc;
+    public GDExtensionClassGetRID GetRidFunc;
+    public unsafe void* ClassUserdata;
 }

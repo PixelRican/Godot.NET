@@ -33,13 +33,13 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionGodotVersion2
 {
-    public uint major;
-    public uint minor;
-    public uint patch;
-    public uint hex;
-    public readonly unsafe byte* status;
-    public readonly unsafe byte* build;
-    public readonly unsafe byte* hash;
-    public ulong timestamp;
-    public readonly unsafe byte* @string;
+    public uint Major;
+    public uint Minor;
+    public uint Patch;
+    public uint Hex;
+    public readonly unsafe byte* Status;
+    public readonly unsafe byte* Build;
+    public readonly unsafe byte* Hash;
+    public ulong Timestamp;
+    public readonly unsafe byte* String;
 }

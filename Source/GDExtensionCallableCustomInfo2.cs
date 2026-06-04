@@ -33,15 +33,15 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionCallableCustomInfo2
 {
-    public unsafe void* callable_userdata;
-    public unsafe void* token;
-    public GDObjectInstanceID object_id;
-    public GDExtensionCallableCustomCall call_func;
-    public GDExtensionCallableCustomIsValid is_valid_func;
-    public GDExtensionCallableCustomFree free_func;
-    public GDExtensionCallableCustomHash hash_func;
-    public GDExtensionCallableCustomEqual equal_func;
-    public GDExtensionCallableCustomLessThan less_than_func;
-    public GDExtensionCallableCustomToString to_string_func;
-    public GDExtensionCallableCustomGetArgumentCount get_argument_count_func;
+    public unsafe void* CallableUserdata;
+    public unsafe void* Token;
+    public GDObjectInstanceID ObjectId;
+    public GDExtensionCallableCustomCall CallFunc;
+    public GDExtensionCallableCustomIsValid IsValidFunc;
+    public GDExtensionCallableCustomFree FreeFunc;
+    public GDExtensionCallableCustomHash HashFunc;
+    public GDExtensionCallableCustomEqual EqualFunc;
+    public GDExtensionCallableCustomLessThan LessThanFunc;
+    public GDExtensionCallableCustomToString ToStringFunc;
+    public GDExtensionCallableCustomGetArgumentCount GetArgumentCountFunc;
 }

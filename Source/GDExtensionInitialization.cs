@@ -33,8 +33,8 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionInitialization
 {
-    public GDExtensionInitializationLevel minimum_initialization_level;
-    public unsafe void* userdata;
-    public GDExtensionInitializeCallback initialize;
-    public GDExtensionDeinitializeCallback deinitialize;
+    public GDExtensionInitializationLevel MinimumInitializationLevel;
+    public unsafe void* Userdata;
+    public GDExtensionInitializeCallback Initialize;
+    public GDExtensionDeinitializeCallback Deinitialize;
 }

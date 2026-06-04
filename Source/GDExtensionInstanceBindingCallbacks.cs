@@ -33,7 +33,7 @@ namespace Godot.NET;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionInstanceBindingCallbacks
 {
-    public GDExtensionInstanceBindingCreateCallback create_callback;
-    public GDExtensionInstanceBindingFreeCallback free_callback;
-    public GDExtensionInstanceBindingReferenceCallback reference_callback;
+    public GDExtensionInstanceBindingCreateCallback CreateCallback;
+    public GDExtensionInstanceBindingFreeCallback FreeCallback;
+    public GDExtensionInstanceBindingReferenceCallback ReferenceCallback;
 }

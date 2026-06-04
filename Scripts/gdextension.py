@@ -91,7 +91,7 @@ class EnumGenerator:
         file.write(f"public enum {data_name}\n")
         file.write("{\n")
         for value in data["values"]:
-            value_name: str = value["name"]
+            value_name: str = value["name"].title().replace("_", "").replace("Gde", "GDE", 1)
             value_value: int = value["value"]
             file.write(f"    {value_name} = {value_value},\n")
         file.write("}\n")
@@ -179,9 +179,7 @@ class StructGenerator:
         file.write(f"public struct {data_name}\n")
         file.write("{\n")
         for member in data["members"]:
-            member_name: str = member["name"]
-            if member_name == "string":
-                member_name = "@string"
+            member_name: str = member["name"].title().replace("_", "")
             member_type, is_readonly, is_unsafe = resolve(member["type"])
             modifiers: list[str] = ["public"]
             if is_readonly:
