@@ -26,10 +26,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
+[Obsolete("Deprecated since Godot 4.2. Use GDExtensionScriptInstanceNotification2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionScriptInstanceNotification
 {
