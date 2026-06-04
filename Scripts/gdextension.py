@@ -1,6 +1,19 @@
 ﻿from io import IOBase
 from typing import Any
 
+def function(data: dict[str, Any]):
+    type_parameters: list[str] = []
+    for argument in data["arguments"]:
+        argument_type, _, _ = resolve(argument["type"])
+        type_parameters.append(argument_type)
+    return_value: dict[str, Any] | None = data.get("return_value")
+    if return_value:
+        return_value_type, _, _ = resolve(return_value["type"])
+        type_parameters.append(return_value_type)
+    else:
+        type_parameters.append("void")
+    return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+
 def generate(data: dict[str, Any]) -> None:
     for type_data in data["types"]:
         name: str = type_data["name"]
@@ -23,6 +36,18 @@ def generate(data: dict[str, Any]) -> None:
                     FunctionGenerator.generate(file, type_data)
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
+    with open(f"../Source/GDExtensionInterface.cs", "w") as file:
+        for line in data["_copyright"]:
+            file.write(line)
+            file.write("\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        file.write("public static unsafe class GDExtensionInterface\n")
+        file.write("{\n")
+        for interface_data in data["interface"]:
+            file.write(f"    private static {function(interface_data)} {interface_data["name"]};\n")
+        file.write("}\n")
 
 def obsolete(data: dict[str, Any]) -> str:
     since: str = data["since"]
@@ -192,18 +217,8 @@ class StructGenerator:
 class FunctionGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
-        type_parameters: list[str] = []
-        for argument in data["arguments"]:
-            argument_type, _, _ = resolve(argument["type"])
-            type_parameters.append(argument_type)
-        return_value: dict[str, Any] | None = data.get("return_value")
-        if return_value:
-            return_value_type, _, _ = resolve(return_value["type"])
-            type_parameters.append(return_value_type)
-        else:
-            type_parameters.append("void")
         data_name: str = data["name"]
-        data_type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+        data_type: str = function(data)
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_deprecated:
             file.write("using System;\n")
