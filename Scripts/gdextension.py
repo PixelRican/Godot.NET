@@ -37,7 +37,8 @@ def generate(data: dict[str, Any]) -> None:
                     _copyright()
                     file.writelines(EnumGenerator.generate(typedef, typedefs))
             case "handle":
-                with open("../Source/GlobalUsings.cs", "a") as file:
+                with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+                    _copyright()
                     file.writelines(HandleGenerator.generate(typedef, typedefs))
             case "alias":
                 with open(f"../Source/{typedef["name"]}.cs", "w") as file:
@@ -120,11 +121,37 @@ class EnumGenerator(TypeGenerator):
 class HandleGenerator(TypeGenerator):
     @staticmethod
     def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
-        return "void*"
+        return "Godot.NET." + data["name"]
 
     @staticmethod
     def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
-        yield f"global using unsafe {data["name"]} = void*;\n"
+        data_name: str = data["name"]
+        data_parent: str | None = data.get("parent")
+        yield "using System.Runtime.InteropServices;\n"
+        yield "\n"
+        yield "namespace Godot.NET;\n"
+        yield "\n"
+        yield "[StructLayout(LayoutKind.Sequential)]\n"
+        yield f"public readonly struct {data_name}\n"
+        yield "{\n"
+        yield f"    private readonly nint _handle;\n"
+        yield "\n"
+        yield f"    public {data_name}(nint handle)\n"
+        yield "    {\n"
+        yield "        _handle = handle;\n"
+        yield "    }\n"
+        yield "\n"
+        yield f"    public nint Handle\n"
+        yield "    {\n"
+        yield "        get => _handle;\n"
+        yield "    }\n"
+        if data_parent:
+            yield "\n"
+            yield f"    public static implicit operator {data_name}({data_parent} parent)\n"
+            yield "    {\n"
+            yield f"        return new {data_name}(parent.Handle);\n"
+            yield "    }\n"
+        yield "}\n"
 
 class AliasGenerator(TypeGenerator):
     @staticmethod
