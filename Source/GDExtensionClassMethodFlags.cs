@@ -31,7 +31,7 @@ using System;
 namespace Godot.NET;
 
 [Flags]
-internal enum GDExtensionClassMethodFlags
+public enum GDExtensionClassMethodFlags
 {
     GDEXTENSION_METHOD_FLAG_NORMAL = 1,
     GDEXTENSION_METHOD_FLAG_EDITOR = 2,

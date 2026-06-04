@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionGodotVersion2
+public struct GDExtensionGodotVersion2
 {
     public uint major;
     public uint minor;

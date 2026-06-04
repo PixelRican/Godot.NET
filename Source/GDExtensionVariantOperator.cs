@@ -28,7 +28,7 @@
 
 namespace Godot.NET;
 
-internal enum GDExtensionVariantOperator
+public enum GDExtensionVariantOperator
 {
     GDEXTENSION_VARIANT_OP_EQUAL = 0,
     GDEXTENSION_VARIANT_OP_NOT_EQUAL = 1,

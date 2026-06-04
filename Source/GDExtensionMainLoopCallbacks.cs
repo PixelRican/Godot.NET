@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionMainLoopCallbacks
+public struct GDExtensionMainLoopCallbacks
 {
     public unsafe GDExtensionMainLoopStartupCallback startup_func;
     public unsafe GDExtensionMainLoopShutdownCallback shutdown_func;

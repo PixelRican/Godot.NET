@@ -28,7 +28,7 @@
 
 namespace Godot.NET;
 
-internal enum GDExtensionClassMethodArgumentMetadata
+public enum GDExtensionClassMethodArgumentMetadata
 {
     GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE = 0,
     GDEXTENSION_METHOD_ARGUMENT_METADATA_INT_IS_INT8 = 1,

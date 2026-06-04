@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionScriptInstanceInfo3
+public struct GDExtensionScriptInstanceInfo3
 {
     public unsafe GDExtensionScriptInstanceSet set_func;
     public unsafe GDExtensionScriptInstanceGet get_func;

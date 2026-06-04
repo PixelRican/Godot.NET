@@ -33,7 +33,7 @@ namespace Godot.NET;
 
 [Obsolete("Deprecated since Godot 4.3. Use GDExtensionCallableCustomInfo2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionCallableCustomInfo
+public struct GDExtensionCallableCustomInfo
 {
     public unsafe void* callable_userdata;
     public unsafe void* token;

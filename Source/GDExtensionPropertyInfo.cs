@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionPropertyInfo
+public struct GDExtensionPropertyInfo
 {
     public GDExtensionVariantType type;
     public unsafe GDExtensionStringNamePtr name;

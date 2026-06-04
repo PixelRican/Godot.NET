@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionCallError
+public struct GDExtensionCallError
 {
     public GDExtensionCallErrorType error;
     public int argument;

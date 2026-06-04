@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionCallableCustomInfo2
+public struct GDExtensionCallableCustomInfo2
 {
     public unsafe void* callable_userdata;
     public unsafe void* token;

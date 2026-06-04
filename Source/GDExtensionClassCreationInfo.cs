@@ -33,7 +33,7 @@ namespace Godot.NET;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionClassCreationInfo4 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionClassCreationInfo
+public struct GDExtensionClassCreationInfo
 {
     public GDExtensionBool is_virtual;
     public GDExtensionBool is_abstract;

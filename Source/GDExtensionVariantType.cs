@@ -28,7 +28,7 @@
 
 namespace Godot.NET;
 
-internal enum GDExtensionVariantType
+public enum GDExtensionVariantType
 {
     GDEXTENSION_VARIANT_TYPE_NIL = 0,
     GDEXTENSION_VARIANT_TYPE_BOOL = 1,

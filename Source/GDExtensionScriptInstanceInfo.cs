@@ -33,7 +33,7 @@ namespace Godot.NET;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionScriptInstanceInfo3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionScriptInstanceInfo
+public struct GDExtensionScriptInstanceInfo
 {
     public unsafe GDExtensionScriptInstanceSet set_func;
     public unsafe GDExtensionScriptInstanceGet get_func;

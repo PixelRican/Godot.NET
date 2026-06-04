@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionInstanceBindingCallbacks
+public struct GDExtensionInstanceBindingCallbacks
 {
     public unsafe GDExtensionInstanceBindingCreateCallback create_callback;
     public unsafe GDExtensionInstanceBindingFreeCallback free_callback;

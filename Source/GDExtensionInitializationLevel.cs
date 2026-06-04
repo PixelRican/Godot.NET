@@ -28,7 +28,7 @@
 
 namespace Godot.NET;
 
-internal enum GDExtensionInitializationLevel
+public enum GDExtensionInitializationLevel
 {
     GDEXTENSION_INITIALIZATION_CORE = 0,
     GDEXTENSION_INITIALIZATION_SERVERS = 1,

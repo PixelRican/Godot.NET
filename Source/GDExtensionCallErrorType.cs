@@ -28,7 +28,7 @@
 
 namespace Godot.NET;
 
-internal enum GDExtensionCallErrorType
+public enum GDExtensionCallErrorType
 {
     GDEXTENSION_CALL_OK = 0,
     GDEXTENSION_CALL_ERROR_INVALID_METHOD = 1,

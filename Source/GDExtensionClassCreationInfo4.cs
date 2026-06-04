@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct GDExtensionClassCreationInfo4
+public struct GDExtensionClassCreationInfo4
 {
     public GDExtensionBool is_virtual;
     public GDExtensionBool is_abstract;

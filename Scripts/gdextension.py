@@ -110,7 +110,7 @@ class EnumGenerator(TypeGenerator):
         yield "\n"
         if data.get("is_bitfield"):
             yield "[Flags]\n"
-        yield f"internal enum {data["name"]}\n"
+        yield f"public enum {data["name"]}\n"
         yield "{\n"
         for value in data["values"]:
             yield f"    {value["name"]} = {value["value"]},\n"
@@ -155,7 +155,7 @@ class StructGenerator(TypeGenerator):
         if deprecated:
             yield f"[Obsolete(\"Deprecated since Godot {deprecated["since"]}. Use {deprecated["replace_with"]} instead.\")]\n"
         yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"internal struct {data["name"]}\n"
+        yield f"public struct {data["name"]}\n"
         yield "{\n"
         for member in data["members"]:
             member_name: str = member["name"]
