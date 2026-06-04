@@ -26,10 +26,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
+[Obsolete("Deprecated since Godot 4.3. Use GDExtensionScriptInstanceInfo3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 internal struct GDExtensionScriptInstanceInfo2
 {

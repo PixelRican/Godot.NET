@@ -145,10 +145,15 @@ class StructGenerator(TypeGenerator):
 
     @staticmethod
     def generate(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> Iterator[str]:
+        deprecated: dict[str, Any] | None = data.get("deprecated")
+        if deprecated:
+            yield "using System;\n"
         yield "using System.Runtime.InteropServices;\n"
         yield "\n"
         yield "namespace Godot.NET;\n"
         yield "\n"
+        if deprecated:
+            yield f"[Obsolete(\"Deprecated since Godot {deprecated["since"]}. Use {deprecated["replace_with"]} instead.\")]\n"
         yield "[StructLayout(LayoutKind.Sequential)]\n"
         yield f"internal struct {data["name"]}\n"
         yield "{\n"
