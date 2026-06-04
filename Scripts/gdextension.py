@@ -37,19 +37,43 @@ def generate(data: dict[str, Any]) -> None:
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
     with open(f"../Source/GDExtensionInterface.cs", "w") as file:
+        fields: list[tuple[str, str, str]] = []
         for line in data["_copyright"]:
             file.write(line)
             file.write("\n")
+        file.write("\n")
+        file.write("using System;\n")
         file.write("\n")
         file.write("namespace Godot.NET;\n")
         file.write("\n")
         file.write("public static unsafe class GDExtensionInterface\n")
         file.write("{\n")
         for interface_data in data["interface"]:
-            interface_name: str = interface_data["name"].title().replace("_", "")
-            interface_name = f"s_{interface_name[0].lower()}{interface_name[1:]}"
-            interface_type: str = function(interface_data)
-            file.write(f"    private static {interface_type} {interface_name};\n")
+            interface_name: str = interface_data["name"]
+            field_name = f"s_{interface_name[0]}{interface_name.title().replace("_", "")[1:]}"
+            field_type: str = function(interface_data)
+            fields.append((interface_name, field_name, field_type))
+            file.write(f"    private static {field_type} {field_name};\n")
+        file.write("\n")
+        file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
+        file.write("    {\n")
+        file.write("        if (getProcAddress.Method == null)\n")
+        file.write("        {\n")
+        file.write("            throw new ArgumentNullException(nameof(getProcAddress));\n")
+        file.write("        }\n")
+        file.write("\n")
+        for interface_name, field_name, field_type in fields:
+            file.write(f"        {field_name} = ({field_type})Load(getProcAddress, \"{interface_name}\"u8);\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    private static void* Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> name)\n")
+        file.write("    {\n")
+        file.write("        fixed (byte* reference = name)\n")
+        file.write("        {\n")
+        file.write("            GDExtensionInterfaceFunctionPtr function = getProcAddress.Method(reference);\n")
+        file.write("            return function.Method;\n")
+        file.write("        }\n")
+        file.write("    }\n")
         file.write("}\n")
 
 def obsolete(data: dict[str, Any]) -> str:
