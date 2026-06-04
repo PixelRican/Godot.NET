@@ -1,23 +1,40 @@
-﻿from typing import Any, Iterator
+﻿from io import TextIOWrapper
+from typing import Any
 
 def generate(data: dict[str, Any]) -> None:
-    for typedef in data["types"]:
-        with open(f"../Source/{typedef["name"]}.cs", "w") as file:
+    for type_data in data["types"]:
+        name: str = type_data["name"]
+        kind: str = type_data["kind"]
+        with open(f"../Source/{name}.cs", "w") as file:
             for line in data["_copyright"]:
                 file.write(line)
                 file.write("\n")
             file.write("\n")
-            match typedef["kind"]:
+            match kind:
                 case "enum":
-                    file.writelines(EnumGenerator.generate(typedef))
+                    EnumGenerator.generate(file, type_data)
                 case "handle":
-                    file.writelines(HandleGenerator.generate(typedef))
+                    HandleGenerator.generate(file, type_data)
                 case "alias":
-                    file.writelines(AliasGenerator.generate(typedef))
+                    AliasGenerator.generate(file, type_data)
                 case "struct":
-                    file.writelines(StructGenerator.generate(typedef))
+                    StructGenerator.generate(file, type_data)
                 case "function":
-                    file.writelines(FunctionGenerator.generate(typedef))
+                    FunctionGenerator.generate(file, type_data)
+                case _:
+                    raise ValueError(f"'{name}' has invalid kind '{kind}.'")
+
+def obsolete(data: dict[str, Any]) -> str:
+    since: str = data["since"]
+    replace_with: str = data["replace_with"]
+    message: str | None = data.get("message")
+    sentence: list[str] = [
+        f"Deprecated since Godot {since}.",
+        f"Use {replace_with} instead."
+    ]
+    if message:
+        sentence.append(message)
+    return f"[Obsolete(\"{" ".join(sentence)}\")]\n"
 
 def resolve(typedef: str) -> tuple[str, bool, bool]:
     is_readonly: bool = typedef.startswith("const")
@@ -58,91 +75,109 @@ def resolve(typedef: str) -> tuple[str, bool, bool]:
 
 class EnumGenerator:
     @staticmethod
-    def generate(data: dict[str, Any]) -> Iterator[str]:
-        if data.get("is_bitfield"):
-            yield "using System;\n"
-            yield "\n"
-        yield "namespace Godot.NET;\n"
-        yield "\n"
-        if data.get("is_bitfield"):
-            yield "[Flags]\n"
-        yield f"public enum {data["name"]}\n"
-        yield "{\n"
+    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+        data_name: str = data["name"]
+        data_deprecated: dict[str, Any] | None = data.get("deprecated")
+        data_is_bitfield: bool | None = data.get("is_bitfield")
+        if data_deprecated or data_is_bitfield:
+            file.write("using System;\n")
+            file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        if data_deprecated:
+            file.write(obsolete(data_deprecated))
+        if data_is_bitfield:
+            file.write("[Flags]\n")
+        file.write(f"public enum {data_name}\n")
+        file.write("{\n")
         for value in data["values"]:
-            yield f"    {value["name"]} = {value["value"]},\n"
-        yield "}\n"
+            value_name: str = value["name"]
+            value_value: int = value["value"]
+            file.write(f"    {value_name} = {value_value},\n")
+        file.write("}\n")
 
 class HandleGenerator:
     @staticmethod
-    def generate(data: dict[str, Any]) -> Iterator[str]:
+    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
+        data_deprecated: dict[str, Any] | None = data.get("deprecated")
         data_parent: str | None = data.get("parent")
-        yield "using System.Runtime.InteropServices;\n"
-        yield "\n"
-        yield "namespace Godot.NET;\n"
-        yield "\n"
-        yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"public readonly struct {data_name}\n"
-        yield "{\n"
-        yield f"    private readonly nint _handle;\n"
-        yield "\n"
-        yield f"    public {data_name}(nint handle)\n"
-        yield "    {\n"
-        yield "        _handle = handle;\n"
-        yield "    }\n"
-        yield "\n"
-        yield f"    public nint Handle\n"
-        yield "    {\n"
-        yield "        get => _handle;\n"
-        yield "    }\n"
+        if data_deprecated:
+            file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        if data_deprecated:
+            file.write(obsolete(data_deprecated))
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public readonly struct {data_name}\n")
+        file.write("{\n")
+        file.write("    private readonly nint _handle;\n")
+        file.write("\n")
+        file.write(f"    public {data_name}(nint handle)\n")
+        file.write("    {\n")
+        file.write("        _handle = handle;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public nint Handle\n")
+        file.write("    {\n")
+        file.write("        get => _handle;\n")
+        file.write("    }\n")
         if data_parent:
-            yield "\n"
-            yield f"    public static implicit operator {data_name}({data_parent} parent)\n"
-            yield "    {\n"
-            yield f"        return new {data_name}(parent.Handle);\n"
-            yield "    }\n"
-        yield "}\n"
+            file.write("\n")
+            file.write(f"    public static implicit operator {data_name}({data_parent} parent)\n")
+            file.write("    {\n")
+            file.write(f"        return new {data_name}(parent.Handle);\n")
+            file.write("    }\n")
+        file.write("}\n")
 
 class AliasGenerator:
     @staticmethod
-    def generate(data: dict[str, Any]) -> Iterator[str]:
+    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
         data_type, _, _ = resolve(data["type"])
-        yield "using System.Runtime.InteropServices;\n"
-        yield "\n"
-        yield "namespace Godot.NET;\n"
-        yield "\n"
-        yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"public readonly struct {data_name}\n"
-        yield "{\n"
-        yield f"    private readonly {data_type} _value;\n"
-        yield "\n"
-        yield f"    public {data_name}({data_type} value)\n"
-        yield "    {\n"
-        yield "        _value = value;\n"
-        yield "    }\n"
-        yield "\n"
-        yield f"    public {data_type} Value\n"
-        yield "    {\n"
-        yield "        get => _value;\n"
-        yield "    }\n"
-        yield "}\n"
+        data_deprecated: dict[str, Any] | None = data.get("deprecated")
+        if data_deprecated:
+            file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        if data_deprecated:
+            file.write(obsolete(data_deprecated))
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public readonly struct {data_name}\n")
+        file.write("{\n")
+        file.write(f"    private readonly {data_type} _value;\n")
+        file.write("\n")
+        file.write(f"    public {data_name}({data_type} value)\n")
+        file.write("    {\n")
+        file.write("        _value = value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public {data_type} Value\n")
+        file.write("    {\n")
+        file.write("        get => _value;\n")
+        file.write("    }\n")
+        file.write("}\n")
 
 class StructGenerator:
     @staticmethod
-    def generate(data: dict[str, Any]) -> Iterator[str]:
-        deprecated: dict[str, Any] | None = data.get("deprecated")
-        if deprecated:
-            yield "using System;\n"
-        yield "using System.Runtime.InteropServices;\n"
-        yield "\n"
-        yield "namespace Godot.NET;\n"
-        yield "\n"
-        if deprecated:
-            yield f"[Obsolete(\"Deprecated since Godot {deprecated["since"]}. Use {deprecated["replace_with"]} instead.\")]\n"
-        yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"public struct {data["name"]}\n"
-        yield "{\n"
+    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
+        data_name: str = data["name"]
+        data_deprecated: dict[str, Any] | None = data.get("deprecated")
+        if data_deprecated:
+            file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        if data_deprecated:
+            file.write(obsolete(data_deprecated))
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public struct {data_name}\n")
+        file.write("{\n")
         for member in data["members"]:
             member_name: str = member["name"]
             if member_name == "string":
@@ -153,12 +188,12 @@ class StructGenerator:
                 modifiers.append("readonly")
             if is_unsafe:
                 modifiers.append("unsafe")
-            yield f"    {" ".join(modifiers)} {member_type} {member_name};\n"
-        yield "}\n"
+            file.write(f"    {" ".join(modifiers)} {member_type} {member_name};\n")
+        file.write("}\n")
 
 class FunctionGenerator:
     @staticmethod
-    def generate(data: dict[str, Any]) -> Iterator[str]:
+    def generate(file: TextIOWrapper, data: dict[str, Any]) -> None:
         type_parameters: list[str] = []
         for argument in data["arguments"]:
             argument_type, _, _ = resolve(argument["type"])
@@ -171,22 +206,27 @@ class FunctionGenerator:
             type_parameters.append("void")
         data_name: str = data["name"]
         data_type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-        yield "using System.Runtime.InteropServices;\n"
-        yield "\n"
-        yield "namespace Godot.NET;\n"
-        yield "\n"
-        yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"public readonly unsafe struct {data_name}\n"
-        yield "{\n"
-        yield f"    private readonly {data_type} _method;\n"
-        yield "\n"
-        yield f"    public {data_name}({data_type} method)\n"
-        yield "    {\n"
-        yield "        _method = method;\n"
-        yield "    }\n"
-        yield "\n"
-        yield f"    public {data_type} Method\n"
-        yield "    {\n"
-        yield "        get => _method;\n"
-        yield "    }\n"
-        yield "}\n"
+        data_deprecated: dict[str, Any] | None = data.get("deprecated")
+        if data_deprecated:
+            file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        if data_deprecated:
+            file.write(obsolete(data_deprecated))
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public readonly unsafe struct {data_name}\n")
+        file.write("{\n")
+        file.write(f"    private readonly {data_type} _method;\n")
+        file.write("\n")
+        file.write(f"    public {data_name}({data_type} method)\n")
+        file.write("    {\n")
+        file.write("        _method = method;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public {data_type} Method\n")
+        file.write("    {\n")
+        file.write("        get => _method;\n")
+        file.write("    }\n")
+        file.write("}\n")
