@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "Godot.NET.Tests.GDExtension.Initialize"
+compatibility_minimum = "4.2"
+
+[libraries]
+macos.debug = "res://bin/Godot.NET.Tests.dylib"
+linux.debug = "res://bin/Godot.NET.Tests.so"
+windows.debug = "res://bin/Godot.NET.Tests.dll"

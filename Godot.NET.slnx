@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="Source/Godot.NET.csproj" />
+    <Project Path="Source/Godot.NET.csproj" />
+    <Project Path="Tests/Godot.NET.Tests.csproj" />
 </Solution>
