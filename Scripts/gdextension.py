@@ -1,6 +1,21 @@
 ﻿from itertools import chain
 from typing import Any, Iterator
 
+def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
+    match data["kind"]:
+        case "enum":
+            return EnumGenerator.expand(data, typedefs)
+        case "handle":
+            return HandleGenerator.expand(data, typedefs)
+        case "alias":
+            return AliasGenerator.expand(data, typedefs)
+        case "struct":
+            return StructGenerator.expand(data, typedefs)
+        case "function":
+            return FunctionGenerator.expand(data, typedefs)
+        case _:
+            raise ValueError(f"'data' has Invalid kind '{data['kind']}.'")
+
 def generate(data: dict[str, Any]) -> None:
     def _copyright():
         for line in data["_copyright"]:
@@ -74,22 +89,6 @@ def resolve(typedef: str) -> tuple[str, bool, bool]:
 
 class TypeGenerator:
     @staticmethod
-    def get(kind: str) -> type[TypeGenerator]:
-        match kind:
-            case "enum":
-                return EnumGenerator
-            case "handle":
-                return HandleGenerator
-            case "alias":
-                return AliasGenerator
-            case "struct":
-                return StructGenerator
-            case "function":
-                return FunctionGenerator
-            case _:
-                raise ValueError(f"Invalid kind '{kind}.'")
-
-    @staticmethod
     def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
         raise NotImplementedError()
 
@@ -131,8 +130,7 @@ class AliasGenerator(TypeGenerator):
     def expand(data: dict[str, Any], typedefs: dict[str, dict[str, Any]]) -> str:
         typedef: dict[str, Any] | None = typedefs.get(data["type"])
         if typedef:
-            generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
-            return generator.expand(typedef, typedefs)
+            return expand(typedef, typedefs)
         alias_type, _, _ = resolve(data["type"])
         return alias_type
 
@@ -180,8 +178,7 @@ class FunctionGenerator(TypeGenerator):
             split: int = len(argument_type) - is_unsafe
             typedef: dict[str, Any] | None = typedefs.get(argument_type[:split])
             if typedef:
-                generator: type[TypeGenerator] = TypeGenerator.get(typedef["kind"])
-                argument_type = generator.expand(typedef, typedefs) + argument_type[split:]
+                argument_type = expand(typedef, typedefs) + argument_type[split:]
             type_parameters.append(argument_type)
         return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
