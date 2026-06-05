@@ -31,17 +31,17 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionVariantPtr
+public readonly unsafe struct GDExtensionVariantPtr
 {
-    private readonly nint _handle;
+    private readonly void* _value;
 
-    public GDExtensionVariantPtr(nint handle)
+    public GDExtensionVariantPtr(void* value)
     {
-        _handle = handle;
+        _value = value;
     }
 
-    public nint Handle
+    public void* Value
     {
-        get => _handle;
+        get => _value;
     }
 }

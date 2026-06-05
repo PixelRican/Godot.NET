@@ -31,22 +31,22 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionConstVariantPtr
+public readonly unsafe struct GDExtensionConstVariantPtr
 {
-    private readonly nint _handle;
+    private readonly void* _value;
 
-    public GDExtensionConstVariantPtr(nint handle)
+    public GDExtensionConstVariantPtr(void* value)
     {
-        _handle = handle;
+        _value = value;
     }
 
-    public nint Handle
+    public void* Value
     {
-        get => _handle;
+        get => _value;
     }
 
     public static implicit operator GDExtensionConstVariantPtr(GDExtensionVariantPtr parent)
     {
-        return new GDExtensionConstVariantPtr(parent.Handle);
+        return new GDExtensionConstVariantPtr(parent.Value);
     }
 }
