@@ -16,7 +16,7 @@ internal static unsafe class GDExampleMarshaller
 
         fixed (byte* name = "Sprite2D"u8)
         {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, new GDExtensionBool(0));
+            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, GDExtensionBool.False);
         }
 
         GDExtensionObjectPtr @object = GDExtensionInterface.ClassdbConstructObject(classNamePtr);
@@ -27,7 +27,7 @@ internal static unsafe class GDExampleMarshaller
 
         fixed (byte* name = "GDExample"u8)
         {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, new GDExtensionBool(0));
+            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, GDExtensionBool.False);
         }
 
         GDExtensionInstanceBindingCallbacks callbacks = default;
@@ -55,17 +55,17 @@ internal static unsafe class GDExampleMarshaller
 
         fixed (byte* name = "GDExample"u8)
         {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, new GDExtensionBool(0));
+            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, GDExtensionBool.False);
         }
 
         fixed (byte* name = "Sprite2D"u8)
         {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(parentClassNamePtr, name, new GDExtensionBool(0));
+            GDExtensionInterface.StringNameNewWithLatin1Chars(parentClassNamePtr, name, GDExtensionBool.False);
         }
 
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
-            IsExposed = new GDExtensionBool(1),
+            IsExposed = GDExtensionBool.True,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(&CreateInstance),
             FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance)
         };

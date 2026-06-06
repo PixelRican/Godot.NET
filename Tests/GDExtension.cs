@@ -24,7 +24,7 @@ internal static unsafe class GDExtension
         initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeModule);
         initialization->Userdata = null;
         initialization->MinimumInitializationLevel = GDExtensionInitializationScene;
-        return new GDExtensionBool(1);
+        return GDExtensionBool.True;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
