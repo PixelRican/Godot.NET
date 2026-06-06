@@ -40,8 +40,28 @@ public readonly struct GDExtensionBool
         _value = value;
     }
 
+    public static GDExtensionBool True
+    {
+        get => new GDExtensionBool(1);
+    }
+
+    public static GDExtensionBool False
+    {
+        get => new GDExtensionBool(0);
+    }
+
     public byte Value
     {
         get => _value;
+    }
+
+    public static implicit operator GDExtensionBool(bool value)
+    {
+        return new GDExtensionBool((byte)(value ? 1 : 0));
+    }
+
+    public static implicit operator bool(GDExtensionBool alias)
+    {
+        return alias._value != 0;
     }
 }

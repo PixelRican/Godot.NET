@@ -163,6 +163,7 @@ class AliasGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
+        data_is_bool: bool = data_name.endswith("Bool")
         data_type: TypeInfo = TypeInfo(data["type"])
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_deprecated:
@@ -182,11 +183,33 @@ class AliasGenerator:
         file.write("    {\n")
         file.write("        _value = value;\n")
         file.write("    }\n")
+        if data_is_bool:
+            file.write("\n")
+            file.write(f"    public static {data_name} True\n")
+            file.write("    {\n")
+            file.write(f"        get => new {data_name}(1);\n")
+            file.write("    }\n")
+            file.write("\n")
+            file.write(f"    public static {data_name} False\n")
+            file.write("    {\n")
+            file.write(f"        get => new {data_name}(0);\n")
+            file.write("    }\n")
         file.write("\n")
         file.write(f"    public {data_type.name} Value\n")
         file.write("    {\n")
         file.write("        get => _value;\n")
         file.write("    }\n")
+        if data_is_bool:
+            file.write("\n")
+            file.write(f"    public static implicit operator {data_name}(bool value)\n")
+            file.write("    {\n")
+            file.write(f"        return new {data_name}((byte)(value ? 1 : 0));\n")
+            file.write("    }\n")
+            file.write("\n")
+            file.write(f"    public static implicit operator bool({data_name} alias)\n")
+            file.write("    {\n")
+            file.write("        return alias._value != 0;\n")
+            file.write("    }\n")
         file.write("}\n")
 
 class StructGenerator:
