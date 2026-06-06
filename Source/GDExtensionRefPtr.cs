@@ -26,22 +26,83 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionRefPtr
+public readonly struct GDExtensionRefPtr : IEquatable<GDExtensionRefPtr>
 {
-    private readonly void* _value;
+    private readonly nint _handle;
 
-    public GDExtensionRefPtr(void* value)
+    public GDExtensionRefPtr(nint value)
     {
-        _value = value;
+        _handle = value;
     }
 
-    public void* Value
+    public unsafe GDExtensionRefPtr(void* value)
     {
-        get => _value;
+        _handle = (nint)value;
+    }
+
+    public bool IsAllocated
+    {
+        get => _handle != 0;
+    }
+
+    public nint ToIntPtr()
+    {
+        return _handle;
+    }
+
+    public unsafe void* ToPointer()
+    {
+        return (void*)_handle;
+    }
+
+    public bool Equals(GDExtensionRefPtr other)
+    {
+        return _handle == other._handle;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionRefPtr other && _handle == other._handle;
+    }
+
+    public override int GetHashCode()
+    {
+        return _handle.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionRefPtr(nint value)
+    {
+        return new GDExtensionRefPtr(value);
+    }
+
+    public static unsafe explicit operator GDExtensionRefPtr(void* value)
+    {
+        return new GDExtensionRefPtr(value);
+    }
+
+    public static explicit operator nint(GDExtensionRefPtr value)
+    {
+        return value._handle;
+    }
+
+    public static unsafe explicit operator void*(GDExtensionRefPtr value)
+    {
+        return (void*)value._handle;
+    }
+
+    public static bool operator ==(GDExtensionRefPtr left, GDExtensionRefPtr right)
+    {
+        return left._handle == right._handle;
+    }
+
+    public static bool operator !=(GDExtensionRefPtr left, GDExtensionRefPtr right)
+    {
+        return left._handle != right._handle;
     }
 }

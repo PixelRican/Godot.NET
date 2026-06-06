@@ -26,22 +26,83 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionScriptInstanceDataPtr
+public readonly struct GDExtensionScriptInstanceDataPtr : IEquatable<GDExtensionScriptInstanceDataPtr>
 {
-    private readonly void* _value;
+    private readonly nint _handle;
 
-    public GDExtensionScriptInstanceDataPtr(void* value)
+    public GDExtensionScriptInstanceDataPtr(nint value)
     {
-        _value = value;
+        _handle = value;
     }
 
-    public void* Value
+    public unsafe GDExtensionScriptInstanceDataPtr(void* value)
     {
-        get => _value;
+        _handle = (nint)value;
+    }
+
+    public bool IsAllocated
+    {
+        get => _handle != 0;
+    }
+
+    public nint ToIntPtr()
+    {
+        return _handle;
+    }
+
+    public unsafe void* ToPointer()
+    {
+        return (void*)_handle;
+    }
+
+    public bool Equals(GDExtensionScriptInstanceDataPtr other)
+    {
+        return _handle == other._handle;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionScriptInstanceDataPtr other && _handle == other._handle;
+    }
+
+    public override int GetHashCode()
+    {
+        return _handle.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionScriptInstanceDataPtr(nint value)
+    {
+        return new GDExtensionScriptInstanceDataPtr(value);
+    }
+
+    public static unsafe explicit operator GDExtensionScriptInstanceDataPtr(void* value)
+    {
+        return new GDExtensionScriptInstanceDataPtr(value);
+    }
+
+    public static explicit operator nint(GDExtensionScriptInstanceDataPtr value)
+    {
+        return value._handle;
+    }
+
+    public static unsafe explicit operator void*(GDExtensionScriptInstanceDataPtr value)
+    {
+        return (void*)value._handle;
+    }
+
+    public static bool operator ==(GDExtensionScriptInstanceDataPtr left, GDExtensionScriptInstanceDataPtr right)
+    {
+        return left._handle == right._handle;
+    }
+
+    public static bool operator !=(GDExtensionScriptInstanceDataPtr left, GDExtensionScriptInstanceDataPtr right)
+    {
+        return left._handle != right._handle;
     }
 }

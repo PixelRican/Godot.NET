@@ -26,22 +26,83 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionMethodBindPtr
+public readonly struct GDExtensionMethodBindPtr : IEquatable<GDExtensionMethodBindPtr>
 {
-    private readonly void* _value;
+    private readonly nint _handle;
 
-    public GDExtensionMethodBindPtr(void* value)
+    public GDExtensionMethodBindPtr(nint value)
     {
-        _value = value;
+        _handle = value;
     }
 
-    public void* Value
+    public unsafe GDExtensionMethodBindPtr(void* value)
     {
-        get => _value;
+        _handle = (nint)value;
+    }
+
+    public bool IsAllocated
+    {
+        get => _handle != 0;
+    }
+
+    public nint ToIntPtr()
+    {
+        return _handle;
+    }
+
+    public unsafe void* ToPointer()
+    {
+        return (void*)_handle;
+    }
+
+    public bool Equals(GDExtensionMethodBindPtr other)
+    {
+        return _handle == other._handle;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionMethodBindPtr other && _handle == other._handle;
+    }
+
+    public override int GetHashCode()
+    {
+        return _handle.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionMethodBindPtr(nint value)
+    {
+        return new GDExtensionMethodBindPtr(value);
+    }
+
+    public static unsafe explicit operator GDExtensionMethodBindPtr(void* value)
+    {
+        return new GDExtensionMethodBindPtr(value);
+    }
+
+    public static explicit operator nint(GDExtensionMethodBindPtr value)
+    {
+        return value._handle;
+    }
+
+    public static unsafe explicit operator void*(GDExtensionMethodBindPtr value)
+    {
+        return (void*)value._handle;
+    }
+
+    public static bool operator ==(GDExtensionMethodBindPtr left, GDExtensionMethodBindPtr right)
+    {
+        return left._handle == right._handle;
+    }
+
+    public static bool operator !=(GDExtensionMethodBindPtr left, GDExtensionMethodBindPtr right)
+    {
+        return left._handle != right._handle;
     }
 }

@@ -20,10 +20,10 @@ internal static unsafe class GDExampleMarshaller
         }
 
         GDExtensionObjectPtr @object = GDExtensionInterface.ClassdbConstructObject(classNamePtr);
-        destructor.Method(new GDExtensionTypePtr(classNamePtr.Value));
+        destructor.Method((GDExtensionTypePtr)(nint)classNamePtr);
         GDExample self = new GDExample(@object);
         GCHandle<GDExample> handle = new GCHandle<GDExample>(self);
-        GDExtensionClassInstancePtr pointer = new GDExtensionClassInstancePtr(GCHandle<GDExample>.ToIntPtr(handle).ToPointer());
+        GDExtensionClassInstancePtr pointer = (GDExtensionClassInstancePtr)GCHandle<GDExample>.ToIntPtr(handle);
 
         fixed (byte* name = "GDExample"u8)
         {
@@ -32,17 +32,17 @@ internal static unsafe class GDExampleMarshaller
 
         GDExtensionInstanceBindingCallbacks callbacks = default;
         GDExtensionInterface.ObjectSetInstance(@object, classNamePtr, pointer);
-        GDExtensionInterface.ObjectSetInstanceBinding(@object, GDExtension.Library.Value, pointer.Value, &callbacks);
-        destructor.Method(new GDExtensionTypePtr(classNamePtr.Value));
+        GDExtensionInterface.ObjectSetInstanceBinding(@object, (void*)GDExtension.Library, (void*)pointer, &callbacks);
+        destructor.Method((GDExtensionTypePtr)(nint)classNamePtr);
         return @object;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     public static void FreeInstance(void* classUserdata, GDExtensionClassInstancePtr instance)
     {
-        if (instance.Value != null)
+        if (instance.IsAllocated)
         {
-            GCHandle<GDExample>.FromIntPtr((nint)instance.Value).Dispose();
+            GCHandle<GDExample>.FromIntPtr((nint)instance).Dispose();
         }
     }
 
@@ -50,8 +50,8 @@ internal static unsafe class GDExampleMarshaller
     {
         nint className;
         nint parentClassName;
-        GDExtensionStringNamePtr classNamePtr = new GDExtensionStringNamePtr(&className);
-        GDExtensionStringNamePtr parentClassNamePtr = new GDExtensionStringNamePtr(&parentClassName);
+        GDExtensionStringNamePtr classNamePtr = (GDExtensionStringNamePtr)(&className);
+        GDExtensionStringNamePtr parentClassNamePtr = (GDExtensionStringNamePtr)(&parentClassName);
 
         fixed (byte* name = "GDExample"u8)
         {
@@ -71,7 +71,7 @@ internal static unsafe class GDExampleMarshaller
         };
         GDExtensionInterface.ClassdbRegisterExtensionClass2(GDExtension.Library, classNamePtr, parentClassNamePtr, &classInfo);
         GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName);
-        destructor.Method(new GDExtensionTypePtr(classNamePtr.Value));
-        destructor.Method(new GDExtensionTypePtr(parentClassNamePtr.Value));
+        destructor.Method((GDExtensionTypePtr)(nint)classNamePtr);
+        destructor.Method((GDExtensionTypePtr)(nint)parentClassNamePtr);
     }
 }

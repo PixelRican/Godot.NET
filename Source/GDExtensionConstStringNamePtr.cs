@@ -26,27 +26,88 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionConstStringNamePtr
+public readonly struct GDExtensionConstStringNamePtr : IEquatable<GDExtensionConstStringNamePtr>
 {
-    private readonly void* _value;
+    private readonly nint _handle;
 
-    public GDExtensionConstStringNamePtr(void* value)
+    public GDExtensionConstStringNamePtr(nint value)
     {
-        _value = value;
+        _handle = value;
     }
 
-    public void* Value
+    public unsafe GDExtensionConstStringNamePtr(void* value)
     {
-        get => _value;
+        _handle = (nint)value;
     }
 
-    public static implicit operator GDExtensionConstStringNamePtr(GDExtensionStringNamePtr parent)
+    public bool IsAllocated
     {
-        return new GDExtensionConstStringNamePtr(parent.Value);
+        get => _handle != 0;
+    }
+
+    public nint ToIntPtr()
+    {
+        return _handle;
+    }
+
+    public unsafe void* ToPointer()
+    {
+        return (void*)_handle;
+    }
+
+    public bool Equals(GDExtensionConstStringNamePtr other)
+    {
+        return _handle == other._handle;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionConstStringNamePtr other && _handle == other._handle;
+    }
+
+    public override int GetHashCode()
+    {
+        return _handle.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionConstStringNamePtr(nint value)
+    {
+        return new GDExtensionConstStringNamePtr(value);
+    }
+
+    public static unsafe explicit operator GDExtensionConstStringNamePtr(void* value)
+    {
+        return new GDExtensionConstStringNamePtr(value);
+    }
+
+    public static explicit operator nint(GDExtensionConstStringNamePtr value)
+    {
+        return value._handle;
+    }
+
+    public static unsafe explicit operator void*(GDExtensionConstStringNamePtr value)
+    {
+        return (void*)value._handle;
+    }
+
+    public static implicit operator GDExtensionConstStringNamePtr(GDExtensionStringNamePtr value)
+    {
+        return new GDExtensionConstStringNamePtr((nint)value);
+    }
+
+    public static bool operator ==(GDExtensionConstStringNamePtr left, GDExtensionConstStringNamePtr right)
+    {
+        return left._handle == right._handle;
+    }
+
+    public static bool operator !=(GDExtensionConstStringNamePtr left, GDExtensionConstStringNamePtr right)
+    {
+        return left._handle != right._handle;
     }
 }

@@ -26,22 +26,83 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionTypePtr
+public readonly struct GDExtensionTypePtr : IEquatable<GDExtensionTypePtr>
 {
-    private readonly void* _value;
+    private readonly nint _handle;
 
-    public GDExtensionTypePtr(void* value)
+    public GDExtensionTypePtr(nint value)
     {
-        _value = value;
+        _handle = value;
     }
 
-    public void* Value
+    public unsafe GDExtensionTypePtr(void* value)
     {
-        get => _value;
+        _handle = (nint)value;
+    }
+
+    public bool IsAllocated
+    {
+        get => _handle != 0;
+    }
+
+    public nint ToIntPtr()
+    {
+        return _handle;
+    }
+
+    public unsafe void* ToPointer()
+    {
+        return (void*)_handle;
+    }
+
+    public bool Equals(GDExtensionTypePtr other)
+    {
+        return _handle == other._handle;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionTypePtr other && _handle == other._handle;
+    }
+
+    public override int GetHashCode()
+    {
+        return _handle.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionTypePtr(nint value)
+    {
+        return new GDExtensionTypePtr(value);
+    }
+
+    public static unsafe explicit operator GDExtensionTypePtr(void* value)
+    {
+        return new GDExtensionTypePtr(value);
+    }
+
+    public static explicit operator nint(GDExtensionTypePtr value)
+    {
+        return value._handle;
+    }
+
+    public static unsafe explicit operator void*(GDExtensionTypePtr value)
+    {
+        return (void*)value._handle;
+    }
+
+    public static bool operator ==(GDExtensionTypePtr left, GDExtensionTypePtr right)
+    {
+        return left._handle == right._handle;
+    }
+
+    public static bool operator !=(GDExtensionTypePtr left, GDExtensionTypePtr right)
+    {
+        return left._handle != right._handle;
     }
 }
