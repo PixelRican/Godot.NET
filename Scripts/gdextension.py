@@ -6,10 +6,7 @@ def generate(data: dict[str, Any]) -> None:
         name: str = type_data["name"]
         kind: str = type_data["kind"]
         with open(f"../Source/{name}.cs", "w") as file:
-            for line in data["_copyright"]:
-                file.write(line)
-                file.write("\n")
-            file.write("\n")
+            CopyrightGenerator.generate(file, data)
             match kind:
                 case "enum":
                     EnumGenerator.generate(file, type_data)
@@ -24,10 +21,7 @@ def generate(data: dict[str, Any]) -> None:
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
     with open(f"../Source/GDExtensionInterface.cs", "w") as file:
-        for line in data["_copyright"]:
-            file.write(line)
-            file.write("\n")
-        file.write("\n")
+        CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
 def function(data: dict[str, Any]):
@@ -97,6 +91,14 @@ class TypeInfo:
                 self.is_builtin = False
         if self.is_unsafe:
             self.name += "*"
+
+class CopyrightGenerator:
+    @staticmethod
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
+        for line in data["_copyright"]:
+            file.write(line)
+            file.write("\n")
+        file.write("\n")
 
 class EnumGenerator:
     @staticmethod
