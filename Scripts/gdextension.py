@@ -4,12 +4,12 @@ from typing import Any
 def function(data: dict[str, Any]):
     type_parameters: list[str] = []
     for argument in data["arguments"]:
-        argument_type, _, _ = resolve(argument["type"])
-        type_parameters.append(argument_type)
+        argument_type: TypeInfo = TypeInfo(argument["type"])
+        type_parameters.append(argument_type.name)
     return_value: dict[str, Any] | None = data.get("return_value")
     if return_value:
-        return_value_type, _, _ = resolve(return_value["type"])
-        type_parameters.append(return_value_type)
+        return_value_type: TypeInfo = TypeInfo(return_value["type"])
+        type_parameters.append(return_value_type.name)
     else:
         type_parameters.append("void")
     return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
@@ -56,42 +56,47 @@ def obsolete(data: dict[str, Any]) -> str:
         sentence.append(f"Use {replace_with} instead.")
     return f"[Obsolete(\"{" ".join(sentence)}\")]\n"
 
-def resolve(typedef: str) -> tuple[str, bool, bool]:
-    is_readonly: bool = typedef.startswith("const")
-    is_unsafe: bool = typedef.endswith("*")
-    start: int = 6 if is_readonly else 0
-    end: int = -1 if is_unsafe else len(typedef)
-    name: str = typedef[start:end]
-    match name:
-        case "int8_t":
-            name = "sbyte"
-        case "uint8_t":
-            name = "byte"
-        case "int16_t":
-            name = "short"
-        case "uint16_t":
-            name = "ushort"
-        case "int32_t":
-            name = "int"
-        case "uint32_t":
-            name = "uint"
-        case "int64_t":
-            name = "long"
-        case "uint64_t":
-            name = "ulong"
-        case "size_t":
-            name = "nuint"
-        case "char":
-            name = "byte"
-        case "char16_t":
-            name = "ushort"
-        case "char32_t":
-            name = "uint"
-        case "wchar_t":
-            name = "char"
-    if is_unsafe:
-        name += "*"
-    return name, is_readonly, is_unsafe
+class TypeInfo:
+    def __init__(self, typedef: str) -> None:
+        self.is_readonly: bool = typedef.startswith("const")
+        self.is_unsafe: bool = typedef.endswith("*")
+        self.is_builtin: bool = True
+        start: int = 6 if self.is_readonly else 0
+        end: int = -1 if self.is_unsafe else len(typedef)
+        self.name: str = typedef[start:end]
+        match self.name:
+            case "int8_t":
+                self.name = "sbyte"
+            case "uint8_t":
+                self.name = "byte"
+            case "int16_t":
+                self.name = "short"
+            case "uint16_t":
+                self.name = "ushort"
+            case "int32_t":
+                self.name = "int"
+            case "uint32_t":
+                self.name = "uint"
+            case "int64_t":
+                self.name = "long"
+            case "uint64_t":
+                self.name = "ulong"
+            case "size_t":
+                self.name = "nuint"
+            case "char":
+                self.name = "byte"
+            case "char16_t":
+                self.name = "ushort"
+            case "char32_t":
+                self.name = "uint"
+            case "wchar_t":
+                self.name = "char"
+            case "void" | "float" | "double":
+                pass
+            case _:
+                self.is_builtin = False
+        if self.is_unsafe:
+            self.name += "*"
 
 class EnumGenerator:
     @staticmethod
@@ -156,7 +161,7 @@ class AliasGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
-        data_type, _, _ = resolve(data["type"])
+        data_type: TypeInfo = TypeInfo(data["type"])
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_deprecated:
             file.write("using System;\n")
@@ -169,14 +174,14 @@ class AliasGenerator:
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public readonly struct {data_name}\n")
         file.write("{\n")
-        file.write(f"    private readonly {data_type} _value;\n")
+        file.write(f"    private readonly {data_type.name} _value;\n")
         file.write("\n")
-        file.write(f"    public {data_name}({data_type} value)\n")
+        file.write(f"    public {data_name}({data_type.name} value)\n")
         file.write("    {\n")
         file.write("        _value = value;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write(f"    public {data_type} Value\n")
+        file.write(f"    public {data_type.name} Value\n")
         file.write("    {\n")
         file.write("        get => _value;\n")
         file.write("    }\n")
@@ -200,13 +205,13 @@ class StructGenerator:
         file.write("{\n")
         for member in data["members"]:
             member_name: str = member["name"].title().replace("_", "")
-            member_type, is_readonly, is_unsafe = resolve(member["type"])
+            member_type: TypeInfo = TypeInfo(member["type"])
             modifiers: list[str] = ["public"]
-            if is_readonly:
+            if member_type.is_readonly:
                 modifiers.append("readonly")
-            if is_unsafe:
+            if member_type.is_unsafe:
                 modifiers.append("unsafe")
-            file.write(f"    {" ".join(modifiers)} {member_type} {member_name};\n")
+            file.write(f"    {" ".join(modifiers)} {member_type.name} {member_name};\n")
         file.write("}\n")
 
 class FunctionGenerator:
