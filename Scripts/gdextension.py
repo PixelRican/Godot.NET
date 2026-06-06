@@ -37,54 +37,11 @@ def generate(data: dict[str, Any]) -> None:
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
     with open(f"../Source/GDExtensionInterface.cs", "w") as file:
-        fields: list[tuple[str, str, str]] = []
         for line in data["_copyright"]:
             file.write(line)
             file.write("\n")
         file.write("\n")
-        file.write("using System;\n")
-        file.write("\n")
-        file.write("namespace Godot.NET;\n")
-        file.write("\n")
-        file.write("public static unsafe class GDExtensionInterface\n")
-        file.write("{\n")
-        for interface_data in data["interface"]:
-            interface_name: str = interface_data["name"]
-            field_name = f"s_{interface_name[0]}{interface_name.title().replace("_", "")[1:]}"
-            field_type: str = function(interface_data)
-            fields.append((interface_name, field_name, field_type))
-            file.write(f"    private static {field_type} {field_name};\n")
-        for interface_data, field in zip(data["interface"], fields):
-            _, field_name, field_type = field
-            interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
-            file.write("\n")
-            if interface_deprecated:
-                file.write("    " + obsolete(interface_deprecated))
-            file.write(f"    public static {field_type} {field_name[2].upper() + field_name[3:]}\n")
-            file.write("    {\n")
-            file.write(f"        get => {field_name};\n")
-            file.write("    }\n")
-        file.write("\n")
-        file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
-        file.write("    {\n")
-        file.write("        if (getProcAddress.Method == null)\n")
-        file.write("        {\n")
-        file.write("            throw new ArgumentNullException(nameof(getProcAddress));\n")
-        file.write("        }\n")
-        file.write("\n")
-        for interface_name, field_name, field_type in fields:
-            file.write(f"        {field_name} = ({field_type})Load(getProcAddress, \"{interface_name}\"u8);\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    private static void* Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> name)\n")
-        file.write("    {\n")
-        file.write("        fixed (byte* reference = name)\n")
-        file.write("        {\n")
-        file.write("            GDExtensionInterfaceFunctionPtr function = getProcAddress.Method(reference);\n")
-        file.write("            return function.Method;\n")
-        file.write("        }\n")
-        file.write("    }\n")
-        file.write("}\n")
+        GDExtensionInterfaceGenerator.generate(file, data)
 
 def obsolete(data: dict[str, Any]) -> str:
     since: str = data["since"]
@@ -279,5 +236,54 @@ class FunctionGenerator:
         file.write(f"    public {data_type} Method\n")
         file.write("    {\n")
         file.write("        get => _method;\n")
+        file.write("    }\n")
+        file.write("}\n")
+
+class GDExtensionInterfaceGenerator:
+    @staticmethod
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
+        interface: list[dict[str, Any]] = data["interface"]
+        fields: list[tuple[str, str, str]] = []
+        file.write("using System;\n")
+        file.write("\n")
+        file.write("namespace Godot.NET;\n")
+        file.write("\n")
+        file.write("public static unsafe class GDExtensionInterface\n")
+        file.write("{\n")
+        for interface_data in interface:
+            interface_name: str = interface_data["name"]
+            field_name = f"s_{interface_name[0]}{interface_name.title().replace("_", "")[1:]}"
+            field_type: str = function(interface_data)
+            fields.append((interface_name, field_name, field_type))
+            file.write(f"    private static {field_type} {field_name};\n")
+        for interface_data, field in zip(interface, fields):
+            _, field_name, field_type = field
+            interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
+            file.write("\n")
+            if interface_deprecated:
+                file.write("    " + obsolete(interface_deprecated))
+            file.write(f"    public static {field_type} {field_name[2].upper() + field_name[3:]}\n")
+            file.write("    {\n")
+            file.write(f"        get => {field_name};\n")
+            file.write("    }\n")
+        file.write("\n")
+        file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
+        file.write("    {\n")
+        file.write("        if (getProcAddress.Method == null)\n")
+        file.write("        {\n")
+        file.write("            throw new ArgumentNullException(nameof(getProcAddress));\n")
+        file.write("        }\n")
+        file.write("\n")
+        for interface_name, field_name, field_type in fields:
+            file.write(f"        {field_name} = ({field_type})Load(getProcAddress, \"{interface_name}\"u8);\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    private static void* Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> name)\n")
+        file.write("    {\n")
+        file.write("        fixed (byte* reference = name)\n")
+        file.write("        {\n")
+        file.write("            GDExtensionInterfaceFunctionPtr function = getProcAddress.Method(reference);\n")
+        file.write("            return function.Method;\n")
+        file.write("        }\n")
         file.write("    }\n")
         file.write("}\n")
