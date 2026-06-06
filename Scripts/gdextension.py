@@ -1,19 +1,6 @@
 ﻿from io import IOBase
 from typing import Any
 
-def function(data: dict[str, Any]):
-    type_parameters: list[str] = []
-    for argument in data["arguments"]:
-        argument_type: TypeInfo = TypeInfo(argument["type"])
-        type_parameters.append(argument_type.name)
-    return_value: dict[str, Any] | None = data.get("return_value")
-    if return_value:
-        return_value_type: TypeInfo = TypeInfo(return_value["type"])
-        type_parameters.append(return_value_type.name)
-    else:
-        type_parameters.append("void")
-    return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-
 def generate(data: dict[str, Any]) -> None:
     for type_data in data["types"]:
         name: str = type_data["name"]
@@ -42,6 +29,19 @@ def generate(data: dict[str, Any]) -> None:
             file.write("\n")
         file.write("\n")
         GDExtensionInterfaceGenerator.generate(file, data)
+
+def function(data: dict[str, Any]):
+    type_parameters: list[str] = []
+    for argument in data["arguments"]:
+        argument_type: TypeInfo = TypeInfo(argument["type"])
+        type_parameters.append(argument_type.name)
+    return_value: dict[str, Any] | None = data.get("return_value")
+    if return_value:
+        return_value_type: TypeInfo = TypeInfo(return_value["type"])
+        type_parameters.append(return_value_type.name)
+    else:
+        type_parameters.append("void")
+    return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
 def obsolete(data: dict[str, Any]) -> str:
     since: str = data["since"]
