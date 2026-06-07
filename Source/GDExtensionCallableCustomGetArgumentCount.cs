@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionCallableCustomGetArgumentCount
+public readonly unsafe struct GDExtensionCallableCustomGetArgumentCount : IEquatable<GDExtensionCallableCustomGetArgumentCount>
 {
     private readonly delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionInt> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionCallableCustomGetArgumentCount
     public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionInt> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionCallableCustomGetArgumentCount other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionCallableCustomGetArgumentCount other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionCallableCustomGetArgumentCount left, GDExtensionCallableCustomGetArgumentCount right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionCallableCustomGetArgumentCount left, GDExtensionCallableCustomGetArgumentCount right)
+    {
+        return left._method != right._method;
     }
 }

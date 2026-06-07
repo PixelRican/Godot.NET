@@ -33,7 +33,7 @@ namespace Godot.NET;
 
 [Obsolete("Deprecated since Godot 4.3. Use GDExtensionScriptInstanceFreePropertyList2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionScriptInstanceFreePropertyList
+public readonly unsafe struct GDExtensionScriptInstanceFreePropertyList : IEquatable<GDExtensionScriptInstanceFreePropertyList>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, void> _method;
 
@@ -45,5 +45,30 @@ public readonly unsafe struct GDExtensionScriptInstanceFreePropertyList
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionScriptInstanceFreePropertyList other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionScriptInstanceFreePropertyList other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionScriptInstanceFreePropertyList left, GDExtensionScriptInstanceFreePropertyList right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionScriptInstanceFreePropertyList left, GDExtensionScriptInstanceFreePropertyList right)
+    {
+        return left._method != right._method;
     }
 }

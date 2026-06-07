@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionMainLoopFrameCallback
+public readonly unsafe struct GDExtensionMainLoopFrameCallback : IEquatable<GDExtensionMainLoopFrameCallback>
 {
     private readonly delegate* unmanaged[Cdecl]<void> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionMainLoopFrameCallback
     public delegate* unmanaged[Cdecl]<void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionMainLoopFrameCallback other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionMainLoopFrameCallback other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionMainLoopFrameCallback left, GDExtensionMainLoopFrameCallback right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionMainLoopFrameCallback left, GDExtensionMainLoopFrameCallback right)
+    {
+        return left._method != right._method;
     }
 }

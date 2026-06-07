@@ -33,7 +33,7 @@ namespace Godot.NET;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionScriptInstanceNotification2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionScriptInstanceNotification
+public readonly unsafe struct GDExtensionScriptInstanceNotification : IEquatable<GDExtensionScriptInstanceNotification>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, int, void> _method;
 
@@ -45,5 +45,30 @@ public readonly unsafe struct GDExtensionScriptInstanceNotification
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, int, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionScriptInstanceNotification other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionScriptInstanceNotification other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionScriptInstanceNotification left, GDExtensionScriptInstanceNotification right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionScriptInstanceNotification left, GDExtensionScriptInstanceNotification right)
+    {
+        return left._method != right._method;
     }
 }

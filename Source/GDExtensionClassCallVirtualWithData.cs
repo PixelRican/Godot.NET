@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassCallVirtualWithData
+public readonly unsafe struct GDExtensionClassCallVirtualWithData : IEquatable<GDExtensionClassCallVirtualWithData>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, void*, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionClassCallVirtualWithData
     public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, void*, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionClassCallVirtualWithData other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionClassCallVirtualWithData other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionClassCallVirtualWithData left, GDExtensionClassCallVirtualWithData right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionClassCallVirtualWithData left, GDExtensionClassCallVirtualWithData right)
+    {
+        return left._method != right._method;
     }
 }

@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassRecreateInstance
+public readonly unsafe struct GDExtensionClassRecreateInstance : IEquatable<GDExtensionClassRecreateInstance>
 {
     private readonly delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr, GDExtensionClassInstancePtr> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionClassRecreateInstance
     public delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr, GDExtensionClassInstancePtr> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionClassRecreateInstance other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionClassRecreateInstance other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionClassRecreateInstance left, GDExtensionClassRecreateInstance right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionClassRecreateInstance left, GDExtensionClassRecreateInstance right)
+    {
+        return left._method != right._method;
     }
 }

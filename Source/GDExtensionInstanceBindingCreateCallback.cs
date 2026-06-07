@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionInstanceBindingCreateCallback
+public readonly unsafe struct GDExtensionInstanceBindingCreateCallback : IEquatable<GDExtensionInstanceBindingCreateCallback>
 {
     private readonly delegate* unmanaged[Cdecl]<void*, void*, void*> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionInstanceBindingCreateCallback
     public delegate* unmanaged[Cdecl]<void*, void*, void*> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionInstanceBindingCreateCallback other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionInstanceBindingCreateCallback other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionInstanceBindingCreateCallback left, GDExtensionInstanceBindingCreateCallback right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionInstanceBindingCreateCallback left, GDExtensionInstanceBindingCreateCallback right)
+    {
+        return left._method != right._method;
     }
 }

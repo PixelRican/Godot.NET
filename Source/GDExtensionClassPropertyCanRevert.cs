@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassPropertyCanRevert
+public readonly unsafe struct GDExtensionClassPropertyCanRevert : IEquatable<GDExtensionClassPropertyCanRevert>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionBool> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionClassPropertyCanRevert
     public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionBool> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionClassPropertyCanRevert other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionClassPropertyCanRevert other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionClassPropertyCanRevert left, GDExtensionClassPropertyCanRevert right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionClassPropertyCanRevert left, GDExtensionClassPropertyCanRevert right)
+    {
+        return left._method != right._method;
     }
 }

@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassFreePropertyList
+public readonly unsafe struct GDExtensionClassFreePropertyList : IEquatable<GDExtensionClassFreePropertyList>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionPropertyInfo*, void> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionClassFreePropertyList
     public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionPropertyInfo*, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionClassFreePropertyList other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionClassFreePropertyList other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionClassFreePropertyList left, GDExtensionClassFreePropertyList right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionClassFreePropertyList left, GDExtensionClassFreePropertyList right)
+    {
+        return left._method != right._method;
     }
 }

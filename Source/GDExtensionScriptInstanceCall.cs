@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionScriptInstanceCall
+public readonly unsafe struct GDExtensionScriptInstanceCall : IEquatable<GDExtensionScriptInstanceCall>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionScriptInstanceCall
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionScriptInstanceCall other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionScriptInstanceCall other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionScriptInstanceCall left, GDExtensionScriptInstanceCall right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionScriptInstanceCall left, GDExtensionScriptInstanceCall right)
+    {
+        return left._method != right._method;
     }
 }

@@ -33,7 +33,7 @@ namespace Godot.NET;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionClassNotification2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassNotification
+public readonly unsafe struct GDExtensionClassNotification : IEquatable<GDExtensionClassNotification>
 {
     private readonly delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, int, void> _method;
 
@@ -45,5 +45,30 @@ public readonly unsafe struct GDExtensionClassNotification
     public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, int, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionClassNotification other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionClassNotification other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionClassNotification left, GDExtensionClassNotification right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionClassNotification left, GDExtensionClassNotification right)
+    {
+        return left._method != right._method;
     }
 }

@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassMethodCall
+public readonly unsafe struct GDExtensionClassMethodCall : IEquatable<GDExtensionClassMethodCall>
 {
     private readonly delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> _method;
 
@@ -43,5 +44,30 @@ public readonly unsafe struct GDExtensionClassMethodCall
     public delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> Method
     {
         get => _method;
+    }
+
+    public bool Equals(GDExtensionClassMethodCall other)
+    {
+        return _method == other._method;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionClassMethodCall other && _method == other._method;
+    }
+
+    public override int GetHashCode()
+    {
+        return new nint(_method).GetHashCode();
+    }
+
+    public static bool operator ==(GDExtensionClassMethodCall left, GDExtensionClassMethodCall right)
+    {
+        return left._method == right._method;
+    }
+
+    public static bool operator !=(GDExtensionClassMethodCall left, GDExtensionClassMethodCall right)
+    {
+        return left._method != right._method;
     }
 }
