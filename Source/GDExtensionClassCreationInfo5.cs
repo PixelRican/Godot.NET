@@ -39,14 +39,4 @@ public struct GDExtensionClassCreationInfo5
     {
         Value = value;
     }
-
-    public static explicit operator GDExtensionClassCreationInfo5(GDExtensionClassCreationInfo4 value)
-    {
-        return new GDExtensionClassCreationInfo5(value);
-    }
-
-    public static explicit operator GDExtensionClassCreationInfo4(GDExtensionClassCreationInfo5 alias)
-    {
-        return alias.Value;
-    }
 }

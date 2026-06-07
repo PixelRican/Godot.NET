@@ -61,16 +61,6 @@ public readonly unsafe struct GDExtensionClassLibraryPtr : IEquatable<GDExtensio
         return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionClassLibraryPtr(void* pointer)
-    {
-        return new GDExtensionClassLibraryPtr(pointer);
-    }
-
-    public static explicit operator void*(GDExtensionClassLibraryPtr handle)
-    {
-        return handle._pointer;
-    }
-
     public static bool operator ==(GDExtensionClassLibraryPtr left, GDExtensionClassLibraryPtr right)
     {
         return left._pointer == right._pointer;

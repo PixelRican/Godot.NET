@@ -61,16 +61,6 @@ public readonly struct GDExtensionInt : IEquatable<GDExtensionInt>
         return _value.GetHashCode();
     }
 
-    public static explicit operator GDExtensionInt(long value)
-    {
-        return new GDExtensionInt(value);
-    }
-
-    public static explicit operator long(GDExtensionInt alias)
-    {
-        return alias._value;
-    }
-
     public static bool operator ==(GDExtensionInt left, GDExtensionInt right)
     {
         return left._value == right._value;

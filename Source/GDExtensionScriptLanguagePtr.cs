@@ -61,16 +61,6 @@ public readonly unsafe struct GDExtensionScriptLanguagePtr : IEquatable<GDExtens
         return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionScriptLanguagePtr(void* pointer)
-    {
-        return new GDExtensionScriptLanguagePtr(pointer);
-    }
-
-    public static explicit operator void*(GDExtensionScriptLanguagePtr handle)
-    {
-        return handle._pointer;
-    }
-
     public static bool operator ==(GDExtensionScriptLanguagePtr left, GDExtensionScriptLanguagePtr right)
     {
         return left._pointer == right._pointer;

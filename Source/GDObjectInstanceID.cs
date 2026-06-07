@@ -61,16 +61,6 @@ public readonly struct GDObjectInstanceID : IEquatable<GDObjectInstanceID>
         return _value.GetHashCode();
     }
 
-    public static explicit operator GDObjectInstanceID(ulong value)
-    {
-        return new GDObjectInstanceID(value);
-    }
-
-    public static explicit operator ulong(GDObjectInstanceID alias)
-    {
-        return alias._value;
-    }
-
     public static bool operator ==(GDObjectInstanceID left, GDObjectInstanceID right)
     {
         return left._value == right._value;

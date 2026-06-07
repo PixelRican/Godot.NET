@@ -61,16 +61,6 @@ public readonly unsafe struct GDExtensionConstVariantPtr : IEquatable<GDExtensio
         return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionConstVariantPtr(void* pointer)
-    {
-        return new GDExtensionConstVariantPtr(pointer);
-    }
-
-    public static explicit operator void*(GDExtensionConstVariantPtr handle)
-    {
-        return handle._pointer;
-    }
-
     public static implicit operator GDExtensionConstVariantPtr(GDExtensionVariantPtr parent)
     {
         return new GDExtensionConstVariantPtr(parent.Pointer);

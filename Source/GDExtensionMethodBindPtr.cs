@@ -61,16 +61,6 @@ public readonly unsafe struct GDExtensionMethodBindPtr : IEquatable<GDExtensionM
         return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionMethodBindPtr(void* pointer)
-    {
-        return new GDExtensionMethodBindPtr(pointer);
-    }
-
-    public static explicit operator void*(GDExtensionMethodBindPtr handle)
-    {
-        return handle._pointer;
-    }
-
     public static bool operator ==(GDExtensionMethodBindPtr left, GDExtensionMethodBindPtr right)
     {
         return left._pointer == right._pointer;
