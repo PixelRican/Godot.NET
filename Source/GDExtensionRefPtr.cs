@@ -32,77 +32,52 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionRefPtr : IEquatable<GDExtensionRefPtr>
+public readonly unsafe struct GDExtensionRefPtr : IEquatable<GDExtensionRefPtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionRefPtr(nint value)
+    public GDExtensionRefPtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionRefPtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionRefPtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionRefPtr other && _handle == other._handle;
+        return obj is GDExtensionRefPtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionRefPtr(nint value)
+    public static explicit operator GDExtensionRefPtr(void* pointer)
     {
-        return new GDExtensionRefPtr(value);
+        return new GDExtensionRefPtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionRefPtr(void* value)
+    public static explicit operator void*(GDExtensionRefPtr handle)
     {
-        return new GDExtensionRefPtr(value);
-    }
-
-    public static explicit operator nint(GDExtensionRefPtr value)
-    {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionRefPtr value)
-    {
-        return (void*)value._handle;
+        return handle._pointer;
     }
 
     public static bool operator ==(GDExtensionRefPtr left, GDExtensionRefPtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionRefPtr left, GDExtensionRefPtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

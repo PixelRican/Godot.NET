@@ -32,82 +32,57 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionConstVariantPtr : IEquatable<GDExtensionConstVariantPtr>
+public readonly unsafe struct GDExtensionConstVariantPtr : IEquatable<GDExtensionConstVariantPtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionConstVariantPtr(nint value)
+    public GDExtensionConstVariantPtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionConstVariantPtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionConstVariantPtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionConstVariantPtr other && _handle == other._handle;
+        return obj is GDExtensionConstVariantPtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionConstVariantPtr(nint value)
+    public static explicit operator GDExtensionConstVariantPtr(void* pointer)
     {
-        return new GDExtensionConstVariantPtr(value);
+        return new GDExtensionConstVariantPtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionConstVariantPtr(void* value)
+    public static explicit operator void*(GDExtensionConstVariantPtr handle)
     {
-        return new GDExtensionConstVariantPtr(value);
+        return handle._pointer;
     }
 
-    public static explicit operator nint(GDExtensionConstVariantPtr value)
+    public static implicit operator GDExtensionConstVariantPtr(GDExtensionVariantPtr parent)
     {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionConstVariantPtr value)
-    {
-        return (void*)value._handle;
-    }
-
-    public static implicit operator GDExtensionConstVariantPtr(GDExtensionVariantPtr value)
-    {
-        return new GDExtensionConstVariantPtr((nint)value);
+        return new GDExtensionConstVariantPtr(parent.Pointer);
     }
 
     public static bool operator ==(GDExtensionConstVariantPtr left, GDExtensionConstVariantPtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionConstVariantPtr left, GDExtensionConstVariantPtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

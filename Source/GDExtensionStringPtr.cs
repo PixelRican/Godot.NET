@@ -32,77 +32,52 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionStringPtr : IEquatable<GDExtensionStringPtr>
+public readonly unsafe struct GDExtensionStringPtr : IEquatable<GDExtensionStringPtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionStringPtr(nint value)
+    public GDExtensionStringPtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionStringPtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionStringPtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionStringPtr other && _handle == other._handle;
+        return obj is GDExtensionStringPtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionStringPtr(nint value)
+    public static explicit operator GDExtensionStringPtr(void* pointer)
     {
-        return new GDExtensionStringPtr(value);
+        return new GDExtensionStringPtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionStringPtr(void* value)
+    public static explicit operator void*(GDExtensionStringPtr handle)
     {
-        return new GDExtensionStringPtr(value);
-    }
-
-    public static explicit operator nint(GDExtensionStringPtr value)
-    {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionStringPtr value)
-    {
-        return (void*)value._handle;
+        return handle._pointer;
     }
 
     public static bool operator ==(GDExtensionStringPtr left, GDExtensionStringPtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionStringPtr left, GDExtensionStringPtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

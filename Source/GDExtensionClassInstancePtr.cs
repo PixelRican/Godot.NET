@@ -32,77 +32,52 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionClassInstancePtr : IEquatable<GDExtensionClassInstancePtr>
+public readonly unsafe struct GDExtensionClassInstancePtr : IEquatable<GDExtensionClassInstancePtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionClassInstancePtr(nint value)
+    public GDExtensionClassInstancePtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionClassInstancePtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionClassInstancePtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionClassInstancePtr other && _handle == other._handle;
+        return obj is GDExtensionClassInstancePtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionClassInstancePtr(nint value)
+    public static explicit operator GDExtensionClassInstancePtr(void* pointer)
     {
-        return new GDExtensionClassInstancePtr(value);
+        return new GDExtensionClassInstancePtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionClassInstancePtr(void* value)
+    public static explicit operator void*(GDExtensionClassInstancePtr handle)
     {
-        return new GDExtensionClassInstancePtr(value);
-    }
-
-    public static explicit operator nint(GDExtensionClassInstancePtr value)
-    {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionClassInstancePtr value)
-    {
-        return (void*)value._handle;
+        return handle._pointer;
     }
 
     public static bool operator ==(GDExtensionClassInstancePtr left, GDExtensionClassInstancePtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionClassInstancePtr left, GDExtensionClassInstancePtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

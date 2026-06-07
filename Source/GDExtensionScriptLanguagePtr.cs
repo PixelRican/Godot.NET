@@ -32,77 +32,52 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionScriptLanguagePtr : IEquatable<GDExtensionScriptLanguagePtr>
+public readonly unsafe struct GDExtensionScriptLanguagePtr : IEquatable<GDExtensionScriptLanguagePtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionScriptLanguagePtr(nint value)
+    public GDExtensionScriptLanguagePtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionScriptLanguagePtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionScriptLanguagePtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionScriptLanguagePtr other && _handle == other._handle;
+        return obj is GDExtensionScriptLanguagePtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionScriptLanguagePtr(nint value)
+    public static explicit operator GDExtensionScriptLanguagePtr(void* pointer)
     {
-        return new GDExtensionScriptLanguagePtr(value);
+        return new GDExtensionScriptLanguagePtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionScriptLanguagePtr(void* value)
+    public static explicit operator void*(GDExtensionScriptLanguagePtr handle)
     {
-        return new GDExtensionScriptLanguagePtr(value);
-    }
-
-    public static explicit operator nint(GDExtensionScriptLanguagePtr value)
-    {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionScriptLanguagePtr value)
-    {
-        return (void*)value._handle;
+        return handle._pointer;
     }
 
     public static bool operator ==(GDExtensionScriptLanguagePtr left, GDExtensionScriptLanguagePtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionScriptLanguagePtr left, GDExtensionScriptLanguagePtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

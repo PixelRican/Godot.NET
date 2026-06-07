@@ -32,77 +32,52 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionClassLibraryPtr : IEquatable<GDExtensionClassLibraryPtr>
+public readonly unsafe struct GDExtensionClassLibraryPtr : IEquatable<GDExtensionClassLibraryPtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionClassLibraryPtr(nint value)
+    public GDExtensionClassLibraryPtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionClassLibraryPtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionClassLibraryPtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionClassLibraryPtr other && _handle == other._handle;
+        return obj is GDExtensionClassLibraryPtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionClassLibraryPtr(nint value)
+    public static explicit operator GDExtensionClassLibraryPtr(void* pointer)
     {
-        return new GDExtensionClassLibraryPtr(value);
+        return new GDExtensionClassLibraryPtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionClassLibraryPtr(void* value)
+    public static explicit operator void*(GDExtensionClassLibraryPtr handle)
     {
-        return new GDExtensionClassLibraryPtr(value);
-    }
-
-    public static explicit operator nint(GDExtensionClassLibraryPtr value)
-    {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionClassLibraryPtr value)
-    {
-        return (void*)value._handle;
+        return handle._pointer;
     }
 
     public static bool operator ==(GDExtensionClassLibraryPtr left, GDExtensionClassLibraryPtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionClassLibraryPtr left, GDExtensionClassLibraryPtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

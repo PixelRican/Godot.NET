@@ -20,10 +20,10 @@ internal static unsafe class GDExampleMarshaller
         }
 
         GDExtensionObjectPtr @object = GDExtensionInterface.ClassdbConstructObject(classNamePtr);
-        destructor.Method((GDExtensionTypePtr)(nint)classNamePtr);
+        destructor.Method((GDExtensionTypePtr)classNamePtr.Pointer);
         GDExample self = new GDExample(@object);
         GCHandle<GDExample> handle = new GCHandle<GDExample>(self);
-        GDExtensionClassInstancePtr pointer = (GDExtensionClassInstancePtr)GCHandle<GDExample>.ToIntPtr(handle);
+        GDExtensionClassInstancePtr pointer = (GDExtensionClassInstancePtr)(void*)GCHandle<GDExample>.ToIntPtr(handle);
 
         fixed (byte* name = "GDExample"u8)
         {
@@ -33,16 +33,16 @@ internal static unsafe class GDExampleMarshaller
         GDExtensionInstanceBindingCallbacks callbacks = default;
         GDExtensionInterface.ObjectSetInstance(@object, classNamePtr, pointer);
         GDExtensionInterface.ObjectSetInstanceBinding(@object, (void*)GDExtension.Library, (void*)pointer, &callbacks);
-        destructor.Method((GDExtensionTypePtr)(nint)classNamePtr);
+        destructor.Method((GDExtensionTypePtr)classNamePtr.Pointer);
         return @object;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     public static void FreeInstance(void* classUserdata, GDExtensionClassInstancePtr instance)
     {
-        if (instance.IsAllocated)
+        if (instance.Pointer != null)
         {
-            GCHandle<GDExample>.FromIntPtr((nint)instance).Dispose();
+            GCHandle<GDExample>.FromIntPtr((nint)instance.Pointer).Dispose();
         }
     }
 
@@ -71,7 +71,7 @@ internal static unsafe class GDExampleMarshaller
         };
         GDExtensionInterface.ClassdbRegisterExtensionClass2(GDExtension.Library, classNamePtr, parentClassNamePtr, &classInfo);
         GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName);
-        destructor.Method((GDExtensionTypePtr)(nint)classNamePtr);
-        destructor.Method((GDExtensionTypePtr)(nint)parentClassNamePtr);
+        destructor.Method((GDExtensionTypePtr)classNamePtr.Pointer);
+        destructor.Method((GDExtensionTypePtr)parentClassNamePtr.Pointer);
     }
 }

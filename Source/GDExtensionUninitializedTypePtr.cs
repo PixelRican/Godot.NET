@@ -32,82 +32,57 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionUninitializedTypePtr : IEquatable<GDExtensionUninitializedTypePtr>
+public readonly unsafe struct GDExtensionUninitializedTypePtr : IEquatable<GDExtensionUninitializedTypePtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionUninitializedTypePtr(nint value)
+    public GDExtensionUninitializedTypePtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionUninitializedTypePtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionUninitializedTypePtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionUninitializedTypePtr other && _handle == other._handle;
+        return obj is GDExtensionUninitializedTypePtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionUninitializedTypePtr(nint value)
+    public static explicit operator GDExtensionUninitializedTypePtr(void* pointer)
     {
-        return new GDExtensionUninitializedTypePtr(value);
+        return new GDExtensionUninitializedTypePtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionUninitializedTypePtr(void* value)
+    public static explicit operator void*(GDExtensionUninitializedTypePtr handle)
     {
-        return new GDExtensionUninitializedTypePtr(value);
+        return handle._pointer;
     }
 
-    public static explicit operator nint(GDExtensionUninitializedTypePtr value)
+    public static implicit operator GDExtensionUninitializedTypePtr(GDExtensionTypePtr parent)
     {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionUninitializedTypePtr value)
-    {
-        return (void*)value._handle;
-    }
-
-    public static implicit operator GDExtensionUninitializedTypePtr(GDExtensionTypePtr value)
-    {
-        return new GDExtensionUninitializedTypePtr((nint)value);
+        return new GDExtensionUninitializedTypePtr(parent.Pointer);
     }
 
     public static bool operator ==(GDExtensionUninitializedTypePtr left, GDExtensionUninitializedTypePtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionUninitializedTypePtr left, GDExtensionUninitializedTypePtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }

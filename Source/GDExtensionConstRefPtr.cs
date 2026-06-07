@@ -32,82 +32,57 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionConstRefPtr : IEquatable<GDExtensionConstRefPtr>
+public readonly unsafe struct GDExtensionConstRefPtr : IEquatable<GDExtensionConstRefPtr>
 {
-    private readonly nint _handle;
+    private readonly void* _pointer;
 
-    public GDExtensionConstRefPtr(nint value)
+    public GDExtensionConstRefPtr(void* pointer)
     {
-        _handle = value;
+        _pointer = pointer;
     }
 
-    public unsafe GDExtensionConstRefPtr(void* value)
+    public void* Pointer
     {
-        _handle = (nint)value;
-    }
-
-    public bool IsAllocated
-    {
-        get => _handle != 0;
-    }
-
-    public nint ToIntPtr()
-    {
-        return _handle;
-    }
-
-    public unsafe void* ToPointer()
-    {
-        return (void*)_handle;
+        get => _pointer;
     }
 
     public bool Equals(GDExtensionConstRefPtr other)
     {
-        return _handle == other._handle;
+        return _pointer == other._pointer;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionConstRefPtr other && _handle == other._handle;
+        return obj is GDExtensionConstRefPtr other && _pointer == other._pointer;
     }
 
     public override int GetHashCode()
     {
-        return _handle.GetHashCode();
+        return new nint(_pointer).GetHashCode();
     }
 
-    public static explicit operator GDExtensionConstRefPtr(nint value)
+    public static explicit operator GDExtensionConstRefPtr(void* pointer)
     {
-        return new GDExtensionConstRefPtr(value);
+        return new GDExtensionConstRefPtr(pointer);
     }
 
-    public static unsafe explicit operator GDExtensionConstRefPtr(void* value)
+    public static explicit operator void*(GDExtensionConstRefPtr handle)
     {
-        return new GDExtensionConstRefPtr(value);
+        return handle._pointer;
     }
 
-    public static explicit operator nint(GDExtensionConstRefPtr value)
+    public static implicit operator GDExtensionConstRefPtr(GDExtensionRefPtr parent)
     {
-        return value._handle;
-    }
-
-    public static unsafe explicit operator void*(GDExtensionConstRefPtr value)
-    {
-        return (void*)value._handle;
-    }
-
-    public static implicit operator GDExtensionConstRefPtr(GDExtensionRefPtr value)
-    {
-        return new GDExtensionConstRefPtr((nint)value);
+        return new GDExtensionConstRefPtr(parent.Pointer);
     }
 
     public static bool operator ==(GDExtensionConstRefPtr left, GDExtensionConstRefPtr right)
     {
-        return left._handle == right._handle;
+        return left._pointer == right._pointer;
     }
 
     public static bool operator !=(GDExtensionConstRefPtr left, GDExtensionConstRefPtr right)
     {
-        return left._handle != right._handle;
+        return left._pointer != right._pointer;
     }
 }
