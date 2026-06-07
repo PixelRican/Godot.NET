@@ -3,75 +3,67 @@ using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
-using static GDExtensionVariantType;
+using static GCHandle<GDExample>;
 
-internal static unsafe class GDExampleMarshaller
+public static unsafe class GDExampleMarshaller
 {
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    public static GDExtensionObjectPtr CreateInstance(void* classUserdata)
+    public static void RegisterClass(void* userdata)
     {
-        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName);
-        nint className;
-        GDExtensionStringNamePtr classNamePtr = new GDExtensionStringNamePtr(&className);
-
-        fixed (byte* name = "Sprite2D"u8)
-        {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, GDExtensionBool.False);
-        }
-
-        GDExtensionObjectPtr @object = GDExtensionInterface.ClassdbConstructObject(classNamePtr);
-        destructor.Method(new GDExtensionTypePtr(classNamePtr.Pointer));
-        GDExample self = new GDExample(@object);
-        GCHandle<GDExample> handle = new GCHandle<GDExample>(self);
-        GDExtensionClassInstancePtr pointer = new GDExtensionClassInstancePtr((void*)GCHandle<GDExample>.ToIntPtr(handle));
-
-        fixed (byte* name = "GDExample"u8)
-        {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, GDExtensionBool.False);
-        }
-
-        GDExtensionInstanceBindingCallbacks callbacks = default;
-        GDExtensionInterface.ObjectSetInstance(@object, classNamePtr, pointer);
-        GDExtensionInterface.ObjectSetInstanceBinding(@object, GDExtension.Library.Pointer, pointer.Pointer, &callbacks);
-        destructor.Method(new GDExtensionTypePtr(classNamePtr.Pointer));
-        return @object;
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    public static void FreeInstance(void* classUserdata, GDExtensionClassInstancePtr instance)
-    {
-        if (instance.Pointer != null)
-        {
-            GCHandle<GDExample>.FromIntPtr((nint)instance.Pointer).Dispose();
-        }
-    }
-
-    public static void RegisterClass()
-    {
-        nint className;
-        nint parentClassName;
-        GDExtensionStringNamePtr classNamePtr = new GDExtensionStringNamePtr(&className);
-        GDExtensionStringNamePtr parentClassNamePtr = new GDExtensionStringNamePtr(&parentClassName);
-
-        fixed (byte* name = "GDExample"u8)
-        {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(classNamePtr, name, GDExtensionBool.False);
-        }
-
-        fixed (byte* name = "Sprite2D"u8)
-        {
-            GDExtensionInterface.StringNameNewWithLatin1Chars(parentClassNamePtr, name, GDExtensionBool.False);
-        }
-
+        using GDExtensionStringName className = new GDExtensionStringName("GDExtension"u8);
+        using GDExtensionStringName parentClassName = new GDExtensionStringName("Sprite2D"u8);
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
             IsExposed = GDExtensionBool.True,
+            ClassUserdata = userdata,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(&CreateInstance),
-            FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance)
+            FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance),
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClass2(GDExtension.Library, classNamePtr, parentClassNamePtr, &classInfo);
-        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName);
-        destructor.Method(new GDExtensionTypePtr(classNamePtr.Pointer));
-        destructor.Method(new GDExtensionTypePtr(parentClassNamePtr.Pointer));
+        GDExtensionInterface.ClassdbRegisterExtensionClass2(new GDExtensionClassLibraryPtr(userdata),
+                                                            new GDExtensionConstStringNamePtr(&className),
+                                                            new GDExtensionConstStringNamePtr(&parentClassName),
+                                                            &classInfo);
+    }
+
+    public static void DeregisterClass(void* userdata)
+    {
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static GDExtensionObjectPtr CreateInstance(void* classUserdata)
+    {
+        GDExample self;
+
+        using (GDExtensionStringName className = new GDExtensionStringName("Sprite2D"u8))
+        {
+            self = new GDExample
+            {
+                Parent = GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&className))
+            };
+        }
+
+        void* handle = ToIntPtr(new GCHandle<GDExample>(self)).ToPointer();
+
+        using (GDExtensionStringName className = new GDExtensionStringName("GDExtension"u8))
+        {
+            GDExtensionInterface.ObjectSetInstance(self.Parent,
+                                                   new GDExtensionConstStringNamePtr(&className),
+                                                   new GDExtensionClassInstancePtr(handle));
+        }
+
+        GDExtensionInstanceBindingCallbacks callbacks = default;
+        GDExtensionInterface.ObjectSetInstanceBinding(self.Parent, classUserdata, handle, &callbacks);
+        return self.Parent;
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void FreeInstance(void* classUserdata, GDExtensionClassInstancePtr instance)
+    {
+        if (instance.Pointer == null)
+        {
+            return;
+        }
+
+        using GCHandle<GDExample> handle = FromIntPtr((nint)instance.Pointer);
+        handle.Target.Dispose();
     }
 }
