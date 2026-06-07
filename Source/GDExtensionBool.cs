@@ -26,18 +26,24 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionBool
+public readonly struct GDExtensionBool : IEquatable<GDExtensionBool>
 {
     private readonly byte _value;
 
     public GDExtensionBool(byte value)
     {
         _value = value;
+    }
+
+    public GDExtensionBool(bool value)
+    {
+        _value = (byte)(value ? 1 : 0);
     }
 
     public static GDExtensionBool True
@@ -55,13 +61,48 @@ public readonly struct GDExtensionBool
         get => _value;
     }
 
+    public bool Equals(GDExtensionBool other)
+    {
+        return _value == other._value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionBool other && _value == other._value;
+    }
+
+    public override int GetHashCode()
+    {
+        return _value.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionBool(byte value)
+    {
+        return new GDExtensionBool(value);
+    }
+
+    public static explicit operator byte(GDExtensionBool alias)
+    {
+        return alias._value;
+    }
+
     public static implicit operator GDExtensionBool(bool value)
     {
-        return new GDExtensionBool((byte)(value ? 1 : 0));
+        return new GDExtensionBool(value);
     }
 
     public static implicit operator bool(GDExtensionBool alias)
     {
         return alias._value != 0;
+    }
+
+    public static bool operator ==(GDExtensionBool left, GDExtensionBool right)
+    {
+        return left._value == right._value;
+    }
+
+    public static bool operator !=(GDExtensionBool left, GDExtensionBool right)
+    {
+        return left._value != right._value;
     }
 }

@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionInt
+public readonly struct GDExtensionInt : IEquatable<GDExtensionInt>
 {
     private readonly long _value;
 
@@ -43,5 +44,40 @@ public readonly struct GDExtensionInt
     public long Value
     {
         get => _value;
+    }
+
+    public bool Equals(GDExtensionInt other)
+    {
+        return _value == other._value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDExtensionInt other && _value == other._value;
+    }
+
+    public override int GetHashCode()
+    {
+        return _value.GetHashCode();
+    }
+
+    public static explicit operator GDExtensionInt(long value)
+    {
+        return new GDExtensionInt(value);
+    }
+
+    public static explicit operator long(GDExtensionInt alias)
+    {
+        return alias._value;
+    }
+
+    public static bool operator ==(GDExtensionInt left, GDExtensionInt right)
+    {
+        return left._value == right._value;
+    }
+
+    public static bool operator !=(GDExtensionInt left, GDExtensionInt right)
+    {
+        return left._value != right._value;
     }
 }

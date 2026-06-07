@@ -31,17 +31,22 @@ using System.Runtime.InteropServices;
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDExtensionClassCreationInfo5
+public struct GDExtensionClassCreationInfo5
 {
-    private readonly GDExtensionClassCreationInfo4 _value;
+    public GDExtensionClassCreationInfo4 Value;
 
     public GDExtensionClassCreationInfo5(GDExtensionClassCreationInfo4 value)
     {
-        _value = value;
+        Value = value;
     }
 
-    public GDExtensionClassCreationInfo4 Value
+    public static explicit operator GDExtensionClassCreationInfo5(GDExtensionClassCreationInfo4 value)
     {
-        get => _value;
+        return new GDExtensionClassCreationInfo5(value);
+    }
+
+    public static explicit operator GDExtensionClassCreationInfo4(GDExtensionClassCreationInfo5 alias)
+    {
+        return alias.Value;
     }
 }

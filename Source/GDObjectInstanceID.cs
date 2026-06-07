@@ -26,12 +26,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct GDObjectInstanceID
+public readonly struct GDObjectInstanceID : IEquatable<GDObjectInstanceID>
 {
     private readonly ulong _value;
 
@@ -43,5 +44,40 @@ public readonly struct GDObjectInstanceID
     public ulong Value
     {
         get => _value;
+    }
+
+    public bool Equals(GDObjectInstanceID other)
+    {
+        return _value == other._value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is GDObjectInstanceID other && _value == other._value;
+    }
+
+    public override int GetHashCode()
+    {
+        return _value.GetHashCode();
+    }
+
+    public static explicit operator GDObjectInstanceID(ulong value)
+    {
+        return new GDObjectInstanceID(value);
+    }
+
+    public static explicit operator ulong(GDObjectInstanceID alias)
+    {
+        return alias._value;
+    }
+
+    public static bool operator ==(GDObjectInstanceID left, GDObjectInstanceID right)
+    {
+        return left._value == right._value;
+    }
+
+    public static bool operator !=(GDObjectInstanceID left, GDObjectInstanceID right)
+    {
+        return left._value != right._value;
     }
 }
