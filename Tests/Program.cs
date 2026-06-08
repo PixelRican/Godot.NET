@@ -33,7 +33,7 @@ public static unsafe class Program
     {
         if (level == GDExtensionInitializationScene)
         {
-            GDExampleMarshaller.RegisterClass(userdata);
+            GDExampleMarshaller.DeregisterClass(userdata);
         }
     }
 }
