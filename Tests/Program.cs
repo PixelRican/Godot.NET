@@ -3,8 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
-using static GDExtensionInitializationLevel;
-
 public static unsafe class Program
 {
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)], EntryPoint = "GDExample_Initialize")]

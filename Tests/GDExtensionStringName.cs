@@ -3,8 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
-using static GDExtensionVariantType;
-
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct GDExtensionStringName : IDisposable
 {
