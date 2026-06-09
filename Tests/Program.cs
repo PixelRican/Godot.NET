@@ -29,9 +29,5 @@ public static unsafe class Program
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DeinitializeExtension(void* userdata, GDExtensionInitializationLevel level)
     {
-        if (level == GDExtensionInitializationScene)
-        {
-            GDExampleMarshaller.DeregisterClass(userdata);
-        }
     }
 }
