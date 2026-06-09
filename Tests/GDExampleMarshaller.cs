@@ -22,10 +22,28 @@ public static unsafe class GDExampleMarshaller
                                                             new GDExtensionConstStringNamePtr(&className),
                                                             new GDExtensionConstStringNamePtr(&parentClassName),
                                                             &classInfo);
-    }
-
-    public static void DeregisterClass(void* userdata)
-    {
+        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+                                      "GDExample"u8,
+                                      "GetAmplitude"u8,
+                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetAmplitude,
+                                      GDExtensionVariantTypeFloat);
+        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+                                      "GDExample"u8,
+                                      "SetAmplitude"u8,
+                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetAmplitude,
+                                      "value"u8,
+                                      GDExtensionVariantTypeFloat);
+        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+                                      "GDExample"u8,
+                                      "GetSpeed"u8,
+                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetAmplitude,
+                                      GDExtensionVariantTypeFloat);
+        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+                                      "GDExample"u8,
+                                      "SetSpeed"u8,
+                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetAmplitude,
+                                      "value"u8,
+                                      GDExtensionVariantTypeFloat);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -65,5 +83,29 @@ public static unsafe class GDExampleMarshaller
 
         using GCHandle<GDExample> handle = FromIntPtr((nint)instance.Pointer);
         handle.Target.Dispose();
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static double GetAmplitude(GCHandle<GDExample> handle)
+    {
+        return handle.Target.Amplitude;
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void SetAmplitude(GCHandle<GDExample> handle, double value)
+    {
+        handle.Target.Amplitude = value;
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static double GetSpeed(GCHandle<GDExample> handle)
+    {
+        return handle.Target.Speed;
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void SetSpeed(GCHandle<GDExample> handle, double value)
+    {
+        handle.Target.Speed = value;
     }
 }
