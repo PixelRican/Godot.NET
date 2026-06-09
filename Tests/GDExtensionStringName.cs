@@ -14,7 +14,7 @@ public unsafe struct GDExtensionStringName : IDisposable
         fixed (void** pointer = &_pointer)
         {
             GDExtensionUninitializedStringNamePtr argument = new GDExtensionUninitializedStringNamePtr(pointer);
-            GDExtensionInterface.StringNameNewWithLatin1Chars(argument, reference, GDExtensionBool.False);
+            GDExtensionInterface.StringNameNewWithLatin1Chars(argument, reference, false);
         }
     }
 
