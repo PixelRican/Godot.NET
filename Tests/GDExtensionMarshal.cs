@@ -56,6 +56,16 @@ public static unsafe class GDExtensionMarshal
         DestructProperty(&argsInfo);
     }
 
+    public static void BindProperty(GDExtensionClassLibraryPtr library, ReadOnlySpan<byte> className, ReadOnlySpan<byte> name, GDExtensionVariantType type, ReadOnlySpan<byte> getter, ReadOnlySpan<byte> setter)
+    {
+        using GDExtensionStringName classStringName = new GDExtensionStringName(className);
+        GDExtensionPropertyInfo info = MakeProperty(type, name);
+        using GDExtensionStringName getterName = new GDExtensionStringName(getter);
+        using GDExtensionStringName setterName = new GDExtensionStringName(setter);
+        GDExtensionInterface.ClassdbRegisterExtensionClassProperty(library, new GDExtensionConstStringNamePtr(&classStringName), &info, new GDExtensionConstStringNamePtr(&setterName), new GDExtensionConstStringNamePtr(&getterName));
+        DestructProperty(&info);
+    }
+
     public static GDExtensionPropertyInfo MakeProperty(GDExtensionVariantType type, ReadOnlySpan<byte> name)
     {
         return MakeProperty(type, name, PropertyUsageNone, ""u8, ""u8, PropertyUsageDefault);

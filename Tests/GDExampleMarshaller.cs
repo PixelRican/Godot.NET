@@ -33,17 +33,29 @@ public static unsafe class GDExampleMarshaller
                                       (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetAmplitude,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
+        GDExtensionMarshal.BindProperty(new GDExtensionClassLibraryPtr(userdata),
+                                        "GDExample"u8,
+                                        "Amplitude"u8,
+                                        GDExtensionVariantTypeFloat,
+                                        "GetAmplitude"u8,
+                                        "SetAmplitude"u8);
         GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
                                       "GDExample"u8,
                                       "GetSpeed"u8,
-                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetAmplitude,
+                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetSpeed,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
                                       "GDExample"u8,
                                       "SetSpeed"u8,
-                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetAmplitude,
+                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetSpeed,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
+        GDExtensionMarshal.BindProperty(new GDExtensionClassLibraryPtr(userdata),
+                                        "GDExample"u8,
+                                        "Speed"u8,
+                                        GDExtensionVariantTypeFloat,
+                                        "GetSpeed"u8,
+                                        "SetSpeed"u8);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
