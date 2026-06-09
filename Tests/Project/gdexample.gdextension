@@ -1,6 +1,6 @@
 [configuration]
 
-entry_symbol = "Godot.NET.Tests.GDExtension.Initialize"
+entry_symbol = "GDExample_Initialize"
 compatibility_minimum = "4.2"
 
 [libraries]

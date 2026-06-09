@@ -7,7 +7,7 @@ using static GDExtensionInitializationLevel;
 
 public static unsafe class Program
 {
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)], EntryPoint = "Godot.NET.Tests.Program.Initialize")]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)], EntryPoint = "GDExample_Initialize")]
     private static GDExtensionBool Initialize(GDExtensionInterfaceGetProcAddress getProcAddress,
         GDExtensionClassLibraryPtr library, GDExtensionInitialization* initialization)
     {
