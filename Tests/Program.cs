@@ -14,7 +14,7 @@ public static unsafe class Program
         initialization->Userdata = library.Pointer;
         initialization->Initialize = new GDExtensionInitializeCallback(&InitializeExtension);
         initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeExtension);
-        return GDExtensionBool.True;
+        return true;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
