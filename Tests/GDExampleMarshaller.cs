@@ -9,7 +9,7 @@ public static unsafe class GDExampleMarshaller
 {
     public static void RegisterClass(void* userdata)
     {
-        using GDExtensionStringName className = new GDExtensionStringName("GDExtension"u8);
+        using GDExtensionStringName className = new GDExtensionStringName("GDExample"u8);
         using GDExtensionStringName parentClassName = new GDExtensionStringName("Sprite2D"u8);
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
@@ -43,7 +43,7 @@ public static unsafe class GDExampleMarshaller
 
         void* handle = ToIntPtr(new GCHandle<GDExample>(self)).ToPointer();
 
-        using (GDExtensionStringName className = new GDExtensionStringName("GDExtension"u8))
+        using (GDExtensionStringName className = new GDExtensionStringName("GDExample"u8))
         {
             GDExtensionInterface.ObjectSetInstance(self.Parent,
                                                    new GDExtensionConstStringNamePtr(&className),
