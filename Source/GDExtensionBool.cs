@@ -41,16 +41,6 @@ public readonly struct GDExtensionBool : IEquatable<GDExtensionBool>
         _value = value;
     }
 
-    public static GDExtensionBool True
-    {
-        get => new GDExtensionBool(1);
-    }
-
-    public static GDExtensionBool False
-    {
-        get => new GDExtensionBool(0);
-    }
-
     public byte Value
     {
         get => _value;

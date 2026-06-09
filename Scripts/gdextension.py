@@ -216,17 +216,6 @@ class AliasGenerator:
         else:
             file.write("        Value = value;\n")
         file.write("    }\n")
-        if data_is_bool:
-            file.write("\n")
-            file.write(f"    public static {data_name} True\n")
-            file.write("    {\n")
-            file.write(f"        get => new {data_name}(1);\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write(f"    public static {data_name} False\n")
-            file.write("    {\n")
-            file.write(f"        get => new {data_name}(0);\n")
-            file.write("    }\n")
         if data_type.is_builtin:
             file.write("\n")
             file.write(f"    public {data_type.name} Value\n")
