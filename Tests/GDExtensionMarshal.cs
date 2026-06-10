@@ -22,7 +22,7 @@ public static unsafe class GDExtensionMarshal
             CallFunc = new GDExtensionClassMethodCall(&CallPassVoidReturnFloat),
             PtrcallFunc = new GDExtensionClassMethodPtrCall(&PtrCallPassVoidReturnFloat),
             MethodFlags = (uint)GDExtensionMethodFlagsDefault,
-            HasReturnValue = true,
+            HasReturnValue = new GDExtensionBool(true),
             ReturnValueInfo = &returnInfo,
             ReturnValueMetadata = GDExtensionMethodArgumentMetadataNone,
             ArgumentCount = 0,
@@ -45,12 +45,11 @@ public static unsafe class GDExtensionMarshal
             CallFunc = new GDExtensionClassMethodCall(&CallPassFloatReturnVoid),
             PtrcallFunc = new GDExtensionClassMethodPtrCall(&PtrCallPassFloatReturnVoid),
             MethodFlags = (uint)GDExtensionMethodFlagsDefault,
-            HasReturnValue = false,
+            HasReturnValue = new GDExtensionBool(false),
             ArgumentCount = 1,
             ArgumentsInfo = &argsInfo,
             ArgumentsMetadata = &argsMetadata,
         };
-
         using GDExtensionStringName classNameString = new GDExtensionStringName(className);
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library, new GDExtensionConstStringNamePtr(&classNameString), &methodInfo);
         DestructProperty(&argsInfo);

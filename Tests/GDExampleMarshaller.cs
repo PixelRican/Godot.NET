@@ -13,7 +13,7 @@ public static unsafe class GDExampleMarshaller
         using GDExtensionStringName parentClassName = new GDExtensionStringName("Sprite2D"u8);
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
-            IsExposed = true,
+            IsExposed = new GDExtensionBool(true),
             ClassUserdata = userdata,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(&CreateInstance),
             FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance),

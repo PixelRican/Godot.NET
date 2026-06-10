@@ -36,14 +36,14 @@ public readonly struct GDExtensionBool : IEquatable<GDExtensionBool>
 {
     private readonly byte _value;
 
-    public GDExtensionBool(byte value)
+    public GDExtensionBool(bool value)
     {
-        _value = value;
+        _value = (byte)(value ? 1 : 0);
     }
 
-    public byte Value
+    public bool Value
     {
-        get => _value;
+        get => _value != 0;
     }
 
     public bool Equals(GDExtensionBool other)
@@ -59,16 +59,6 @@ public readonly struct GDExtensionBool : IEquatable<GDExtensionBool>
     public override int GetHashCode()
     {
         return _value.GetHashCode();
-    }
-
-    public static implicit operator GDExtensionBool(bool value)
-    {
-        return new GDExtensionBool((byte)(value ? 1 : 0));
-    }
-
-    public static implicit operator bool(GDExtensionBool alias)
-    {
-        return alias._value != 0;
     }
 
     public static bool operator ==(GDExtensionBool left, GDExtensionBool right)

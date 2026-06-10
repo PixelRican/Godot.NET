@@ -206,12 +206,16 @@ class AliasGenerator:
         file.write("{\n")
         if data_type.is_builtin:
             file.write(f"    private readonly {data_type.name} _value;\n")
+            if data_is_bool:
+                data_type.name = "bool"
         else:
             file.write(f"    public {data_type.name} Value;\n")
         file.write("\n")
         file.write(f"    public {data_name}({data_type.name} value)\n")
         file.write("    {\n")
-        if data_type.is_builtin:
+        if data_is_bool:
+            file.write("        _value = (byte)(value ? 1 : 0);\n")
+        elif data_type.is_builtin:
             file.write("        _value = value;\n")
         else:
             file.write("        Value = value;\n")
@@ -220,7 +224,10 @@ class AliasGenerator:
             file.write("\n")
             file.write(f"    public {data_type.name} Value\n")
             file.write("    {\n")
-            file.write("        get => _value;\n")
+            if data_is_bool:
+                file.write("        get => _value != 0;\n")
+            else:
+                file.write("        get => _value;\n")
             file.write("    }\n")
             file.write("\n")
             file.write(f"    public bool Equals({data_name} other)\n")
@@ -237,18 +244,6 @@ class AliasGenerator:
             file.write("    {\n")
             file.write("        return _value.GetHashCode();\n")
             file.write("    }\n")
-        if data_is_bool:
-            file.write("\n")
-            file.write(f"    public static implicit operator {data_name}(bool value)\n")
-            file.write("    {\n")
-            file.write(f"        return new {data_name}((byte)(value ? 1 : 0));\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write(f"    public static implicit operator bool({data_name} alias)\n")
-            file.write("    {\n")
-            file.write("        return alias._value != 0;\n")
-            file.write("    }\n")
-        if data_type.is_builtin:
             file.write("\n")
             file.write(f"    public static bool operator ==({data_name} left, {data_name} right)\n")
             file.write("    {\n")
