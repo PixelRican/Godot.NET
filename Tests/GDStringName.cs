@@ -6,24 +6,27 @@ namespace Godot.NET.Tests;
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct GDStringName : IDisposable
 {
-    private void* _pointer;
+    private nint _handle;
 
     public GDStringName(ReadOnlySpan<byte> value)
     {
+        nint handle;
+
         fixed (byte* reference = value)
-        fixed (void** pointer = &_pointer)
         {
-            GDExtensionUninitializedStringNamePtr argument = new GDExtensionUninitializedStringNamePtr(pointer);
-            GDExtensionInterface.StringNameNewWithLatin1Chars(argument, reference, new GDExtensionBool(false));
+            GDExtensionUninitializedStringNamePtr self = new GDExtensionUninitializedStringNamePtr(&handle);
+            GDExtensionInt length = new GDExtensionInt(value.Length);
+            GDExtensionInterface.StringNameNewWithUtf8CharsAndLen(self, reference, length);
         }
+
+        _handle = handle;
     }
 
     public void Dispose()
     {
-        fixed (void** pointer = &_pointer)
-        {
-            GDExtensionTypePtr argument = new GDExtensionTypePtr(pointer);
-            GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName).Method(argument);
-        }
+        nint handle = _handle;
+        GDExtensionTypePtr self = new GDExtensionTypePtr(&handle);
+        GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName).Method(self);
+        _handle = 0;
     }
 }
