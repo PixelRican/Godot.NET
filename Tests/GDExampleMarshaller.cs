@@ -7,8 +7,8 @@ public static unsafe class GDExampleMarshaller
 {
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
-        using GDExtensionStringName className = new GDExtensionStringName("GDExample"u8);
-        using GDExtensionStringName parentClassName = new GDExtensionStringName("Sprite2D"u8);
+        using GDStringName className = new GDStringName("GDExample"u8);
+        using GDStringName parentClassName = new GDStringName("Sprite2D"u8);
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
             IsExposed = new GDExtensionBool(true),
@@ -61,7 +61,7 @@ public static unsafe class GDExampleMarshaller
     {
         GDExample self;
 
-        using (GDExtensionStringName className = new GDExtensionStringName("Sprite2D"u8))
+        using (GDStringName className = new GDStringName("Sprite2D"u8))
         {
             self = new GDExample
             {
@@ -71,7 +71,7 @@ public static unsafe class GDExampleMarshaller
 
         GDExtensionClassInstancePtr instance = new GCHandle<GDExample>(self).ToPointer();
 
-        using (GDExtensionStringName className = new GDExtensionStringName("GDExample"u8))
+        using (GDStringName className = new GDStringName("GDExample"u8))
         {
             GDExtensionInterface.ObjectSetInstance(self.Parent,
                                                    new GDExtensionConstStringNamePtr(&className),

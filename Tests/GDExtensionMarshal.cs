@@ -13,7 +13,7 @@ public static unsafe class GDExtensionMarshal
 
     public static void BindMethod(GDExtensionClassLibraryPtr library, ReadOnlySpan<byte> className, ReadOnlySpan<byte> methodName, void* function, GDExtensionVariantType returnType)
     {
-        using GDExtensionStringName methodNameString = new GDExtensionStringName(methodName);
+        using GDStringName methodNameString = new GDStringName(methodName);
         GDExtensionPropertyInfo returnInfo = MakeProperty(returnType, ""u8);
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
@@ -27,14 +27,14 @@ public static unsafe class GDExtensionMarshal
             ReturnValueMetadata = GDExtensionMethodArgumentMetadataNone,
             ArgumentCount = 0,
         };
-        using GDExtensionStringName classNameString = new GDExtensionStringName(className);
+        using GDStringName classNameString = new GDStringName(className);
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library, new GDExtensionConstStringNamePtr(&classNameString), &methodInfo);
         DestructProperty(&returnInfo);
     }
 
     public static void BindMethod(GDExtensionClassLibraryPtr library, ReadOnlySpan<byte> className, ReadOnlySpan<byte> methodName, void* function, ReadOnlySpan<byte> arg1Name, GDExtensionVariantType arg1Type)
     {
-        using GDExtensionStringName methodNameString = new GDExtensionStringName(methodName);
+        using GDStringName methodNameString = new GDStringName(methodName);
         GDExtensionPropertyInfo argsInfo = MakeProperty(arg1Type, arg1Name);
         GDExtensionClassMethodArgumentMetadata argsMetadata = GDExtensionMethodArgumentMetadataNone;
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
@@ -49,17 +49,17 @@ public static unsafe class GDExtensionMarshal
             ArgumentsInfo = &argsInfo,
             ArgumentsMetadata = &argsMetadata,
         };
-        using GDExtensionStringName classNameString = new GDExtensionStringName(className);
+        using GDStringName classNameString = new GDStringName(className);
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library, new GDExtensionConstStringNamePtr(&classNameString), &methodInfo);
         DestructProperty(&argsInfo);
     }
 
     public static void BindProperty(GDExtensionClassLibraryPtr library, ReadOnlySpan<byte> className, ReadOnlySpan<byte> name, GDExtensionVariantType type, ReadOnlySpan<byte> getter, ReadOnlySpan<byte> setter)
     {
-        using GDExtensionStringName classStringName = new GDExtensionStringName(className);
+        using GDStringName classStringName = new GDStringName(className);
         GDExtensionPropertyInfo info = MakeProperty(type, name);
-        using GDExtensionStringName getterName = new GDExtensionStringName(getter);
-        using GDExtensionStringName setterName = new GDExtensionStringName(setter);
+        using GDStringName getterName = new GDStringName(getter);
+        using GDStringName setterName = new GDStringName(setter);
         GDExtensionInterface.ClassdbRegisterExtensionClassProperty(library, new GDExtensionConstStringNamePtr(&classStringName), &info, new GDExtensionConstStringNamePtr(&setterName), new GDExtensionConstStringNamePtr(&getterName));
         DestructProperty(&info);
     }
@@ -71,12 +71,12 @@ public static unsafe class GDExtensionMarshal
 
     private static GDExtensionPropertyInfo MakeProperty(GDExtensionVariantType type, ReadOnlySpan<byte> name, uint hint, ReadOnlySpan<byte> hintString, ReadOnlySpan<byte> className, uint usageFlags)
     {
-        GDExtensionStringName* propName = (GDExtensionStringName*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDExtensionStringName));
-        *propName = new GDExtensionStringName(name);
-        GDExtensionString* propHintString = (GDExtensionString*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDExtensionString));
-        *propHintString = new GDExtensionString(hintString);
-        GDExtensionStringName* propClassName = (GDExtensionStringName*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDExtensionStringName));
-        *propClassName = new GDExtensionStringName(className);
+        GDStringName* propName = (GDStringName*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDStringName));
+        *propName = new GDStringName(name);
+        GDString* propHintString = (GDString*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDString));
+        *propHintString = new GDString(hintString);
+        GDStringName* propClassName = (GDStringName*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDStringName));
+        *propClassName = new GDStringName(className);
         return new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(propName),
@@ -90,9 +90,9 @@ public static unsafe class GDExtensionMarshal
 
     private static void DestructProperty(GDExtensionPropertyInfo* info)
     {
-        ((GDExtensionStringName*)info->Name.Pointer)->Dispose();
-        ((GDExtensionString*)info->HintString.Pointer)->Dispose();
-        ((GDExtensionStringName*)info->ClassName.Pointer)->Dispose();
+        ((GDStringName*)info->Name.Pointer)->Dispose();
+        ((GDString*)info->HintString.Pointer)->Dispose();
+        ((GDStringName*)info->ClassName.Pointer)->Dispose();
         GDExtensionInterface.MemFree(info->Name.Pointer);
         GDExtensionInterface.MemFree(info->HintString.Pointer);
         GDExtensionInterface.MemFree(info->ClassName.Pointer);

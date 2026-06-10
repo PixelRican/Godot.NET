@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 namespace Godot.NET.Tests;
 
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct GDExtensionStringName : IDisposable
+public unsafe struct GDStringName : IDisposable
 {
     private void* _pointer;
 
-    public GDExtensionStringName(ReadOnlySpan<byte> value)
+    public GDStringName(ReadOnlySpan<byte> value)
     {
         fixed (byte* reference = value)
         fixed (void** pointer = &_pointer)

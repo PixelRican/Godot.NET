@@ -2,11 +2,11 @@
 
 namespace Godot.NET.Tests;
 
-public abstract class GDExtensionObject : IDisposable
+public abstract class GDObject : IDisposable
 {
     private GDExtensionObjectPtr _parent;
 
-    ~GDExtensionObject()
+    ~GDObject()
     {
         Dispose(disposing: false);
     }
