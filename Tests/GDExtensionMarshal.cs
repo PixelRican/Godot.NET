@@ -27,7 +27,6 @@ public static unsafe class GDExtensionMarshal
             ReturnValueMetadata = GDExtensionMethodArgumentMetadataNone,
             ArgumentCount = 0,
         };
-
         using GDExtensionStringName classNameString = new GDExtensionStringName(className);
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library, new GDExtensionConstStringNamePtr(&classNameString), &methodInfo);
         DestructProperty(&returnInfo);
@@ -65,12 +64,12 @@ public static unsafe class GDExtensionMarshal
         DestructProperty(&info);
     }
 
-    public static GDExtensionPropertyInfo MakeProperty(GDExtensionVariantType type, ReadOnlySpan<byte> name)
+    private static GDExtensionPropertyInfo MakeProperty(GDExtensionVariantType type, ReadOnlySpan<byte> name)
     {
         return MakeProperty(type, name, PropertyUsageNone, ""u8, ""u8, PropertyUsageDefault);
     }
 
-    public static GDExtensionPropertyInfo MakeProperty(GDExtensionVariantType type, ReadOnlySpan<byte> name, uint hint, ReadOnlySpan<byte> hintString, ReadOnlySpan<byte> className, uint usageFlags)
+    private static GDExtensionPropertyInfo MakeProperty(GDExtensionVariantType type, ReadOnlySpan<byte> name, uint hint, ReadOnlySpan<byte> hintString, ReadOnlySpan<byte> className, uint usageFlags)
     {
         GDExtensionStringName* propName = (GDExtensionStringName*)GDExtensionInterface.MemAlloc((nuint)sizeof(GDExtensionStringName));
         *propName = new GDExtensionStringName(name);
@@ -89,7 +88,7 @@ public static unsafe class GDExtensionMarshal
         };
     }
 
-    public static void DestructProperty(GDExtensionPropertyInfo* info)
+    private static void DestructProperty(GDExtensionPropertyInfo* info)
     {
         ((GDExtensionStringName*)info->Name.Pointer)->Dispose();
         ((GDExtensionString*)info->HintString.Pointer)->Dispose();
@@ -100,21 +99,21 @@ public static unsafe class GDExtensionMarshal
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    public static void PtrCallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
+    private static void PtrCallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
     {
         var function = (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)methodUserdata;
         function(instance, Cast<double>(args[0]));
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    public static void PtrCallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
+    private static void PtrCallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
     {
         var function = (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)methodUserdata;
         Cast<double>(ret) = function(instance);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    public static void CallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
+    private static void CallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
     {
         switch (argumentCount.Value)
         {
@@ -143,7 +142,7 @@ public static unsafe class GDExtensionMarshal
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    public static void CallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
+    private static void CallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
     {
         if (argumentCount.Value != 0)
         {
