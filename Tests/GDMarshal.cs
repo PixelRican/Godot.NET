@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
-public static unsafe class GDExtensionMarshal
+public static unsafe class GDMarshal
 {
     private const uint PropertyUsageNone = 0;
     private const uint PropertyUsageStorage = 2;

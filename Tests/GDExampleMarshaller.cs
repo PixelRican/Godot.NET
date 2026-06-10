@@ -20,40 +20,40 @@ public static unsafe class GDExampleMarshaller
                                                             new GDExtensionConstStringNamePtr(&className),
                                                             new GDExtensionConstStringNamePtr(&parentClassName),
                                                             &classInfo);
-        GDExtensionMarshal.BindMethod(library,
-                                      "GDExample"u8,
-                                      "GetAmplitude"u8,
-                                      (delegate*<GDExtensionClassInstancePtr, double>)&GetAmplitude,
-                                      GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindMethod(library,
-                                      "GDExample"u8,
-                                      "SetAmplitude"u8,
-                                      (delegate*<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
-                                      "value"u8,
-                                      GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindProperty(library,
-                                        "GDExample"u8,
-                                        "Amplitude"u8,
-                                        GDExtensionVariantTypeFloat,
-                                        "GetAmplitude"u8,
-                                        "SetAmplitude"u8);
-        GDExtensionMarshal.BindMethod(library,
-                                      "GDExample"u8,
-                                      "GetSpeed"u8,
-                                      (delegate*<GDExtensionClassInstancePtr, double>)&GetSpeed,
-                                      GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindMethod(library,
-                                      "GDExample"u8,
-                                      "SetSpeed"u8,
-                                      (delegate*<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
-                                      "value"u8,
-                                      GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindProperty(library,
-                                        "GDExample"u8,
-                                        "Speed"u8,
-                                        GDExtensionVariantTypeFloat,
-                                        "GetSpeed"u8,
-                                        "SetSpeed"u8);
+        GDMarshal.BindMethod(library,
+                             "GDExample"u8,
+                             "GetAmplitude"u8,
+                             (delegate*<GDExtensionClassInstancePtr, double>)&GetAmplitude,
+                             GDExtensionVariantTypeFloat);
+        GDMarshal.BindMethod(library,
+                             "GDExample"u8,
+                             "SetAmplitude"u8,
+                             (delegate*<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
+                             "value"u8,
+                             GDExtensionVariantTypeFloat);
+        GDMarshal.BindProperty(library,
+                               "GDExample"u8,
+                               "Amplitude"u8,
+                               GDExtensionVariantTypeFloat,
+                               "GetAmplitude"u8,
+                               "SetAmplitude"u8);
+        GDMarshal.BindMethod(library,
+                             "GDExample"u8,
+                             "GetSpeed"u8,
+                             (delegate*<GDExtensionClassInstancePtr, double>)&GetSpeed,
+                             GDExtensionVariantTypeFloat);
+        GDMarshal.BindMethod(library,
+                             "GDExample"u8,
+                             "SetSpeed"u8,
+                             (delegate*<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
+                             "value"u8,
+                             GDExtensionVariantTypeFloat);
+        GDMarshal.BindProperty(library,
+                               "GDExample"u8,
+                               "Speed"u8,
+                               GDExtensionVariantTypeFloat,
+                               "GetSpeed"u8,
+                               "SetSpeed"u8);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
