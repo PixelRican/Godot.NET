@@ -7,50 +7,50 @@ using static GCHandle<GDExample>;
 
 public static unsafe class GDExampleMarshaller
 {
-    public static void RegisterClass(void* userdata)
+    public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
         using GDExtensionStringName className = new GDExtensionStringName("GDExample"u8);
         using GDExtensionStringName parentClassName = new GDExtensionStringName("Sprite2D"u8);
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
             IsExposed = new GDExtensionBool(true),
-            ClassUserdata = userdata,
+            ClassUserdata = library.Pointer,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(&CreateInstance),
             FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance),
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClass2(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionInterface.ClassdbRegisterExtensionClass2(library,
                                                             new GDExtensionConstStringNamePtr(&className),
                                                             new GDExtensionConstStringNamePtr(&parentClassName),
                                                             &classInfo);
-        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "GetAmplitude"u8,
                                       (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetAmplitude,
                                       GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "SetAmplitude"u8,
                                       (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetAmplitude,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindProperty(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionMarshal.BindProperty(library,
                                         "GDExample"u8,
                                         "Amplitude"u8,
                                         GDExtensionVariantTypeFloat,
                                         "GetAmplitude"u8,
                                         "SetAmplitude"u8);
-        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "GetSpeed"u8,
                                       (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetSpeed,
                                       GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindMethod(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "SetSpeed"u8,
                                       (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetSpeed,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
-        GDExtensionMarshal.BindProperty(new GDExtensionClassLibraryPtr(userdata),
+        GDExtensionMarshal.BindProperty(library,
                                         "GDExample"u8,
                                         "Speed"u8,
                                         GDExtensionVariantTypeFloat,
