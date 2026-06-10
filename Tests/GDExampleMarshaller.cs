@@ -23,12 +23,12 @@ public static unsafe class GDExampleMarshaller
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "GetAmplitude"u8,
-                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)&GetAmplitude,
+                                      (delegate*<GDExtensionClassInstancePtr, double>)&GetAmplitude,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "SetAmplitude"u8,
-                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
+                                      (delegate*<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindProperty(library,
@@ -40,12 +40,12 @@ public static unsafe class GDExampleMarshaller
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "GetSpeed"u8,
-                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)&GetSpeed,
+                                      (delegate*<GDExtensionClassInstancePtr, double>)&GetSpeed,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "SetSpeed"u8,
-                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
+                                      (delegate*<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindProperty(library,
@@ -97,25 +97,21 @@ public static unsafe class GDExampleMarshaller
         self.Dispose();
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static double GetAmplitude(GDExtensionClassInstancePtr instance)
     {
         return instance.ToHandle<GDExample>().Target.Amplitude;
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void SetAmplitude(GDExtensionClassInstancePtr instance, double value)
     {
         instance.ToHandle<GDExample>().Target.Amplitude = value;
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static double GetSpeed(GDExtensionClassInstancePtr instance)
     {
         return instance.ToHandle<GDExample>().Target.Speed;
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void SetSpeed(GDExtensionClassInstancePtr instance, double value)
     {
         instance.ToHandle<GDExample>().Target.Speed = value;

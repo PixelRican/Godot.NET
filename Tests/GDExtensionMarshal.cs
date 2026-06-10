@@ -101,14 +101,14 @@ public static unsafe class GDExtensionMarshal
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void PtrCallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
     {
-        var function = (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)methodUserdata;
+        var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
         function(instance, Cast<double>(args[0]));
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void PtrCallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
     {
-        var function = (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)methodUserdata;
+        var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
         Cast<double>(ret) = function(instance);
     }
 
@@ -137,7 +137,7 @@ public static unsafe class GDExtensionMarshal
 
         double arg1;
         GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat).Method(new GDExtensionUninitializedTypePtr(&arg1), new GDExtensionVariantPtr(args[0].Pointer));
-        var function = (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)methodUserdata;
+        var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
         function(instance, arg1);
     }
 
@@ -150,7 +150,7 @@ public static unsafe class GDExtensionMarshal
             error->Expected = 0;
         }
 
-        var function = (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)methodUserdata;
+        var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
         double result = function(instance);
         GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat).Method(@return, new GDExtensionTypePtr(&result));
     }
