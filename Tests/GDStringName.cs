@@ -11,11 +11,11 @@ public unsafe struct GDStringName : IDisposable
     public GDStringName(ReadOnlySpan<byte> value)
     {
         nint handle;
+        GDExtensionUninitializedStringNamePtr self = new GDExtensionUninitializedStringNamePtr(&handle);
+        GDExtensionInt length = new GDExtensionInt(value.Length);
 
         fixed (byte* reference = value)
         {
-            GDExtensionUninitializedStringNamePtr self = new GDExtensionUninitializedStringNamePtr(&handle);
-            GDExtensionInt length = new GDExtensionInt(value.Length);
             GDExtensionInterface.StringNameNewWithUtf8CharsAndLen(self, reference, length);
         }
 
