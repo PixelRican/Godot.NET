@@ -3,8 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
-using static GCHandle<GDExample>;
-
 public static unsafe class GDExampleMarshaller
 {
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
@@ -25,12 +23,12 @@ public static unsafe class GDExampleMarshaller
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "GetAmplitude"u8,
-                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetAmplitude,
+                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)&GetAmplitude,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "SetAmplitude"u8,
-                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetAmplitude,
+                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindProperty(library,
@@ -42,12 +40,12 @@ public static unsafe class GDExampleMarshaller
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "GetSpeed"u8,
-                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double>)&GetSpeed,
+                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double>)&GetSpeed,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindMethod(library,
                                       "GDExample"u8,
                                       "SetSpeed"u8,
-                                      (delegate* unmanaged[Cdecl]<GCHandle<GDExample>, double, void>)&SetSpeed,
+                                      (delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
                                       "value"u8,
                                       GDExtensionVariantTypeFloat);
         GDExtensionMarshal.BindProperty(library,
@@ -71,17 +69,17 @@ public static unsafe class GDExampleMarshaller
             };
         }
 
-        void* handle = ToIntPtr(new GCHandle<GDExample>(self)).ToPointer();
+        GDExtensionClassInstancePtr instance = new GCHandle<GDExample>(self).ToPointer();
 
         using (GDExtensionStringName className = new GDExtensionStringName("GDExample"u8))
         {
             GDExtensionInterface.ObjectSetInstance(self.Parent,
                                                    new GDExtensionConstStringNamePtr(&className),
-                                                   new GDExtensionClassInstancePtr(handle));
+                                                   instance);
         }
 
         GDExtensionInstanceBindingCallbacks callbacks = default;
-        GDExtensionInterface.ObjectSetInstanceBinding(self.Parent, classUserdata, handle, &callbacks);
+        GDExtensionInterface.ObjectSetInstanceBinding(self.Parent, classUserdata, instance.Pointer, &callbacks);
         return self.Parent;
     }
 
@@ -93,31 +91,33 @@ public static unsafe class GDExampleMarshaller
             return;
         }
 
-        using GCHandle<GDExample> handle = FromIntPtr((nint)instance.Pointer);
-        handle.Target.Dispose();
+        GCHandle<GDExample> handle = instance.ToHandle<GDExample>();
+        GDExample self = handle.Target;
+        handle.Dispose();
+        self.Dispose();
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static double GetAmplitude(GCHandle<GDExample> handle)
+    private static double GetAmplitude(GDExtensionClassInstancePtr instance)
     {
-        return handle.Target.Amplitude;
+        return instance.ToHandle<GDExample>().Target.Amplitude;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void SetAmplitude(GCHandle<GDExample> handle, double value)
+    private static void SetAmplitude(GDExtensionClassInstancePtr instance, double value)
     {
-        handle.Target.Amplitude = value;
+        instance.ToHandle<GDExample>().Target.Amplitude = value;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static double GetSpeed(GCHandle<GDExample> handle)
+    private static double GetSpeed(GDExtensionClassInstancePtr instance)
     {
-        return handle.Target.Speed;
+        return instance.ToHandle<GDExample>().Target.Speed;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void SetSpeed(GCHandle<GDExample> handle, double value)
+    private static void SetSpeed(GDExtensionClassInstancePtr instance, double value)
     {
-        handle.Target.Speed = value;
+        instance.ToHandle<GDExample>().Target.Speed = value;
     }
 }
