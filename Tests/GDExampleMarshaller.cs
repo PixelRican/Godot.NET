@@ -86,11 +86,6 @@ public static unsafe class GDExampleMarshaller
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void FreeInstance(void* classUserdata, GDExtensionClassInstancePtr instance)
     {
-        if (instance.Pointer == null)
-        {
-            return;
-        }
-
         GCHandle<GDExample> handle = instance.ToHandle<GDExample>();
         GDExample self = handle.Target;
         handle.Dispose();
