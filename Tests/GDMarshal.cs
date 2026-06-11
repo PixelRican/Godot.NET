@@ -11,6 +11,16 @@ public static unsafe class GDMarshal
     private const uint PropertyUsageEditor = 4;
     private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
 
+    public static ref T AsRef<T>(GDExtensionTypePtr handle) where T : unmanaged
+    {
+        return ref *(T*)handle.Pointer;
+    }
+
+    public static ref readonly T AsRef<T>(GDExtensionConstTypePtr handle) where T : unmanaged
+    {
+        return ref *(T*)handle.Pointer;
+    }
+
     public static GDExtensionClassInstancePtr ToPointer<T>(GCHandle<T> handle) where T : class
     {
         return new GDExtensionClassInstancePtr(GCHandle<T>.ToIntPtr(handle).ToPointer());
@@ -112,14 +122,14 @@ public static unsafe class GDMarshal
     private static void PtrCallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
     {
         var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
-        function(instance, Cast<double>(args[0]));
+        function(instance, AsRef<double>(args[0]));
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void PtrCallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
     {
         var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
-        Cast<double>(ret) = function(instance);
+        AsRef<double>(ret) = function(instance);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -163,15 +173,5 @@ public static unsafe class GDMarshal
         var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
         double result = function(instance);
         GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat).Method(@return, new GDExtensionTypePtr(&result));
-    }
-
-    private static ref T Cast<T>(GDExtensionTypePtr handle) where T : unmanaged
-    {
-        return ref *(T*)handle.Pointer;
-    }
-
-    private static ref readonly T Cast<T>(GDExtensionConstTypePtr handle) where T : unmanaged
-    {
-        return ref *(T*)handle.Pointer;
     }
 }
