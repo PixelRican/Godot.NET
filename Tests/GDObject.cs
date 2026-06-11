@@ -6,6 +6,11 @@ public abstract class GDObject : IDisposable
 {
     private GDExtensionObjectPtr _parent;
 
+    protected GDObject(GDExtensionObjectPtr parent)
+    {
+        _parent = parent;
+    }
+
     ~GDObject()
     {
         Dispose(disposing: false);
@@ -14,7 +19,6 @@ public abstract class GDObject : IDisposable
     public GDExtensionObjectPtr Parent
     {
         get => _parent;
-        init => _parent = value;
     }
 
     public void Dispose()
@@ -25,6 +29,9 @@ public abstract class GDObject : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        _parent = default;
+        if (disposing)
+        {
+            _parent = default;
+        }
     }
 }

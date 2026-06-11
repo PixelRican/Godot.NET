@@ -66,10 +66,7 @@ public static unsafe class GDExampleMarshaller
         GDStringName className = data->ClassName;
         GDStringName parentClassName = data->ParentClassName;
         GDExtensionObjectPtr parent = GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&parentClassName));
-        GDExample self = new GDExample
-        {
-            Parent = parent
-        };
+        GDExample self = new GDExample(parent);
         GDExtensionClassInstancePtr instance = new GCHandle<GDExample>(self).ToPointer();
         GDExtensionInterface.ObjectSetInstance(parent,
                                                new GDExtensionConstStringNamePtr(&className),
