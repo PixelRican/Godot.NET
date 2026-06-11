@@ -6,10 +6,10 @@ namespace Godot.NET.Tests;
 
 public static unsafe class GDMarshal
 {
-    private const uint PropertyUsageNone = 0;
-    private const uint PropertyUsageStorage = 2;
-    private const uint PropertyUsageEditor = 4;
-    private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
+    public const uint PropertyUsageNone = 0;
+    public const uint PropertyUsageStorage = 2;
+    public const uint PropertyUsageEditor = 4;
+    public const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
 
     public static ref T AsRef<T>(GDExtensionTypePtr handle) where T : unmanaged
     {
