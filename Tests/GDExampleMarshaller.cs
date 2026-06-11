@@ -7,12 +7,14 @@ public static unsafe class GDExampleMarshaller
 {
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
-        using GDStringName className = new GDStringName("GDExample"u8);
-        using GDStringName parentClassName = new GDStringName("Sprite2D"u8);
+        GDClassData* data = (GDClassData*)GDExtensionInterface.MemAlloc2((nuint)sizeof(GDClassData), new GDExtensionBool(false));
+        GDStringName className = new GDStringName("GDExample"u8);
+        GDStringName parentClassName = new GDStringName("Sprite2D"u8);
+        *data = new GDClassData(library, className, parentClassName);
         GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
         {
             IsExposed = new GDExtensionBool(true),
-            ClassUserdata = library.Pointer,
+            ClassUserdata = data,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(&CreateInstance),
             FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance),
         };
@@ -59,28 +61,22 @@ public static unsafe class GDExampleMarshaller
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static GDExtensionObjectPtr CreateInstance(void* classUserdata)
     {
-        GDExample self;
-
-        using (GDStringName className = new GDStringName("Sprite2D"u8))
+        GDClassData* data = (GDClassData*)classUserdata;
+        GDExtensionClassLibraryPtr library = data->Library;
+        GDStringName className = data->ClassName;
+        GDStringName parentClassName = data->ParentClassName;
+        GDExtensionObjectPtr parent = GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&parentClassName));
+        GDExample self = new GDExample
         {
-            self = new GDExample
-            {
-                Parent = GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&className))
-            };
-        }
-
+            Parent = parent
+        };
         GDExtensionClassInstancePtr instance = new GCHandle<GDExample>(self).ToPointer();
-
-        using (GDStringName className = new GDStringName("GDExample"u8))
-        {
-            GDExtensionInterface.ObjectSetInstance(self.Parent,
-                                                   new GDExtensionConstStringNamePtr(&className),
-                                                   instance);
-        }
-
+        GDExtensionInterface.ObjectSetInstance(parent,
+                                               new GDExtensionConstStringNamePtr(&className),
+                                               instance);
         GDExtensionInstanceBindingCallbacks callbacks = default;
-        GDExtensionInterface.ObjectSetInstanceBinding(self.Parent, classUserdata, instance.Pointer, &callbacks);
-        return self.Parent;
+        GDExtensionInterface.ObjectSetInstanceBinding(parent, library.Pointer, instance.Pointer, &callbacks);
+        return parent;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
