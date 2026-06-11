@@ -67,7 +67,7 @@ public static unsafe class GDExampleMarshaller
         GDStringName parentClassName = data->ParentClassName;
         GDExtensionObjectPtr parent = GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&parentClassName));
         GDExample self = new GDExample(parent);
-        GDExtensionClassInstancePtr instance = new GCHandle<GDExample>(self).ToPointer();
+        GDExtensionClassInstancePtr instance = GDMarshal.ToPointer(new GCHandle<GDExample>(self));
         GDExtensionInterface.ObjectSetInstance(parent,
                                                new GDExtensionConstStringNamePtr(&className),
                                                instance);
@@ -79,7 +79,7 @@ public static unsafe class GDExampleMarshaller
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void FreeInstance(void* classUserdata, GDExtensionClassInstancePtr instance)
     {
-        GCHandle<GDExample> handle = instance.ToHandle<GDExample>();
+        GCHandle<GDExample> handle = GDMarshal.ToGCHandle<GDExample>(instance);
         GDExample self = handle.Target;
         handle.Dispose();
         self.Dispose();
@@ -87,21 +87,21 @@ public static unsafe class GDExampleMarshaller
 
     private static double GetAmplitude(GDExtensionClassInstancePtr instance)
     {
-        return instance.ToHandle<GDExample>().Target.Amplitude;
+        return GDMarshal.ToGCHandle<GDExample>(instance).Target.Amplitude;
     }
 
     private static void SetAmplitude(GDExtensionClassInstancePtr instance, double value)
     {
-        instance.ToHandle<GDExample>().Target.Amplitude = value;
+        GDMarshal.ToGCHandle<GDExample>(instance).Target.Amplitude = value;
     }
 
     private static double GetSpeed(GDExtensionClassInstancePtr instance)
     {
-        return instance.ToHandle<GDExample>().Target.Speed;
+        return GDMarshal.ToGCHandle<GDExample>(instance).Target.Speed;
     }
 
     private static void SetSpeed(GDExtensionClassInstancePtr instance, double value)
     {
-        instance.ToHandle<GDExample>().Target.Speed = value;
+        GDMarshal.ToGCHandle<GDExample>(instance).Target.Speed = value;
     }
 }

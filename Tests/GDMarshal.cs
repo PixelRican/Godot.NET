@@ -11,6 +11,16 @@ public static unsafe class GDMarshal
     private const uint PropertyUsageEditor = 4;
     private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
 
+    public static GDExtensionClassInstancePtr ToPointer<T>(GCHandle<T> handle) where T : class
+    {
+        return new GDExtensionClassInstancePtr(GCHandle<T>.ToIntPtr(handle).ToPointer());
+    }
+
+    public static GCHandle<T> ToGCHandle<T>(GDExtensionClassInstancePtr instance) where T : class
+    {
+        return GCHandle<T>.FromIntPtr((nint)instance.Pointer);
+    }
+
     public static void BindMethod(GDExtensionClassLibraryPtr library, ReadOnlySpan<byte> className, ReadOnlySpan<byte> methodName, void* function, GDExtensionVariantType returnType)
     {
         using GDStringName methodNameString = new GDStringName(methodName);
