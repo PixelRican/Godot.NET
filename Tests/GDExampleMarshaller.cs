@@ -7,21 +7,18 @@ public static unsafe class GDExampleMarshaller
 {
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
-        GDClassData* data = (GDClassData*)GDExtensionInterface.MemAlloc2((nuint)sizeof(GDClassData), new GDExtensionBool(false));
-        GDStringName className = new GDStringName("GDExample"u8);
-        GDStringName parentClassName = new GDStringName("Sprite2D"u8);
-        *data = new GDClassData(library, className, parentClassName);
-        GDExtensionClassCreationInfo2 classInfo = new GDExtensionClassCreationInfo2
+        using GDStringName className = new GDStringName("GDExample"u8);
+        using GDStringName parentClassName = new GDStringName("Sprite2D"u8);
+        GDExtensionClassCreationInfo classInfo = new GDExtensionClassCreationInfo
         {
-            IsExposed = new GDExtensionBool(true),
-            ClassUserdata = data,
+            ClassUserdata = library.Pointer,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(&CreateInstance),
             FreeInstanceFunc = new GDExtensionClassFreeInstance(&FreeInstance),
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClass2(library,
-                                                            new GDExtensionConstStringNamePtr(&className),
-                                                            new GDExtensionConstStringNamePtr(&parentClassName),
-                                                            &classInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClass(library,
+                                                           new GDExtensionConstStringNamePtr(&className),
+                                                           new GDExtensionConstStringNamePtr(&parentClassName),
+                                                           &classInfo);
         GDMarshal.BindMethod(library,
                              "GDExample"u8,
                              "GetAmplitude"u8,
@@ -61,10 +58,8 @@ public static unsafe class GDExampleMarshaller
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static GDExtensionObjectPtr CreateInstance(void* classUserdata)
     {
-        GDClassData* data = (GDClassData*)classUserdata;
-        GDExtensionClassLibraryPtr library = data->Library;
-        GDStringName className = data->ClassName;
-        GDStringName parentClassName = data->ParentClassName;
+        using GDStringName className = new GDStringName("GDExample"u8);
+        using GDStringName parentClassName = new GDStringName("Sprite2D"u8);
         GDExtensionObjectPtr parent = GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&parentClassName));
         GDExample self = new GDExample(parent);
         GDExtensionClassInstancePtr instance = GDMarshal.ToPointer(new GCHandle<GDExample>(self));
@@ -72,7 +67,7 @@ public static unsafe class GDExampleMarshaller
                                                new GDExtensionConstStringNamePtr(&className),
                                                instance);
         GDExtensionInstanceBindingCallbacks callbacks = default;
-        GDExtensionInterface.ObjectSetInstanceBinding(parent, library.Pointer, instance.Pointer, &callbacks);
+        GDExtensionInterface.ObjectSetInstanceBinding(parent, classUserdata, instance.Pointer, &callbacks);
         return parent;
     }
 
