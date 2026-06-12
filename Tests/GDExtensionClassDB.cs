@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
@@ -39,7 +37,8 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterPropertyGetter(GDExtensionClassLibraryPtr library,
                                               ReadOnlySpan<byte> className,
                                               ReadOnlySpan<byte> methodName,
-                                              void* function,
+                                              GDExtensionClassMethodCall methodCall,
+                                              GDExtensionClassMethodPtrCall methodPtrcall,
                                               GDExtensionVariantType type)
     {
         using GDStringName classStringName = new GDStringName(className);
@@ -57,9 +56,8 @@ public static unsafe class GDExtensionClassDB
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
             Name = new GDExtensionStringNamePtr(&methodStringName),
-            MethodUserdata = function,
-            CallFunc = new GDExtensionClassMethodCall(&CallPassVoidReturnFloat),
-            PtrcallFunc = new GDExtensionClassMethodPtrCall(&PtrCallPassVoidReturnFloat),
+            CallFunc = methodCall,
+            PtrcallFunc = methodPtrcall,
             MethodFlags = (uint)GDExtensionMethodFlagsDefault,
             HasReturnValue = new GDExtensionBool(true),
             ReturnValueInfo = &returnInfo
@@ -72,7 +70,8 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterPropertySetter(GDExtensionClassLibraryPtr library,
                                               ReadOnlySpan<byte> className,
                                               ReadOnlySpan<byte> methodName,
-                                              void* function,
+                                              GDExtensionClassMethodCall methodCall,
+                                              GDExtensionClassMethodPtrCall methodPtrcall,
                                               GDExtensionVariantType type)
     {
         using GDStringName classNameString = new GDStringName(className);
@@ -92,11 +91,9 @@ public static unsafe class GDExtensionClassDB
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
             Name = new GDExtensionStringNamePtr(&methodNameString),
-            MethodUserdata = function,
-            CallFunc = new GDExtensionClassMethodCall(&CallPassFloatReturnVoid),
-            PtrcallFunc = new GDExtensionClassMethodPtrCall(&PtrCallPassFloatReturnVoid),
+            CallFunc = methodCall,
+            PtrcallFunc = methodPtrcall,
             MethodFlags = (uint)GDExtensionMethodFlagsDefault,
-            HasReturnValue = new GDExtensionBool(false),
             ArgumentCount = 1,
             ArgumentsInfo = &argumentInfo,
             ArgumentsMetadata = &argsMetadata,
@@ -132,39 +129,5 @@ public static unsafe class GDExtensionClassDB
                                                                    &info,
                                                                    new GDExtensionConstStringNamePtr(&propertySetterStringName),
                                                                    new GDExtensionConstStringNamePtr(&propertyGetterStringName));
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void PtrCallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
-    {
-        var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
-        function(instance, Unsafe.Read<double>(args[0].Pointer));
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void PtrCallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
-    {
-        var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
-        Unsafe.Write(ret.Pointer, function(instance));
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void CallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
-    {
-        if (GDExtensionMarshal.ValidateArguments(args, argumentCount, error, [GDExtensionVariantTypeFloat]))
-        {
-            var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
-            function(instance, GDExtensionMarshal.ReadFloat(args[0]));
-        }
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void CallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
-    {
-        if (GDExtensionMarshal.ValidateArguments(args, argumentCount, error, []))
-        {
-            var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
-            GDExtensionMarshal.WriteFloat(@return, function(instance));
-        }
     }
 }

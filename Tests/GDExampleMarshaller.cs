@@ -15,12 +15,14 @@ public static unsafe class GDExampleMarshaller
         GDExtensionClassDB.RegisterPropertyGetter(library,
                                                   "GDExample"u8,
                                                   "_get_amplitude"u8,
-                                                  (delegate*<GDExtensionClassInstancePtr, double>)&GetAmplitude,
+                                                  new GDExtensionClassMethodCall(&PropertyGetAmplitude),
+                                                  new GDExtensionClassMethodPtrCall(&PropertyGetAmplitude),
                                                   GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterPropertySetter(library,
                                                   "GDExample"u8,
                                                   "_set_amplitude"u8,
-                                                  (delegate*<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
+                                                  new GDExtensionClassMethodCall(&PropertySetAmplitude),
+                                                  new GDExtensionClassMethodPtrCall(&PropertySetAmplitude),
                                                   GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterProperty(library,
                                             "GDExample"u8,
@@ -31,12 +33,14 @@ public static unsafe class GDExampleMarshaller
         GDExtensionClassDB.RegisterPropertyGetter(library,
                                                   "GDExample"u8,
                                                   "_get_speed"u8,
-                                                  (delegate*<GDExtensionClassInstancePtr, double>)&GetSpeed,
+                                                  new GDExtensionClassMethodCall(&PropertyGetSpeed),
+                                                  new GDExtensionClassMethodPtrCall(&PropertyGetSpeed),
                                                   GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterPropertySetter(library,
                                                   "GDExample"u8,
                                                   "_set_speed"u8,
-                                                  (delegate*<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
+                                                  new GDExtensionClassMethodCall(&PropertySetSpeed),
+                                                  new GDExtensionClassMethodPtrCall(&PropertySetSpeed),
                                                   GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterProperty(library,
                                             "GDExample"u8,
@@ -58,27 +62,71 @@ public static unsafe class GDExampleMarshaller
         GDExtensionMarshal.FreeInstance(instance);
     }
 
-    private static double GetAmplitude(GDExtensionClassInstancePtr instance)
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertyGetAmplitude(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* arguments, GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        return target.Amplitude;
+        Unsafe.Write(result.Pointer, target.Amplitude);
     }
 
-    private static void SetAmplitude(GDExtensionClassInstancePtr instance, double value)
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertyGetAmplitude(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
     {
-        GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        target.Amplitude = value;
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, []))
+        {
+            GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+            GDExtensionMarshal.WriteFloat(result, target.Amplitude);
+        }
     }
 
-    private static double GetSpeed(GDExtensionClassInstancePtr instance)
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertySetAmplitude(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* arguments, GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        return target.Speed;
+        target.Amplitude = Unsafe.Read<double>(arguments[0].Pointer);
     }
 
-    private static void SetSpeed(GDExtensionClassInstancePtr instance, double value)
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertySetAmplitude(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
+    {
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
+        {
+            GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+            target.Amplitude = GDExtensionMarshal.ReadFloat(arguments[0]);
+        }
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertyGetSpeed(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* arguments, GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        target.Speed = value;
+        Unsafe.Write(result.Pointer, target.Speed);
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertyGetSpeed(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
+    {
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, []))
+        {
+            GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+            GDExtensionMarshal.WriteFloat(result, target.Speed);
+        }
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertySetSpeed(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* arguments, GDExtensionTypePtr result)
+    {
+        GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+        target.Speed = Unsafe.Read<double>(arguments[0].Pointer);
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PropertySetSpeed(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
+    {
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
+        {
+            GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+            target.Speed = GDExtensionMarshal.ReadFloat(arguments[0]);
+        }
     }
 }
