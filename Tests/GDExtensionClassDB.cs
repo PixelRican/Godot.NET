@@ -151,43 +151,20 @@ public static unsafe class GDExtensionClassDB
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void CallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
     {
-        switch (argumentCount.Value)
+        if (GDExtensionMarshal.ValidateArguments(args, argumentCount, error, [GDExtensionVariantTypeFloat]))
         {
-            case < 1:
-                error->Error = GDExtensionCallErrorTooFewArguments;
-                error->Expected = 1;
-                return;
-            case > 1:
-                error->Error = GDExtensionCallErrorTooManyArguments;
-                error->Expected = 1;
-                return;
+            var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
+            function(instance, GDExtensionMarshal.ReadFloat(args[0]));
         }
-
-        if (GDExtensionInterface.VariantGetType(args[0]) != GDExtensionVariantTypeFloat)
-        {
-            error->Error = GDExtensionCallErrorInvalidArgument;
-            error->Expected = (int)GDExtensionVariantTypeFloat;
-            error->Argument = 0;
-            return;
-        }
-
-        double arg1;
-        GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat).Method(new GDExtensionUninitializedTypePtr(&arg1), new GDExtensionVariantPtr(args[0].Pointer));
-        var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
-        function(instance, arg1);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void CallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
     {
-        if (argumentCount.Value != 0)
+        if (GDExtensionMarshal.ValidateArguments(args, argumentCount, error, []))
         {
-            error->Error = GDExtensionCallErrorTooManyArguments;
-            error->Expected = 0;
+            var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
+            GDExtensionMarshal.WriteFloat(@return, function(instance));
         }
-
-        var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
-        double result = function(instance);
-        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat).Method(@return, new GDExtensionTypePtr(&result));
     }
 }

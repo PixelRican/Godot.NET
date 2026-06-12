@@ -35,4 +35,46 @@ public static unsafe class GDExtensionMarshal
         GCHandle<T> handle = GCHandle<T>.FromIntPtr((nint)instance.Pointer);
         return handle.Target;
     }
+
+    public static double ReadFloat(GDExtensionConstVariantPtr variant)
+    {
+        double result;
+        GDExtensionTypeFromVariantConstructorFunc constructor = GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat);
+        constructor.Method(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(variant.Pointer));
+        return result;
+    }
+
+    public static void WriteFloat(GDExtensionVariantPtr variant, double value)
+    {
+        GDExtensionVariantFromTypeConstructorFunc constructor = GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat);
+        constructor.Method(variant, new GDExtensionTypePtr(&value));
+    }
+
+    public static bool ValidateArguments(GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionCallError* error, ReadOnlySpan<GDExtensionVariantType> expectedTypes)
+    {
+        if (argumentCount.Value != expectedTypes.Length)
+        {
+            error->Error = argumentCount.Value < expectedTypes.Length
+                ? GDExtensionCallErrorTooFewArguments
+                : GDExtensionCallErrorTooManyArguments;
+            error->Expected = expectedTypes.Length;
+            return false;
+        }
+
+        for (int i = 0; i < expectedTypes.Length; i++)
+        {
+            GDExtensionConstVariantPtr argument = arguments[i];
+            GDExtensionVariantType expectedType = expectedTypes[i];
+
+            if (GDExtensionInterface.VariantGetType(argument) != expectedType)
+            {
+                error->Error = GDExtensionCallErrorInvalidArgument;
+                error->Expected = (int)expectedType;
+                error->Argument = i;
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
