@@ -44,8 +44,8 @@ public static unsafe class GDExtensionClassDB
     {
         using GDStringName classStringName = new GDStringName(className);
         using GDStringName methodStringName = new GDStringName(methodName);
-        using GDStringName emptyStringName = new GDStringName(""u8);
-        using GDString emptyString = new GDString(""u8);
+        using GDStringName emptyStringName = new GDStringName(default);
+        using GDString emptyString = new GDString(default);
         GDExtensionPropertyInfo returnInfo = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&emptyStringName),
@@ -78,8 +78,8 @@ public static unsafe class GDExtensionClassDB
         using GDStringName classNameString = new GDStringName(className);
         using GDStringName methodNameString = new GDStringName(methodName);
         using GDStringName argumentName = new GDStringName("value"u8);
-        using GDStringName emptyStringName = new GDStringName(""u8);
-        using GDString emptyString = new GDString(""u8);
+        using GDStringName emptyStringName = new GDStringName(default);
+        using GDString emptyString = new GDString(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&argumentName),
@@ -117,8 +117,8 @@ public static unsafe class GDExtensionClassDB
         using GDStringName propertyStringName = new GDStringName(propertyName);
         using GDStringName propertyGetterStringName = new GDStringName(propertyGetterName);
         using GDStringName propertySetterStringName = new GDStringName(propertySetterName);
-        using GDStringName emptyStringName = new GDStringName(""u8);
-        using GDString emptyString = new GDString(""u8);
+        using GDStringName emptyStringName = new GDStringName(default);
+        using GDString emptyString = new GDString(default);
         GDExtensionPropertyInfo info = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&propertyStringName),
