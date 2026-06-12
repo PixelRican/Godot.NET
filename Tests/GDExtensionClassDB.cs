@@ -1,0 +1,193 @@
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace Godot.NET.Tests;
+
+public static unsafe class GDExtensionClassDB
+{
+    private const uint PropertyUsageStorage = 2;
+    private const uint PropertyUsageEditor = 4;
+    private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
+
+    public static GDExtensionObjectPtr ConstructObject(ReadOnlySpan<byte> className)
+    {
+        using GDStringName classStringName = new GDStringName(className);
+        return GDExtensionInterface.ClassdbConstructObject(new GDExtensionConstStringNamePtr(&classStringName));
+    }
+
+    public static void RegisterClass(GDExtensionClassLibraryPtr library,
+                                     ReadOnlySpan<byte> className,
+                                     ReadOnlySpan<byte> parentClassName,
+                                     GDExtensionClassCreateInstance createCallback,
+                                     GDExtensionClassFreeInstance freeCallback)
+    {
+        using GDStringName classStringName = new GDStringName(className);
+        using GDStringName parentClassStringName = new GDStringName(parentClassName);
+        GDExtensionClassCreationInfo classInfo = new GDExtensionClassCreationInfo
+        {
+            ClassUserdata = library.Pointer,
+            CreateInstanceFunc = createCallback,
+            FreeInstanceFunc = freeCallback,
+        };
+        GDExtensionInterface.ClassdbRegisterExtensionClass(library,
+            new GDExtensionConstStringNamePtr(&classStringName),
+            new GDExtensionConstStringNamePtr(&parentClassStringName),
+            &classInfo);
+    }
+
+    public static void RegisterPropertyGetter(GDExtensionClassLibraryPtr library,
+                                              ReadOnlySpan<byte> className,
+                                              ReadOnlySpan<byte> methodName,
+                                              void* function,
+                                              GDExtensionVariantType type)
+    {
+        using GDStringName classStringName = new GDStringName(className);
+        using GDStringName methodStringName = new GDStringName(methodName);
+        using GDStringName emptyStringName = new GDStringName(""u8);
+        using GDString emptyString = new GDString(""u8);
+        GDExtensionPropertyInfo returnInfo = new GDExtensionPropertyInfo
+        {
+            Name = new GDExtensionStringNamePtr(&emptyStringName),
+            Type = type,
+            HintString = new GDExtensionStringPtr(&emptyString),
+            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
+            Usage = PropertyUsageDefault
+        };
+        GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
+        {
+            Name = new GDExtensionStringNamePtr(&methodStringName),
+            MethodUserdata = function,
+            CallFunc = new GDExtensionClassMethodCall(&CallPassVoidReturnFloat),
+            PtrcallFunc = new GDExtensionClassMethodPtrCall(&PtrCallPassVoidReturnFloat),
+            MethodFlags = (uint)GDExtensionMethodFlagsDefault,
+            HasReturnValue = new GDExtensionBool(true),
+            ReturnValueInfo = &returnInfo
+        };
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library,
+                                                                 new GDExtensionConstStringNamePtr(&classStringName),
+                                                                 &methodInfo);
+    }
+
+    public static void RegisterPropertySetter(GDExtensionClassLibraryPtr library,
+                                              ReadOnlySpan<byte> className,
+                                              ReadOnlySpan<byte> methodName,
+                                              void* function,
+                                              GDExtensionVariantType type)
+    {
+        using GDStringName classNameString = new GDStringName(className);
+        using GDStringName methodNameString = new GDStringName(methodName);
+        using GDStringName argumentName = new GDStringName("value"u8);
+        using GDStringName emptyStringName = new GDStringName(""u8);
+        using GDString emptyString = new GDString(""u8);
+        GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
+        {
+            Name = new GDExtensionStringNamePtr(&argumentName),
+            Type = type,
+            HintString = new GDExtensionStringPtr(&emptyString),
+            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
+            Usage = PropertyUsageDefault
+        };
+        GDExtensionClassMethodArgumentMetadata argsMetadata = GDExtensionMethodArgumentMetadataNone;
+        GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
+        {
+            Name = new GDExtensionStringNamePtr(&methodNameString),
+            MethodUserdata = function,
+            CallFunc = new GDExtensionClassMethodCall(&CallPassFloatReturnVoid),
+            PtrcallFunc = new GDExtensionClassMethodPtrCall(&PtrCallPassFloatReturnVoid),
+            MethodFlags = (uint)GDExtensionMethodFlagsDefault,
+            HasReturnValue = new GDExtensionBool(false),
+            ArgumentCount = 1,
+            ArgumentsInfo = &argumentInfo,
+            ArgumentsMetadata = &argsMetadata,
+        };
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library,
+                                                                 new GDExtensionConstStringNamePtr(&classNameString),
+                                                                 &methodInfo);
+    }
+
+    public static void RegisterProperty(GDExtensionClassLibraryPtr library,
+                                        ReadOnlySpan<byte> className,
+                                        ReadOnlySpan<byte> propertyName,
+                                        GDExtensionVariantType type,
+                                        ReadOnlySpan<byte> propertyGetterName,
+                                        ReadOnlySpan<byte> propertySetterName)
+    {
+        using GDStringName classStringName = new GDStringName(className);
+        using GDStringName propertyStringName = new GDStringName(propertyName);
+        using GDStringName propertyGetterStringName = new GDStringName(propertyGetterName);
+        using GDStringName propertySetterStringName = new GDStringName(propertySetterName);
+        using GDStringName emptyStringName = new GDStringName(""u8);
+        using GDString emptyString = new GDString(""u8);
+        GDExtensionPropertyInfo info = new GDExtensionPropertyInfo
+        {
+            Name = new GDExtensionStringNamePtr(&propertyStringName),
+            Type = type,
+            HintString = new GDExtensionStringPtr(&emptyString),
+            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
+            Usage = PropertyUsageDefault
+        };
+        GDExtensionInterface.ClassdbRegisterExtensionClassProperty(library,
+                                                                   new GDExtensionConstStringNamePtr(&classStringName),
+                                                                   &info,
+                                                                   new GDExtensionConstStringNamePtr(&propertySetterStringName),
+                                                                   new GDExtensionConstStringNamePtr(&propertyGetterStringName));
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PtrCallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
+    {
+        var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
+        function(instance, Unsafe.Read<double>(args[0].Pointer));
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void PtrCallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* args, GDExtensionTypePtr ret)
+    {
+        var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
+        Unsafe.Write(ret.Pointer, function(instance));
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void CallPassFloatReturnVoid(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
+    {
+        switch (argumentCount.Value)
+        {
+            case < 1:
+                error->Error = GDExtensionCallErrorTooFewArguments;
+                error->Expected = 1;
+                return;
+            case > 1:
+                error->Error = GDExtensionCallErrorTooManyArguments;
+                error->Expected = 1;
+                return;
+        }
+
+        if (GDExtensionInterface.VariantGetType(args[0]) != GDExtensionVariantTypeFloat)
+        {
+            error->Error = GDExtensionCallErrorInvalidArgument;
+            error->Expected = (int)GDExtensionVariantTypeFloat;
+            error->Argument = 0;
+            return;
+        }
+
+        double arg1;
+        GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat).Method(new GDExtensionUninitializedTypePtr(&arg1), new GDExtensionVariantPtr(args[0].Pointer));
+        var function = (delegate*<GDExtensionClassInstancePtr, double, void>)methodUserdata;
+        function(instance, arg1);
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void CallPassVoidReturnFloat(void* methodUserdata, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* args, GDExtensionInt argumentCount, GDExtensionVariantPtr @return, GDExtensionCallError* error)
+    {
+        if (argumentCount.Value != 0)
+        {
+            error->Error = GDExtensionCallErrorTooManyArguments;
+            error->Expected = 0;
+        }
+
+        var function = (delegate*<GDExtensionClassInstancePtr, double>)methodUserdata;
+        double result = function(instance);
+        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat).Method(@return, new GDExtensionTypePtr(&result));
+    }
+}
