@@ -8,42 +8,42 @@ public static unsafe class GDExampleMarshaller
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
         GDExtensionClassDB.RegisterClass(library,
-                              "GDExample"u8,
-                              "Sprite2D"u8,
-                              new GDExtensionClassCreateInstance(&CreateInstance),
-                              new GDExtensionClassFreeInstance(&FreeInstance));
+                                         "GDExample"u8,
+                                         "Sprite2D"u8,
+                                         new GDExtensionClassCreateInstance(&CreateInstance),
+                                         new GDExtensionClassFreeInstance(&FreeInstance));
         GDExtensionClassDB.RegisterPropertyGetter(library,
-                                       "GDExample"u8,
-                                       "GetAmplitude"u8,
-                                       (delegate*<GDExtensionClassInstancePtr, double>)&GetAmplitude,
-                                       GDExtensionVariantTypeFloat);
+                                                  "GDExample"u8,
+                                                  "_get_amplitude"u8,
+                                                  (delegate*<GDExtensionClassInstancePtr, double>)&GetAmplitude,
+                                                  GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterPropertySetter(library,
-                                       "GDExample"u8,
-                                       "SetAmplitude"u8,
-                                       (delegate*<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
-                                       GDExtensionVariantTypeFloat);
+                                                  "GDExample"u8,
+                                                  "_set_amplitude"u8,
+                                                  (delegate*<GDExtensionClassInstancePtr, double, void>)&SetAmplitude,
+                                                  GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterProperty(library,
-                                 "GDExample"u8,
-                                 "Amplitude"u8,
-                                 GDExtensionVariantTypeFloat,
-                                 "GetAmplitude"u8,
-                                 "SetAmplitude"u8);
+                                            "GDExample"u8,
+                                            "amplitude"u8,
+                                            GDExtensionVariantTypeFloat,
+                                            "_get_amplitude"u8,
+                                            "_set_amplitude"u8);
         GDExtensionClassDB.RegisterPropertyGetter(library,
-                                       "GDExample"u8,
-                                       "GetSpeed"u8,
-                                       (delegate*<GDExtensionClassInstancePtr, double>)&GetSpeed,
-                                       GDExtensionVariantTypeFloat);
+                                                  "GDExample"u8,
+                                                  "_get_speed"u8,
+                                                  (delegate*<GDExtensionClassInstancePtr, double>)&GetSpeed,
+                                                  GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterPropertySetter(library,
-                                       "GDExample"u8,
-                                       "SetSpeed"u8,
-                                       (delegate*<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
-                                       GDExtensionVariantTypeFloat);
+                                                  "GDExample"u8,
+                                                  "_set_speed"u8,
+                                                  (delegate*<GDExtensionClassInstancePtr, double, void>)&SetSpeed,
+                                                  GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterProperty(library,
-                                 "GDExample"u8,
-                                 "Speed"u8,
-                                 GDExtensionVariantTypeFloat,
-                                 "GetSpeed"u8,
-                                 "SetSpeed"u8);
+                                            "GDExample"u8,
+                                            "speed"u8,
+                                            GDExtensionVariantTypeFloat,
+                                            "_get_speed"u8,
+                                            "_set_speed"u8);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
