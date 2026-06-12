@@ -5,7 +5,7 @@ namespace Godot.NET.Tests;
 
 public static unsafe class GDExampleMarshaller
 {
-    public static void RegisterClass(GDExtensionClassLibraryPtr library)
+    public static void Initialize(GDExtensionClassLibraryPtr library)
     {
         GDExtensionClassDB.RegisterClass(library,
                                          "GDExample"u8,

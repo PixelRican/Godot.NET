@@ -22,7 +22,7 @@ public static unsafe class Program
     {
         if (level == GDExtensionInitializationScene)
         {
-            GDExampleMarshaller.RegisterClass(new GDExtensionClassLibraryPtr(userdata));
+            GDExampleMarshaller.Initialize(new GDExtensionClassLibraryPtr(userdata));
         }
     }
 
