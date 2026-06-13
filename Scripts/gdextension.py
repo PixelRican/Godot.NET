@@ -367,11 +367,7 @@ class GDExtensionInterfaceGenerator:
         file.write("\n")
         file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
         file.write("    {\n")
-        file.write("        if (getProcAddress.Method == null)\n")
-        file.write("        {\n")
-        file.write("            throw new ArgumentNullException(nameof(getProcAddress));\n")
-        file.write("        }\n")
-        file.write("\n")
+        file.write("        ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));\n")
         for interface_name, field_name, field_type in fields:
             file.write(f"        {field_name} = ({field_type})Load(getProcAddress, \"{interface_name}\"u8);\n")
         file.write("    }\n")

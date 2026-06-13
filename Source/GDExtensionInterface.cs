@@ -1106,11 +1106,7 @@ public static unsafe class GDExtensionInterface
 
     public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)
     {
-        if (getProcAddress.Method == null)
-        {
-            throw new ArgumentNullException(nameof(getProcAddress));
-        }
-
+        ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));
         s_getGodotVersion = (delegate* unmanaged[Cdecl]<GDExtensionGodotVersion*, void>)Load(getProcAddress, "get_godot_version"u8);
         s_getGodotVersion2 = (delegate* unmanaged[Cdecl]<GDExtensionGodotVersion2*, void>)Load(getProcAddress, "get_godot_version2"u8);
         s_memAlloc = (delegate* unmanaged[Cdecl]<nuint, void*>)Load(getProcAddress, "mem_alloc"u8);
