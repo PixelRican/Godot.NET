@@ -83,7 +83,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, []))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            GDExtensionMarshal.WriteFloat(result, target.Amplitude);
+            GDExtensionMarshal.FloatToVariant(result, target.Amplitude);
         }
     }
 
@@ -108,7 +108,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            target.Amplitude = GDExtensionMarshal.ReadFloat(arguments[0]);
+            target.Amplitude = GDExtensionMarshal.VariantToFloat(arguments[0]);
         }
     }
 
@@ -133,7 +133,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, []))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            GDExtensionMarshal.WriteFloat(result, target.Speed);
+            GDExtensionMarshal.FloatToVariant(result, target.Speed);
         }
     }
 
@@ -158,7 +158,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            target.Speed = GDExtensionMarshal.ReadFloat(arguments[0]);
+            target.Speed = GDExtensionMarshal.VariantToFloat(arguments[0]);
         }
     }
 }

@@ -35,7 +35,7 @@ public static unsafe class GDExtensionMarshal
         return handle.Target;
     }
 
-    public static double ReadFloat(GDExtensionConstVariantPtr variant)
+    public static double VariantToFloat(GDExtensionConstVariantPtr variant)
     {
         double result;
         GDExtensionTypeFromVariantConstructorFunc constructor = GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat);
@@ -43,7 +43,7 @@ public static unsafe class GDExtensionMarshal
         return result;
     }
 
-    public static void WriteFloat(GDExtensionVariantPtr variant, double value)
+    public static void FloatToVariant(GDExtensionVariantPtr variant, double value)
     {
         GDExtensionVariantFromTypeConstructorFunc constructor = GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat);
         constructor.Method(variant, new GDExtensionTypePtr(&value));
