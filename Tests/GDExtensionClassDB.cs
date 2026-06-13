@@ -10,10 +10,10 @@ public static unsafe class GDExtensionClassDB
 
     public static GDExtensionObjectPtr ConstructObject(ReadOnlySpan<byte> className)
     {
-        nint pointer = ConstructStringName(className);
-        GDExtensionConstStringNamePtr classStringName = new GDExtensionConstStringNamePtr(&pointer);
-        GDExtensionObjectPtr result = GDExtensionInterface.ClassdbConstructObject(classStringName);
-        DestructStringName(pointer);
+        nint classStringName = ConstructStringName(className);
+        GDExtensionConstStringNamePtr classStringNamePointer = new GDExtensionConstStringNamePtr(&classStringName);
+        GDExtensionObjectPtr result = GDExtensionInterface.ClassdbConstructObject(classStringNamePointer);
+        DestructStringName(classStringName);
         return result;
     }
 
