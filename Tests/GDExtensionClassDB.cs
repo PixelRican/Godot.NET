@@ -84,8 +84,8 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterPropertyGetter(GDExtensionClassLibraryPtr library,
                                               ReadOnlySpan<byte> className,
                                               ReadOnlySpan<byte> methodName,
-                                              GDExtensionClassMethodCall methodCall,
-                                              GDExtensionClassMethodPtrCall methodPtrcall,
+                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
+                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
                                               GDExtensionVariantType type)
     {
         nint classStringName = ConstructStringName(className);
@@ -103,8 +103,8 @@ public static unsafe class GDExtensionClassDB
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
             Name = new GDExtensionStringNamePtr(&methodStringName),
-            CallFunc = methodCall,
-            PtrcallFunc = methodPtrcall,
+            CallFunc = new GDExtensionClassMethodCall(callFunc),
+            PtrcallFunc = new GDExtensionClassMethodPtrCall(ptrcallFunc),
             MethodFlags = (uint)GDExtensionMethodFlagsDefault,
             HasReturnValue = new GDExtensionBool(true),
             ReturnValueInfo = &returnInfo
@@ -121,8 +121,8 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterPropertySetter(GDExtensionClassLibraryPtr library,
                                               ReadOnlySpan<byte> className,
                                               ReadOnlySpan<byte> methodName,
-                                              GDExtensionClassMethodCall methodCall,
-                                              GDExtensionClassMethodPtrCall methodPtrcall,
+                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
+                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
                                               GDExtensionVariantType type)
     {
         nint classStringName = ConstructStringName(className);
@@ -142,8 +142,8 @@ public static unsafe class GDExtensionClassDB
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
             Name = new GDExtensionStringNamePtr(&methodStringName),
-            CallFunc = methodCall,
-            PtrcallFunc = methodPtrcall,
+            CallFunc = new GDExtensionClassMethodCall(callFunc),
+            PtrcallFunc = new GDExtensionClassMethodPtrCall(ptrcallFunc),
             MethodFlags = (uint)GDExtensionMethodFlagsDefault,
             ArgumentCount = 1,
             ArgumentsInfo = &argumentInfo,
@@ -162,9 +162,9 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterProperty(GDExtensionClassLibraryPtr library,
                                         ReadOnlySpan<byte> className,
                                         ReadOnlySpan<byte> propertyName,
-                                        GDExtensionVariantType type,
                                         ReadOnlySpan<byte> propertyGetterName,
-                                        ReadOnlySpan<byte> propertySetterName)
+                                        ReadOnlySpan<byte> propertySetterName,
+                                        GDExtensionVariantType type)
     {
         nint classStringName = ConstructStringName(className);
         nint propertyStringName = ConstructStringName(propertyName);
