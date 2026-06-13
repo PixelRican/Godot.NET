@@ -52,7 +52,10 @@ public static unsafe class GDExtensionMarshal
         constructor.Method(variant, new GDExtensionTypePtr(&value));
     }
 
-    public static bool ValidateArguments(GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionCallError* error, ReadOnlySpan<GDExtensionVariantType> expectedTypes)
+    public static bool ValidateArguments(GDExtensionConstVariantPtr* arguments,
+                                         GDExtensionInt argumentCount,
+                                         GDExtensionCallError* error,
+                                         ReadOnlySpan<GDExtensionVariantType> expectedTypes)
     {
         if (argumentCount.Value != expectedTypes.Length)
         {
