@@ -5,7 +5,10 @@ namespace Godot.NET.Tests;
 
 public static unsafe class GDExtensionMarshal
 {
-    public static GDExtensionObjectPtr CreateInstance(void* token, GDExtensionObject target, ReadOnlySpan<byte> className)
+    public static GDExtensionObjectPtr CreateInstance(void* token,
+                                                      GDExtensionObject target,
+                                                      ReadOnlySpan<byte> className,
+                                                      GDExtensionInstanceBindingCallbacks callbacks = default)
     {
         ArgumentNullException.ThrowIfNull(target);
         GDExtensionObjectPtr parent = target.Base;
@@ -17,7 +20,6 @@ public static unsafe class GDExtensionMarshal
             GDExtensionInterface.ObjectSetInstance(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
         }
 
-        GDExtensionInstanceBindingCallbacks callbacks = default;
         GDExtensionInterface.ObjectSetInstanceBinding(parent, token, instance.Pointer, &callbacks);
         return parent;
     }
