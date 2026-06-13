@@ -69,7 +69,7 @@ public static unsafe class GDExampleMarshaller
                                              GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        Unsafe.Write(result.Pointer, target.Amplitude);
+        GDExtensionMarshal.WriteFloat(result, target.Amplitude);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -83,7 +83,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, []))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            GDExtensionMarshal.FloatToVariant(result, target.Amplitude);
+            GDExtensionMarshal.WriteFloat(result, target.Amplitude);
         }
     }
 
@@ -94,7 +94,7 @@ public static unsafe class GDExampleMarshaller
                                              GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        target.Amplitude = Unsafe.Read<double>(arguments[0].Pointer);
+        target.Amplitude = GDExtensionMarshal.ReadFloat(arguments[0]);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -108,7 +108,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            target.Amplitude = GDExtensionMarshal.VariantToFloat(arguments[0]);
+            target.Amplitude = GDExtensionMarshal.ReadFloat(arguments[0]);
         }
     }
 
@@ -119,7 +119,7 @@ public static unsafe class GDExampleMarshaller
                                          GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        Unsafe.Write(result.Pointer, target.Speed);
+        GDExtensionMarshal.WriteFloat(result, target.Speed);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -133,7 +133,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, []))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            GDExtensionMarshal.FloatToVariant(result, target.Speed);
+            GDExtensionMarshal.WriteFloat(result, target.Speed);
         }
     }
 
@@ -144,7 +144,7 @@ public static unsafe class GDExampleMarshaller
                                          GDExtensionTypePtr result)
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-        target.Speed = Unsafe.Read<double>(arguments[0].Pointer);
+        target.Speed = GDExtensionMarshal.ReadFloat(arguments[0]);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -158,7 +158,7 @@ public static unsafe class GDExampleMarshaller
         if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
-            target.Speed = GDExtensionMarshal.VariantToFloat(arguments[0]);
+            target.Speed = GDExtensionMarshal.ReadFloat(arguments[0]);
         }
     }
 }

@@ -35,18 +35,28 @@ public static unsafe class GDExtensionMarshal
         return handle.Target;
     }
 
-    public static double VariantToFloat(GDExtensionConstVariantPtr variant)
+    public static double ReadFloat(GDExtensionConstTypePtr pointer)
+    {
+        return *(double*)pointer.Pointer;
+    }
+
+    public static double ReadFloat(GDExtensionConstVariantPtr pointer)
     {
         double result;
         GDExtensionTypeFromVariantConstructorFunc constructor = GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat);
-        constructor.Method(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(variant.Pointer));
+        constructor.Method(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(pointer.Pointer));
         return result;
     }
 
-    public static void FloatToVariant(GDExtensionVariantPtr variant, double value)
+    public static void WriteFloat(GDExtensionTypePtr pointer, double value)
+    {
+        *(double*)pointer.Pointer = value;
+    }
+
+    public static void WriteFloat(GDExtensionVariantPtr pointer, double value)
     {
         GDExtensionVariantFromTypeConstructorFunc constructor = GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat);
-        constructor.Method(variant, new GDExtensionTypePtr(&value));
+        constructor.Method(pointer, new GDExtensionTypePtr(&value));
     }
 
     public static bool ValidateArguments(GDExtensionConstVariantPtr* arguments,
