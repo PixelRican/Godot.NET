@@ -62,16 +62,16 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterClass(GDExtensionClassLibraryPtr library,
                                      ReadOnlySpan<byte> className,
                                      ReadOnlySpan<byte> parentClassName,
-                                     GDExtensionClassCreateInstance createCallback,
-                                     GDExtensionClassFreeInstance freeCallback)
+                                     delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> createInstanceFunc,
+                                     delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, void> freeInstanceFunc)
     {
         nint classStringName = ConstructStringName(className);
         nint parentClassStringName = ConstructStringName(parentClassName);
         GDExtensionClassCreationInfo classInfo = new GDExtensionClassCreationInfo
         {
             ClassUserdata = library.Pointer,
-            CreateInstanceFunc = createCallback,
-            FreeInstanceFunc = freeCallback,
+            CreateInstanceFunc = new GDExtensionClassCreateInstance(createInstanceFunc),
+            FreeInstanceFunc = new GDExtensionClassFreeInstance(freeInstanceFunc),
         };
         GDExtensionInterface.ClassdbRegisterExtensionClass(library,
                                                            new GDExtensionConstStringNamePtr(&classStringName),

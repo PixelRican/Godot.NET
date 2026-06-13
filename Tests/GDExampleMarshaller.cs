@@ -7,11 +7,7 @@ public static unsafe class GDExampleMarshaller
 {
     public static void Initialize(GDExtensionClassLibraryPtr library)
     {
-        GDExtensionClassDB.RegisterClass(library,
-                                         "GDExample"u8,
-                                         "Sprite2D"u8,
-                                         new GDExtensionClassCreateInstance(&CreateInstance),
-                                         new GDExtensionClassFreeInstance(&FreeInstance));
+        GDExtensionClassDB.RegisterClass(library, "GDExample"u8, "Sprite2D"u8, &CreateInstance, &FreeInstance);
         GDExtensionClassDB.RegisterPropertyGetter(library,
                                                   "GDExample"u8,
                                                   "_get_amplitude"u8,
