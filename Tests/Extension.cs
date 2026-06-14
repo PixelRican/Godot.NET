@@ -3,22 +3,21 @@ using System.Runtime.InteropServices;
 
 namespace Godot.NET.Tests;
 
-public static unsafe class Program
+file static unsafe class Extension
 {
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)], EntryPoint = "GDExample_Initialize")]
-    private static GDExtensionBool Initialize(GDExtensionInterfaceGetProcAddress getProcAddress,
-        GDExtensionClassLibraryPtr library, GDExtensionInitialization* initialization)
+    private static GDExtensionBool Initialize(GDExtensionInterfaceGetProcAddress getProcAddress, GDExtensionClassLibraryPtr library, GDExtensionInitialization* initialization)
     {
         GDExtensionInterface.Initialize(getProcAddress);
         initialization->MinimumInitializationLevel = GDExtensionInitializationScene;
         initialization->Userdata = library.Pointer;
-        initialization->Initialize = new GDExtensionInitializeCallback(&InitializeExtension);
-        initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeExtension);
+        initialization->Initialize = new GDExtensionInitializeCallback(&InitializeLevel);
+        initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeLevel);
         return new GDExtensionBool(true);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void InitializeExtension(void* userdata, GDExtensionInitializationLevel level)
+    private static void InitializeLevel(void* userdata, GDExtensionInitializationLevel level)
     {
         if (level == GDExtensionInitializationScene)
         {
@@ -27,7 +26,7 @@ public static unsafe class Program
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void DeinitializeExtension(void* userdata, GDExtensionInitializationLevel level)
+    private static void DeinitializeLevel(void* userdata, GDExtensionInitializationLevel level)
     {
     }
 }
