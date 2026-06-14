@@ -8,11 +8,14 @@ public sealed class GDExample : GDExtensionObject
     private double _amplitude;
     private double _speed;
     private double _timePassed;
+    private double _timeEmit;
+    private nint _positionChanged;
 
     public GDExample() : base("Sprite2D"u8)
     {
         _amplitude = 10.0;
         _speed = 1.0;
+        _positionChanged = GDExtensionClassDB.ConstructStringName("position_changed"u8);
     }
 
     public double Amplitude
@@ -30,10 +33,26 @@ public sealed class GDExample : GDExtensionObject
     public void Process(double delta)
     {
         _timePassed += _speed * delta;
-        GDExtensionClassDB.SetPosition(Base, new Vector2
+        _timeEmit += delta;
+        Vector2 newPosition = new Vector2(
+            x: (float)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
+            y: (float)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5))));
+        GDExtensionClassDB.SetPosition(Base, newPosition);
+
+        if (_timeEmit >= 1.0)
         {
-            X = (float)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
-            Y = (float)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5)))
-        });
+            GDExtensionClassDB.EmitSignal(Base, _positionChanged, newPosition);
+            _timeEmit = 0.0;
+        }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        GDExtensionClassDB.DestructStringName(_positionChanged);
+
+        if (disposing)
+        {
+            _positionChanged = 0;
+        }
     }
 }

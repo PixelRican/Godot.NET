@@ -14,6 +14,7 @@ public static unsafe class GDExampleMarshaller
         GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_speed"u8, &PropertyGetSpeed, &PropertyGetSpeed, GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterPropertySetter(library, "GDExample"u8, "_set_speed"u8, &PropertySetSpeed, &PropertySetSpeed, GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterProperty(library, "GDExample"u8, "speed"u8, "_get_speed"u8, "_set_speed"u8, GDExtensionVariantTypeFloat);
+        GDExtensionClassDB.RegisterSignal(library, "GDExample"u8, "position_changed"u8, "new_position"u8, GDExtensionVariantTypeVector2);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

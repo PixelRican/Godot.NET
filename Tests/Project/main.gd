@@ -1,11 +1,7 @@
-extends Node
+extends Node2D
 
-func _ready() -> void:
-	var object: GDExample = $GDExample
-	assert(object)
-	assert(object.amplitude == 10.0)
-	assert(object.speed == 1.0)
-	object.amplitude *= 2.0
-	assert(object.amplitude == 20.0)
-	object.speed *= 2.0
-	assert(object.speed == 2.0)
+func _ready():
+	$GDExample.position_changed.connect(_on_position_changed)
+
+func _on_position_changed(new_position: Vector2):
+	prints("New position:", new_position)

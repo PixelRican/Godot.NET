@@ -196,6 +196,64 @@ public static unsafe class GDExtensionClassDB
         DestructString(emptyString);
     }
 
+    public static void RegisterSignal(GDExtensionClassLibraryPtr library,
+                                      ReadOnlySpan<byte> className,
+                                      ReadOnlySpan<byte> signalName,
+                                      ReadOnlySpan<byte> argumentName,
+                                      GDExtensionVariantType argumentType)
+    {
+        nint classStringName = ConstructStringName(className);
+        nint signalStringName = ConstructStringName(signalName);
+        nint argumentStringName = ConstructStringName(argumentName);
+        nint emptyStringName = ConstructStringName(default);
+        nint emptyString = ConstructString(default);
+        GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
+        {
+            Name = new GDExtensionStringNamePtr(&argumentStringName),
+            Type = argumentType,
+            HintString = new GDExtensionStringPtr(&emptyString),
+            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
+            Usage = PropertyUsageDefault
+        };
+        GDExtensionInterface.ClassdbRegisterExtensionClassSignal(library,
+                                                                 new GDExtensionConstStringNamePtr(&classStringName),
+                                                                 new GDExtensionConstStringNamePtr(&signalStringName),
+                                                                 &argumentInfo,
+                                                                 new GDExtensionInt(1));
+        DestructStringName(classStringName);
+        DestructStringName(signalStringName);
+        DestructStringName(argumentStringName);
+        DestructStringName(emptyStringName);
+        DestructString(emptyString);
+    }
+
+    public static void EmitSignal(GDExtensionObjectPtr instance, nint argument1, Vector2 argument2)
+    {
+        nint classStringName = ConstructStringName("Object"u8);
+        nint methodStringName = ConstructStringName("emit_signal"u8);
+        var methodBind = GDExtensionInterface.ClassdbGetMethodBind(new GDExtensionConstStringNamePtr(&classStringName),
+                                                                   new GDExtensionConstStringNamePtr(&methodStringName),
+                                                                   new GDExtensionInt(4047867050));
+        DestructStringName(classStringName);
+        DestructStringName(methodStringName);
+        void* variantArgument1 = stackalloc byte[24];
+        void* variantArgument2 = stackalloc byte[24];
+        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeStringName).Method(new GDExtensionUninitializedVariantPtr(variantArgument1),
+                                                                                                    new GDExtensionTypePtr(&argument1));
+        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeVector2).Method(new GDExtensionUninitializedVariantPtr(variantArgument2),
+                                                                                                 new GDExtensionTypePtr(&argument2));
+        GDExtensionConstVariantPtr* arguments = stackalloc GDExtensionConstVariantPtr[]
+        {
+            new GDExtensionConstVariantPtr(variantArgument1),
+            new GDExtensionConstVariantPtr(variantArgument2),
+        };
+        void* result = stackalloc byte[24];
+        GDExtensionInterface.ObjectMethodBindCall(methodBind, instance, arguments, new GDExtensionInt(2), new GDExtensionUninitializedVariantPtr(result), null);
+        GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(variantArgument1));
+        GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(variantArgument2));
+        GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(result));
+    }
+
     public static bool Equals(GDExtensionConstStringNamePtr left, GDExtensionConstStringNamePtr right)
     {
         GDExtensionBool result;
