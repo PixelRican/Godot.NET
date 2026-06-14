@@ -1,4 +1,7 @@
-﻿namespace Godot.NET.Tests;
+﻿using System;
+using System.Numerics;
+
+namespace Godot.NET.Tests;
 
 public sealed class GDExample : GDExtensionObject
 {
@@ -27,5 +30,10 @@ public sealed class GDExample : GDExtensionObject
     public void Process(double delta)
     {
         _timePassed += _speed * delta;
+        GDExtensionClassDB.SetPosition(Base, new Vector2
+        {
+            X = (float)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
+            Y = (float)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5)))
+        });
     }
 }
