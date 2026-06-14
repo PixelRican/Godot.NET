@@ -14,6 +14,7 @@ public static unsafe class GDExampleMarshaller
         GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_speed"u8, &PropertyGetSpeed, &PropertyGetSpeed, GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterPropertySetter(library, "GDExample"u8, "_set_speed"u8, &PropertySetSpeed, &PropertySetSpeed, GDExtensionVariantTypeFloat);
         GDExtensionClassDB.RegisterProperty(library, "GDExample"u8, "speed"u8, "_get_speed"u8, "_set_speed"u8, GDExtensionVariantTypeFloat);
+        GDExtensionClassDB.RegisterProcess(library, "GDExample"u8, &VirtualMethodProcess, &VirtualMethodProcess);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -94,5 +95,22 @@ public static unsafe class GDExampleMarshaller
     {
         GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
         target.Speed = GDExtensionMarshal.ReadFloat(arguments[0]);
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void VirtualMethodProcess(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
+    {
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
+        {
+            GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+            target.Process(GDExtensionMarshal.ReadFloat(arguments[0]));
+        }
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static void VirtualMethodProcess(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstTypePtr* arguments, GDExtensionTypePtr result)
+    {
+        GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
+        target.Process(GDExtensionMarshal.ReadFloat(arguments[0]));
     }
 }

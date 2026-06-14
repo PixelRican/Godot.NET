@@ -4,6 +4,7 @@ public sealed class GDExample : GDExtensionObject
 {
     private double _amplitude;
     private double _speed;
+    private double _timePassed;
 
     public GDExample() : base("Sprite2D"u8)
     {
@@ -21,5 +22,10 @@ public sealed class GDExample : GDExtensionObject
     {
         get => _speed;
         set => _speed = value;
+    }
+
+    public void Process(double delta)
+    {
+        _timePassed += _speed * delta;
     }
 }

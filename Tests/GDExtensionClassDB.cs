@@ -192,4 +192,43 @@ public static unsafe class GDExtensionClassDB
         DestructStringName(emptyStringName);
         DestructString(emptyString);
     }
+
+    public static void RegisterProcess(GDExtensionClassLibraryPtr library,
+                                        ReadOnlySpan<byte> className,
+                                        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
+                                        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc)
+    {
+        nint classStringName = ConstructStringName(className);
+        nint methodStringName = ConstructStringName("_process"u8);
+        nint argumentStringName = ConstructStringName("delta"u8);
+        nint emptyStringName = ConstructStringName(default);
+        nint emptyString = ConstructString(default);
+        GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
+        {
+            Name = new GDExtensionStringNamePtr(&argumentStringName),
+            Type = GDExtensionVariantTypeFloat,
+            HintString = new GDExtensionStringPtr(&emptyString),
+            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
+            Usage = PropertyUsageDefault
+        };
+        GDExtensionClassMethodArgumentMetadata argsMetadata = GDExtensionMethodArgumentMetadataNone;
+        GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
+        {
+            Name = new GDExtensionStringNamePtr(&methodStringName),
+            CallFunc = new GDExtensionClassMethodCall(callFunc),
+            PtrcallFunc = new GDExtensionClassMethodPtrCall(ptrcallFunc),
+            MethodFlags = (uint)GDExtensionMethodFlagVirtual,
+            ArgumentCount = 1,
+            ArgumentsInfo = &argumentInfo,
+            ArgumentsMetadata = &argsMetadata,
+        };
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library,
+                                                                 new GDExtensionConstStringNamePtr(&classStringName),
+                                                                 &methodInfo);
+        DestructStringName(classStringName);
+        DestructStringName(methodStringName);
+        DestructStringName(argumentStringName);
+        DestructStringName(emptyStringName);
+        DestructString(emptyString);
+    }
 }
