@@ -13,7 +13,6 @@ autostart = true
 ignore_time_scale = true
 
 [node name="GDExample" type="GDExample" parent="." unique_id=1071962141]
-position = Vector2(560, 320)
 texture = ExtResource("2_0xm2m")
 
 [connection signal="timeout" from="Timer" to="GDExample" method="queue_free"]

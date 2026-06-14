@@ -64,7 +64,8 @@ public static unsafe class GDExtensionClassDB
                                      ReadOnlySpan<byte> className,
                                      ReadOnlySpan<byte> parentClassName,
                                      delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> createInstanceFunc,
-                                     delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, void> freeInstanceFunc)
+                                     delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, void> freeInstanceFunc,
+                                     delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, GDExtensionClassCallVirtual> getVirtualFunc)
     {
         nint classStringName = ConstructStringName(className);
         nint parentClassStringName = ConstructStringName(parentClassName);
@@ -73,6 +74,7 @@ public static unsafe class GDExtensionClassDB
             ClassUserdata = library.Pointer,
             CreateInstanceFunc = new GDExtensionClassCreateInstance(createInstanceFunc),
             FreeInstanceFunc = new GDExtensionClassFreeInstance(freeInstanceFunc),
+            GetVirtualFunc = new GDExtensionClassGetVirtual(getVirtualFunc)
         };
         GDExtensionInterface.ClassdbRegisterExtensionClass(library,
                                                            new GDExtensionConstStringNamePtr(&classStringName),
@@ -194,43 +196,16 @@ public static unsafe class GDExtensionClassDB
         DestructString(emptyString);
     }
 
-    public static void RegisterProcess(GDExtensionClassLibraryPtr library,
-                                        ReadOnlySpan<byte> className,
-                                        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
-                                        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc)
+    public static bool Equals(GDExtensionConstStringNamePtr left, GDExtensionConstStringNamePtr right)
     {
-        nint classStringName = ConstructStringName(className);
-        nint methodStringName = ConstructStringName("_process"u8);
-        nint argumentStringName = ConstructStringName("delta"u8);
-        nint emptyStringName = ConstructStringName(default);
-        nint emptyString = ConstructString(default);
-        GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
-        {
-            Name = new GDExtensionStringNamePtr(&argumentStringName),
-            Type = GDExtensionVariantTypeFloat,
-            HintString = new GDExtensionStringPtr(&emptyString),
-            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
-            Usage = PropertyUsageDefault
-        };
-        GDExtensionClassMethodArgumentMetadata argsMetadata = GDExtensionMethodArgumentMetadataNone;
-        GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
-        {
-            Name = new GDExtensionStringNamePtr(&methodStringName),
-            CallFunc = new GDExtensionClassMethodCall(callFunc),
-            PtrcallFunc = new GDExtensionClassMethodPtrCall(ptrcallFunc),
-            MethodFlags = (uint)GDExtensionMethodFlagVirtual,
-            ArgumentCount = 1,
-            ArgumentsInfo = &argumentInfo,
-            ArgumentsMetadata = &argsMetadata,
-        };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library,
-                                                                 new GDExtensionConstStringNamePtr(&classStringName),
-                                                                 &methodInfo);
-        DestructStringName(classStringName);
-        DestructStringName(methodStringName);
-        DestructStringName(argumentStringName);
-        DestructStringName(emptyStringName);
-        DestructString(emptyString);
+        GDExtensionBool result;
+        GDExtensionPtrOperatorEvaluator evaluator = GDExtensionInterface.VariantGetPtrOperatorEvaluator(GDExtensionVariantOpEqual,
+                                                                                                        GDExtensionVariantTypeStringName,
+                                                                                                        GDExtensionVariantTypeStringName);
+        evaluator.Method(new GDExtensionConstTypePtr(left.Pointer),
+                         new GDExtensionConstTypePtr(right.Pointer),
+                         new GDExtensionTypePtr(&result));
+        return result.Value;
     }
 
     public static void SetPosition(GDExtensionObjectPtr obj, Vector2 value)
