@@ -17,16 +17,16 @@ file static unsafe class Extension
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void InitializeLevel(void* userdata, GDExtensionInitializationLevel level)
+    private static void InitializeLevel(void* token, GDExtensionInitializationLevel level)
     {
         if (level == GDExtensionInitializationScene)
         {
-            GDExampleMarshaller.Initialize(new GDExtensionClassLibraryPtr(userdata));
+            GDExampleMarshaller.Initialize(new GDExtensionClassLibraryPtr(token));
         }
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void DeinitializeLevel(void* userdata, GDExtensionInitializationLevel level)
+    private static void DeinitializeLevel(void* token, GDExtensionInitializationLevel level)
     {
     }
 }
