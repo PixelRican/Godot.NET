@@ -231,9 +231,9 @@ public static unsafe class GDExtensionClassDB
     {
         nint classStringName = ConstructStringName("Object"u8);
         nint methodStringName = ConstructStringName("emit_signal"u8);
-        var methodBind = GDExtensionInterface.ClassdbGetMethodBind(new GDExtensionConstStringNamePtr(&classStringName),
-                                                                   new GDExtensionConstStringNamePtr(&methodStringName),
-                                                                   new GDExtensionInt(4047867050));
+        GDExtensionMethodBindPtr methodBind = GDExtensionInterface.ClassdbGetMethodBind(new GDExtensionConstStringNamePtr(&classStringName),
+                                                                                        new GDExtensionConstStringNamePtr(&methodStringName),
+                                                                                        new GDExtensionInt(4047867050));
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
         void* variantArgument1 = stackalloc byte[24];
