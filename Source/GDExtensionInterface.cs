@@ -1289,7 +1289,7 @@ public static unsafe class GDExtensionInterface
     {
         fixed (byte* reference = name)
         {
-            GDExtensionInterfaceFunctionPtr function = getProcAddress.Method(reference);
+            GDExtensionInterfaceFunctionPtr function = getProcAddress.Invoke(reference);
             return function.Method;
         }
     }

@@ -397,7 +397,7 @@ class GDExtensionInterfaceGenerator:
         file.write("    {\n")
         file.write("        fixed (byte* reference = name)\n")
         file.write("        {\n")
-        file.write("            GDExtensionInterfaceFunctionPtr function = getProcAddress.Method(reference);\n")
+        file.write("            GDExtensionInterfaceFunctionPtr function = getProcAddress.Invoke(reference);\n")
         file.write("            return function.Method;\n")
         file.write("        }\n")
         file.write("    }\n")

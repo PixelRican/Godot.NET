@@ -50,14 +50,14 @@ public static unsafe class GDExtensionClassDB
     {
         GDExtensionTypePtr @base = new GDExtensionTypePtr(&pointer);
         GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeString);
-        destructor.Method(@base);
+        destructor.Invoke(@base);
     }
 
     public static void DestructStringName(nint pointer)
     {
         GDExtensionTypePtr @base = new GDExtensionTypePtr(&pointer);
         GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName);
-        destructor.Method(@base);
+        destructor.Invoke(@base);
     }
 
     public static void RegisterClass(GDExtensionClassLibraryPtr library,
@@ -238,9 +238,9 @@ public static unsafe class GDExtensionClassDB
         DestructStringName(methodStringName);
         void* variantArgument1 = stackalloc byte[24];
         void* variantArgument2 = stackalloc byte[24];
-        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeStringName).Method(new GDExtensionUninitializedVariantPtr(variantArgument1),
+        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeStringName).Invoke(new GDExtensionUninitializedVariantPtr(variantArgument1),
                                                                                                     new GDExtensionTypePtr(&argument1));
-        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeVector2).Method(new GDExtensionUninitializedVariantPtr(variantArgument2),
+        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeVector2).Invoke(new GDExtensionUninitializedVariantPtr(variantArgument2),
                                                                                                  new GDExtensionTypePtr(&argument2));
         GDExtensionConstVariantPtr* arguments = stackalloc GDExtensionConstVariantPtr[]
         {
@@ -260,7 +260,7 @@ public static unsafe class GDExtensionClassDB
         GDExtensionPtrOperatorEvaluator evaluator = GDExtensionInterface.VariantGetPtrOperatorEvaluator(GDExtensionVariantOpEqual,
                                                                                                         GDExtensionVariantTypeStringName,
                                                                                                         GDExtensionVariantTypeStringName);
-        evaluator.Method(new GDExtensionConstTypePtr(left.Pointer),
+        evaluator.Invoke(new GDExtensionConstTypePtr(left.Pointer),
                          new GDExtensionConstTypePtr(right.Pointer),
                          new GDExtensionTypePtr(&result));
         return result.Value;
