@@ -27,6 +27,8 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Godot.NET;
 
@@ -210,898 +212,1074 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> s_registerMainLoopCallbacks;
 
     [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.GetGodotVersion2 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionGodotVersion*, void> GetGodotVersion
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void GetGodotVersion(GDExtensionGodotVersion* rGodotVersion)
     {
-        get => s_getGodotVersion;
+        s_getGodotVersion(rGodotVersion);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionGodotVersion2*, void> GetGodotVersion2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void GetGodotVersion2(GDExtensionGodotVersion2* rGodotVersion)
     {
-        get => s_getGodotVersion2;
+        s_getGodotVersion2(rGodotVersion);
     }
 
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemAlloc2 instead.")]
-    public static delegate* unmanaged[Cdecl]<nuint, void*> MemAlloc
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* MemAlloc(nuint pBytes)
     {
-        get => s_memAlloc;
+        return s_memAlloc(pBytes);
     }
 
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemRealloc2 instead.")]
-    public static delegate* unmanaged[Cdecl]<void*, nuint, void*> MemRealloc
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* MemRealloc(void* pPtr, nuint pBytes)
     {
-        get => s_memRealloc;
+        return s_memRealloc(pPtr, pBytes);
     }
 
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemFree2 instead.")]
-    public static delegate* unmanaged[Cdecl]<void*, void> MemFree
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void MemFree(void* pPtr)
     {
-        get => s_memFree;
+        s_memFree(pPtr);
     }
 
-    public static delegate* unmanaged[Cdecl]<nuint, GDExtensionBool, void*> MemAlloc2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* MemAlloc2(nuint pBytes, GDExtensionBool pPadAlign)
     {
-        get => s_memAlloc2;
+        return s_memAlloc2(pBytes, pPadAlign);
     }
 
-    public static delegate* unmanaged[Cdecl]<void*, nuint, GDExtensionBool, void*> MemRealloc2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* MemRealloc2(void* pPtr, nuint pBytes, GDExtensionBool pPadAlign)
     {
-        get => s_memRealloc2;
+        return s_memRealloc2(pPtr, pBytes, pPadAlign);
     }
 
-    public static delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void> MemFree2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void MemFree2(void* pPtr, GDExtensionBool pPadAlign)
     {
-        get => s_memFree2;
+        s_memFree2(pPtr, pPadAlign);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> PrintError
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PrintError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
-        get => s_printError;
+        s_printError(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> PrintErrorWithMessage
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PrintErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
-        get => s_printErrorWithMessage;
+        s_printErrorWithMessage(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> PrintWarning
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PrintWarning(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
-        get => s_printWarning;
+        s_printWarning(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> PrintWarningWithMessage
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PrintWarningWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
-        get => s_printWarningWithMessage;
+        s_printWarningWithMessage(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> PrintScriptError
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PrintScriptError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
-        get => s_printScriptError;
+        s_printScriptError(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> PrintScriptErrorWithMessage
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PrintScriptErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
-        get => s_printScriptErrorWithMessage;
+        s_printScriptErrorWithMessage(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong> GetNativeStructSize
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ulong GetNativeStructSize(GDExtensionConstStringNamePtr pName)
     {
-        get => s_getNativeStructSize;
+        return s_getNativeStructSize(pName);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr, void> VariantNewCopy
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantNewCopy(GDExtensionUninitializedVariantPtr rDest, GDExtensionConstVariantPtr pSrc)
     {
-        get => s_variantNewCopy;
+        s_variantNewCopy(rDest, pSrc);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void> VariantNewNil
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantNewNil(GDExtensionUninitializedVariantPtr rDest)
     {
-        get => s_variantNewNil;
+        s_variantNewNil(rDest);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void> VariantDestroy
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantDestroy(GDExtensionVariantPtr pSelf)
     {
-        get => s_variantDestroy;
+        s_variantDestroy(pSelf);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> VariantCall
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantCall(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
-        get => s_variantCall;
+        s_variantCall(pSelf, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> VariantCallStatic
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantCallStatic(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
-        get => s_variantCallStatic;
+        s_variantCallStatic(pType, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantEvaluate
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionConstVariantPtr pA, GDExtensionConstVariantPtr pB, GDExtensionUninitializedVariantPtr rReturn, GDExtensionBool* rValid)
     {
-        get => s_variantEvaluate;
+        s_variantEvaluate(pOp, pA, pB, rReturn, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> VariantSet
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantSet(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
-        get => s_variantSet;
+        s_variantSet(pSelf, pKey, pValue, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> VariantSetNamed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantSetNamed(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
-        get => s_variantSetNamed;
+        s_variantSetNamed(pSelf, pKey, pValue, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> VariantSetKeyed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantSetKeyed(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
-        get => s_variantSetKeyed;
+        s_variantSetKeyed(pSelf, pKey, pValue, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool*, void> VariantSetIndexed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantSetIndexed(GDExtensionVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid, GDExtensionBool* rOob)
     {
-        get => s_variantSetIndexed;
+        s_variantSetIndexed(pSelf, pIndex, pValue, rValid, rOob);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantGet
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantGet(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
-        get => s_variantGet;
+        s_variantGet(pSelf, pKey, rRet, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantGetNamed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantGetNamed(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
-        get => s_variantGetNamed;
+        s_variantGetNamed(pSelf, pKey, rRet, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantGetKeyed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantGetKeyed(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
-        get => s_variantGetKeyed;
+        s_variantGetKeyed(pSelf, pKey, rRet, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool*, void> VariantGetIndexed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantGetIndexed(GDExtensionConstVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid, GDExtensionBool* rOob)
     {
-        get => s_variantGetIndexed;
+        s_variantGetIndexed(pSelf, pIndex, rRet, rValid, rOob);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool> VariantIterInit
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantIterInit(GDExtensionConstVariantPtr pSelf, GDExtensionUninitializedVariantPtr rIter, GDExtensionBool* rValid)
     {
-        get => s_variantIterInit;
+        return s_variantIterInit(pSelf, rIter, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool*, GDExtensionBool> VariantIterNext
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantIterNext(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionBool* rValid)
     {
-        get => s_variantIterNext;
+        return s_variantIterNext(pSelf, rIter, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> VariantIterGet
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantIterGet(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
-        get => s_variantIterGet;
+        s_variantIterGet(pSelf, rIter, rRet, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt> VariantHash
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt VariantHash(GDExtensionConstVariantPtr pSelf)
     {
-        get => s_variantHash;
+        return s_variantHash(pSelf);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt> VariantRecursiveHash
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt VariantRecursiveHash(GDExtensionConstVariantPtr pSelf, GDExtensionInt pRecursionCount)
     {
-        get => s_variantRecursiveHash;
+        return s_variantRecursiveHash(pSelf, pRecursionCount);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool> VariantHashCompare
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantHashCompare(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pOther)
     {
-        get => s_variantHashCompare;
+        return s_variantHashCompare(pSelf, pOther);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionBool> VariantBooleanize
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantBooleanize(GDExtensionConstVariantPtr pSelf)
     {
-        get => s_variantBooleanize;
+        return s_variantBooleanize(pSelf);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool, void> VariantDuplicate
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantDuplicate(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rRet, GDExtensionBool pDeep)
     {
-        get => s_variantDuplicate;
+        s_variantDuplicate(pSelf, rRet, pDeep);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionStringPtr, void> VariantStringify
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantStringify(GDExtensionConstVariantPtr pSelf, GDExtensionStringPtr rRet)
     {
-        get => s_variantStringify;
+        s_variantStringify(pSelf, rRet);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantType> VariantGetType
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantType VariantGetType(GDExtensionConstVariantPtr pSelf)
     {
-        get => s_variantGetType;
+        return s_variantGetType(pSelf);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionBool> VariantHasMethod
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantHasMethod(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod)
     {
-        get => s_variantHasMethod;
+        return s_variantHasMethod(pSelf, pMethod);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool> VariantHasMember
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantHasMember(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
-        get => s_variantHasMember;
+        return s_variantHasMember(pType, pMember);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool> VariantHasKey
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantHasKey(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionBool* rValid)
     {
-        get => s_variantHasKey;
+        return s_variantHasKey(pSelf, pKey, rValid);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> VariantGetObjectInstanceId
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDObjectInstanceID VariantGetObjectInstanceId(GDExtensionConstVariantPtr pSelf)
     {
-        get => s_variantGetObjectInstanceId;
+        return s_variantGetObjectInstanceId(pSelf);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void> VariantGetTypeName
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionUninitializedStringPtr rName)
     {
-        get => s_variantGetTypeName;
+        s_variantGetTypeName(pType, rName);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> VariantCanConvert
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantCanConvert(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
-        get => s_variantCanConvert;
+        return s_variantCanConvert(pFrom, pTo);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> VariantCanConvertStrict
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool VariantCanConvertStrict(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
-        get => s_variantCanConvertStrict;
+        return s_variantCanConvertStrict(pFrom, pTo);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc> GetVariantFromTypeConstructor
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantFromTypeConstructorFunc GetVariantFromTypeConstructor(GDExtensionVariantType pType)
     {
-        get => s_getVariantFromTypeConstructor;
+        return s_getVariantFromTypeConstructor(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc> GetVariantToTypeConstructor
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypeFromVariantConstructorFunc GetVariantToTypeConstructor(GDExtensionVariantType pType)
     {
-        get => s_getVariantToTypeConstructor;
+        return s_getVariantToTypeConstructor(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantGetInternalPtrFunc> VariantGetPtrInternalGetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantGetInternalPtrFunc VariantGetPtrInternalGetter(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrInternalGetter;
+        return s_variantGetPtrInternalGetter(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, GDExtensionPtrOperatorEvaluator> VariantGetPtrOperatorEvaluator
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrOperatorEvaluator VariantGetPtrOperatorEvaluator(GDExtensionVariantOperator pOperator, GDExtensionVariantType pTypeA, GDExtensionVariantType pTypeB)
     {
-        get => s_variantGetPtrOperatorEvaluator;
+        return s_variantGetPtrOperatorEvaluator(pOperator, pTypeA, pTypeB);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod> VariantGetPtrBuiltinMethod
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrBuiltInMethod VariantGetPtrBuiltinMethod(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionInt pHash)
     {
-        get => s_variantGetPtrBuiltinMethod;
+        return s_variantGetPtrBuiltinMethod(pType, pMethod, pHash);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, GDExtensionPtrConstructor> VariantGetPtrConstructor
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrConstructor VariantGetPtrConstructor(GDExtensionVariantType pType, int pConstructor)
     {
-        get => s_variantGetPtrConstructor;
+        return s_variantGetPtrConstructor(pType, pConstructor);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor> VariantGetPtrDestructor
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrDestructor VariantGetPtrDestructor(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrDestructor;
+        return s_variantGetPtrDestructor(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr*, int, GDExtensionCallError*, void> VariantConstruct
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantConstruct(GDExtensionVariantType pType, GDExtensionUninitializedVariantPtr rBase, GDExtensionConstVariantPtr* pArgs, int pArgumentCount, GDExtensionCallError* rError)
     {
-        get => s_variantConstruct;
+        s_variantConstruct(pType, rBase, pArgs, pArgumentCount, rError);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter> VariantGetPtrSetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrSetter VariantGetPtrSetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
-        get => s_variantGetPtrSetter;
+        return s_variantGetPtrSetter(pType, pMember);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrGetter> VariantGetPtrGetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrGetter VariantGetPtrGetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
-        get => s_variantGetPtrGetter;
+        return s_variantGetPtrGetter(pType, pMember);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter> VariantGetPtrIndexedSetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrIndexedSetter VariantGetPtrIndexedSetter(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrIndexedSetter;
+        return s_variantGetPtrIndexedSetter(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedGetter> VariantGetPtrIndexedGetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrIndexedGetter VariantGetPtrIndexedGetter(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrIndexedGetter;
+        return s_variantGetPtrIndexedGetter(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedSetter> VariantGetPtrKeyedSetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrKeyedSetter VariantGetPtrKeyedSetter(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrKeyedSetter;
+        return s_variantGetPtrKeyedSetter(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedGetter> VariantGetPtrKeyedGetter
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrKeyedGetter VariantGetPtrKeyedGetter(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrKeyedGetter;
+        return s_variantGetPtrKeyedGetter(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker> VariantGetPtrKeyedChecker
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrKeyedChecker VariantGetPtrKeyedChecker(GDExtensionVariantType pType)
     {
-        get => s_variantGetPtrKeyedChecker;
+        return s_variantGetPtrKeyedChecker(pType);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void> VariantGetConstantValue
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void VariantGetConstantValue(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pConstant, GDExtensionUninitializedVariantPtr rRet)
     {
-        get => s_variantGetConstantValue;
+        s_variantGetConstantValue(pType, pConstant, rRet);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction> VariantGetPtrUtilityFunction
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionPtrUtilityFunction VariantGetPtrUtilityFunction(GDExtensionConstStringNamePtr pFunction, GDExtensionInt pHash)
     {
-        get => s_variantGetPtrUtilityFunction;
+        return s_variantGetPtrUtilityFunction(pFunction, pHash);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> StringNewWithLatin1Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithLatin1Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
     {
-        get => s_stringNewWithLatin1Chars;
+        s_stringNewWithLatin1Chars(rDest, pContents);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> StringNewWithUtf8Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithUtf8Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
     {
-        get => s_stringNewWithUtf8Chars;
+        s_stringNewWithUtf8Chars(rDest, pContents);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, void> StringNewWithUtf16Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithUtf16Chars(GDExtensionUninitializedStringPtr rDest, ushort* pContents)
     {
-        get => s_stringNewWithUtf16Chars;
+        s_stringNewWithUtf16Chars(rDest, pContents);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> StringNewWithUtf32Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithUtf32Chars(GDExtensionUninitializedStringPtr rDest, uint* pContents)
     {
-        get => s_stringNewWithUtf32Chars;
+        s_stringNewWithUtf32Chars(rDest, pContents);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void> StringNewWithWideChars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithWideChars(GDExtensionUninitializedStringPtr rDest, char* pContents)
     {
-        get => s_stringNewWithWideChars;
+        s_stringNewWithWideChars(rDest, pContents);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> StringNewWithLatin1CharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithLatin1CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
-        get => s_stringNewWithLatin1CharsAndLen;
+        s_stringNewWithLatin1CharsAndLen(rDest, pContents, pSize);
     }
 
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf8CharsAndLen2 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> StringNewWithUtf8CharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithUtf8CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
-        get => s_stringNewWithUtf8CharsAndLen;
+        s_stringNewWithUtf8CharsAndLen(rDest, pContents, pSize);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt> StringNewWithUtf8CharsAndLen2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringNewWithUtf8CharsAndLen2(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
-        get => s_stringNewWithUtf8CharsAndLen2;
+        return s_stringNewWithUtf8CharsAndLen2(rDest, pContents, pSize);
     }
 
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf16CharsAndLen2 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, void> StringNewWithUtf16CharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithUtf16CharsAndLen(GDExtensionUninitializedStringPtr rDest, ushort* pContents, GDExtensionInt pCharCount)
     {
-        get => s_stringNewWithUtf16CharsAndLen;
+        s_stringNewWithUtf16CharsAndLen(rDest, pContents, pCharCount);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, GDExtensionBool, GDExtensionInt> StringNewWithUtf16CharsAndLen2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringNewWithUtf16CharsAndLen2(GDExtensionUninitializedStringPtr rDest, ushort* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
     {
-        get => s_stringNewWithUtf16CharsAndLen2;
+        return s_stringNewWithUtf16CharsAndLen2(rDest, pContents, pCharCount, pDefaultLittleEndian);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> StringNewWithUtf32CharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithUtf32CharsAndLen(GDExtensionUninitializedStringPtr rDest, uint* pContents, GDExtensionInt pCharCount)
     {
-        get => s_stringNewWithUtf32CharsAndLen;
+        s_stringNewWithUtf32CharsAndLen(rDest, pContents, pCharCount);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void> StringNewWithWideCharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNewWithWideCharsAndLen(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount)
     {
-        get => s_stringNewWithWideCharsAndLen;
+        s_stringNewWithWideCharsAndLen(rDest, pContents, pCharCount);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> StringToLatin1Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringToLatin1Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
     {
-        get => s_stringToLatin1Chars;
+        return s_stringToLatin1Chars(pSelf, rText, pMaxWriteLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> StringToUtf8Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringToUtf8Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
     {
-        get => s_stringToUtf8Chars;
+        return s_stringToUtf8Chars(pSelf, rText, pMaxWriteLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, ushort*, GDExtensionInt, GDExtensionInt> StringToUtf16Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringToUtf16Chars(GDExtensionConstStringPtr pSelf, ushort* rText, GDExtensionInt pMaxWriteLength)
     {
-        get => s_stringToUtf16Chars;
+        return s_stringToUtf16Chars(pSelf, rText, pMaxWriteLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt> StringToUtf32Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringToUtf32Chars(GDExtensionConstStringPtr pSelf, uint* rText, GDExtensionInt pMaxWriteLength)
     {
-        get => s_stringToUtf32Chars;
+        return s_stringToUtf32Chars(pSelf, rText, pMaxWriteLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt> StringToWideChars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringToWideChars(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
     {
-        get => s_stringToWideChars;
+        return s_stringToWideChars(pSelf, rText, pMaxWriteLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*> StringOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static uint* StringOperatorIndex(GDExtensionStringPtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_stringOperatorIndex;
+        return s_stringOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*> StringOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static uint* StringOperatorIndexConst(GDExtensionConstStringPtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_stringOperatorIndexConst;
+        return s_stringOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void> StringOperatorPlusEqString
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringOperatorPlusEqString(GDExtensionStringPtr pSelf, GDExtensionConstStringPtr pB)
     {
-        get => s_stringOperatorPlusEqString;
+        s_stringOperatorPlusEqString(pSelf, pB);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void> StringOperatorPlusEqChar
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringOperatorPlusEqChar(GDExtensionStringPtr pSelf, uint pB)
     {
-        get => s_stringOperatorPlusEqChar;
+        s_stringOperatorPlusEqChar(pSelf, pB);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void> StringOperatorPlusEqCstr
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringOperatorPlusEqCstr(GDExtensionStringPtr pSelf, byte* pB)
     {
-        get => s_stringOperatorPlusEqCstr;
+        s_stringOperatorPlusEqCstr(pSelf, pB);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, char*, void> StringOperatorPlusEqWcstr
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringOperatorPlusEqWcstr(GDExtensionStringPtr pSelf, char* pB)
     {
-        get => s_stringOperatorPlusEqWcstr;
+        s_stringOperatorPlusEqWcstr(pSelf, pB);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void> StringOperatorPlusEqC32Str
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringOperatorPlusEqC32Str(GDExtensionStringPtr pSelf, uint* pB)
     {
-        get => s_stringOperatorPlusEqC32Str;
+        s_stringOperatorPlusEqC32Str(pSelf, pB);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> StringResize
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt StringResize(GDExtensionStringPtr pSelf, GDExtensionInt pResize)
     {
-        get => s_stringResize;
+        return s_stringResize(pSelf, pResize);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void> StringNameNewWithLatin1Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNameNewWithLatin1Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionBool pIsStatic)
     {
-        get => s_stringNameNewWithLatin1Chars;
+        s_stringNameNewWithLatin1Chars(rDest, pContents, pIsStatic);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, void> StringNameNewWithUtf8Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNameNewWithUtf8Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents)
     {
-        get => s_stringNameNewWithUtf8Chars;
+        s_stringNameNewWithUtf8Chars(rDest, pContents);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void> StringNameNewWithUtf8CharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void StringNameNewWithUtf8CharsAndLen(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionInt pSize)
     {
-        get => s_stringNameNewWithUtf8CharsAndLen;
+        s_stringNameNewWithUtf8CharsAndLen(rDest, pContents, pSize);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, nuint, GDExtensionInt> XmlParserOpenBuffer
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionInt XmlParserOpenBuffer(GDExtensionObjectPtr pInstance, byte* pBuffer, nuint pSize)
     {
-        get => s_xmlParserOpenBuffer;
+        return s_xmlParserOpenBuffer(pInstance, pBuffer, pSize);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, ulong, void> FileAccessStoreBuffer
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void FileAccessStoreBuffer(GDExtensionObjectPtr pInstance, byte* pSrc, ulong pLength)
     {
-        get => s_fileAccessStoreBuffer;
+        s_fileAccessStoreBuffer(pInstance, pSrc, pLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, byte*, ulong, ulong> FileAccessGetBuffer
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ulong FileAccessGetBuffer(GDExtensionConstObjectPtr pInstance, byte* pDst, ulong pLength)
     {
-        get => s_fileAccessGetBuffer;
+        return s_fileAccessGetBuffer(pInstance, pDst, pLength);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> ImagePtrw
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte* ImagePtrw(GDExtensionObjectPtr pInstance)
     {
-        get => s_imagePtrw;
+        return s_imagePtrw(pInstance);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> ImagePtr
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte* ImagePtr(GDExtensionObjectPtr pInstance)
     {
-        get => s_imagePtr;
+        return s_imagePtr(pInstance);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long> WorkerThreadPoolAddNativeGroupTask
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long WorkerThreadPoolAddNativeGroupTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserdata, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
-        get => s_workerThreadPoolAddNativeGroupTask;
+        return s_workerThreadPoolAddNativeGroupTask(pInstance, pFunc, pUserdata, pElements, pTasks, pHighPriority, pDescription);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> WorkerThreadPoolAddNativeTask
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long WorkerThreadPoolAddNativeTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserdata, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
-        get => s_workerThreadPoolAddNativeTask;
+        return s_workerThreadPoolAddNativeTask(pInstance, pFunc, pUserdata, pHighPriority, pDescription);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, byte*> PackedByteArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte* PackedByteArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedByteArrayOperatorIndex;
+        return s_packedByteArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, byte*> PackedByteArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static byte* PackedByteArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedByteArrayOperatorIndexConst;
+        return s_packedByteArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, float*> PackedFloat32ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float* PackedFloat32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedFloat32ArrayOperatorIndex;
+        return s_packedFloat32ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*> PackedFloat32ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float* PackedFloat32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedFloat32ArrayOperatorIndexConst;
+        return s_packedFloat32ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*> PackedFloat64ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static double* PackedFloat64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedFloat64ArrayOperatorIndex;
+        return s_packedFloat64ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, double*> PackedFloat64ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static double* PackedFloat64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedFloat64ArrayOperatorIndexConst;
+        return s_packedFloat64ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, int*> PackedInt32ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int* PackedInt32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedInt32ArrayOperatorIndex;
+        return s_packedInt32ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, int*> PackedInt32ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int* PackedInt32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedInt32ArrayOperatorIndexConst;
+        return s_packedInt32ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, long*> PackedInt64ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long* PackedInt64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedInt64ArrayOperatorIndex;
+        return s_packedInt64ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*> PackedInt64ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long* PackedInt64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedInt64ArrayOperatorIndexConst;
+        return s_packedInt64ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionStringPtr> PackedStringArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionStringPtr PackedStringArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedStringArrayOperatorIndex;
+        return s_packedStringArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionStringPtr> PackedStringArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionStringPtr PackedStringArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedStringArrayOperatorIndexConst;
+        return s_packedStringArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector2ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedVector2ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedVector2ArrayOperatorIndex;
+        return s_packedVector2ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector2ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedVector2ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedVector2ArrayOperatorIndexConst;
+        return s_packedVector2ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector3ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedVector3ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedVector3ArrayOperatorIndex;
+        return s_packedVector3ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector3ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedVector3ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedVector3ArrayOperatorIndexConst;
+        return s_packedVector3ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector4ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedVector4ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedVector4ArrayOperatorIndex;
+        return s_packedVector4ArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedVector4ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedVector4ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedVector4ArrayOperatorIndexConst;
+        return s_packedVector4ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedColorArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedColorArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedColorArrayOperatorIndex;
+        return s_packedColorArrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> PackedColorArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionTypePtr PackedColorArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_packedColorArrayOperatorIndexConst;
+        return s_packedColorArrayOperatorIndexConst(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr> ArrayOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantPtr ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_arrayOperatorIndex;
+        return s_arrayOperatorIndex(pSelf, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr> ArrayOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantPtr ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
-        get => s_arrayOperatorIndexConst;
+        return s_arrayOperatorIndexConst(pSelf, pIndex);
     }
 
     [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> ArrayRef
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ArrayRef(GDExtensionTypePtr pSelf, GDExtensionConstTypePtr pFrom)
     {
-        get => s_arrayRef;
+        s_arrayRef(pSelf, pFrom);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> ArraySetTyped
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ArraySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pType, GDExtensionConstStringNamePtr pClassName, GDExtensionConstVariantPtr pScript)
     {
-        get => s_arraySetTyped;
+        s_arraySetTyped(pSelf, pType, pClassName, pScript);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> DictionaryOperatorIndex
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantPtr DictionaryOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionConstVariantPtr pKey)
     {
-        get => s_dictionaryOperatorIndex;
+        return s_dictionaryOperatorIndex(pSelf, pKey);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> DictionaryOperatorIndexConst
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantPtr DictionaryOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionConstVariantPtr pKey)
     {
-        get => s_dictionaryOperatorIndexConst;
+        return s_dictionaryOperatorIndexConst(pSelf, pKey);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> DictionarySetTyped
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void DictionarySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pKeyType, GDExtensionConstStringNamePtr pKeyClassName, GDExtensionConstVariantPtr pKeyScript, GDExtensionVariantType pValueType, GDExtensionConstStringNamePtr pValueClassName, GDExtensionConstVariantPtr pValueScript)
     {
-        get => s_dictionarySetTyped;
+        s_dictionarySetTyped(pSelf, pKeyType, pKeyClassName, pKeyScript, pValueType, pValueClassName, pValueScript);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> ObjectMethodBindCall
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectMethodBindCall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgCount, GDExtensionUninitializedVariantPtr rRet, GDExtensionCallError* rError)
     {
-        get => s_objectMethodBindCall;
+        s_objectMethodBindCall(pMethodBind, pInstance, pArgs, pArgCount, rRet, rError);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ObjectMethodBindPtrcall
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectMethodBindPtrcall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstTypePtr* pArgs, GDExtensionTypePtr rRet)
     {
-        get => s_objectMethodBindPtrcall;
+        s_objectMethodBindPtrcall(pMethodBind, pInstance, pArgs, rRet);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void> ObjectDestroy
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectDestroy(GDExtensionObjectPtr pO)
     {
-        get => s_objectDestroy;
+        s_objectDestroy(pO);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> GlobalGetSingleton
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr GlobalGetSingleton(GDExtensionConstStringNamePtr pName)
     {
-        get => s_globalGetSingleton;
+        return s_globalGetSingleton(pName);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, GDExtensionInstanceBindingCallbacks*, void*> ObjectGetInstanceBinding
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* ObjectGetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
-        get => s_objectGetInstanceBinding;
+        return s_objectGetInstanceBinding(pO, pToken, pCallbacks);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void> ObjectSetInstanceBinding
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectSetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, void* pBinding, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
-        get => s_objectSetInstanceBinding;
+        s_objectSetInstanceBinding(pO, pToken, pBinding, pCallbacks);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void> ObjectFreeInstanceBinding
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectFreeInstanceBinding(GDExtensionObjectPtr pO, void* pToken)
     {
-        get => s_objectFreeInstanceBinding;
+        s_objectFreeInstanceBinding(pO, pToken);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> ObjectSetInstance
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectSetInstance(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassname, GDExtensionClassInstancePtr pInstance)
     {
-        get => s_objectSetInstance;
+        s_objectSetInstance(pO, pClassname, pInstance);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr, GDExtensionBool> ObjectGetClassName
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool ObjectGetClassName(GDExtensionConstObjectPtr pObject, GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringNamePtr rClassName)
     {
-        get => s_objectGetClassName;
+        return s_objectGetClassName(pObject, pLibrary, rClassName);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr> ObjectCastTo
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr ObjectCastTo(GDExtensionConstObjectPtr pObject, void* pClassTag)
     {
-        get => s_objectCastTo;
+        return s_objectCastTo(pObject, pClassTag);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr> ObjectGetInstanceFromId
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr ObjectGetInstanceFromId(GDObjectInstanceID pInstanceId)
     {
-        get => s_objectGetInstanceFromId;
+        return s_objectGetInstanceFromId(pInstanceId);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDObjectInstanceID> ObjectGetInstanceId
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDObjectInstanceID ObjectGetInstanceId(GDExtensionConstObjectPtr pObject)
     {
-        get => s_objectGetInstanceId;
+        return s_objectGetInstanceId(pObject);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr, GDExtensionBool> ObjectHasScriptMethod
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionBool ObjectHasScriptMethod(GDExtensionConstObjectPtr pObject, GDExtensionConstStringNamePtr pMethod)
     {
-        get => s_objectHasScriptMethod;
+        return s_objectHasScriptMethod(pObject, pMethod);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> ObjectCallScriptMethod
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectCallScriptMethod(GDExtensionObjectPtr pObject, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
-        get => s_objectCallScriptMethod;
+        s_objectCallScriptMethod(pObject, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr> RefGetObject
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr RefGetObject(GDExtensionConstRefPtr pRef)
     {
-        get => s_refGetObject;
+        return s_refGetObject(pRef);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionRefPtr, GDExtensionObjectPtr, void> RefSetObject
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void RefSetObject(GDExtensionRefPtr pRef, GDExtensionObjectPtr pObject)
     {
-        get => s_refSetObject;
+        s_refSetObject(pRef, pObject);
     }
 
     [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ScriptInstanceCreate3 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionScriptInstancePtr ScriptInstanceCreate(GDExtensionScriptInstanceInfo* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
-        get => s_scriptInstanceCreate;
+        return s_scriptInstanceCreate(pInfo, pInstanceData);
     }
 
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ScriptInstanceCreate3 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionScriptInstancePtr ScriptInstanceCreate2(GDExtensionScriptInstanceInfo2* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
-        get => s_scriptInstanceCreate2;
+        return s_scriptInstanceCreate2(pInfo, pInstanceData);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> ScriptInstanceCreate3
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionScriptInstancePtr ScriptInstanceCreate3(GDExtensionScriptInstanceInfo3* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
-        get => s_scriptInstanceCreate3;
+        return s_scriptInstanceCreate3(pInfo, pInstanceData);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr> PlaceholderScriptInstanceCreate
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionScriptInstancePtr PlaceholderScriptInstanceCreate(GDExtensionObjectPtr pLanguage, GDExtensionObjectPtr pScript, GDExtensionObjectPtr pOwner)
     {
-        get => s_placeholderScriptInstanceCreate;
+        return s_placeholderScriptInstanceCreate(pLanguage, pScript, pOwner);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> PlaceholderScriptInstanceUpdate
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void PlaceholderScriptInstanceUpdate(GDExtensionScriptInstancePtr pPlaceholder, GDExtensionConstTypePtr pProperties, GDExtensionConstTypePtr pValues)
     {
-        get => s_placeholderScriptInstanceUpdate;
+        s_placeholderScriptInstanceUpdate(pPlaceholder, pProperties, pValues);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr> ObjectGetScriptInstance
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionScriptInstanceDataPtr ObjectGetScriptInstance(GDExtensionConstObjectPtr pObject, GDExtensionObjectPtr pLanguage)
     {
-        get => s_objectGetScriptInstance;
+        return s_objectGetScriptInstance(pObject, pLanguage);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void> ObjectSetScriptInstance
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ObjectSetScriptInstance(GDExtensionObjectPtr pObject, GDExtensionScriptInstanceDataPtr pScriptInstance)
     {
-        get => s_objectSetScriptInstance;
+        s_objectSetScriptInstance(pObject, pScriptInstance);
     }
 
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.CallableCustomCreate2 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo*, void> CallableCustomCreate
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void CallableCustomCreate(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
     {
-        get => s_callableCustomCreate;
+        s_callableCustomCreate(rCallable, pCallableCustomInfo);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void> CallableCustomCreate2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void CallableCustomCreate2(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo2* pCallableCustomInfo)
     {
-        get => s_callableCustomCreate2;
+        s_callableCustomCreate2(rCallable, pCallableCustomInfo);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> CallableCustomGetUserdata
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* CallableCustomGetUserdata(GDExtensionConstTypePtr pCallable, void* pToken)
     {
-        get => s_callableCustomGetUserdata;
+        return s_callableCustomGetUserdata(pCallable, pToken);
     }
 
     [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbConstructObject2 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> ClassdbConstructObject
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr ClassdbConstructObject(GDExtensionConstStringNamePtr pClassname)
     {
-        get => s_classdbConstructObject;
+        return s_classdbConstructObject(pClassname);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> ClassdbConstructObject2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr ClassdbConstructObject2(GDExtensionConstStringNamePtr pClassname)
     {
-        get => s_classdbConstructObject2;
+        return s_classdbConstructObject2(pClassname);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> ClassdbGetMethodBind
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionMethodBindPtr ClassdbGetMethodBind(GDExtensionConstStringNamePtr pClassname, GDExtensionConstStringNamePtr pMethodname, GDExtensionInt pHash)
     {
-        get => s_classdbGetMethodBind;
+        return s_classdbGetMethodBind(pClassname, pMethodname, pHash);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> ClassdbGetClassTag
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void* ClassdbGetClassTag(GDExtensionConstStringNamePtr pClassname)
     {
-        get => s_classdbGetClassTag;
+        return s_classdbGetClassTag(pClassname);
     }
 
     [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void> ClassdbRegisterExtensionClass
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
     {
-        get => s_classdbRegisterExtensionClass;
+        s_classdbRegisterExtensionClass(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2*, void> ClassdbRegisterExtensionClass2
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClass2(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
     {
-        get => s_classdbRegisterExtensionClass2;
+        s_classdbRegisterExtensionClass2(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void> ClassdbRegisterExtensionClass3
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClass3(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
     {
-        get => s_classdbRegisterExtensionClass3;
+        s_classdbRegisterExtensionClass3(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void> ClassdbRegisterExtensionClass4
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClass4(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
-        get => s_classdbRegisterExtensionClass4;
+        s_classdbRegisterExtensionClass4(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void> ClassdbRegisterExtensionClass5
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClass5(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo5* pExtensionFuncs)
     {
-        get => s_classdbRegisterExtensionClass5;
+        s_classdbRegisterExtensionClass5(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void> ClassdbRegisterExtensionClassMethod
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassMethodInfo* pMethodInfo)
     {
-        get => s_classdbRegisterExtensionClassMethod;
+        s_classdbRegisterExtensionClassMethod(pLibrary, pClassName, pMethodInfo);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void> ClassdbRegisterExtensionClassVirtualMethod
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassVirtualMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassVirtualMethodInfo* pMethodInfo)
     {
-        get => s_classdbRegisterExtensionClassVirtualMethod;
+        s_classdbRegisterExtensionClassVirtualMethod(pLibrary, pClassName, pMethodInfo);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void> ClassdbRegisterExtensionClassIntegerConstant
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassIntegerConstant(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pEnumName, GDExtensionConstStringNamePtr pConstantName, GDExtensionInt pConstantValue, GDExtensionBool pIsBitfield)
     {
-        get => s_classdbRegisterExtensionClassIntegerConstant;
+        s_classdbRegisterExtensionClassIntegerConstant(pLibrary, pClassName, pEnumName, pConstantName, pConstantValue, pIsBitfield);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, void> ClassdbRegisterExtensionClassProperty
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassProperty(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter)
     {
-        get => s_classdbRegisterExtensionClassProperty;
+        s_classdbRegisterExtensionClassProperty(pLibrary, pClassName, pInfo, pSetter, pGetter);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void> ClassdbRegisterExtensionClassPropertyIndexed
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassPropertyIndexed(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter, GDExtensionInt pIndex)
     {
-        get => s_classdbRegisterExtensionClassPropertyIndexed;
+        s_classdbRegisterExtensionClassPropertyIndexed(pLibrary, pClassName, pInfo, pSetter, pGetter, pIndex);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> ClassdbRegisterExtensionClassPropertyGroup
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassPropertyGroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pGroupName, GDExtensionConstStringPtr pPrefix)
     {
-        get => s_classdbRegisterExtensionClassPropertyGroup;
+        s_classdbRegisterExtensionClassPropertyGroup(pLibrary, pClassName, pGroupName, pPrefix);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> ClassdbRegisterExtensionClassPropertySubgroup
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassPropertySubgroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pSubgroupName, GDExtensionConstStringPtr pPrefix)
     {
-        get => s_classdbRegisterExtensionClassPropertySubgroup;
+        s_classdbRegisterExtensionClassPropertySubgroup(pLibrary, pClassName, pSubgroupName, pPrefix);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionInt, void> ClassdbRegisterExtensionClassSignal
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClassSignal(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pSignalName, GDExtensionPropertyInfo* pArgumentInfo, GDExtensionInt pArgumentCount)
     {
-        get => s_classdbRegisterExtensionClassSignal;
+        s_classdbRegisterExtensionClassSignal(pLibrary, pClassName, pSignalName, pArgumentInfo, pArgumentCount);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, void> ClassdbUnregisterExtensionClass
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbUnregisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName)
     {
-        get => s_classdbUnregisterExtensionClass;
+        s_classdbUnregisterExtensionClass(pLibrary, pClassName);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void> GetLibraryPath
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void GetLibraryPath(GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringPtr rPath)
     {
-        get => s_getLibraryPath;
+        s_getLibraryPath(pLibrary, rPath);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> EditorAddPlugin
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void EditorAddPlugin(GDExtensionConstStringNamePtr pClassName)
     {
-        get => s_editorAddPlugin;
+        s_editorAddPlugin(pClassName);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> EditorRemovePlugin
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void EditorRemovePlugin(GDExtensionConstStringNamePtr pClassName)
     {
-        get => s_editorRemovePlugin;
+        s_editorRemovePlugin(pClassName);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, void> EditorHelpLoadXmlFromUtf8Chars
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void EditorHelpLoadXmlFromUtf8Chars(byte* pData)
     {
-        get => s_editorHelpLoadXmlFromUtf8Chars;
+        s_editorHelpLoadXmlFromUtf8Chars(pData);
     }
 
-    public static delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void> EditorHelpLoadXmlFromUtf8CharsAndLen
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void EditorHelpLoadXmlFromUtf8CharsAndLen(byte* pData, GDExtensionInt pSize)
     {
-        get => s_editorHelpLoadXmlFromUtf8CharsAndLen;
+        s_editorHelpLoadXmlFromUtf8CharsAndLen(pData, pSize);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> EditorRegisterGetClassesUsedCallback
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void EditorRegisterGetClassesUsedCallback(GDExtensionClassLibraryPtr pLibrary, GDExtensionEditorGetClassesUsedCallback pCallback)
     {
-        get => s_editorRegisterGetClassesUsedCallback;
+        s_editorRegisterGetClassesUsedCallback(pLibrary, pCallback);
     }
 
-    public static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> RegisterMainLoopCallbacks
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void RegisterMainLoopCallbacks(GDExtensionClassLibraryPtr pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
     {
-        get => s_registerMainLoopCallbacks;
+        s_registerMainLoopCallbacks(pLibrary, pCallbacks);
     }
 
     public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)

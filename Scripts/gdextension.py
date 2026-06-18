@@ -363,6 +363,8 @@ class GDExtensionInterfaceGenerator:
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         fields: dict[str, FunctionInfo] = {}
         file.write("using System;\n")
+        file.write("using System.Runtime.CompilerServices;\n")
+        file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
         file.write("namespace Godot.NET;\n")
         file.write("\n")
@@ -379,9 +381,13 @@ class GDExtensionInterfaceGenerator:
             file.write("\n")
             if interface_deprecated:
                 file.write("    " + obsolete(interface_deprecated))
-            file.write(f"    public static {function.type} {field_name[2].upper() + field_name[3:]}\n")
+            file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
+            file.write(f"    public static {function.return_value} {field_name[2].upper() + field_name[3:]}({function.parameter_list})\n")
             file.write("    {\n")
-            file.write(f"        get => {field_name};\n")
+            if function.return_value == "void":
+                file.write(f"        {field_name}({function.argument_list});\n")
+            else:
+                file.write(f"        return {field_name}({function.argument_list});\n")
             file.write("    }\n")
         file.write("\n")
         file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
