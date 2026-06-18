@@ -361,22 +361,20 @@ class FunctionGenerator:
 class GDExtensionInterfaceGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
-        interface: list[dict[str, Any]] = data["interface"]
-        fields: list[tuple[str, str, FunctionInfo]] = []
+        fields: dict[str, FunctionInfo] = {}
         file.write("using System;\n")
         file.write("\n")
         file.write("namespace Godot.NET;\n")
         file.write("\n")
         file.write("public static unsafe class GDExtensionInterface\n")
         file.write("{\n")
-        for interface_data in interface:
-            interface_name: str = interface_data["name"]
-            field_name = f"s_{interface_name[0]}{interface_name.title().replace("_", "")[1:]}"
+        for interface_data in data["interface"]:
             function: FunctionInfo = FunctionInfo(interface_data)
-            fields.append((interface_name, field_name, function))
+            field_name = f"s_{function.name[0]}{function.name.title().replace("_", "")[1:]}"
+            fields[field_name] = function
             file.write(f"    private static {function.type} {field_name};\n")
-        for interface_data, field in zip(interface, fields):
-            _, field_name, function = field
+        for field, interface_data in zip(fields.items(), data["interface"]):
+            field_name, function = field
             interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
             file.write("\n")
             if interface_deprecated:
@@ -389,8 +387,8 @@ class GDExtensionInterfaceGenerator:
         file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
         file.write("    {\n")
         file.write("        ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));\n")
-        for interface_name, field_name, function in fields:
-            file.write(f"        {field_name} = ({function.type})Load(getProcAddress, \"{interface_name}\"u8);\n")
+        for field_name, function in fields.items():
+            file.write(f"        {field_name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n")
         file.write("    }\n")
         file.write("\n")
         file.write("    private static void* Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> name)\n")
