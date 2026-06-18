@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionVariantGetInternalPtrFunc : IEquatable<
     public delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void*> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void* Invoke(GDExtensionVariantPtr arg1)
+    {
+        return _method(arg1);
     }
 
     public bool Equals(GDExtensionVariantGetInternalPtrFunc other)

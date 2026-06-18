@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionInterfaceGetProcAddress : IEquatable<GD
     public delegate* unmanaged[Cdecl]<byte*, GDExtensionInterfaceFunctionPtr> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionInterfaceFunctionPtr Invoke(byte* pFunctionName)
+    {
+        return _method(pFunctionName);
     }
 
     public bool Equals(GDExtensionInterfaceGetProcAddress other)

@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionScriptInstanceGetLanguage : IEquatable<
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionScriptLanguagePtr> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionScriptLanguagePtr Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    {
+        return _method(pInstance);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetLanguage other)

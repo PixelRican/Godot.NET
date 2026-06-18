@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionInstanceBindingCreateCallback : IEquata
     public delegate* unmanaged[Cdecl]<void*, void*, void*> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void* Invoke(void* pToken, void* pInstance)
+    {
+        return _method(pToken, pInstance);
     }
 
     public bool Equals(GDExtensionInstanceBindingCreateCallback other)

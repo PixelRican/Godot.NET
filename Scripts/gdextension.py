@@ -24,19 +24,6 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
-def function(data: dict[str, Any]) -> str:
-    type_parameters: list[str] = []
-    for argument in data["arguments"]:
-        argument_type: TypeInfo = TypeInfo(argument["type"])
-        type_parameters.append(argument_type.name)
-    return_value: dict[str, Any] | None = data.get("return_value")
-    if return_value:
-        return_value_type: TypeInfo = TypeInfo(return_value["type"])
-        type_parameters.append(return_value_type.name)
-    else:
-        type_parameters.append("void")
-    return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-
 def obsolete(data: dict[str, Any]) -> str:
     since: str = data["since"]
     message: str | None = data.get("message")
@@ -91,6 +78,31 @@ class TypeInfo:
                 self.is_builtin = False
         if self.is_unsafe:
             self.name += "*"
+
+class FunctionInfo:
+    def __init__(self, data: dict[str, Any]) -> None:
+        type_parameters: list[str] = []
+        argument_names: list[str] = []
+        for i, argument in enumerate(data["arguments"]):
+            argument_type: TypeInfo = TypeInfo(argument["type"])
+            argument_name: str | None = argument.get("name")
+            if argument_name:
+                argument_name = argument_name.title().replace("_", "")
+                argument_names.append(argument_name[0].lower() + argument_name[1:])
+            else:
+                argument_names.append(f"arg{i + 1}")
+            type_parameters.append(argument_type.name)
+        return_value: dict[str, Any] | None = data.get("return_value")
+        if return_value:
+            return_value_type: TypeInfo = TypeInfo(return_value["type"])
+            type_parameters.append(return_value_type.name)
+        else:
+            type_parameters.append("void")
+        self.name: str = data["name"]
+        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+        self.return_value: str = type_parameters.pop(-1)
+        self.parameter_list: str = ", ".join(" ".join(pair) for pair in zip(type_parameters, argument_names))
+        self.argument_list: str = ", ".join(argument_names)
 
 class CopyrightGenerator:
     @staticmethod
@@ -286,10 +298,10 @@ class StructGenerator:
 class FunctionGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
-        data_name: str = data["name"]
-        data_type: str = function(data)
+        function: FunctionInfo = FunctionInfo(data)
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         file.write("using System;\n")
+        file.write("using System.Runtime.CompilerServices;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
         file.write("namespace Godot.NET;\n")
@@ -297,28 +309,37 @@ class FunctionGenerator:
         if data_deprecated:
             file.write(obsolete(data_deprecated))
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
-        file.write(f"public readonly unsafe struct {data_name} : IEquatable<{data_name}>\n")
+        file.write(f"public readonly unsafe struct {function.name} : IEquatable<{function.name}>\n")
         file.write("{\n")
-        file.write(f"    private readonly {data_type} _method;\n")
+        file.write(f"    private readonly {function.type} _method;\n")
         file.write("\n")
-        file.write(f"    public {data_name}({data_type} method)\n")
+        file.write(f"    public {function.name}({function.type} method)\n")
         file.write("    {\n")
         file.write("        _method = method;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write(f"    public {data_type} Method\n")
+        file.write(f"    public {function.type} Method\n")
         file.write("    {\n")
         file.write("        get => _method;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write(f"    public bool Equals({data_name} other)\n")
+        file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
+        file.write(f"    public {function.return_value} Invoke({function.parameter_list})\n")
+        file.write("    {\n")
+        if function.return_value == "void":
+            file.write(f"        _method({function.argument_list});\n")
+        else:
+            file.write(f"        return _method({function.argument_list});\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public bool Equals({function.name} other)\n")
         file.write("    {\n")
         file.write("        return _method == other._method;\n")
         file.write("    }\n")
         file.write("\n")
         file.write("    public override bool Equals(object? obj)\n")
         file.write("    {\n")
-        file.write(f"        return obj is {data_name} other && _method == other._method;\n")
+        file.write(f"        return obj is {function.name} other && _method == other._method;\n")
         file.write("    }\n")
         file.write("\n")
         file.write("    public override int GetHashCode()\n")
@@ -326,12 +347,12 @@ class FunctionGenerator:
         file.write("        return new nint(_method).GetHashCode();\n")
         file.write("    }\n")
         file.write("\n")
-        file.write(f"    public static bool operator ==({data_name} left, {data_name} right)\n")
+        file.write(f"    public static bool operator ==({function.name} left, {function.name} right)\n")
         file.write("    {\n")
         file.write("        return left._method == right._method;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write(f"    public static bool operator !=({data_name} left, {data_name} right)\n")
+        file.write(f"    public static bool operator !=({function.name} left, {function.name} right)\n")
         file.write("    {\n")
         file.write("        return left._method != right._method;\n")
         file.write("    }\n")
@@ -341,7 +362,7 @@ class GDExtensionInterfaceGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         interface: list[dict[str, Any]] = data["interface"]
-        fields: list[tuple[str, str, str]] = []
+        fields: list[tuple[str, str, FunctionInfo]] = []
         file.write("using System;\n")
         file.write("\n")
         file.write("namespace Godot.NET;\n")
@@ -351,16 +372,16 @@ class GDExtensionInterfaceGenerator:
         for interface_data in interface:
             interface_name: str = interface_data["name"]
             field_name = f"s_{interface_name[0]}{interface_name.title().replace("_", "")[1:]}"
-            field_type: str = function(interface_data)
-            fields.append((interface_name, field_name, field_type))
-            file.write(f"    private static {field_type} {field_name};\n")
+            function: FunctionInfo = FunctionInfo(interface_data)
+            fields.append((interface_name, field_name, function))
+            file.write(f"    private static {function.type} {field_name};\n")
         for interface_data, field in zip(interface, fields):
-            _, field_name, field_type = field
+            _, field_name, function = field
             interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
             file.write("\n")
             if interface_deprecated:
                 file.write("    " + obsolete(interface_deprecated))
-            file.write(f"    public static {field_type} {field_name[2].upper() + field_name[3:]}\n")
+            file.write(f"    public static {function.type} {field_name[2].upper() + field_name[3:]}\n")
             file.write("    {\n")
             file.write(f"        get => {field_name};\n")
             file.write("    }\n")
@@ -368,8 +389,8 @@ class GDExtensionInterfaceGenerator:
         file.write("    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
         file.write("    {\n")
         file.write("        ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));\n")
-        for interface_name, field_name, field_type in fields:
-            file.write(f"        {field_name} = ({field_type})Load(getProcAddress, \"{interface_name}\"u8);\n")
+        for interface_name, field_name, function in fields:
+            file.write(f"        {field_name} = ({function.type})Load(getProcAddress, \"{interface_name}\"u8);\n")
         file.write("    }\n")
         file.write("\n")
         file.write("    private static void* Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> name)\n")

@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionClassMethodCall : IEquatable<GDExtensio
     public delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(void* methodUserdata, GDExtensionClassInstancePtr pInstance, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionVariantPtr rReturn, GDExtensionCallError* rError)
+    {
+        _method(methodUserdata, pInstance, pArgs, pArgumentCount, rReturn, rError);
     }
 
     public bool Equals(GDExtensionClassMethodCall other)

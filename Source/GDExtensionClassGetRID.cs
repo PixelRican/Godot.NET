@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionClassGetRID : IEquatable<GDExtensionCla
     public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, ulong> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ulong Invoke(GDExtensionClassInstancePtr pInstance)
+    {
+        return _method(pInstance);
     }
 
     public bool Equals(GDExtensionClassGetRID other)

@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionScriptInstanceFreePropertyList2 : IEqua
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, uint, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionPropertyInfo* pList, uint pCount)
+    {
+        _method(pInstance, pList, pCount);
     }
 
     public bool Equals(GDExtensionScriptInstanceFreePropertyList2 other)

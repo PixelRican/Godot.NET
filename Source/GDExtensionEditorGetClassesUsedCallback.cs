@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionEditorGetClassesUsedCallback : IEquatab
     public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(GDExtensionTypePtr pPackedStringArray)
+    {
+        _method(pPackedStringArray);
     }
 
     public bool Equals(GDExtensionEditorGetClassesUsedCallback other)

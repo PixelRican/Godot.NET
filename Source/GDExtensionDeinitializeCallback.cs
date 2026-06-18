@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionDeinitializeCallback : IEquatable<GDExt
     public delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(void* pUserdata, GDExtensionInitializationLevel pLevel)
+    {
+        _method(pUserdata, pLevel);
     }
 
     public bool Equals(GDExtensionDeinitializeCallback other)

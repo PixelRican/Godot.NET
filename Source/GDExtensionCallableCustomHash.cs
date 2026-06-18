@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionCallableCustomHash : IEquatable<GDExten
     public delegate* unmanaged[Cdecl]<void*, uint> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public uint Invoke(void* callableUserdata)
+    {
+        return _method(callableUserdata);
     }
 
     public bool Equals(GDExtensionCallableCustomHash other)

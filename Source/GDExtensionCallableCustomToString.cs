@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionCallableCustomToString : IEquatable<GDE
     public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionStringPtr, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(void* callableUserdata, GDExtensionBool* rIsValid, GDExtensionStringPtr rOut)
+    {
+        _method(callableUserdata, rIsValid, rOut);
     }
 
     public bool Equals(GDExtensionCallableCustomToString other)

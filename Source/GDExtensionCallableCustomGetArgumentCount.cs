@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionCallableCustomGetArgumentCount : IEquat
     public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionInt> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionInt Invoke(void* callableUserdata, GDExtensionBool* rIsValid)
+    {
+        return _method(callableUserdata, rIsValid);
     }
 
     public bool Equals(GDExtensionCallableCustomGetArgumentCount other)

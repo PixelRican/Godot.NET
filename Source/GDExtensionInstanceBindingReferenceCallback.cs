@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionInstanceBindingReferenceCallback : IEqu
     public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionBool, GDExtensionBool> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionBool Invoke(void* pToken, void* pBinding, GDExtensionBool pReference)
+    {
+        return _method(pToken, pBinding, pReference);
     }
 
     public bool Equals(GDExtensionInstanceBindingReferenceCallback other)

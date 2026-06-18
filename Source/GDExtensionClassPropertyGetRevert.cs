@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionClassPropertyGetRevert : IEquatable<GDE
     public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr, GDExtensionBool> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionBool Invoke(GDExtensionClassInstancePtr pInstance, GDExtensionConstStringNamePtr pName, GDExtensionVariantPtr rRet)
+    {
+        return _method(pInstance, pName, rRet);
     }
 
     public bool Equals(GDExtensionClassPropertyGetRevert other)

@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionScriptInstanceGetClassCategory : IEquat
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, GDExtensionBool> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionPropertyInfo* pClassCategory)
+    {
+        return _method(pInstance, pClassCategory);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetClassCategory other)

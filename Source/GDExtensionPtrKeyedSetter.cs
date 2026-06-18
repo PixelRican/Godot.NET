@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionPtrKeyedSetter : IEquatable<GDExtension
     public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(GDExtensionTypePtr pBase, GDExtensionConstTypePtr pKey, GDExtensionConstTypePtr pValue)
+    {
+        _method(pBase, pKey, pValue);
     }
 
     public bool Equals(GDExtensionPtrKeyedSetter other)

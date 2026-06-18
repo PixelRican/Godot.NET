@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionTypeFromVariantConstructorFunc : IEquat
     public delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionVariantPtr, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(GDExtensionUninitializedTypePtr arg1, GDExtensionVariantPtr arg2)
+    {
+        _method(arg1, arg2);
     }
 
     public bool Equals(GDExtensionTypeFromVariantConstructorFunc other)

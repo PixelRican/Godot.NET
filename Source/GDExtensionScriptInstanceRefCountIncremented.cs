@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionScriptInstanceRefCountIncremented : IEq
     public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    {
+        _method(pInstance);
     }
 
     public bool Equals(GDExtensionScriptInstanceRefCountIncremented other)

@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionCallableCustomLessThan : IEquatable<GDE
     public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionBool> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public GDExtensionBool Invoke(void* callableUserdataA, void* callableUserdataB)
+    {
+        return _method(callableUserdataA, callableUserdataB);
     }
 
     public bool Equals(GDExtensionCallableCustomLessThan other)

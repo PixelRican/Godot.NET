@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionMainLoopShutdownCallback : IEquatable<G
     public delegate* unmanaged[Cdecl]<void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke()
+    {
+        _method();
     }
 
     public bool Equals(GDExtensionMainLoopShutdownCallback other)

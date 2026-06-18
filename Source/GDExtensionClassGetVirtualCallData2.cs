@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionClassGetVirtualCallData2 : IEquatable<G
     public delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, uint, void*> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void* Invoke(void* pClassUserdata, GDExtensionConstStringNamePtr pName, uint pHash)
+    {
+        return _method(pClassUserdata, pName, pHash);
     }
 
     public bool Equals(GDExtensionClassGetVirtualCallData2 other)

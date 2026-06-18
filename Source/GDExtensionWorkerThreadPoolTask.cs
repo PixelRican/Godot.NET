@@ -27,6 +27,7 @@
 /**************************************************************************/
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Godot.NET;
@@ -44,6 +45,12 @@ public readonly unsafe struct GDExtensionWorkerThreadPoolTask : IEquatable<GDExt
     public delegate* unmanaged[Cdecl]<void*, void> Method
     {
         get => _method;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Invoke(void* arg1)
+    {
+        _method(arg1);
     }
 
     public bool Equals(GDExtensionWorkerThreadPoolTask other)
