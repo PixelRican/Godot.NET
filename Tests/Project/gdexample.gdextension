@@ -1,5 +1,4 @@
 [configuration]
-
 entry_symbol = "GDExample_Initialize"
 compatibility_minimum = "4.2"
 
