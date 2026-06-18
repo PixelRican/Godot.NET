@@ -24,7 +24,7 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
-def function(data: dict[str, Any]):
+def function(data: dict[str, Any]) -> str:
     type_parameters: list[str] = []
     for argument in data["arguments"]:
         argument_type: TypeInfo = TypeInfo(argument["type"])
