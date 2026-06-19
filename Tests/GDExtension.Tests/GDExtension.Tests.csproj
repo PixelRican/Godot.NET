@@ -6,6 +6,6 @@
         <PublishAot>true</PublishAot>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\Source\GDExtension\Godot.NET.csproj" />
+        <ProjectReference Include="..\..\Source\GDExtension\GDExtension.csproj" />
     </ItemGroup>
 </Project>

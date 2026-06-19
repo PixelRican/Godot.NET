@@ -30,7 +30,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Godot.NET;
+namespace GDExtension;
 
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionVariantGetInternalPtrFunc : IEquatable<GDExtensionVariantGetInternalPtrFunc>

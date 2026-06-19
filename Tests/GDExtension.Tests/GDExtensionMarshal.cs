@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Godot.NET.Tests;
+namespace GDExtension.Tests;
 
 public static unsafe class GDExtensionMarshal
 {

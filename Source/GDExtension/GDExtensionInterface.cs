@@ -30,7 +30,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Godot.NET;
+namespace GDExtension;
 
 public static unsafe class GDExtensionInterface
 {

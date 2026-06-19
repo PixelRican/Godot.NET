@@ -121,7 +121,7 @@ class EnumGenerator:
         if data_deprecated or data_is_bitfield:
             file.write("using System;\n")
             file.write("\n")
-        file.write("namespace Godot.NET;\n")
+        file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
             file.write(obsolete(data_deprecated))
@@ -144,7 +144,7 @@ class HandleGenerator:
         file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace Godot.NET;\n")
+        file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
             file.write(obsolete(data_deprecated))
@@ -206,7 +206,7 @@ class AliasGenerator:
             file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace Godot.NET;\n")
+        file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
             file.write(obsolete(data_deprecated))
@@ -277,7 +277,7 @@ class StructGenerator:
             file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace Godot.NET;\n")
+        file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
             file.write(obsolete(data_deprecated))
@@ -304,7 +304,7 @@ class FunctionGenerator:
         file.write("using System.Runtime.CompilerServices;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace Godot.NET;\n")
+        file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
             file.write(obsolete(data_deprecated))
@@ -366,7 +366,7 @@ class GDExtensionInterfaceGenerator:
         file.write("using System.Runtime.CompilerServices;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace Godot.NET;\n")
+        file.write("namespace GDExtension;\n")
         file.write("\n")
         file.write("public static unsafe class GDExtensionInterface\n")
         file.write("{\n")

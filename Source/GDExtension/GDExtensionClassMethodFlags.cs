@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Godot.NET;
+namespace GDExtension;
 
 [Flags]
 public enum GDExtensionClassMethodFlags

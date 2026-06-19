@@ -29,7 +29,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Godot.NET;
+namespace GDExtension;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionClassCreationInfo4 instead.")]
 [StructLayout(LayoutKind.Sequential)]

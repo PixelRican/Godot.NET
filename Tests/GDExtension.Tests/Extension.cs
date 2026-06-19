@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Godot.NET.Tests;
+namespace GDExtension.Tests;
 
 file static unsafe class Extension
 {

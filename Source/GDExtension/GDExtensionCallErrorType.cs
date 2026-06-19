@@ -26,7 +26,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-namespace Godot.NET;
+namespace GDExtension;
 
 public enum GDExtensionCallErrorType
 {

@@ -28,7 +28,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.NET;
+namespace GDExtension;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionInitialization
