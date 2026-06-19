@@ -8,7 +8,7 @@ Godot.NET is a code library that provides C# bindings for [GDExtension]("https:/
 
 ## Executing Tests
 
-Code that tests the library's functionality can be found in the Tests folder. The C# project within must be built as a native shared library using [Native AOT]("https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/"), which allows Godot to load it as a GDExtension. Tests are executed through a Godot project residing in the Project subfolder, which contains configurations for loading the native shared library. Once built, the native shared library must be placed in the Project/bin folder so that the Godot project can locate and load it. Once everything is set up, open the project file in the Godot Engine and run it to confirm that it has properly loaded the GDExample class.
+C# projects that test the library's functionality can be found in the Tests folder. These projects must be built as a native shared library using [Native AOT]("https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/"), which allows Godot to load them as GDExtensions. GDExtension tests are conducted through a Godot project residing in the GDExtension.Tests/Project folder, which contains configurations for loading the native shared library. Once built, the native shared library must be placed in the Project/bin folder so that the Godot project can locate and load it. Once everything is set up, open the project file in the Godot Engine and run it to confirm that it has properly loaded the GDExample class.
 
 ## Generating Bindings
 

@@ -5,7 +5,7 @@ def generate(data: dict[str, Any]) -> None:
     for type_data in data["types"]:
         name: str = type_data["name"]
         kind: str = type_data["kind"]
-        with open(f"../Source/{name}.cs", "w") as file:
+        with open(f"../Source/GDExtension/{name}.cs", "w") as file:
             CopyrightGenerator.generate(file, data)
             match kind:
                 case "enum":
@@ -20,7 +20,7 @@ def generate(data: dict[str, Any]) -> None:
                     FunctionGenerator.generate(file, type_data)
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
-    with open(f"../Source/GDExtensionInterface.cs", "w") as file:
+    with open(f"../Source/GDExtension/GDExtensionInterface.cs", "w") as file:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
