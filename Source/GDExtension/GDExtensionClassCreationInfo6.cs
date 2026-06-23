@@ -26,56 +26,34 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
-[Obsolete("Deprecated since Godot 4.4. Use GDExtensionClassCreateInstance3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassCreateInstance : IEquatable<GDExtensionClassCreateInstance>
+public struct GDExtensionClassCreationInfo6
 {
-    private readonly delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> _method;
-
-    public GDExtensionClassCreateInstance(delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> method)
-    {
-        _method = method;
-    }
-
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(void* pClassUserdata)
-    {
-        return _method(pClassUserdata);
-    }
-
-    public bool Equals(GDExtensionClassCreateInstance other)
-    {
-        return _method == other._method;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is GDExtensionClassCreateInstance other && _method == other._method;
-    }
-
-    public override int GetHashCode()
-    {
-        return new nint(_method).GetHashCode();
-    }
-
-    public static bool operator ==(GDExtensionClassCreateInstance left, GDExtensionClassCreateInstance right)
-    {
-        return left._method == right._method;
-    }
-
-    public static bool operator !=(GDExtensionClassCreateInstance left, GDExtensionClassCreateInstance right)
-    {
-        return left._method != right._method;
-    }
+    public GDExtensionBool IsVirtual;
+    public GDExtensionBool IsAbstract;
+    public GDExtensionBool IsExposed;
+    public GDExtensionBool IsRuntime;
+    public GDExtensionConstStringPtr IconPath;
+    public GDExtensionClassSet SetFunc;
+    public GDExtensionClassGet GetFunc;
+    public GDExtensionClassGetPropertyList GetPropertyListFunc;
+    public GDExtensionClassFreePropertyList2 FreePropertyListFunc;
+    public GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
+    public GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
+    public GDExtensionClassValidateProperty ValidatePropertyFunc;
+    public GDExtensionClassNotification2 NotificationFunc;
+    public GDExtensionClassToString ToStringFunc;
+    public GDExtensionClassReference ReferenceFunc;
+    public GDExtensionClassUnreference UnreferenceFunc;
+    public GDExtensionClassCreateInstance3 CreateInstanceFunc;
+    public GDExtensionClassFreeInstance FreeInstanceFunc;
+    public GDExtensionClassRecreateInstance RecreateInstanceFunc;
+    public GDExtensionClassGetVirtual2 GetVirtualFunc;
+    public GDExtensionClassGetVirtualCallData2 GetVirtualCallDataFunc;
+    public GDExtensionClassCallVirtualWithData CallVirtualWithDataFunc;
+    public unsafe void* ClassUserdata;
 }

@@ -32,36 +32,35 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
-[Obsolete("Deprecated since Godot 4.4. Use GDExtensionClassCreateInstance3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe struct GDExtensionClassCreateInstance : IEquatable<GDExtensionClassCreateInstance>
+public readonly unsafe struct GDExtensionClassCreateInstance3 : IEquatable<GDExtensionClassCreateInstance3>
 {
-    private readonly delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> _method;
+    private readonly delegate* unmanaged[Cdecl]<void*, GDExtensionBool, GDExtensionObjectPtr> _method;
 
-    public GDExtensionClassCreateInstance(delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> method)
+    public GDExtensionClassCreateInstance3(delegate* unmanaged[Cdecl]<void*, GDExtensionBool, GDExtensionObjectPtr> method)
     {
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> Method
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool, GDExtensionObjectPtr> Method
     {
         get => _method;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(void* pClassUserdata)
+    public GDExtensionObjectPtr Invoke(void* pClassUserdata, GDExtensionBool pNotifyPostinitialize)
     {
-        return _method(pClassUserdata);
+        return _method(pClassUserdata, pNotifyPostinitialize);
     }
 
-    public bool Equals(GDExtensionClassCreateInstance other)
+    public bool Equals(GDExtensionClassCreateInstance3 other)
     {
         return _method == other._method;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is GDExtensionClassCreateInstance other && _method == other._method;
+        return obj is GDExtensionClassCreateInstance3 other && _method == other._method;
     }
 
     public override int GetHashCode()
@@ -69,12 +68,12 @@ public readonly unsafe struct GDExtensionClassCreateInstance : IEquatable<GDExte
         return new nint(_method).GetHashCode();
     }
 
-    public static bool operator ==(GDExtensionClassCreateInstance left, GDExtensionClassCreateInstance right)
+    public static bool operator ==(GDExtensionClassCreateInstance3 left, GDExtensionClassCreateInstance3 right)
     {
         return left._method == right._method;
     }
 
-    public static bool operator !=(GDExtensionClassCreateInstance left, GDExtensionClassCreateInstance right)
+    public static bool operator !=(GDExtensionClassCreateInstance3 left, GDExtensionClassCreateInstance3 right)
     {
         return left._method != right._method;
     }

@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+[Obsolete("Deprecated since Godot 4.3. Use GDExtensionClassFreePropertyList2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassFreePropertyList : IEquatable<GDExtensionClassFreePropertyList>
 {

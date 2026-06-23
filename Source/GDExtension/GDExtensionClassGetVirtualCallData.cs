@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+[Obsolete("Deprecated since Godot 4.4. Use GDExtensionClassGetVirtualCallData2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassGetVirtualCallData : IEquatable<GDExtensionClassGetVirtualCallData>
 {

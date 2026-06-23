@@ -26,10 +26,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+[Obsolete("Deprecated since Godot 4.7. Use GDExtensionClassCreationInfo6 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassCreationInfo5
 {

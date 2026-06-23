@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+[Obsolete("Deprecated since Godot 4.7. Use GDExtensionClassCreateInstance3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassCreateInstance2 : IEquatable<GDExtensionClassCreateInstance2>
 {

@@ -78,6 +78,7 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool> s_variantHasKey;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> s_variantGetObjectInstanceId;
     private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void> s_variantGetTypeName;
+    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType> s_variantGetTypeByName;
     private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> s_variantCanConvert;
     private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> s_variantCanConvertStrict;
     private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc> s_getVariantFromTypeConstructor;
@@ -187,6 +188,7 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> s_callableCustomGetUserdata;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_classdbConstructObject;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_classdbConstructObject2;
+    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_classdbConstructObject3;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> s_classdbGetMethodBind;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> s_classdbGetClassTag;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void> s_classdbRegisterExtensionClass;
@@ -194,6 +196,7 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void> s_classdbRegisterExtensionClass3;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void> s_classdbRegisterExtensionClass4;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void> s_classdbRegisterExtensionClass5;
+    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6*, void> s_classdbRegisterExtensionClass6;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void> s_classdbRegisterExtensionClassMethod;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void> s_classdbRegisterExtensionClassVirtualMethod;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void> s_classdbRegisterExtensionClassIntegerConstant;
@@ -477,6 +480,12 @@ public static unsafe class GDExtensionInterface
     public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionUninitializedStringPtr rName)
     {
         s_variantGetTypeName(pType, rName);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionVariantType VariantGetTypeByName(GDExtensionConstStringPtr pTypeName)
+    {
+        return s_variantGetTypeByName(pTypeName);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1022,6 +1031,7 @@ public static unsafe class GDExtensionInterface
         return s_objectGetClassName(pObject, pLibrary, rClassName);
     }
 
+    [Obsolete("Deprecated since Godot 4.7. Use the `is_class` method on `Object` to check if an object can be cast instead. If true, the previous pointer can be reinterpreted as a pointer to the target type.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ObjectCastTo(GDExtensionConstObjectPtr pObject, void* pClassTag)
     {
@@ -1127,17 +1137,24 @@ public static unsafe class GDExtensionInterface
         return s_callableCustomGetUserdata(pCallable, pToken);
     }
 
-    [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbConstructObject2 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ClassdbConstructObject(GDExtensionConstStringNamePtr pClassname)
     {
         return s_classdbConstructObject(pClassname);
     }
 
+    [Obsolete("Deprecated since Godot 4.7. Use GDExtensionInterface.ClassdbConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ClassdbConstructObject2(GDExtensionConstStringNamePtr pClassname)
     {
         return s_classdbConstructObject2(pClassname);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GDExtensionObjectPtr ClassdbConstructObject3(GDExtensionConstStringNamePtr pClassname)
+    {
+        return s_classdbConstructObject3(pClassname);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1146,44 +1163,52 @@ public static unsafe class GDExtensionInterface
         return s_classdbGetMethodBind(pClassname, pMethodname, pHash);
     }
 
+    [Obsolete("Deprecated since Godot 4.7. No longer needed. Use the `is_class` method on `Object` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ClassdbGetClassTag(GDExtensionConstStringNamePtr pClassname)
     {
         return s_classdbGetClassTag(pClassname);
     }
 
-    [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
     {
         s_classdbRegisterExtensionClass(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
-    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass2(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
     {
         s_classdbRegisterExtensionClass2(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
-    [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass3(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
     {
         s_classdbRegisterExtensionClass3(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
-    [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.ClassdbRegisterExtensionClass5 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass4(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
         s_classdbRegisterExtensionClass4(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    [Obsolete("Deprecated since Godot 4.7. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass5(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo5* pExtensionFuncs)
     {
         s_classdbRegisterExtensionClass5(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ClassdbRegisterExtensionClass6(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
+    {
+        s_classdbRegisterExtensionClass6(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1329,6 +1354,7 @@ public static unsafe class GDExtensionInterface
         s_variantHasKey = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool>)Load(getProcAddress, "variant_has_key"u8);
         s_variantGetObjectInstanceId = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID>)Load(getProcAddress, "variant_get_object_instance_id"u8);
         s_variantGetTypeName = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void>)Load(getProcAddress, "variant_get_type_name"u8);
+        s_variantGetTypeByName = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType>)Load(getProcAddress, "variant_get_type_by_name"u8);
         s_variantCanConvert = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool>)Load(getProcAddress, "variant_can_convert"u8);
         s_variantCanConvertStrict = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool>)Load(getProcAddress, "variant_can_convert_strict"u8);
         s_getVariantFromTypeConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc>)Load(getProcAddress, "get_variant_from_type_constructor"u8);
@@ -1438,6 +1464,7 @@ public static unsafe class GDExtensionInterface
         s_callableCustomGetUserdata = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*>)Load(getProcAddress, "callable_custom_get_userdata"u8);
         s_classdbConstructObject = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(getProcAddress, "classdb_construct_object"u8);
         s_classdbConstructObject2 = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(getProcAddress, "classdb_construct_object2"u8);
+        s_classdbConstructObject3 = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(getProcAddress, "classdb_construct_object3"u8);
         s_classdbGetMethodBind = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr>)Load(getProcAddress, "classdb_get_method_bind"u8);
         s_classdbGetClassTag = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*>)Load(getProcAddress, "classdb_get_class_tag"u8);
         s_classdbRegisterExtensionClass = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void>)Load(getProcAddress, "classdb_register_extension_class"u8);
@@ -1445,6 +1472,7 @@ public static unsafe class GDExtensionInterface
         s_classdbRegisterExtensionClass3 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void>)Load(getProcAddress, "classdb_register_extension_class3"u8);
         s_classdbRegisterExtensionClass4 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void>)Load(getProcAddress, "classdb_register_extension_class4"u8);
         s_classdbRegisterExtensionClass5 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void>)Load(getProcAddress, "classdb_register_extension_class5"u8);
+        s_classdbRegisterExtensionClass6 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6*, void>)Load(getProcAddress, "classdb_register_extension_class6"u8);
         s_classdbRegisterExtensionClassMethod = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void>)Load(getProcAddress, "classdb_register_extension_class_method"u8);
         s_classdbRegisterExtensionClassVirtualMethod = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void>)Load(getProcAddress, "classdb_register_extension_class_virtual_method"u8);
         s_classdbRegisterExtensionClassIntegerConstant = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void>)Load(getProcAddress, "classdb_register_extension_class_integer_constant"u8);
