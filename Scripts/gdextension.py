@@ -30,10 +30,7 @@ def description(file: IOBase, lines: list[str], tag: str = "summary", spacing: i
     spaces: str = " " * spacing
     file.write(f"{spaces}/// <{tag}>\n")
     for line in lines:
-        file.write(spaces)
-        file.write("/// ")
-        file.write(line)
-        file.write("\n")
+        file.write(f"{spaces}/// {line}\n")
     file.write(f"{spaces}/// </{tag}>\n")
 
 class TypeInfo:
