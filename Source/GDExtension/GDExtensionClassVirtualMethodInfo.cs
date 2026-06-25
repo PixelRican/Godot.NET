@@ -36,6 +36,9 @@ namespace GDExtension;
 public struct GDExtensionClassVirtualMethodInfo
 {
     public GDExtensionStringNamePtr Name;
+    /// <summary>
+    /// Bitfield of `GDExtensionClassMethodFlags`.
+    /// </summary>
     public uint MethodFlags;
     public GDExtensionPropertyInfo ReturnValue;
     public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;

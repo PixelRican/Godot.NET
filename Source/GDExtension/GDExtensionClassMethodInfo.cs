@@ -39,13 +39,30 @@ public struct GDExtensionClassMethodInfo
     public unsafe void* MethodUserdata;
     public GDExtensionClassMethodCall CallFunc;
     public GDExtensionClassMethodPtrCall PtrcallFunc;
+    /// <summary>
+    /// Bitfield of `GDExtensionClassMethodFlags`.
+    /// </summary>
     public uint MethodFlags;
+    /// <summary>
+    /// If `has_return_value` is false, `return_value_info` and `return_value_metadata` are ignored.
+    /// 
+    /// @todo Consider dropping `has_return_value` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
+    /// </summary>
     public GDExtensionBool HasReturnValue;
     public unsafe GDExtensionPropertyInfo* ReturnValueInfo;
     public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
+    /// <summary>
+    /// Arguments: `arguments_info` and `arguments_metadata` are array of size `argument_count`.
+    /// Name and hint information for the argument can be omitted in release builds. Class name should always be present if it applies.
+    /// 
+    /// @todo Consider renaming `arguments_info` to `arguments` for consistency in future version of this struct.
+    /// </summary>
     public uint ArgumentCount;
     public unsafe GDExtensionPropertyInfo* ArgumentsInfo;
     public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
+    /// <summary>
+    /// Default arguments: `default_arguments` is an array of size `default_argument_count`.
+    /// </summary>
     public uint DefaultArgumentCount;
     public unsafe GDExtensionVariantPtr* DefaultArguments;
 }

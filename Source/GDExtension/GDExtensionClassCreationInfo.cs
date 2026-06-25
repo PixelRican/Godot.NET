@@ -49,9 +49,21 @@ public struct GDExtensionClassCreationInfo
     public GDExtensionClassToString ToStringFunc;
     public GDExtensionClassReference ReferenceFunc;
     public GDExtensionClassUnreference UnreferenceFunc;
+    /// <summary>
+    /// Class constructor. Required unless the class is virtual or abstract.
+    /// </summary>
     public GDExtensionClassCreateInstance CreateInstanceFunc;
+    /// <summary>
+    /// Destructor; mandatory.
+    /// </summary>
     public GDExtensionClassFreeInstance FreeInstanceFunc;
+    /// <summary>
+    /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
+    /// </summary>
     public GDExtensionClassGetVirtual GetVirtualFunc;
     public GDExtensionClassGetRID GetRidFunc;
+    /// <summary>
+    /// Per-class user data, later accessible in instance bindings.
+    /// </summary>
     public unsafe void* ClassUserdata;
 }

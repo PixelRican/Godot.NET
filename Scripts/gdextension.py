@@ -307,6 +307,7 @@ class StructGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
+        data_description: list[str] | None = data.get("description")
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_deprecated:
             file.write("using System;\n")
@@ -314,6 +315,8 @@ class StructGenerator:
         file.write("\n")
         file.write("namespace GDExtension;\n")
         file.write("\n")
+        if data_description:
+            description(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
@@ -322,12 +325,15 @@ class StructGenerator:
         for member in data["members"]:
             member_name: str = member["name"].title().replace("_", "")
             member_type: TypeInfo = TypeInfo(member["type"])
-            modifiers: list[str] = ["public"]
+            member_description: list[str] | None = member.get("description")
+            if member_description:
+                description(file, member_description, spacing=4)
+            file.write("    public ")
             if member_type.is_readonly:
-                modifiers.append("readonly")
+                file.write("readonly ")
             if member_type.is_unsafe:
-                modifiers.append("unsafe")
-            file.write(f"    {" ".join(modifiers)} {member_type.name} {member_name};\n")
+                file.write("unsafe ")
+            file.write(f"{member_type.name} {member_name};\n")
         file.write("}\n")
 
 class FunctionGenerator:

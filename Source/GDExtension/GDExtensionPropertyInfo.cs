@@ -38,7 +38,13 @@ public struct GDExtensionPropertyInfo
     public GDExtensionVariantType Type;
     public GDExtensionStringNamePtr Name;
     public GDExtensionStringNamePtr ClassName;
+    /// <summary>
+    /// Bitfield of `PropertyHint` (defined in `extension_api.json`).
+    /// </summary>
     public uint Hint;
     public GDExtensionStringPtr HintString;
+    /// <summary>
+    /// Bitfield of `PropertyUsageFlags` (defined in `extension_api.json`).
+    /// </summary>
     public uint Usage;
 }

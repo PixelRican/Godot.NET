@@ -35,8 +35,18 @@ namespace GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionInitialization
 {
+    /// <summary>
+    /// Minimum initialization level required.
+    /// If Core or Servers, the extension needs editor or game restart to take effect
+    /// </summary>
     public GDExtensionInitializationLevel MinimumInitializationLevel;
+    /// <summary>
+    /// Up to the user to supply when initializing
+    /// </summary>
     public unsafe void* Userdata;
+    /// <summary>
+    /// This function will be called multiple times for each initialization level.
+    /// </summary>
     public GDExtensionInitializeCallback Initialize;
     public GDExtensionDeinitializeCallback Deinitialize;
 }

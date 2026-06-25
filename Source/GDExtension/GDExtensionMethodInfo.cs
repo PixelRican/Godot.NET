@@ -37,10 +37,19 @@ public struct GDExtensionMethodInfo
 {
     public GDExtensionStringNamePtr Name;
     public GDExtensionPropertyInfo ReturnValue;
+    /// <summary>
+    /// Bitfield of `GDExtensionClassMethodFlags`.
+    /// </summary>
     public uint Flags;
     public int Id;
+    /// <summary>
+    /// Arguments: `default_arguments` is an array of size `argument_count`.
+    /// </summary>
     public uint ArgumentCount;
     public unsafe GDExtensionPropertyInfo* Arguments;
+    /// <summary>
+    /// Default arguments: `default_arguments` is an array of size `default_argument_count`.
+    /// </summary>
     public uint DefaultArgumentCount;
     public unsafe GDExtensionVariantPtr* DefaultArguments;
 }
