@@ -108,7 +108,7 @@ class CopyrightGenerator:
             file.write("\n")
         file.write("\n")
 
-class ObsoleteGenerator:
+class DeprecatedGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         since: str = data["since"]
@@ -140,7 +140,7 @@ class EnumGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            ObsoleteGenerator.generate(file, data_deprecated)
+            DeprecatedGenerator.generate(file, data_deprecated)
         if data_is_bitfield:
             file.write("[Flags]\n")
         file.write(f"public enum {data_name}\n")
@@ -163,7 +163,7 @@ class HandleGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            ObsoleteGenerator.generate(file, data_deprecated)
+            DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public readonly unsafe struct {data_name} : IEquatable<{data_name}>\n")
         file.write("{\n")
@@ -225,7 +225,7 @@ class AliasGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            ObsoleteGenerator.generate(file, data_deprecated)
+            DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         if data_type.is_builtin:
             file.write(f"public readonly struct {data_name} : IEquatable<{data_name}>\n")
@@ -296,7 +296,7 @@ class StructGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            ObsoleteGenerator.generate(file, data_deprecated)
+            DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public struct {data_name}\n")
         file.write("{\n")
@@ -323,7 +323,7 @@ class FunctionGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            ObsoleteGenerator.generate(file, data_deprecated)
+            DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public readonly unsafe struct {function.name} : IEquatable<{function.name}>\n")
         file.write("{\n")
@@ -397,7 +397,7 @@ class GDExtensionInterfaceGenerator:
             file.write("\n")
             if interface_deprecated:
                 file.write("    ")
-                ObsoleteGenerator.generate(file, interface_deprecated)
+                DeprecatedGenerator.generate(file, interface_deprecated)
             file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
             file.write(f"    public static {function.return_value} {field_name[2].upper() + field_name[3:]}({function.parameter_list})\n")
             file.write("    {\n")
