@@ -26,6 +26,16 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
+def description(file: IOBase, lines: list[str], tag: str = "summary", spacing: int = 0) -> None:
+    spaces: str = " " * spacing
+    file.write(f"{spaces}/// <{tag}>\n")
+    for line in lines:
+        file.write(spaces)
+        file.write("/// ")
+        file.write(line)
+        file.write("\n")
+    file.write(f"{spaces}/// </{tag}>\n")
+
 class TypeInfo:
     def __init__(self, typedef: str) -> None:
         self.is_readonly: bool = typedef.startswith("const")
@@ -132,6 +142,7 @@ class EnumGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
+        data_description: list[str] | None = data.get("description")
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         data_is_bitfield: bool | None = data.get("is_bitfield")
         if data_deprecated or data_is_bitfield:
@@ -139,6 +150,8 @@ class EnumGenerator:
             file.write("\n")
         file.write("namespace GDExtension;\n")
         file.write("\n")
+        if data_description:
+            description(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         if data_is_bitfield:
@@ -148,6 +161,9 @@ class EnumGenerator:
         for value in data["values"]:
             value_name: str = value["name"].title().replace("_", "").replace("Gde", "GDE", 1)
             value_value: int = value["value"]
+            value_description: list[str] | None = value.get("description")
+            if value_description:
+                description(file, value_description, spacing=4)
             file.write(f"    {value_name} = {value_value},\n")
         file.write("}\n")
 

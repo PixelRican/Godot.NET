@@ -34,9 +34,21 @@ public enum GDExtensionCallErrorType
 {
     GDExtensionCallOk = 0,
     GDExtensionCallErrorInvalidMethod = 1,
+    /// <summary>
+    /// Expected a different variant type.
+    /// </summary>
     GDExtensionCallErrorInvalidArgument = 2,
+    /// <summary>
+    /// Expected lower number of arguments.
+    /// </summary>
     GDExtensionCallErrorTooManyArguments = 3,
+    /// <summary>
+    /// Expected higher number of arguments.
+    /// </summary>
     GDExtensionCallErrorTooFewArguments = 4,
     GDExtensionCallErrorInstanceIsNull = 5,
+    /// <summary>
+    /// Used for const call.
+    /// </summary>
     GDExtensionCallErrorMethodNotConst = 6,
 }
