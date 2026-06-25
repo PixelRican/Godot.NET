@@ -26,19 +26,6 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
-def obsolete(data: dict[str, Any]) -> str:
-    since: str = data["since"]
-    message: str | None = data.get("message")
-    replace_with: str | None = data.get("replace_with")
-    sentence: list[str] = [f"Deprecated since Godot {since}."]
-    if message:
-        sentence.append(message)
-    if replace_with:
-        if "_" in replace_with:
-            replace_with = "GDExtensionInterface." + replace_with.title().replace("_", "")
-        sentence.append(f"Use {replace_with} instead.")
-    return f"[Obsolete(\"{" ".join(sentence)}\")]\n"
-
 class TypeInfo:
     def __init__(self, typedef: str) -> None:
         self.is_readonly: bool = typedef.startswith("const")
@@ -121,6 +108,26 @@ class CopyrightGenerator:
             file.write("\n")
         file.write("\n")
 
+class ObsoleteGenerator:
+    @staticmethod
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
+        since: str = data["since"]
+        message: str | None = data.get("message")
+        replace_with: str | None = data.get("replace_with")
+        file.write(f"[Obsolete(\"Deprecated since Godot {since}.")
+        if message:
+            file.write(" ")
+            file.write(message)
+        if replace_with:
+            file.write(" Use ")
+            if "_" in replace_with:
+                file.write("GDExtensionInterface.")
+                file.write(replace_with.title().replace("_", ""))
+            else:
+                file.write(replace_with)
+            file.write(" instead.")
+        file.write("\")]\n")
+
 class EnumGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
@@ -133,7 +140,7 @@ class EnumGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            file.write(obsolete(data_deprecated))
+            ObsoleteGenerator.generate(file, data_deprecated)
         if data_is_bitfield:
             file.write("[Flags]\n")
         file.write(f"public enum {data_name}\n")
@@ -156,7 +163,7 @@ class HandleGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            file.write(obsolete(data_deprecated))
+            ObsoleteGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public readonly unsafe struct {data_name} : IEquatable<{data_name}>\n")
         file.write("{\n")
@@ -218,7 +225,7 @@ class AliasGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            file.write(obsolete(data_deprecated))
+            ObsoleteGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         if data_type.is_builtin:
             file.write(f"public readonly struct {data_name} : IEquatable<{data_name}>\n")
@@ -289,7 +296,7 @@ class StructGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            file.write(obsolete(data_deprecated))
+            ObsoleteGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public struct {data_name}\n")
         file.write("{\n")
@@ -316,7 +323,7 @@ class FunctionGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_deprecated:
-            file.write(obsolete(data_deprecated))
+            ObsoleteGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public readonly unsafe struct {function.name} : IEquatable<{function.name}>\n")
         file.write("{\n")
@@ -389,7 +396,8 @@ class GDExtensionInterfaceGenerator:
             interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
             file.write("\n")
             if interface_deprecated:
-                file.write("    " + obsolete(interface_deprecated))
+                file.write("    ")
+                ObsoleteGenerator.generate(file, interface_deprecated)
             file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
             file.write(f"    public static {function.return_value} {field_name[2].upper() + field_name[3:]}({function.parameter_list})\n")
             file.write("    {\n")
