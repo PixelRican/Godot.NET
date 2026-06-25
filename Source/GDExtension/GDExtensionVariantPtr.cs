@@ -33,6 +33,23 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// In this API there are multiple functions which expect the caller to pass a pointer
+/// on return value as parameter.
+/// In order to make it clear if the caller should initialize the return value or not
+/// we have two flavor of types:
+/// - `GDExtensionXXXPtr` for pointer on an initialized value
+/// - `GDExtensionUninitializedXXXPtr` for pointer on uninitialized value
+/// 
+/// Notes:
+/// - Not respecting those requirements can seems harmless, but will lead to unexpected
+/// segfault or memory leak (for instance with a specific compiler/OS, or when two
+/// native extensions start doing ptrcall on each other).
+/// - Initialization must be done with the function pointer returned by `variant_get_ptr_constructor`,
+/// zero-initializing the variable should not be considered a valid initialization method here !
+/// - Some types have no destructor (see `extension_api.json`'s `has_destructor` field), for
+/// them it is always safe to skip the constructor for the return value if you are in a hurry ;-)
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionVariantPtr : IEquatable<GDExtensionVariantPtr>
 {

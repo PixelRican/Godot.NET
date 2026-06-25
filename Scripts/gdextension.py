@@ -171,6 +171,7 @@ class HandleGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
+        data_description: list[str] | None = data.get("description")
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         data_parent: str | None = data.get("parent")
         file.write("using System;\n")
@@ -178,6 +179,8 @@ class HandleGenerator:
         file.write("\n")
         file.write("namespace GDExtension;\n")
         file.write("\n")
+        if data_description:
+            description(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")

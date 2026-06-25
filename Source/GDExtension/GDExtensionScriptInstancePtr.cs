@@ -33,6 +33,9 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Pointer to ScriptInstance.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionScriptInstancePtr : IEquatable<GDExtensionScriptInstancePtr>
 {
