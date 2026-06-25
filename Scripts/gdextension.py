@@ -22,6 +22,7 @@ def generate(data: dict[str, Any]) -> None:
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
     with open(f"../Source/GDExtension/GDExtensionInterface.cs", "w") as file:
+        HeaderGenerator.generate(file, {"name" : "GDExtensionInterface"})
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
