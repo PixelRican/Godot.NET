@@ -1,4 +1,6 @@
 /**************************************************************************/
+/*  GDExtensionScriptInstanceGetPropertyState.cs                          */
+/**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */

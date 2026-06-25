@@ -6,6 +6,7 @@ def generate(data: dict[str, Any]) -> None:
         name: str = type_data["name"]
         kind: str = type_data["kind"]
         with open(f"../Source/GDExtension/{name}.cs", "w") as file:
+            HeaderGenerator.generate(file, type_data)
             CopyrightGenerator.generate(file, data)
             match kind:
                 case "enum":
@@ -103,6 +104,13 @@ class FunctionInfo:
         self.return_value: str = type_parameters.pop(-1)
         self.parameter_list: str = ", ".join(" ".join(pair) for pair in zip(type_parameters, argument_names))
         self.argument_list: str = ", ".join(argument_names)
+
+class HeaderGenerator:
+    @staticmethod
+    def generate(file: IOBase, data: dict[str, Any]) -> None:
+        name: str = data["name"]
+        file.write("/**************************************************************************/\n")
+        file.write(f"/*  {name}.cs{" " * (67 - len(name))}*/\n")
 
 class CopyrightGenerator:
     @staticmethod
