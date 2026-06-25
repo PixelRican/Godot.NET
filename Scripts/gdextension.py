@@ -236,6 +236,7 @@ class AliasGenerator:
         data_name: str = data["name"]
         data_is_bool: bool = data_name.endswith("Bool")
         data_type: TypeInfo = TypeInfo(data["type"])
+        data_description: list[str] | None = data.get("description")
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_deprecated or data_type.is_builtin:
             file.write("using System;\n")
@@ -243,6 +244,8 @@ class AliasGenerator:
         file.write("\n")
         file.write("namespace GDExtension;\n")
         file.write("\n")
+        if data_description:
+            description(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
