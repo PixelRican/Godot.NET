@@ -70,7 +70,7 @@ public struct GDExtensionClassCreationInfo5
     /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that
     /// need or benefit from extra data when calling virtual functions.
     /// Returns user data that will be passed to `call_virtual_with_data_func`.
-    /// Returning `NULL` from this function signals to Godot that the virtual function is not overridden.
+    /// Returning `null` from this function signals to Godot that the virtual function is not overridden.
     /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.
     /// You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`.
     /// </summary>

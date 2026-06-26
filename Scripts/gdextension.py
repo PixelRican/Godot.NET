@@ -34,7 +34,7 @@ def describe(file: IOBase, lines: list[str], tag: str = "summary", metadata: str
         file.write(f" {metadata}")
     file.write(">\n")
     for line in lines:
-        file.write(f"{spaces}/// {line}\n")
+        file.write(f"{spaces}/// {line.replace("NULL", "null")}\n")
     file.write(f"{spaces}/// </{tag}>\n")
 
 class TypeInfo:

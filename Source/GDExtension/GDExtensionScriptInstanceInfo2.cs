@@ -42,7 +42,7 @@ public struct GDExtensionScriptInstanceInfo2
     public GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
     public GDExtensionScriptInstanceFreePropertyList FreePropertyListFunc;
     /// <summary>
-    /// Optional. Set to NULL for the default behavior.
+    /// Optional. Set to null for the default behavior.
     /// </summary>
     public GDExtensionScriptInstanceGetClassCategory GetClassCategoryFunc;
     public GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
