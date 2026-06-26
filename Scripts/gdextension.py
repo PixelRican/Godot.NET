@@ -1,4 +1,5 @@
 ﻿from io import IOBase
+from itertools import chain
 from typing import Any
 
 def generate(data: dict[str, Any]) -> None:
@@ -26,9 +27,12 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
-def describe(file: IOBase, lines: list[str], tag: str = "summary", spacing: int = 0) -> None:
+def describe(file: IOBase, lines: list[str], tag: str = "summary", metadata: str = "", spacing: int = 0) -> None:
     spaces: str = " " * spacing
-    file.write(f"{spaces}/// <{tag}>\n")
+    file.write(f"{spaces}/// <{tag}")
+    if metadata:
+        file.write(f" {metadata}")
+    file.write(">\n")
     for line in lines:
         file.write(f"{spaces}/// {line}\n")
     file.write(f"{spaces}/// </{tag}>\n")
@@ -77,28 +81,42 @@ class TypeInfo:
 
 class FunctionInfo:
     def __init__(self, data: dict[str, Any]) -> None:
-        type_parameters: list[str] = []
-        argument_names: list[str] = []
+        self.name: str = data["name"]
+        self.description: list[str] | None = data.get("description")
+        self.deprecated: dict[str, Any] | None = data.get("deprecated")
+        self.arguments: list[ArgumentInfo] = []
         for i, argument in enumerate(data["arguments"]):
-            argument_type: TypeInfo = TypeInfo(argument["type"])
-            argument_name: str | None = argument.get("name")
+            argument_type: str = argument["type"]
+            argument_name: str = argument.get("name")
+            argument_description: list[str] | None = argument.get("description")
             if argument_name:
                 argument_name = argument_name.title().replace("_", "")
-                argument_names.append(argument_name[0].lower() + argument_name[1:])
+                argument_name = argument_name[0].lower() + argument_name[1:]
             else:
-                argument_names.append(f"arg{i + 1}")
-            type_parameters.append(argument_type.name)
+                argument_name = f"arg{i + 1}"
+            self.arguments.append(ArgumentInfo(argument_type, argument_name, argument_description))
         return_value: dict[str, Any] | None = data.get("return_value")
         if return_value:
-            return_value_type: TypeInfo = TypeInfo(return_value["type"])
-            type_parameters.append(return_value_type.name)
+            return_value_type: str = return_value["type"]
+            return_value_description: list[str] | None = return_value.get("description")
+            self.return_value: ReturnValueInfo = ReturnValueInfo(return_value_type, return_value_description)
         else:
-            type_parameters.append("void")
-        self.name: str = data["name"]
+            self.return_value: ReturnValueInfo = ReturnValueInfo("void", None)
+        type_parameters: chain[str] = chain((argument.type for argument in self.arguments), [self.return_value.type])
         self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-        self.return_value: str = type_parameters.pop(-1)
-        self.parameter_list: str = ", ".join(" ".join(pair) for pair in zip(type_parameters, argument_names))
-        self.argument_list: str = ", ".join(argument_names)
+        self.parameter_list: str = ", ".join(f"{argument.type} {argument.name}" for argument in self.arguments)
+        self.argument_list: str = ", ".join(argument.name for argument in self.arguments)
+
+class ArgumentInfo:
+    def __init__(self, typedef: str, name: str, description: list[str] | None) -> None:
+        self.type: str = TypeInfo(typedef).name
+        self.name: str = name
+        self.description: list[str] | None = description
+
+class ReturnValueInfo:
+    def __init__(self, typedef: str, description: list[str] | None) -> None:
+        self.type: str = TypeInfo(typedef).name
+        self.description: list[str] | None = description
 
 class HeaderGenerator:
     @staticmethod
@@ -340,15 +358,16 @@ class FunctionGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         function: FunctionInfo = FunctionInfo(data)
-        data_deprecated: dict[str, Any] | None = data.get("deprecated")
         file.write("using System;\n")
         file.write("using System.Runtime.CompilerServices;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
         file.write("namespace GDExtension;\n")
         file.write("\n")
-        if data_deprecated:
-            DeprecatedGenerator.generate(file, data_deprecated)
+        if function.description:
+            describe(file, function.description)
+        if function.deprecated:
+            DeprecatedGenerator.generate(file, function.deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
         file.write(f"public readonly unsafe struct {function.name} : IEquatable<{function.name}>\n")
         file.write("{\n")
@@ -365,9 +384,9 @@ class FunctionGenerator:
         file.write("    }\n")
         file.write("\n")
         file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
-        file.write(f"    public {function.return_value} Invoke({function.parameter_list})\n")
+        file.write(f"    public {function.return_value.type} Invoke({function.parameter_list})\n")
         file.write("    {\n")
-        if function.return_value == "void":
+        if function.return_value.type == "void":
             file.write(f"        _method({function.argument_list});\n")
         else:
             file.write(f"        return _method({function.argument_list});\n")
@@ -416,17 +435,22 @@ class GDExtensionInterfaceGenerator:
             field_name = f"s_{function.name[0]}{function.name.title().replace("_", "")[1:]}"
             fields[field_name] = function
             file.write(f"    private static {function.type} {field_name};\n")
-        for field, interface_data in zip(fields.items(), data["interface"]):
-            field_name, function = field
-            interface_deprecated: dict[str, Any] | None = interface_data.get("deprecated")
+        for field_name, function in fields.items():
             file.write("\n")
-            if interface_deprecated:
+            if function.description:
+                describe(file, function.description, spacing=4)
+            for argument in function.arguments:
+                if argument.description:
+                    describe(file, argument.description, tag="param", metadata=f"name=\"{argument.name}\"", spacing=4)
+            if function.return_value.description:
+                describe(file, function.return_value.description, tag="returns", spacing=4)
+            if function.deprecated:
                 file.write("    ")
-                DeprecatedGenerator.generate(file, interface_deprecated)
+                DeprecatedGenerator.generate(file, function.deprecated)
             file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
-            file.write(f"    public static {function.return_value} {field_name[2].upper() + field_name[3:]}({function.parameter_list})\n")
+            file.write(f"    public static {function.return_value.type} {field_name[2].upper() + field_name[3:]}({function.parameter_list})\n")
             file.write("    {\n")
-            if function.return_value == "void":
+            if function.return_value.type == "void":
                 file.write(f"        {field_name}({function.argument_list});\n")
             else:
                 file.write(f"        return {field_name}({function.argument_list});\n")

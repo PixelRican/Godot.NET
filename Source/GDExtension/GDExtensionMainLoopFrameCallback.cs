@@ -34,6 +34,9 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Called for every frame iteration of the main loop.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionMainLoopFrameCallback : IEquatable<GDExtensionMainLoopFrameCallback>
 {

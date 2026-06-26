@@ -34,6 +34,40 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Each GDExtension should define a C function that matches the signature of GDExtensionInitializationFunction,
+/// and export it so that it can be loaded via dlopen() or equivalent for the given platform.
+/// 
+/// For example:
+/// 
+///   GDExtensionBool my_extension_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization);
+/// 
+/// This function's name must be specified as the 'entry_symbol' in the .gdextension file.
+/// 
+/// This makes it the entry point of the GDExtension and will be called on initialization.
+/// 
+/// The GDExtension can then modify the r_initialization structure, setting the minimum initialization level,
+/// and providing pointers to functions that will be called at various stages of initialization/shutdown.
+/// 
+/// The rest of the GDExtension's interface to Godot consists of function pointers that can be loaded
+/// by calling p_get_proc_address("...") with the name of the function.
+/// 
+/// For example:
+/// 
+///   GDExtensionInterfaceGetGodotVersion get_godot_version = (GDExtensionInterfaceGetGodotVersion)p_get_proc_address("get_godot_version");
+/// 
+/// (Note that snippet may cause "cast between incompatible function types" on some compilers, you can
+/// silence this by adding an intermediary `void*` cast.)
+/// 
+/// You can then call it like a normal function:
+/// 
+///   GDExtensionGodotVersion godot_version;
+///   get_godot_version(&godot_version);
+///   printf("Godot v%d.%d.%d\n", godot_version.major, godot_version.minor, godot_version.patch);
+/// 
+/// All of these interface functions are described below, together with the name that's used to load it,
+/// and the function pointer typedef that shows its signature.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionInitializationFunction : IEquatable<GDExtensionInitializationFunction>
 {

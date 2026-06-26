@@ -34,6 +34,10 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Called to construct an instance of the class.
+/// For classes descending from RefCounted, the reference count should be zero.
+/// </summary>
 [Obsolete("Deprecated since Godot 4.7. Use GDExtensionClassCreateInstance3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassCreateInstance2 : IEquatable<GDExtensionClassCreateInstance2>

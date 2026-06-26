@@ -34,6 +34,10 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Called to construct an instance of the class.
+/// For classes descending from RefCounted, the reference count should already be incremented by 1.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassCreateInstance3 : IEquatable<GDExtensionClassCreateInstance3>
 {

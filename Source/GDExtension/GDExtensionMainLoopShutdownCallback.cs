@@ -34,6 +34,9 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Called when shutting down the main loop.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionMainLoopShutdownCallback : IEquatable<GDExtensionMainLoopShutdownCallback>
 {

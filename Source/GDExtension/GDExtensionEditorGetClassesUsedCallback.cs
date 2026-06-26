@@ -34,6 +34,9 @@ using System.Runtime.InteropServices;
 
 namespace GDExtension;
 
+/// <summary>
+/// Passed a pointer to a PackedStringArray that should be filled with the classes that may be used by the GDExtension.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionEditorGetClassesUsedCallback : IEquatable<GDExtensionEditorGetClassesUsedCallback>
 {

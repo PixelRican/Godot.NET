@@ -216,6 +216,12 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> s_editorRegisterGetClassesUsedCallback;
     private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> s_registerMainLoopCallbacks;
 
+    /// <summary>
+    /// Gets the Godot version that the GDExtension was loaded into.
+    /// </summary>
+    /// <param name="rGodotVersion">
+    /// A pointer to the structure to write the version information into.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.GetGodotVersion2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GetGodotVersion(GDExtensionGodotVersion* rGodotVersion)
@@ -223,12 +229,27 @@ public static unsafe class GDExtensionInterface
         s_getGodotVersion(rGodotVersion);
     }
 
+    /// <summary>
+    /// Gets the Godot version that the GDExtension was loaded into.
+    /// </summary>
+    /// <param name="rGodotVersion">
+    /// A pointer to the structure to write the version information into.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GetGodotVersion2(GDExtensionGodotVersion2* rGodotVersion)
     {
         s_getGodotVersion2(rGodotVersion);
     }
 
+    /// <summary>
+    /// Allocates memory.
+    /// </summary>
+    /// <param name="pBytes">
+    /// The amount of memory to allocate in bytes.
+    /// </param>
+    /// <returns>
+    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemAlloc2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* MemAlloc(nuint pBytes)
@@ -236,6 +257,18 @@ public static unsafe class GDExtensionInterface
         return s_memAlloc(pBytes);
     }
 
+    /// <summary>
+    /// Reallocates memory.
+    /// </summary>
+    /// <param name="pPtr">
+    /// A pointer to the previously allocated memory.
+    /// </param>
+    /// <param name="pBytes">
+    /// The number of bytes to resize the memory block to.
+    /// </param>
+    /// <returns>
+    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemRealloc2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* MemRealloc(void* pPtr, nuint pBytes)
@@ -243,6 +276,12 @@ public static unsafe class GDExtensionInterface
         return s_memRealloc(pPtr, pBytes);
     }
 
+    /// <summary>
+    /// Frees memory.
+    /// </summary>
+    /// <param name="pPtr">
+    /// A pointer to the previously allocated memory.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use GDExtensionInterface.MemFree2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemFree(void* pPtr)
@@ -250,396 +289,1237 @@ public static unsafe class GDExtensionInterface
         s_memFree(pPtr);
     }
 
+    /// <summary>
+    /// Allocates memory.
+    /// </summary>
+    /// <param name="pBytes">
+    /// The amount of memory to allocate in bytes.
+    /// </param>
+    /// <param name="pPadAlign">
+    /// If true, the returned memory will have prepadding of at least 8 bytes.
+    /// </param>
+    /// <returns>
+    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* MemAlloc2(nuint pBytes, GDExtensionBool pPadAlign)
     {
         return s_memAlloc2(pBytes, pPadAlign);
     }
 
+    /// <summary>
+    /// Reallocates memory.
+    /// </summary>
+    /// <param name="pPtr">
+    /// A pointer to the previously allocated memory.
+    /// </param>
+    /// <param name="pBytes">
+    /// The number of bytes to resize the memory block to.
+    /// </param>
+    /// <param name="pPadAlign">
+    /// If true, the returned memory will have prepadding of at least 8 bytes.
+    /// </param>
+    /// <returns>
+    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* MemRealloc2(void* pPtr, nuint pBytes, GDExtensionBool pPadAlign)
     {
         return s_memRealloc2(pPtr, pBytes, pPadAlign);
     }
 
+    /// <summary>
+    /// Frees memory.
+    /// </summary>
+    /// <param name="pPtr">
+    /// A pointer to the previously allocated memory.
+    /// </param>
+    /// <param name="pPadAlign">
+    /// If true, the given memory was allocated with prepadding.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemFree2(void* pPtr, GDExtensionBool pPadAlign)
     {
         s_memFree2(pPtr, pPadAlign);
     }
 
+    /// <summary>
+    /// Logs an error to Godot's built-in debugger and to the OS terminal.
+    /// </summary>
+    /// <param name="pDescription">
+    /// The code triggering the error.
+    /// </param>
+    /// <param name="pFunction">
+    /// The function name where the error occurred.
+    /// </param>
+    /// <param name="pFile">
+    /// The file where the error occurred.
+    /// </param>
+    /// <param name="pLine">
+    /// The line where the error occurred.
+    /// </param>
+    /// <param name="pEditorNotify">
+    /// Whether or not to notify the editor.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         s_printError(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
+    /// <summary>
+    /// Logs an error with a message to Godot's built-in debugger and to the OS terminal.
+    /// </summary>
+    /// <param name="pDescription">
+    /// The code triggering the error.
+    /// </param>
+    /// <param name="pMessage">
+    /// The message to show along with the error.
+    /// </param>
+    /// <param name="pFunction">
+    /// The function name where the error occurred.
+    /// </param>
+    /// <param name="pFile">
+    /// The file where the error occurred.
+    /// </param>
+    /// <param name="pLine">
+    /// The line where the error occurred.
+    /// </param>
+    /// <param name="pEditorNotify">
+    /// Whether or not to notify the editor.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         s_printErrorWithMessage(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
+    /// <summary>
+    /// Logs a warning to Godot's built-in debugger and to the OS terminal.
+    /// </summary>
+    /// <param name="pDescription">
+    /// The code triggering the warning.
+    /// </param>
+    /// <param name="pFunction">
+    /// The function name where the warning occurred.
+    /// </param>
+    /// <param name="pFile">
+    /// The file where the warning occurred.
+    /// </param>
+    /// <param name="pLine">
+    /// The line where the warning occurred.
+    /// </param>
+    /// <param name="pEditorNotify">
+    /// Whether or not to notify the editor.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintWarning(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         s_printWarning(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
+    /// <summary>
+    /// Logs a warning with a message to Godot's built-in debugger and to the OS terminal.
+    /// </summary>
+    /// <param name="pDescription">
+    /// The code triggering the warning.
+    /// </param>
+    /// <param name="pMessage">
+    /// The message to show along with the warning.
+    /// </param>
+    /// <param name="pFunction">
+    /// The function name where the warning occurred.
+    /// </param>
+    /// <param name="pFile">
+    /// The file where the warning occurred.
+    /// </param>
+    /// <param name="pLine">
+    /// The line where the warning occurred.
+    /// </param>
+    /// <param name="pEditorNotify">
+    /// Whether or not to notify the editor.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintWarningWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         s_printWarningWithMessage(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
+    /// <summary>
+    /// Logs a script error to Godot's built-in debugger and to the OS terminal.
+    /// </summary>
+    /// <param name="pDescription">
+    /// The code triggering the error.
+    /// </param>
+    /// <param name="pFunction">
+    /// The function name where the error occurred.
+    /// </param>
+    /// <param name="pFile">
+    /// The file where the error occurred.
+    /// </param>
+    /// <param name="pLine">
+    /// The line where the error occurred.
+    /// </param>
+    /// <param name="pEditorNotify">
+    /// Whether or not to notify the editor.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintScriptError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         s_printScriptError(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
+    /// <summary>
+    /// Logs a script error with a message to Godot's built-in debugger and to the OS terminal.
+    /// </summary>
+    /// <param name="pDescription">
+    /// The code triggering the error.
+    /// </param>
+    /// <param name="pMessage">
+    /// The message to show along with the error.
+    /// </param>
+    /// <param name="pFunction">
+    /// The function name where the error occurred.
+    /// </param>
+    /// <param name="pFile">
+    /// The file where the error occurred.
+    /// </param>
+    /// <param name="pLine">
+    /// The line where the error occurred.
+    /// </param>
+    /// <param name="pEditorNotify">
+    /// Whether or not to notify the editor.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintScriptErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         s_printScriptErrorWithMessage(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
+    /// <summary>
+    /// Gets the size of a native struct (ex. ObjectID) in bytes.
+    /// </summary>
+    /// <param name="pName">
+    /// A pointer to a StringName identifying the struct name.
+    /// </param>
+    /// <returns>
+    /// The size in bytes.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ulong GetNativeStructSize(GDExtensionConstStringNamePtr pName)
     {
         return s_getNativeStructSize(pName);
     }
 
+    /// <summary>
+    /// Copies one Variant into a another.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to the destination Variant.
+    /// </param>
+    /// <param name="pSrc">
+    /// A pointer to the source Variant.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantNewCopy(GDExtensionUninitializedVariantPtr rDest, GDExtensionConstVariantPtr pSrc)
     {
         s_variantNewCopy(rDest, pSrc);
     }
 
+    /// <summary>
+    /// Creates a new Variant containing nil.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to the destination Variant.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantNewNil(GDExtensionUninitializedVariantPtr rDest)
     {
         s_variantNewNil(rDest);
     }
 
+    /// <summary>
+    /// Destroys a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant to destroy.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantDestroy(GDExtensionVariantPtr pSelf)
     {
         s_variantDestroy(pSelf);
     }
 
+    /// <summary>
+    /// Calls a method on a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pMethod">
+    /// A pointer to a StringName identifying the method.
+    /// </param>
+    /// <param name="pArgs">
+    /// A pointer to a C array of Variant.
+    /// </param>
+    /// <param name="pArgumentCount">
+    /// The number of arguments.
+    /// </param>
+    /// <param name="rReturn">
+    /// A pointer a Variant which will be assigned the return value.
+    /// </param>
+    /// <param name="rError">
+    /// A pointer the structure which will hold error information.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantCall(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
         s_variantCall(pSelf, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
+    /// <summary>
+    /// Calls a static method on a Variant.
+    /// </summary>
+    /// <param name="pType">
+    /// The variant type.
+    /// </param>
+    /// <param name="pMethod">
+    /// A pointer to a StringName identifying the method.
+    /// </param>
+    /// <param name="pArgs">
+    /// A pointer to a C array of Variant.
+    /// </param>
+    /// <param name="pArgumentCount">
+    /// The number of arguments.
+    /// </param>
+    /// <param name="rReturn">
+    /// A pointer a Variant which will be assigned the return value.
+    /// </param>
+    /// <param name="rError">
+    /// A pointer the structure which will be updated with error information.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantCallStatic(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
         s_variantCallStatic(pType, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
+    /// <summary>
+    /// Evaluate an operator on two Variants.
+    /// </summary>
+    /// <param name="pOp">
+    /// The operator to evaluate.
+    /// </param>
+    /// <param name="pA">
+    /// The first Variant.
+    /// </param>
+    /// <param name="pB">
+    /// The second Variant.
+    /// </param>
+    /// <param name="rReturn">
+    /// A pointer a Variant which will be assigned the return value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionConstVariantPtr pA, GDExtensionConstVariantPtr pB, GDExtensionUninitializedVariantPtr rReturn, GDExtensionBool* rValid)
     {
         s_variantEvaluate(pOp, pA, pB, rReturn, rValid);
     }
 
+    /// <summary>
+    /// Sets a key on a Variant to a value.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <param name="pValue">
+    /// A pointer to a Variant representing the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSet(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
         s_variantSet(pSelf, pKey, pValue, rValid);
     }
 
+    /// <summary>
+    /// Sets a named key on a Variant to a value.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a StringName representing the key.
+    /// </param>
+    /// <param name="pValue">
+    /// A pointer to a Variant representing the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetNamed(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
         s_variantSetNamed(pSelf, pKey, pValue, rValid);
     }
 
+    /// <summary>
+    /// Sets a keyed property on a Variant to a value.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <param name="pValue">
+    /// A pointer to a Variant representing the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetKeyed(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
         s_variantSetKeyed(pSelf, pKey, pValue, rValid);
     }
 
+    /// <summary>
+    /// Sets an index on a Variant to a value.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index.
+    /// </param>
+    /// <param name="pValue">
+    /// A pointer to a Variant representing the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
+    /// <param name="rOob">
+    /// A pointer to a boolean which will be set to true if the index is out of bounds.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetIndexed(GDExtensionVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid, GDExtensionBool* rOob)
     {
         s_variantSetIndexed(pSelf, pIndex, pValue, rValid, rOob);
     }
 
+    /// <summary>
+    /// Gets the value of a key from a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant which will be assigned the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGet(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         s_variantGet(pSelf, pKey, rRet, rValid);
     }
 
+    /// <summary>
+    /// Gets the value of a named key from a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a StringName representing the key.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant which will be assigned the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetNamed(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         s_variantGetNamed(pSelf, pKey, rRet, rValid);
     }
 
+    /// <summary>
+    /// Gets the value of a keyed property from a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant which will be assigned the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetKeyed(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         s_variantGetKeyed(pSelf, pKey, rRet, rValid);
     }
 
+    /// <summary>
+    /// Gets the value of an index from a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant which will be assigned the value.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
+    /// <param name="rOob">
+    /// A pointer to a boolean which will be set to true if the index is out of bounds.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetIndexed(GDExtensionConstVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid, GDExtensionBool* rOob)
     {
         s_variantGetIndexed(pSelf, pIndex, rRet, rValid, rOob);
     }
 
+    /// <summary>
+    /// Initializes an iterator over a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="rIter">
+    /// A pointer to a Variant which will be assigned the iterator.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
+    /// <returns>
+    /// true if the operation is valid; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantIterInit(GDExtensionConstVariantPtr pSelf, GDExtensionUninitializedVariantPtr rIter, GDExtensionBool* rValid)
     {
         return s_variantIterInit(pSelf, rIter, rValid);
     }
 
+    /// <summary>
+    /// Gets the next value for an iterator over a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="rIter">
+    /// A pointer to a Variant which will be assigned the iterator.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
+    /// <returns>
+    /// true if the operation is valid; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantIterNext(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionBool* rValid)
     {
         return s_variantIterNext(pSelf, rIter, rValid);
     }
 
+    /// <summary>
+    /// Gets the next value for an iterator over a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="rIter">
+    /// A pointer to a Variant which will be assigned the iterator.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant which will be assigned false if the operation is invalid.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantIterGet(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         s_variantIterGet(pSelf, rIter, rRet, rValid);
     }
 
+    /// <summary>
+    /// Gets the hash of a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <returns>
+    /// The hash value.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt VariantHash(GDExtensionConstVariantPtr pSelf)
     {
         return s_variantHash(pSelf);
     }
 
+    /// <summary>
+    /// Gets the recursive hash of a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pRecursionCount">
+    /// The number of recursive loops so far.
+    /// </param>
+    /// <returns>
+    /// The hash value.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt VariantRecursiveHash(GDExtensionConstVariantPtr pSelf, GDExtensionInt pRecursionCount)
     {
         return s_variantRecursiveHash(pSelf, pRecursionCount);
     }
 
+    /// <summary>
+    /// Compares two Variants by their hash.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pOther">
+    /// A pointer to the other Variant to compare it to.
+    /// </param>
+    /// <returns>
+    /// The hash value.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHashCompare(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pOther)
     {
         return s_variantHashCompare(pSelf, pOther);
     }
 
+    /// <summary>
+    /// Converts a Variant to a boolean.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <returns>
+    /// The boolean value of the Variant.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantBooleanize(GDExtensionConstVariantPtr pSelf)
     {
         return s_variantBooleanize(pSelf);
     }
 
+    /// <summary>
+    /// Duplicates a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant to store the duplicated value.
+    /// </param>
+    /// <param name="pDeep">
+    /// Whether or not to duplicate deeply (when supported by the Variant type).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantDuplicate(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rRet, GDExtensionBool pDeep)
     {
         s_variantDuplicate(pSelf, rRet, pDeep);
     }
 
+    /// <summary>
+    /// Converts a Variant to a string.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a String to store the resulting value.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantStringify(GDExtensionConstVariantPtr pSelf, GDExtensionStringPtr rRet)
     {
         s_variantStringify(pSelf, rRet);
     }
 
+    /// <summary>
+    /// Gets the type of a Variant.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <returns>
+    /// The variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantType VariantGetType(GDExtensionConstVariantPtr pSelf)
     {
         return s_variantGetType(pSelf);
     }
 
+    /// <summary>
+    /// Checks if a Variant has the given method.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pMethod">
+    /// A pointer to a StringName with the method name.
+    /// </param>
+    /// <returns>
+    /// true if the variant has the given method; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHasMethod(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod)
     {
         return s_variantHasMethod(pSelf, pMethod);
     }
 
+    /// <summary>
+    /// Checks if a type of Variant has the given member.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="pMember">
+    /// A pointer to a StringName with the member name.
+    /// </param>
+    /// <returns>
+    /// true if the variant has the given method; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHasMember(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
         return s_variantHasMember(pType, pMember);
     }
 
+    /// <summary>
+    /// Checks if a Variant has a key.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <param name="rValid">
+    /// A pointer to a boolean which will be set to false if the key doesn't exist.
+    /// </param>
+    /// <returns>
+    /// true if the key exists; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHasKey(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionBool* rValid)
     {
         return s_variantHasKey(pSelf, pKey, rValid);
     }
 
+    /// <summary>
+    /// Gets the object instance ID from a variant of type GDEXTENSION_VARIANT_TYPE_OBJECT.
+    /// If the variant isn't of type GDEXTENSION_VARIANT_TYPE_OBJECT, then zero will be returned.
+    /// The instance ID will be returned even if the object is no longer valid - use `object_get_instance_by_id()` to check if the object is still valid.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Variant.
+    /// </param>
+    /// <returns>
+    /// The instance ID for the contained object.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDObjectInstanceID VariantGetObjectInstanceId(GDExtensionConstVariantPtr pSelf)
     {
         return s_variantGetObjectInstanceId(pSelf);
     }
 
+    /// <summary>
+    /// Gets the name of a Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="rName">
+    /// A pointer to a String to store the Variant type name.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionUninitializedStringPtr rName)
     {
         s_variantGetTypeName(pType, rName);
     }
 
+    /// <summary>
+    /// Gets the Variant type by name.
+    /// </summary>
+    /// <param name="pTypeName">
+    /// The variant type name.
+    /// </param>
+    /// <returns>
+    /// The variant type for the given name; otherwise VARIANT_MAX if name is invalid.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantType VariantGetTypeByName(GDExtensionConstStringPtr pTypeName)
     {
         return s_variantGetTypeByName(pTypeName);
     }
 
+    /// <summary>
+    /// Checks if Variants can be converted from one type to another.
+    /// </summary>
+    /// <param name="pFrom">
+    /// The Variant type to convert from.
+    /// </param>
+    /// <param name="pTo">
+    /// The Variant type to convert to.
+    /// </param>
+    /// <returns>
+    /// true if the conversion is possible; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantCanConvert(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
         return s_variantCanConvert(pFrom, pTo);
     }
 
+    /// <summary>
+    /// Checks if Variant can be converted from one type to another using stricter rules.
+    /// </summary>
+    /// <param name="pFrom">
+    /// The Variant type to convert from.
+    /// </param>
+    /// <param name="pTo">
+    /// The Variant type to convert to.
+    /// </param>
+    /// <returns>
+    /// true if the conversion is possible; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantCanConvertStrict(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
         return s_variantCanConvertStrict(pFrom, pTo);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can create a Variant of the given type from a raw value.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can create a Variant of the given type from a raw value.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantFromTypeConstructorFunc GetVariantFromTypeConstructor(GDExtensionVariantType pType)
     {
         return s_getVariantFromTypeConstructor(pType);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can get the raw value from a Variant of the given type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can get the raw value from a Variant of the given type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypeFromVariantConstructorFunc GetVariantToTypeConstructor(GDExtensionVariantType pType)
     {
         return s_getVariantToTypeConstructor(pType);
     }
 
+    /// <summary>
+    /// Provides a function pointer for retrieving a pointer to a variant's internal value.
+    /// Access to a variant's internal value can be used to modify it in-place, or to retrieve its value without the overhead of variant conversion functions.
+    /// It is recommended to cache the getter for all variant types in a function table to avoid retrieval overhead upon use.
+    /// 
+    /// Each function assumes the variant's type has already been determined and matches the function.
+    /// Invoking the function with a variant of a mismatched type has undefined behavior, and may lead to a segmentation fault.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a type-specific function that returns a pointer to the internal value of a variant. Check the implementation of this function (gdextension_variant_get_ptr_internal_getter) for pointee type info of each variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantGetInternalPtrFunc VariantGetPtrInternalGetter(GDExtensionVariantType pType)
     {
         return s_variantGetPtrInternalGetter(pType);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can evaluate the given Variant operator on the given Variant types.
+    /// </summary>
+    /// <param name="pOperator">
+    /// The variant operator.
+    /// </param>
+    /// <param name="pTypeA">
+    /// The type of the first Variant.
+    /// </param>
+    /// <param name="pTypeB">
+    /// The type of the second Variant.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can evaluate the given Variant operator on the given Variant types.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrOperatorEvaluator VariantGetPtrOperatorEvaluator(GDExtensionVariantOperator pOperator, GDExtensionVariantType pTypeA, GDExtensionVariantType pTypeB)
     {
         return s_variantGetPtrOperatorEvaluator(pOperator, pTypeA, pTypeB);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can call a builtin method on a type of Variant.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="pMethod">
+    /// A pointer to a StringName with the method name.
+    /// </param>
+    /// <param name="pHash">
+    /// A hash representing the method signature.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can call a builtin method on a type of Variant.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrBuiltInMethod VariantGetPtrBuiltinMethod(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionInt pHash)
     {
         return s_variantGetPtrBuiltinMethod(pType, pMethod, pHash);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can call one of the constructors for a type of Variant.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="pConstructor">
+    /// The index of the constructor.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can call one of the constructors for a type of Variant.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrConstructor VariantGetPtrConstructor(GDExtensionVariantType pType, int pConstructor)
     {
         return s_variantGetPtrConstructor(pType, pConstructor);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function than can call the destructor for a type of Variant.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function than can call the destructor for a type of Variant.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrDestructor VariantGetPtrDestructor(GDExtensionVariantType pType)
     {
         return s_variantGetPtrDestructor(pType);
     }
 
+    /// <summary>
+    /// Constructs a Variant of the given type, using the first constructor that matches the given arguments.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="rBase">
+    /// A pointer to a Variant to store the constructed value.
+    /// </param>
+    /// <param name="pArgs">
+    /// A pointer to a C array of Variant pointers representing the arguments for the constructor.
+    /// </param>
+    /// <param name="pArgumentCount">
+    /// The number of arguments to pass to the constructor.
+    /// </param>
+    /// <param name="rError">
+    /// A pointer the structure which will be updated with error information.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantConstruct(GDExtensionVariantType pType, GDExtensionUninitializedVariantPtr rBase, GDExtensionConstVariantPtr* pArgs, int pArgumentCount, GDExtensionCallError* rError)
     {
         s_variantConstruct(pType, rBase, pArgs, pArgumentCount, rError);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can call a member's setter on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="pMember">
+    /// A pointer to a StringName with the member name.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can call a member's setter on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrSetter VariantGetPtrSetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
         return s_variantGetPtrSetter(pType, pMember);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can call a member's getter on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="pMember">
+    /// A pointer to a StringName with the member name.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can call a member's getter on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrGetter VariantGetPtrGetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
         return s_variantGetPtrGetter(pType, pMember);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can set an index on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can set an index on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrIndexedSetter VariantGetPtrIndexedSetter(GDExtensionVariantType pType)
     {
         return s_variantGetPtrIndexedSetter(pType);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can get an index on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can get an index on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrIndexedGetter VariantGetPtrIndexedGetter(GDExtensionVariantType pType)
     {
         return s_variantGetPtrIndexedGetter(pType);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can set a key on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can set a key on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrKeyedSetter VariantGetPtrKeyedSetter(GDExtensionVariantType pType)
     {
         return s_variantGetPtrKeyedSetter(pType);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can get a key on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can get a key on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrKeyedGetter VariantGetPtrKeyedGetter(GDExtensionVariantType pType)
     {
         return s_variantGetPtrKeyedGetter(pType);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can check a key on the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can check a key on the given Variant type.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrKeyedChecker VariantGetPtrKeyedChecker(GDExtensionVariantType pType)
     {
         return s_variantGetPtrKeyedChecker(pType);
     }
 
+    /// <summary>
+    /// Gets the value of a constant from the given Variant type.
+    /// </summary>
+    /// <param name="pType">
+    /// The Variant type.
+    /// </param>
+    /// <param name="pConstant">
+    /// A pointer to a StringName with the constant name.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to a Variant to store the value.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetConstantValue(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pConstant, GDExtensionUninitializedVariantPtr rRet)
     {
         s_variantGetConstantValue(pType, pConstant, rRet);
     }
 
+    /// <summary>
+    /// Gets a pointer to a function that can call a Variant utility function.
+    /// </summary>
+    /// <param name="pFunction">
+    /// A pointer to a StringName with the function name.
+    /// </param>
+    /// <param name="pHash">
+    /// A hash representing the function signature.
+    /// </param>
+    /// <returns>
+    /// A pointer to a function that can call a Variant utility function.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrUtilityFunction VariantGetPtrUtilityFunction(GDExtensionConstStringNamePtr pFunction, GDExtensionInt pHash)
     {
         return s_variantGetPtrUtilityFunction(pFunction, pHash);
     }
 
+    /// <summary>
+    /// Creates a String from a Latin-1 encoded C string.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a Latin-1 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithLatin1Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
     {
         s_stringNewWithLatin1Chars(rDest, pContents);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-8 encoded C string.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-8 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf8Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
     {
         s_stringNewWithUtf8Chars(rDest, pContents);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-16 encoded C string.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-16 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf16Chars(GDExtensionUninitializedStringPtr rDest, ushort* pContents)
     {
         s_stringNewWithUtf16Chars(rDest, pContents);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-32 encoded C string.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-32 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf32Chars(GDExtensionUninitializedStringPtr rDest, uint* pContents)
     {
         s_stringNewWithUtf32Chars(rDest, pContents);
     }
 
+    /// <summary>
+    /// Creates a String from a wide C string.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a wide C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithWideChars(GDExtensionUninitializedStringPtr rDest, char* pContents)
     {
         s_stringNewWithWideChars(rDest, pContents);
     }
 
+    /// <summary>
+    /// Creates a String from a Latin-1 encoded C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a Latin-1 encoded C string.
+    /// </param>
+    /// <param name="pSize">
+    /// The number of characters (= number of bytes).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithLatin1CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         s_stringNewWithLatin1CharsAndLen(rDest, pContents, pSize);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-8 encoded C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-8 encoded C string.
+    /// </param>
+    /// <param name="pSize">
+    /// The number of bytes (not code units).
+    /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf8CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf8CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
@@ -647,12 +1527,39 @@ public static unsafe class GDExtensionInterface
         s_stringNewWithUtf8CharsAndLen(rDest, pContents, pSize);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-8 encoded C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-8 encoded C string.
+    /// </param>
+    /// <param name="pSize">
+    /// The number of bytes (not code units).
+    /// </param>
+    /// <returns>
+    /// Error code signifying if the operation successful.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringNewWithUtf8CharsAndLen2(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         return s_stringNewWithUtf8CharsAndLen2(rDest, pContents, pSize);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-16 encoded C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-16 encoded C string.
+    /// </param>
+    /// <param name="pCharCount">
+    /// The number of characters (not bytes).
+    /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf16CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf16CharsAndLen(GDExtensionUninitializedStringPtr rDest, ushort* pContents, GDExtensionInt pCharCount)
@@ -660,294 +1567,922 @@ public static unsafe class GDExtensionInterface
         s_stringNewWithUtf16CharsAndLen(rDest, pContents, pCharCount);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-16 encoded C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-16 encoded C string.
+    /// </param>
+    /// <param name="pCharCount">
+    /// The number of characters (not bytes).
+    /// </param>
+    /// <param name="pDefaultLittleEndian">
+    /// If true, UTF-16 use little endian.
+    /// </param>
+    /// <returns>
+    /// Error code signifying if the operation successful.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringNewWithUtf16CharsAndLen2(GDExtensionUninitializedStringPtr rDest, ushort* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
     {
         return s_stringNewWithUtf16CharsAndLen2(rDest, pContents, pCharCount, pDefaultLittleEndian);
     }
 
+    /// <summary>
+    /// Creates a String from a UTF-32 encoded C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a UTF-32 encoded C string.
+    /// </param>
+    /// <param name="pCharCount">
+    /// The number of characters (not bytes).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf32CharsAndLen(GDExtensionUninitializedStringPtr rDest, uint* pContents, GDExtensionInt pCharCount)
     {
         s_stringNewWithUtf32CharsAndLen(rDest, pContents, pCharCount);
     }
 
+    /// <summary>
+    /// Creates a String from a wide C string with the given length.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to a Variant to hold the newly created String.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a wide C string.
+    /// </param>
+    /// <param name="pCharCount">
+    /// The number of characters (not bytes).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithWideCharsAndLen(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount)
     {
         s_stringNewWithWideCharsAndLen(rDest, pContents, pCharCount);
     }
 
+    /// <summary>
+    /// Converts a String to a Latin-1 encoded C string.
+    /// It doesn't write a null terminator.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="rText">
+    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// </param>
+    /// <param name="pMaxWriteLength">
+    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// </param>
+    /// <returns>
+    /// The resulting encoded string length in characters, not including a null terminator. Characters that cannot be converted to Latin-1 are replaced with a space.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringToLatin1Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToLatin1Chars(pSelf, rText, pMaxWriteLength);
     }
 
+    /// <summary>
+    /// Converts a String to a UTF-8 encoded C string.
+    /// It doesn't write a null terminator.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="rText">
+    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// </param>
+    /// <param name="pMaxWriteLength">
+    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// </param>
+    /// <returns>
+    /// The resulting encoded string length in bytes (not characters), not including a null terminator.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringToUtf8Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToUtf8Chars(pSelf, rText, pMaxWriteLength);
     }
 
+    /// <summary>
+    /// Converts a String to a UTF-16 encoded C string.
+    /// It doesn't write a null terminator.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="rText">
+    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// </param>
+    /// <param name="pMaxWriteLength">
+    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// </param>
+    /// <returns>
+    /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringToUtf16Chars(GDExtensionConstStringPtr pSelf, ushort* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToUtf16Chars(pSelf, rText, pMaxWriteLength);
     }
 
+    /// <summary>
+    /// Converts a String to a UTF-32 encoded C string.
+    /// It doesn't write a null terminator.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="rText">
+    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// </param>
+    /// <param name="pMaxWriteLength">
+    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// </param>
+    /// <returns>
+    /// The resulting encoded string length in characters (not bytes), not including a null terminator.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringToUtf32Chars(GDExtensionConstStringPtr pSelf, uint* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToUtf32Chars(pSelf, rText, pMaxWriteLength);
     }
 
+    /// <summary>
+    /// Converts a String to a wide C string.
+    /// It doesn't write a null terminator.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="rText">
+    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// </param>
+    /// <param name="pMaxWriteLength">
+    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// </param>
+    /// <returns>
+    /// The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringToWideChars(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToWideChars(pSelf, rText, pMaxWriteLength);
     }
 
+    /// <summary>
+    /// Gets a pointer to the character at the given index from a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested character.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static uint* StringOperatorIndex(GDExtensionStringPtr pSelf, GDExtensionInt pIndex)
     {
         return s_stringOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to the character at the given index from a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested character.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static uint* StringOperatorIndexConst(GDExtensionConstStringPtr pSelf, GDExtensionInt pIndex)
     {
         return s_stringOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Appends another String to a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pB">
+    /// A pointer to the other String to append.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqString(GDExtensionStringPtr pSelf, GDExtensionConstStringPtr pB)
     {
         s_stringOperatorPlusEqString(pSelf, pB);
     }
 
+    /// <summary>
+    /// Appends a character to a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pB">
+    /// A pointer to the character to append.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqChar(GDExtensionStringPtr pSelf, uint pB)
     {
         s_stringOperatorPlusEqChar(pSelf, pB);
     }
 
+    /// <summary>
+    /// Appends a Latin-1 encoded C string to a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pB">
+    /// A pointer to a Latin-1 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqCstr(GDExtensionStringPtr pSelf, byte* pB)
     {
         s_stringOperatorPlusEqCstr(pSelf, pB);
     }
 
+    /// <summary>
+    /// Appends a wide C string to a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pB">
+    /// A pointer to a wide C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqWcstr(GDExtensionStringPtr pSelf, char* pB)
     {
         s_stringOperatorPlusEqWcstr(pSelf, pB);
     }
 
+    /// <summary>
+    /// Appends a UTF-32 encoded C string to a String.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pB">
+    /// A pointer to a UTF-32 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqC32Str(GDExtensionStringPtr pSelf, uint* pB)
     {
         s_stringOperatorPlusEqC32Str(pSelf, pB);
     }
 
+    /// <summary>
+    /// Resizes the underlying string data to the given number of characters.
+    /// Space needs to be allocated for the null terminating character ('\0') which
+    /// also must be added manually, in order for all string functions to work correctly.
+    /// 
+    /// Warning: This is an error-prone operation - only use it if there's no other
+    /// efficient way to accomplish your goal.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the String.
+    /// </param>
+    /// <param name="pResize">
+    /// The new length for the String.
+    /// </param>
+    /// <returns>
+    /// Error code signifying if the operation successful.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt StringResize(GDExtensionStringPtr pSelf, GDExtensionInt pResize)
     {
         return s_stringResize(pSelf, pResize);
     }
 
+    /// <summary>
+    /// Creates a StringName from a Latin-1 encoded C string.
+    /// If `p_is_static` is true, then:
+    /// - The StringName will reuse the `p_contents` buffer instead of copying it.
+    /// - You must guarantee that the buffer remains valid for the duration of the application (e.g. string literal).
+    /// - You must not call a destructor for this StringName. Incrementing the initial reference once should achieve this.
+    /// 
+    /// `p_is_static` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to false.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a C string (null terminated and Latin-1 or ASCII encoded).
+    /// </param>
+    /// <param name="pIsStatic">
+    /// Whether the StringName reuses the buffer directly (see above).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNameNewWithLatin1Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionBool pIsStatic)
     {
         s_stringNameNewWithLatin1Chars(rDest, pContents, pIsStatic);
     }
 
+    /// <summary>
+    /// Creates a StringName from a UTF-8 encoded C string.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a C string (null terminated and UTF-8 encoded).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNameNewWithUtf8Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents)
     {
         s_stringNameNewWithUtf8Chars(rDest, pContents);
     }
 
+    /// <summary>
+    /// Creates a StringName from a UTF-8 encoded string with a given number of characters.
+    /// </summary>
+    /// <param name="rDest">
+    /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
+    /// </param>
+    /// <param name="pContents">
+    /// A pointer to a C string (null terminated and UTF-8 encoded).
+    /// </param>
+    /// <param name="pSize">
+    /// The number of bytes (not UTF-8 code points).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNameNewWithUtf8CharsAndLen(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         s_stringNameNewWithUtf8CharsAndLen(rDest, pContents, pSize);
     }
 
+    /// <summary>
+    /// Opens a raw XML buffer on an XMLParser instance.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to an XMLParser object.
+    /// </param>
+    /// <param name="pBuffer">
+    /// A pointer to the buffer.
+    /// </param>
+    /// <param name="pSize">
+    /// The size of the buffer.
+    /// </param>
+    /// <returns>
+    /// A Godot error code (ex. OK, ERR_INVALID_DATA, etc).
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt XmlParserOpenBuffer(GDExtensionObjectPtr pInstance, byte* pBuffer, nuint pSize)
     {
         return s_xmlParserOpenBuffer(pInstance, pBuffer, pSize);
     }
 
+    /// <summary>
+    /// Stores the given buffer using an instance of FileAccess.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to a FileAccess object.
+    /// </param>
+    /// <param name="pSrc">
+    /// A pointer to the buffer.
+    /// </param>
+    /// <param name="pLength">
+    /// The size of the buffer.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FileAccessStoreBuffer(GDExtensionObjectPtr pInstance, byte* pSrc, ulong pLength)
     {
         s_fileAccessStoreBuffer(pInstance, pSrc, pLength);
     }
 
+    /// <summary>
+    /// Reads the next p_length bytes into the given buffer using an instance of FileAccess.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to a FileAccess object.
+    /// </param>
+    /// <param name="pDst">
+    /// A pointer to the buffer to store the data.
+    /// </param>
+    /// <param name="pLength">
+    /// The requested number of bytes to read.
+    /// </param>
+    /// <returns>
+    /// The actual number of bytes read (may be less than requested).
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ulong FileAccessGetBuffer(GDExtensionConstObjectPtr pInstance, byte* pDst, ulong pLength)
     {
         return s_fileAccessGetBuffer(pInstance, pDst, pLength);
     }
 
+    /// <summary>
+    /// Returns writable pointer to internal Image buffer.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to a Image object.
+    /// </param>
+    /// <returns>
+    /// Pointer to internal Image buffer.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* ImagePtrw(GDExtensionObjectPtr pInstance)
     {
         return s_imagePtrw(pInstance);
     }
 
+    /// <summary>
+    /// Returns read only pointer to internal Image buffer.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to a Image object.
+    /// </param>
+    /// <returns>
+    /// Pointer to internal Image buffer.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* ImagePtr(GDExtensionObjectPtr pInstance)
     {
         return s_imagePtr(pInstance);
     }
 
+    /// <summary>
+    /// Adds a group task to an instance of WorkerThreadPool.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to a WorkerThreadPool object.
+    /// </param>
+    /// <param name="pFunc">
+    /// A pointer to a function to run in the thread pool.
+    /// </param>
+    /// <param name="pUserdata">
+    /// A pointer to arbitrary data which will be passed to p_func.
+    /// </param>
+    /// <param name="pElements">
+    /// The number of element needed in the group.
+    /// </param>
+    /// <param name="pTasks">
+    /// The number of tasks needed in the group.
+    /// </param>
+    /// <param name="pHighPriority">
+    /// Whether or not this is a high priority task.
+    /// </param>
+    /// <param name="pDescription">
+    /// A pointer to a String with the task description.
+    /// </param>
+    /// <returns>
+    /// The task group ID.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long WorkerThreadPoolAddNativeGroupTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserdata, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
         return s_workerThreadPoolAddNativeGroupTask(pInstance, pFunc, pUserdata, pElements, pTasks, pHighPriority, pDescription);
     }
 
+    /// <summary>
+    /// Adds a task to an instance of WorkerThreadPool.
+    /// </summary>
+    /// <param name="pInstance">
+    /// A pointer to a WorkerThreadPool object.
+    /// </param>
+    /// <param name="pFunc">
+    /// A pointer to a function to run in the thread pool.
+    /// </param>
+    /// <param name="pUserdata">
+    /// A pointer to arbitrary data which will be passed to p_func.
+    /// </param>
+    /// <param name="pHighPriority">
+    /// Whether or not this is a high priority task.
+    /// </param>
+    /// <param name="pDescription">
+    /// A pointer to a String with the task description.
+    /// </param>
+    /// <returns>
+    /// The task ID.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long WorkerThreadPoolAddNativeTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserdata, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
         return s_workerThreadPoolAddNativeTask(pInstance, pFunc, pUserdata, pHighPriority, pDescription);
     }
 
+    /// <summary>
+    /// Gets a pointer to a byte in a PackedByteArray.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedByteArray object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the byte to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested byte.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* PackedByteArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedByteArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a byte in a PackedByteArray.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedByteArray object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the byte to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested byte.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* PackedByteArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedByteArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a 32-bit float in a PackedFloat32Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedFloat32Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the float to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested 32-bit float.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float* PackedFloat32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedFloat32ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a 32-bit float in a PackedFloat32Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedFloat32Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the float to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested 32-bit float.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float* PackedFloat32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedFloat32ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a 64-bit float in a PackedFloat64Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedFloat64Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the float to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested 64-bit float.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double* PackedFloat64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedFloat64ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a 64-bit float in a PackedFloat64Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedFloat64Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the float to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested 64-bit float.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double* PackedFloat64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedFloat64ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a 32-bit integer in a PackedInt32Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedInt32Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the integer to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested 32-bit integer.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int* PackedInt32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedInt32ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a 32-bit integer in a PackedInt32Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedInt32Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the integer to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested 32-bit integer.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int* PackedInt32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedInt32ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a 64-bit integer in a PackedInt64Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedInt64Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the integer to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested 64-bit integer.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long* PackedInt64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedInt64ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a 64-bit integer in a PackedInt64Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedInt64Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the integer to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested 64-bit integer.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long* PackedInt64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedInt64ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a string in a PackedStringArray.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedStringArray object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the String to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested String.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionStringPtr PackedStringArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedStringArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a string in a PackedStringArray.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedStringArray object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the String to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested String.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionStringPtr PackedStringArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedStringArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a Vector2 in a PackedVector2Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedVector2Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Vector2 to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested Vector2.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedVector2ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedVector2ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a Vector2 in a PackedVector2Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedVector2Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Vector2 to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested Vector2.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedVector2ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedVector2ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a Vector3 in a PackedVector3Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedVector3Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Vector3 to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested Vector3.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedVector3ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedVector3ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a Vector3 in a PackedVector3Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedVector3Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Vector3 to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested Vector3.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedVector3ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedVector3ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a Vector4 in a PackedVector4Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedVector4Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Vector4 to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested Vector4.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedVector4ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedVector4ArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a Vector4 in a PackedVector4Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedVector4Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Vector4 to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested Vector4.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedVector4ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedVector4ArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a color in a PackedColorArray.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a PackedColorArray object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Color to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested Color.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedColorArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedColorArrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a color in a PackedColorArray.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a PackedColorArray object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Color to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested Color.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr PackedColorArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_packedColorArrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a pointer to a Variant in an Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to an Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Variant to get.
+    /// </param>
+    /// <returns>
+    /// A pointer to the requested Variant.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_arrayOperatorIndex(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a Variant in an Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to an Array object.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index of the Variant to get.
+    /// </param>
+    /// <returns>
+    /// A const pointer to the requested Variant.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         return s_arrayOperatorIndexConst(pSelf, pIndex);
     }
 
+    /// <summary>
+    /// Sets an Array to be a reference to another Array object.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Array object to update.
+    /// </param>
+    /// <param name="pFrom">
+    /// A pointer to the Array object to reference.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ArrayRef(GDExtensionTypePtr pSelf, GDExtensionConstTypePtr pFrom)
@@ -955,84 +2490,279 @@ public static unsafe class GDExtensionInterface
         s_arrayRef(pSelf, pFrom);
     }
 
+    /// <summary>
+    /// Makes an Array into a typed Array.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Array.
+    /// </param>
+    /// <param name="pType">
+    /// The type of Variant the Array will store.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the name of the object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
+    /// </param>
+    /// <param name="pScript">
+    /// A pointer to a Script object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ArraySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pType, GDExtensionConstStringNamePtr pClassName, GDExtensionConstVariantPtr pScript)
     {
         s_arraySetTyped(pSelf, pType, pClassName, pScript);
     }
 
+    /// <summary>
+    /// Gets a pointer to a Variant in a Dictionary with the given key.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to a Dictionary object.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <returns>
+    /// A pointer to a Variant representing the value at the given key.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr DictionaryOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionConstVariantPtr pKey)
     {
         return s_dictionaryOperatorIndex(pSelf, pKey);
     }
 
+    /// <summary>
+    /// Gets a const pointer to a Variant in a Dictionary with the given key.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A const pointer to a Dictionary object.
+    /// </param>
+    /// <param name="pKey">
+    /// A pointer to a Variant representing the key.
+    /// </param>
+    /// <returns>
+    /// A const pointer to a Variant representing the value at the given key.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr DictionaryOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionConstVariantPtr pKey)
     {
         return s_dictionaryOperatorIndexConst(pSelf, pKey);
     }
 
+    /// <summary>
+    /// Makes a Dictionary into a typed Dictionary.
+    /// </summary>
+    /// <param name="pSelf">
+    /// A pointer to the Dictionary.
+    /// </param>
+    /// <param name="pKeyType">
+    /// The type of Variant the Dictionary key will store.
+    /// </param>
+    /// <param name="pKeyClassName">
+    /// A pointer to a StringName with the name of the object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
+    /// </param>
+    /// <param name="pKeyScript">
+    /// A pointer to a Script object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
+    /// </param>
+    /// <param name="pValueType">
+    /// The type of Variant the Dictionary value will store.
+    /// </param>
+    /// <param name="pValueClassName">
+    /// A pointer to a StringName with the name of the object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
+    /// </param>
+    /// <param name="pValueScript">
+    /// A pointer to a Script object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DictionarySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pKeyType, GDExtensionConstStringNamePtr pKeyClassName, GDExtensionConstVariantPtr pKeyScript, GDExtensionVariantType pValueType, GDExtensionConstStringNamePtr pValueClassName, GDExtensionConstVariantPtr pValueScript)
     {
         s_dictionarySetTyped(pSelf, pKeyType, pKeyClassName, pKeyScript, pValueType, pValueClassName, pValueScript);
     }
 
+    /// <summary>
+    /// Calls a method on an Object.
+    /// </summary>
+    /// <param name="pMethodBind">
+    /// A pointer to the MethodBind representing the method on the Object's class.
+    /// </param>
+    /// <param name="pInstance">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pArgs">
+    /// A pointer to a C array of Variants representing the arguments.
+    /// </param>
+    /// <param name="pArgCount">
+    /// The number of arguments.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to Variant which will receive the return value.
+    /// </param>
+    /// <param name="rError">
+    /// A pointer to a GDExtensionCallError struct that will receive error information.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectMethodBindCall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgCount, GDExtensionUninitializedVariantPtr rRet, GDExtensionCallError* rError)
     {
         s_objectMethodBindCall(pMethodBind, pInstance, pArgs, pArgCount, rRet, rError);
     }
 
+    /// <summary>
+    /// Calls a method on an Object (using a "ptrcall").
+    /// </summary>
+    /// <param name="pMethodBind">
+    /// A pointer to the MethodBind representing the method on the Object's class.
+    /// </param>
+    /// <param name="pInstance">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pArgs">
+    /// A pointer to a C array representing the arguments.
+    /// </param>
+    /// <param name="rRet">
+    /// A pointer to the Object that will receive the return value.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectMethodBindPtrcall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstTypePtr* pArgs, GDExtensionTypePtr rRet)
     {
         s_objectMethodBindPtrcall(pMethodBind, pInstance, pArgs, rRet);
     }
 
+    /// <summary>
+    /// Destroys an Object.
+    /// </summary>
+    /// <param name="pO">
+    /// A pointer to the Object.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectDestroy(GDExtensionObjectPtr pO)
     {
         s_objectDestroy(pO);
     }
 
+    /// <summary>
+    /// Gets a global singleton by name.
+    /// </summary>
+    /// <param name="pName">
+    /// A pointer to a StringName with the singleton name.
+    /// </param>
+    /// <returns>
+    /// A pointer to the singleton Object.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr GlobalGetSingleton(GDExtensionConstStringNamePtr pName)
     {
         return s_globalGetSingleton(pName);
     }
 
+    /// <summary>
+    /// Gets a pointer representing an Object's instance binding.
+    /// </summary>
+    /// <param name="pO">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pToken">
+    /// A token the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pCallbacks">
+    /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
+    /// </param>
+    /// <returns>
+    /// A pointer to the instance binding.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ObjectGetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
         return s_objectGetInstanceBinding(pO, pToken, pCallbacks);
     }
 
+    /// <summary>
+    /// Sets an Object's instance binding.
+    /// </summary>
+    /// <param name="pO">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pToken">
+    /// A token the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pBinding">
+    /// A pointer to the instance binding.
+    /// </param>
+    /// <param name="pCallbacks">
+    /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectSetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, void* pBinding, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
         s_objectSetInstanceBinding(pO, pToken, pBinding, pCallbacks);
     }
 
+    /// <summary>
+    /// Free an Object's instance binding.
+    /// </summary>
+    /// <param name="pO">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pToken">
+    /// A token the library received by the GDExtension's entry point function.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectFreeInstanceBinding(GDExtensionObjectPtr pO, void* pToken)
     {
         s_objectFreeInstanceBinding(pO, pToken);
     }
 
+    /// <summary>
+    /// Sets an extension class instance on a Object.
+    /// `p_classname` should be a registered extension class and should extend the `p_o` Object's class.
+    /// </summary>
+    /// <param name="pO">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pClassname">
+    /// A pointer to a StringName with the registered extension class's name.
+    /// </param>
+    /// <param name="pInstance">
+    /// A pointer to the extension class instance.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectSetInstance(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassname, GDExtensionClassInstancePtr pInstance)
     {
         s_objectSetInstance(pO, pClassname, pInstance);
     }
 
+    /// <summary>
+    /// Gets the class name of an Object.
+    /// If the GDExtension wraps the Godot object in an abstraction specific to its class, this is the
+    /// function that should be used to determine which wrapper to use.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="rClassName">
+    /// A pointer to a String to receive the class name.
+    /// </param>
+    /// <returns>
+    /// true if successful in getting the class name; otherwise false.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool ObjectGetClassName(GDExtensionConstObjectPtr pObject, GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringNamePtr rClassName)
     {
         return s_objectGetClassName(pObject, pLibrary, rClassName);
     }
 
+    /// <summary>
+    /// Casts an Object to a different type.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pClassTag">
+    /// A pointer uniquely identifying a built-in class in the ClassDB.
+    /// </param>
+    /// <returns>
+    /// Returns a pointer to the Object, or NULL if it can't be cast to the requested type.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use the `is_class` method on `Object` to check if an object can be cast instead. If true, the previous pointer can be reinterpreted as a pointer to the target type.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ObjectCastTo(GDExtensionConstObjectPtr pObject, void* pClassTag)
@@ -1040,42 +2770,123 @@ public static unsafe class GDExtensionInterface
         return s_objectCastTo(pObject, pClassTag);
     }
 
+    /// <summary>
+    /// Gets an Object by its instance ID.
+    /// </summary>
+    /// <param name="pInstanceId">
+    /// The instance ID.
+    /// </param>
+    /// <returns>
+    /// A pointer to the Object.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ObjectGetInstanceFromId(GDObjectInstanceID pInstanceId)
     {
         return s_objectGetInstanceFromId(pInstanceId);
     }
 
+    /// <summary>
+    /// Gets the instance ID from an Object.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <returns>
+    /// The instance ID.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDObjectInstanceID ObjectGetInstanceId(GDExtensionConstObjectPtr pObject)
     {
         return s_objectGetInstanceId(pObject);
     }
 
+    /// <summary>
+    /// Checks if this object has a script with the given method.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pMethod">
+    /// A pointer to a StringName identifying the method.
+    /// </param>
+    /// <returns>
+    /// true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool ObjectHasScriptMethod(GDExtensionConstObjectPtr pObject, GDExtensionConstStringNamePtr pMethod)
     {
         return s_objectHasScriptMethod(pObject, pMethod);
     }
 
+    /// <summary>
+    /// Call the given script method on this object.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pMethod">
+    /// A pointer to a StringName identifying the method.
+    /// </param>
+    /// <param name="pArgs">
+    /// A pointer to a C array of Variant.
+    /// </param>
+    /// <param name="pArgumentCount">
+    /// The number of arguments.
+    /// </param>
+    /// <param name="rReturn">
+    /// A pointer a Variant which will be assigned the return value.
+    /// </param>
+    /// <param name="rError">
+    /// A pointer the structure which will hold error information.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectCallScriptMethod(GDExtensionObjectPtr pObject, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
         s_objectCallScriptMethod(pObject, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
+    /// <summary>
+    /// Gets the Object from a reference.
+    /// </summary>
+    /// <param name="pRef">
+    /// A pointer to the reference.
+    /// </param>
+    /// <returns>
+    /// A pointer to the Object from the reference or NULL.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr RefGetObject(GDExtensionConstRefPtr pRef)
     {
         return s_refGetObject(pRef);
     }
 
+    /// <summary>
+    /// Sets the Object referred to by a reference.
+    /// </summary>
+    /// <param name="pRef">
+    /// A pointer to the reference.
+    /// </param>
+    /// <param name="pObject">
+    /// A pointer to the Object to refer to.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RefSetObject(GDExtensionRefPtr pRef, GDExtensionObjectPtr pObject)
     {
         s_refSetObject(pRef, pObject);
     }
 
+    /// <summary>
+    /// Creates a script instance that contains the given info and instance data.
+    /// </summary>
+    /// <param name="pInfo">
+    /// A pointer to a GDExtensionScriptInstanceInfo struct.
+    /// </param>
+    /// <param name="pInstanceData">
+    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
+    /// </param>
+    /// <returns>
+    /// A pointer to a ScriptInstanceExtension object.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ScriptInstanceCreate3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr ScriptInstanceCreate(GDExtensionScriptInstanceInfo* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
@@ -1083,6 +2894,18 @@ public static unsafe class GDExtensionInterface
         return s_scriptInstanceCreate(pInfo, pInstanceData);
     }
 
+    /// <summary>
+    /// Creates a script instance that contains the given info and instance data.
+    /// </summary>
+    /// <param name="pInfo">
+    /// A pointer to a GDExtensionScriptInstanceInfo2 struct.
+    /// </param>
+    /// <param name="pInstanceData">
+    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
+    /// </param>
+    /// <returns>
+    /// A pointer to a ScriptInstanceExtension object.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ScriptInstanceCreate3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr ScriptInstanceCreate2(GDExtensionScriptInstanceInfo2* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
@@ -1090,36 +2913,109 @@ public static unsafe class GDExtensionInterface
         return s_scriptInstanceCreate2(pInfo, pInstanceData);
     }
 
+    /// <summary>
+    /// Creates a script instance that contains the given info and instance data.
+    /// </summary>
+    /// <param name="pInfo">
+    /// A pointer to a GDExtensionScriptInstanceInfo3 struct.
+    /// </param>
+    /// <param name="pInstanceData">
+    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
+    /// </param>
+    /// <returns>
+    /// A pointer to a ScriptInstanceExtension object.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr ScriptInstanceCreate3(GDExtensionScriptInstanceInfo3* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
         return s_scriptInstanceCreate3(pInfo, pInstanceData);
     }
 
+    /// <summary>
+    /// Creates a placeholder script instance for a given script and instance.
+    /// This interface is optional as a custom placeholder could also be created with script_instance_create().
+    /// </summary>
+    /// <param name="pLanguage">
+    /// A pointer to a ScriptLanguage.
+    /// </param>
+    /// <param name="pScript">
+    /// A pointer to a Script.
+    /// </param>
+    /// <param name="pOwner">
+    /// A pointer to an Object.
+    /// </param>
+    /// <returns>
+    /// A pointer to a PlaceHolderScriptInstance object.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr PlaceholderScriptInstanceCreate(GDExtensionObjectPtr pLanguage, GDExtensionObjectPtr pScript, GDExtensionObjectPtr pOwner)
     {
         return s_placeholderScriptInstanceCreate(pLanguage, pScript, pOwner);
     }
 
+    /// <summary>
+    /// Updates a placeholder script instance with the given properties and values.
+    /// The passed in placeholder must be an instance of PlaceHolderScriptInstance
+    /// such as the one returned by placeholder_script_instance_create().
+    /// </summary>
+    /// <param name="pPlaceholder">
+    /// A pointer to a PlaceHolderScriptInstance.
+    /// </param>
+    /// <param name="pProperties">
+    /// A pointer to an Array of Dictionary representing PropertyInfo.
+    /// </param>
+    /// <param name="pValues">
+    /// A pointer to a Dictionary mapping StringName to Variant values.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PlaceholderScriptInstanceUpdate(GDExtensionScriptInstancePtr pPlaceholder, GDExtensionConstTypePtr pProperties, GDExtensionConstTypePtr pValues)
     {
         s_placeholderScriptInstanceUpdate(pPlaceholder, pProperties, pValues);
     }
 
+    /// <summary>
+    /// Get the script instance data attached to this object.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pLanguage">
+    /// A pointer to the language expected for this script instance.
+    /// </param>
+    /// <returns>
+    /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of script_instance_create.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstanceDataPtr ObjectGetScriptInstance(GDExtensionConstObjectPtr pObject, GDExtensionObjectPtr pLanguage)
     {
         return s_objectGetScriptInstance(pObject, pLanguage);
     }
 
+    /// <summary>
+    /// Set the script instance data attached to this object.
+    /// </summary>
+    /// <param name="pObject">
+    /// A pointer to the Object.
+    /// </param>
+    /// <param name="pScriptInstance">
+    /// A pointer to the script instance data to attach to this object.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectSetScriptInstance(GDExtensionObjectPtr pObject, GDExtensionScriptInstanceDataPtr pScriptInstance)
     {
         s_objectSetScriptInstance(pObject, pScriptInstance);
     }
 
+    /// <summary>
+    /// Creates a custom Callable object from a function pointer.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="rCallable">
+    /// A pointer that will receive the new Callable.
+    /// </param>
+    /// <param name="pCallableCustomInfo">
+    /// The info required to construct a Callable.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.CallableCustomCreate2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void CallableCustomCreate(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
@@ -1127,18 +3023,51 @@ public static unsafe class GDExtensionInterface
         s_callableCustomCreate(rCallable, pCallableCustomInfo);
     }
 
+    /// <summary>
+    /// Creates a custom Callable object from a function pointer.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="rCallable">
+    /// A pointer that will receive the new Callable.
+    /// </param>
+    /// <param name="pCallableCustomInfo">
+    /// The info required to construct a Callable.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void CallableCustomCreate2(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo2* pCallableCustomInfo)
     {
         s_callableCustomCreate2(rCallable, pCallableCustomInfo);
     }
 
+    /// <summary>
+    /// Retrieves the userdata pointer from a custom Callable.
+    /// If the Callable is not a custom Callable or the token does not match the one provided to callable_custom_create() via GDExtensionCallableCustomInfo then NULL will be returned.
+    /// </summary>
+    /// <param name="pCallable">
+    /// A pointer to a Callable.
+    /// </param>
+    /// <param name="pToken">
+    /// A pointer to an address that uniquely identifies the GDExtension.
+    /// </param>
+    /// <returns>
+    /// The userdata pointer given when creating this custom Callable.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* CallableCustomGetUserdata(GDExtensionConstTypePtr pCallable, void* pToken)
     {
         return s_callableCustomGetUserdata(pCallable, pToken);
     }
 
+    /// <summary>
+    /// Constructs an Object of the requested class.
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
+    /// </summary>
+    /// <param name="pClassname">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <returns>
+    /// A pointer to the newly created Object.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ClassdbConstructObject(GDExtensionConstStringNamePtr pClassname)
@@ -1146,6 +3075,18 @@ public static unsafe class GDExtensionInterface
         return s_classdbConstructObject(pClassname);
     }
 
+    /// <summary>
+    /// Constructs an Object of the requested class.
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
+    /// 
+    /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
+    /// </summary>
+    /// <param name="pClassname">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <returns>
+    /// A pointer to the newly created Object.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use GDExtensionInterface.ClassdbConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ClassdbConstructObject2(GDExtensionConstStringNamePtr pClassname)
@@ -1153,18 +3094,55 @@ public static unsafe class GDExtensionInterface
         return s_classdbConstructObject2(pClassname);
     }
 
+    /// <summary>
+    /// Constructs an Object of the requested class.
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
+    /// If the type is a subtype of RefCounted, it already has a refcount of 1. The caller must take ownership the refcount and is responsible for decrementing it again when the object is no longer needed.
+    /// 
+    /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
+    /// </summary>
+    /// <param name="pClassname">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <returns>
+    /// A pointer to the newly created Object.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ClassdbConstructObject3(GDExtensionConstStringNamePtr pClassname)
     {
         return s_classdbConstructObject3(pClassname);
     }
 
+    /// <summary>
+    /// Gets a pointer to the MethodBind in ClassDB for the given class, method and hash.
+    /// </summary>
+    /// <param name="pClassname">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pMethodname">
+    /// A pointer to a StringName with the method name.
+    /// </param>
+    /// <param name="pHash">
+    /// A hash representing the function signature.
+    /// </param>
+    /// <returns>
+    /// A pointer to the MethodBind from ClassDB.
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionMethodBindPtr ClassdbGetMethodBind(GDExtensionConstStringNamePtr pClassname, GDExtensionConstStringNamePtr pMethodname, GDExtensionInt pHash)
     {
         return s_classdbGetMethodBind(pClassname, pMethodname, pHash);
     }
 
+    /// <summary>
+    /// Gets a pointer uniquely identifying the given built-in class in the ClassDB.
+    /// </summary>
+    /// <param name="pClassname">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <returns>
+    /// A pointer uniquely identifying the built-in class in the ClassDB.
+    /// </returns>
     [Obsolete("Deprecated since Godot 4.7. No longer needed. Use the `is_class` method on `Object` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ClassdbGetClassTag(GDExtensionConstStringNamePtr pClassname)
@@ -1172,6 +3150,22 @@ public static unsafe class GDExtensionInterface
         return s_classdbGetClassTag(pClassname);
     }
 
+    /// <summary>
+    /// Registers an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pParentClassName">
+    /// A pointer to a StringName with the parent class name.
+    /// </param>
+    /// <param name="pExtensionFuncs">
+    /// A pointer to a GDExtensionClassCreationInfo struct.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.2. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
@@ -1179,6 +3173,22 @@ public static unsafe class GDExtensionInterface
         s_classdbRegisterExtensionClass(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    /// <summary>
+    /// Registers an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pParentClassName">
+    /// A pointer to a StringName with the parent class name.
+    /// </param>
+    /// <param name="pExtensionFuncs">
+    /// A pointer to a GDExtensionClassCreationInfo2 struct.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass2(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
@@ -1186,6 +3196,22 @@ public static unsafe class GDExtensionInterface
         s_classdbRegisterExtensionClass2(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    /// <summary>
+    /// Registers an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pParentClassName">
+    /// A pointer to a StringName with the parent class name.
+    /// </param>
+    /// <param name="pExtensionFuncs">
+    /// A pointer to a GDExtensionClassCreationInfo3 struct.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.4. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass3(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
@@ -1193,6 +3219,22 @@ public static unsafe class GDExtensionInterface
         s_classdbRegisterExtensionClass3(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    /// <summary>
+    /// Registers an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pParentClassName">
+    /// A pointer to a StringName with the parent class name.
+    /// </param>
+    /// <param name="pExtensionFuncs">
+    /// A pointer to a GDExtensionClassCreationInfo4 struct.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.5. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass4(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
@@ -1200,6 +3242,22 @@ public static unsafe class GDExtensionInterface
         s_classdbRegisterExtensionClass4(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    /// <summary>
+    /// Registers an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pParentClassName">
+    /// A pointer to a StringName with the parent class name.
+    /// </param>
+    /// <param name="pExtensionFuncs">
+    /// A pointer to a GDExtensionClassCreationInfo5 struct.
+    /// </param>
     [Obsolete("Deprecated since Godot 4.7. Use GDExtensionInterface.ClassdbRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass5(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo5* pExtensionFuncs)
@@ -1207,102 +3265,329 @@ public static unsafe class GDExtensionInterface
         s_classdbRegisterExtensionClass5(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    /// <summary>
+    /// Registers an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pParentClassName">
+    /// A pointer to a StringName with the parent class name.
+    /// </param>
+    /// <param name="pExtensionFuncs">
+    /// A pointer to a GDExtensionClassCreationInfo6 struct.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClass6(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
     {
         s_classdbRegisterExtensionClass6(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
+    /// <summary>
+    /// Registers a method on an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pMethodInfo">
+    /// A pointer to a GDExtensionClassMethodInfo struct.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassMethodInfo* pMethodInfo)
     {
         s_classdbRegisterExtensionClassMethod(pLibrary, pClassName, pMethodInfo);
     }
 
+    /// <summary>
+    /// Registers a virtual method on an extension class in ClassDB, that can be implemented by scripts or other extensions.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pMethodInfo">
+    /// A pointer to a GDExtensionClassMethodInfo struct.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassVirtualMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassVirtualMethodInfo* pMethodInfo)
     {
         s_classdbRegisterExtensionClassVirtualMethod(pLibrary, pClassName, pMethodInfo);
     }
 
+    /// <summary>
+    /// Registers an integer constant on an extension class in the ClassDB.
+    /// Note about registering bitfield values (if p_is_bitfield is true): even though p_constant_value is signed, language bindings are
+    /// advised to treat bitfields as uint64_t, since this is generally clearer and can prevent mistakes like using -1 for setting all bits.
+    /// Language APIs should thus provide an abstraction that registers bitfields (uint64_t) separately from regular constants (int64_t).
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pEnumName">
+    /// A pointer to a StringName with the enum name.
+    /// </param>
+    /// <param name="pConstantName">
+    /// A pointer to a StringName with the constant name.
+    /// </param>
+    /// <param name="pConstantValue">
+    /// The constant value.
+    /// </param>
+    /// <param name="pIsBitfield">
+    /// Whether or not this constant is part of a bitfield.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassIntegerConstant(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pEnumName, GDExtensionConstStringNamePtr pConstantName, GDExtensionInt pConstantValue, GDExtensionBool pIsBitfield)
     {
         s_classdbRegisterExtensionClassIntegerConstant(pLibrary, pClassName, pEnumName, pConstantName, pConstantValue, pIsBitfield);
     }
 
+    /// <summary>
+    /// Registers a property on an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pInfo">
+    /// A pointer to a GDExtensionPropertyInfo struct.
+    /// </param>
+    /// <param name="pSetter">
+    /// A pointer to a StringName with the name of the setter method.
+    /// </param>
+    /// <param name="pGetter">
+    /// A pointer to a StringName with the name of the getter method.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassProperty(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter)
     {
         s_classdbRegisterExtensionClassProperty(pLibrary, pClassName, pInfo, pSetter, pGetter);
     }
 
+    /// <summary>
+    /// Registers an indexed property on an extension class in the ClassDB.
+    /// Provided struct can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pInfo">
+    /// A pointer to a GDExtensionPropertyInfo struct.
+    /// </param>
+    /// <param name="pSetter">
+    /// A pointer to a StringName with the name of the setter method.
+    /// </param>
+    /// <param name="pGetter">
+    /// A pointer to a StringName with the name of the getter method.
+    /// </param>
+    /// <param name="pIndex">
+    /// The index to pass as the first argument to the getter and setter methods.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassPropertyIndexed(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter, GDExtensionInt pIndex)
     {
         s_classdbRegisterExtensionClassPropertyIndexed(pLibrary, pClassName, pInfo, pSetter, pGetter, pIndex);
     }
 
+    /// <summary>
+    /// Registers a property group on an extension class in the ClassDB.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pGroupName">
+    /// A pointer to a String with the group name.
+    /// </param>
+    /// <param name="pPrefix">
+    /// A pointer to a String with the prefix used by properties in this group.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassPropertyGroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pGroupName, GDExtensionConstStringPtr pPrefix)
     {
         s_classdbRegisterExtensionClassPropertyGroup(pLibrary, pClassName, pGroupName, pPrefix);
     }
 
+    /// <summary>
+    /// Registers a property subgroup on an extension class in the ClassDB.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pSubgroupName">
+    /// A pointer to a String with the subgroup name.
+    /// </param>
+    /// <param name="pPrefix">
+    /// A pointer to a String with the prefix used by properties in this subgroup.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassPropertySubgroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pSubgroupName, GDExtensionConstStringPtr pPrefix)
     {
         s_classdbRegisterExtensionClassPropertySubgroup(pLibrary, pClassName, pSubgroupName, pPrefix);
     }
 
+    /// <summary>
+    /// Registers a signal on an extension class in the ClassDB.
+    /// Provided structs can be safely freed once the function returns.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
+    /// <param name="pSignalName">
+    /// A pointer to a StringName with the signal name.
+    /// </param>
+    /// <param name="pArgumentInfo">
+    /// A pointer to a GDExtensionPropertyInfo struct.
+    /// </param>
+    /// <param name="pArgumentCount">
+    /// The number of arguments the signal receives.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbRegisterExtensionClassSignal(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pSignalName, GDExtensionPropertyInfo* pArgumentInfo, GDExtensionInt pArgumentCount)
     {
         s_classdbRegisterExtensionClassSignal(pLibrary, pClassName, pSignalName, pArgumentInfo, pArgumentCount);
     }
 
+    /// <summary>
+    /// Unregisters an extension class in the ClassDB.
+    /// Unregistering a parent class before a class that inherits it will result in failure. Inheritors must be unregistered first.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the class name.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassdbUnregisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName)
     {
         s_classdbUnregisterExtensionClass(pLibrary, pClassName);
     }
 
+    /// <summary>
+    /// Gets the path to the current GDExtension library.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="rPath">
+    /// A pointer to a String which will receive the path.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GetLibraryPath(GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringPtr rPath)
     {
         s_getLibraryPath(pLibrary, rPath);
     }
 
+    /// <summary>
+    /// Adds an editor plugin.
+    /// It's safe to call during initialization.
+    /// </summary>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorAddPlugin(GDExtensionConstStringNamePtr pClassName)
     {
         s_editorAddPlugin(pClassName);
     }
 
+    /// <summary>
+    /// Removes an editor plugin.
+    /// </summary>
+    /// <param name="pClassName">
+    /// A pointer to a StringName with the name of a class that was previously added as an editor plugin.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorRemovePlugin(GDExtensionConstStringNamePtr pClassName)
     {
         s_editorRemovePlugin(pClassName);
     }
 
+    /// <summary>
+    /// Loads new XML-formatted documentation data in the editor.
+    /// The provided pointer can be immediately freed once the function returns.
+    /// </summary>
+    /// <param name="pData">
+    /// A pointer to a UTF-8 encoded C string (null terminated).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorHelpLoadXmlFromUtf8Chars(byte* pData)
     {
         s_editorHelpLoadXmlFromUtf8Chars(pData);
     }
 
+    /// <summary>
+    /// Loads new XML-formatted documentation data in the editor.
+    /// The provided pointer can be immediately freed once the function returns.
+    /// </summary>
+    /// <param name="pData">
+    /// A pointer to a UTF-8 encoded C string.
+    /// </param>
+    /// <param name="pSize">
+    /// The number of bytes (not code units).
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorHelpLoadXmlFromUtf8CharsAndLen(byte* pData, GDExtensionInt pSize)
     {
         s_editorHelpLoadXmlFromUtf8CharsAndLen(pData, pSize);
     }
 
+    /// <summary>
+    /// Registers a callback that Godot can call to get the list of all classes (from ClassDB) that may be used by the calling GDExtension.
+    /// This is used by the editor to generate a build profile (in "Tools" > "Engine Compilation Configuration Editor..." > "Detect from project"),
+    /// in order to recompile Godot with only the classes used.
+    /// In the provided callback, the GDExtension should provide the list of classes that _may_ be used statically, thus the time of invocation shouldn't matter.
+    /// If a GDExtension doesn't register a callback, Godot will assume that it could be using any classes.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pCallback">
+    /// The callback to retrieve the list of classes used.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorRegisterGetClassesUsedCallback(GDExtensionClassLibraryPtr pLibrary, GDExtensionEditorGetClassesUsedCallback pCallback)
     {
         s_editorRegisterGetClassesUsedCallback(pLibrary, pCallback);
     }
 
+    /// <summary>
+    /// Registers callbacks to be called at different phases of the main loop.
+    /// </summary>
+    /// <param name="pLibrary">
+    /// A pointer the library received by the GDExtension's entry point function.
+    /// </param>
+    /// <param name="pCallbacks">
+    /// A pointer to the structure that contains the callbacks.
+    /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RegisterMainLoopCallbacks(GDExtensionClassLibraryPtr pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
     {
