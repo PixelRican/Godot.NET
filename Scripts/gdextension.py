@@ -249,12 +249,29 @@ class AliasGenerator:
     @staticmethod
     def generate(file: IOBase, data: dict[str, Any]) -> None:
         data_name: str = data["name"]
-        data_is_bool: bool = data_name.endswith("Bool")
         data_type: TypeInfo = TypeInfo(data["type"])
-        data_description: list[str] | None = data.get("description")
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
-        if data_deprecated or data_type.is_builtin:
-            file.write("using System;\n")
+        if not data_type.is_builtin:
+            with open(f"../Source/GDExtension/{data_type.name}.cs", "r") as source_file:
+                section: str = "copyright"
+                for line in source_file:
+                    match section:
+                        case "copyright":
+                            if not line.startswith("/"):
+                                section = "global"
+                            continue
+                        case "global":
+                            if line.find("Obsolete", 1) != -1:
+                                if data_deprecated:
+                                    DeprecatedGenerator.generate(file, data_deprecated)
+                                continue
+                            if line.endswith(data_type.name, 0, -1):
+                                line = line.replace(data_type.name, data_name, 1)
+                                section = "local"
+                    file.write(line)
+                return
+        data_description: list[str] | None = data.get("description")
+        file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
         file.write("namespace GDExtension;\n")
@@ -264,61 +281,55 @@ class AliasGenerator:
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
-        if data_type.is_builtin:
-            file.write(f"public readonly struct {data_name} : IEquatable<{data_name}>\n")
-        else:
-            file.write(f"public struct {data_name}\n")
+        file.write(f"public readonly struct {data_name} : IEquatable<{data_name}>\n")
         file.write("{\n")
-        if data_type.is_builtin:
-            file.write(f"    private readonly {data_type.name} _value;\n")
-            if data_is_bool:
-                data_type.name = "bool"
-        else:
-            file.write(f"    public {data_type.name} Value;\n")
+        file.write(f"    private readonly {data_type.name} _value;\n")
         file.write("\n")
-        file.write(f"    public {data_name}({data_type.name} value)\n")
-        file.write("    {\n")
-        if data_is_bool:
+        if data_name.endswith("Bool"):
+            file.write(f"    public {data_name}(bool value)\n")
+            file.write("    {\n")
             file.write("        _value = (byte)(value ? 1 : 0);\n")
-        elif data_type.is_builtin:
-            file.write("        _value = value;\n")
+            file.write("    }\n")
+            file.write("\n")
+            file.write("    public bool Value\n")
+            file.write("    {\n")
+            file.write("        get => _value != 0;\n")
+            file.write("    }\n")
         else:
-            file.write("        Value = value;\n")
-        file.write("    }\n")
-        if data_type.is_builtin:
+            file.write(f"    public {data_name}({data_type.name} value)\n")
+            file.write("    {\n")
+            file.write("        _value = value;\n")
+            file.write("    }\n")
             file.write("\n")
             file.write(f"    public {data_type.name} Value\n")
             file.write("    {\n")
-            if data_is_bool:
-                file.write("        get => _value != 0;\n")
-            else:
-                file.write("        get => _value;\n")
+            file.write("        get => _value;\n")
             file.write("    }\n")
-            file.write("\n")
-            file.write(f"    public bool Equals({data_name} other)\n")
-            file.write("    {\n")
-            file.write("        return _value == other._value;\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write("    public override bool Equals(object? obj)\n")
-            file.write("    {\n")
-            file.write(f"        return obj is {data_name} other && _value == other._value;\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write("    public override int GetHashCode()\n")
-            file.write("    {\n")
-            file.write("        return _value.GetHashCode();\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write(f"    public static bool operator ==({data_name} left, {data_name} right)\n")
-            file.write("    {\n")
-            file.write("        return left._value == right._value;\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write(f"    public static bool operator !=({data_name} left, {data_name} right)\n")
-            file.write("    {\n")
-            file.write("        return left._value != right._value;\n")
-            file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public bool Equals({data_name} other)\n")
+        file.write("    {\n")
+        file.write("        return _value == other._value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    {\n")
+        file.write(f"        return obj is {data_name} other && _value == other._value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override int GetHashCode()\n")
+        file.write("    {\n")
+        file.write("        return _value.GetHashCode();\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator ==({data_name} left, {data_name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._value == right._value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator !=({data_name} left, {data_name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._value != right._value;\n")
+        file.write("    }\n")
         file.write("}\n")
 
 class StructGenerator:

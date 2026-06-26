@@ -37,10 +37,50 @@ namespace GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassCreationInfo5
 {
-    public GDExtensionClassCreationInfo4 Value;
-
-    public GDExtensionClassCreationInfo5(GDExtensionClassCreationInfo4 value)
-    {
-        Value = value;
-    }
+    public GDExtensionBool IsVirtual;
+    public GDExtensionBool IsAbstract;
+    public GDExtensionBool IsExposed;
+    public GDExtensionBool IsRuntime;
+    public GDExtensionConstStringPtr IconPath;
+    public GDExtensionClassSet SetFunc;
+    public GDExtensionClassGet GetFunc;
+    public GDExtensionClassGetPropertyList GetPropertyListFunc;
+    public GDExtensionClassFreePropertyList2 FreePropertyListFunc;
+    public GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
+    public GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
+    public GDExtensionClassValidateProperty ValidatePropertyFunc;
+    public GDExtensionClassNotification2 NotificationFunc;
+    public GDExtensionClassToString ToStringFunc;
+    public GDExtensionClassReference ReferenceFunc;
+    public GDExtensionClassUnreference UnreferenceFunc;
+    /// <summary>
+    /// Class constructor. Required unless the class is virtual or abstract.
+    /// </summary>
+    public GDExtensionClassCreateInstance2 CreateInstanceFunc;
+    /// <summary>
+    /// Destructor; mandatory.
+    /// </summary>
+    public GDExtensionClassFreeInstance FreeInstanceFunc;
+    public GDExtensionClassRecreateInstance RecreateInstanceFunc;
+    /// <summary>
+    /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
+    /// </summary>
+    public GDExtensionClassGetVirtual2 GetVirtualFunc;
+    /// <summary>
+    /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that
+    /// need or benefit from extra data when calling virtual functions.
+    /// Returns user data that will be passed to `call_virtual_with_data_func`.
+    /// Returning `NULL` from this function signals to Godot that the virtual function is not overridden.
+    /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.
+    /// You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`.
+    /// </summary>
+    public GDExtensionClassGetVirtualCallData2 GetVirtualCallDataFunc;
+    /// <summary>
+    /// Used to call virtual functions when `get_virtual_call_data_func` is not null.
+    /// </summary>
+    public GDExtensionClassCallVirtualWithData CallVirtualWithDataFunc;
+    /// <summary>
+    /// Per-class user data, later accessible in instance bindings.
+    /// </summary>
+    public unsafe void* ClassUserdata;
 }
