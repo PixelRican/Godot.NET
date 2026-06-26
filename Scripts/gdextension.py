@@ -26,7 +26,7 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
-def description(file: IOBase, lines: list[str], tag: str = "summary", spacing: int = 0) -> None:
+def describe(file: IOBase, lines: list[str], tag: str = "summary", spacing: int = 0) -> None:
     spaces: str = " " * spacing
     file.write(f"{spaces}/// <{tag}>\n")
     for line in lines:
@@ -148,7 +148,7 @@ class EnumGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_description:
-            description(file, data_description)
+            describe(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         if data_is_bitfield:
@@ -160,7 +160,7 @@ class EnumGenerator:
             value_value: int = value["value"]
             value_description: list[str] | None = value.get("description")
             if value_description:
-                description(file, value_description, spacing=4)
+                describe(file, value_description, spacing=4)
             file.write(f"    {value_name} = {value_value},\n")
         file.write("}\n")
 
@@ -177,7 +177,7 @@ class HandleGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_description:
-            description(file, data_description)
+            describe(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
@@ -242,7 +242,7 @@ class AliasGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_description:
-            description(file, data_description)
+            describe(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
@@ -316,7 +316,7 @@ class StructGenerator:
         file.write("namespace GDExtension;\n")
         file.write("\n")
         if data_description:
-            description(file, data_description)
+            describe(file, data_description)
         if data_deprecated:
             DeprecatedGenerator.generate(file, data_deprecated)
         file.write("[StructLayout(LayoutKind.Sequential)]\n")
@@ -327,7 +327,7 @@ class StructGenerator:
             member_type: TypeInfo = TypeInfo(member["type"])
             member_description: list[str] | None = member.get("description")
             if member_description:
-                description(file, member_description, spacing=4)
+                describe(file, member_description, spacing=4)
             file.write("    public ")
             if member_type.is_readonly:
                 file.write("readonly ")
