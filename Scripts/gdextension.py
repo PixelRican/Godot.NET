@@ -27,8 +27,8 @@ def generate(data: dict[str, Any]) -> None:
         CopyrightGenerator.generate(file, data)
         GDExtensionInterfaceGenerator.generate(file, data)
 
-def describe(file: IOBase, lines: list[str], tag: str = "summary", metadata: str = "", spacing: int = 0) -> None:
-    spaces: str = " " * spacing
+def describe(file: IOBase, lines: list[str], tag: str = "summary", metadata: str = "", tab: bool = False) -> None:
+    spaces: str = "    " if tab else ""
     file.write(f"{spaces}/// <{tag}")
     if metadata:
         file.write(f" {metadata}")
@@ -178,7 +178,7 @@ class EnumGenerator:
             value_value: int = value["value"]
             value_description: list[str] | None = value.get("description")
             if value_description:
-                describe(file, value_description, spacing=4)
+                describe(file, value_description, tab=True)
             file.write(f"    {value_name} = {value_value},\n")
         file.write("}\n")
 
@@ -356,7 +356,7 @@ class StructGenerator:
             member_type: TypeInfo = TypeInfo(member["type"])
             member_description: list[str] | None = member.get("description")
             if member_description:
-                describe(file, member_description, spacing=4)
+                describe(file, member_description, tab=True)
             file.write("    public ")
             if member_type.is_readonly:
                 file.write("readonly ")
@@ -449,12 +449,12 @@ class GDExtensionInterfaceGenerator:
         for field_name, function in fields.items():
             file.write("\n")
             if function.description:
-                describe(file, function.description, spacing=4)
+                describe(file, function.description, tab=True)
             for argument in function.arguments:
                 if argument.description:
-                    describe(file, argument.description, tag="param", metadata=f"name=\"{argument.name}\"", spacing=4)
+                    describe(file, argument.description, tag="param", metadata=f"name=\"{argument.name}\"", tab=True)
             if function.return_value.description:
-                describe(file, function.return_value.description, tag="returns", spacing=4)
+                describe(file, function.return_value.description, tag="returns", tab=True)
             if function.deprecated:
                 file.write("    ")
                 DeprecatedGenerator.generate(file, function.deprecated)
