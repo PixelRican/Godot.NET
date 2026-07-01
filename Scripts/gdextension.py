@@ -67,11 +67,11 @@ class TypeInfo:
             case "char":
                 self.name = "byte"
             case "char16_t":
-                self.name = "ushort"
+                self.name = "char"
             case "char32_t":
                 self.name = "uint"
             case "wchar_t":
-                self.name = "char"
+                self.name = "void"
             case "void" | "float" | "double":
                 pass
             case _:

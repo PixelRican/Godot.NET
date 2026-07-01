@@ -102,27 +102,27 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction> s_variantGetPtrUtilityFunction;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> s_stringNewWithLatin1Chars;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> s_stringNewWithUtf8Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, void> s_stringNewWithUtf16Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void> s_stringNewWithUtf16Chars;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> s_stringNewWithUtf32Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void> s_stringNewWithWideChars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, void> s_stringNewWithWideChars;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> s_stringNewWithLatin1CharsAndLen;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> s_stringNewWithUtf8CharsAndLen;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt> s_stringNewWithUtf8CharsAndLen2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, void> s_stringNewWithUtf16CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, GDExtensionBool, GDExtensionInt> s_stringNewWithUtf16CharsAndLen2;
+    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void> s_stringNewWithUtf16CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, GDExtensionBool, GDExtensionInt> s_stringNewWithUtf16CharsAndLen2;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> s_stringNewWithUtf32CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void> s_stringNewWithWideCharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, GDExtensionInt, void> s_stringNewWithWideCharsAndLen;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> s_stringToLatin1Chars;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> s_stringToUtf8Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, ushort*, GDExtensionInt, GDExtensionInt> s_stringToUtf16Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt> s_stringToUtf16Chars;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt> s_stringToUtf32Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt> s_stringToWideChars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, void*, GDExtensionInt, GDExtensionInt> s_stringToWideChars;
     private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*> s_stringOperatorIndex;
     private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*> s_stringOperatorIndexConst;
     private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void> s_stringOperatorPlusEqString;
     private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void> s_stringOperatorPlusEqChar;
     private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void> s_stringOperatorPlusEqCstr;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, char*, void> s_stringOperatorPlusEqWcstr;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void> s_stringOperatorPlusEqWcstr;
     private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void> s_stringOperatorPlusEqC32Str;
     private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> s_stringResize;
     private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void> s_stringNameNewWithLatin1Chars;
@@ -1455,7 +1455,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-16 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf16Chars(GDExtensionUninitializedStringPtr rDest, ushort* pContents)
+    public static void StringNewWithUtf16Chars(GDExtensionUninitializedStringPtr rDest, char* pContents)
     {
         s_stringNewWithUtf16Chars(rDest, pContents);
     }
@@ -1485,7 +1485,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithWideChars(GDExtensionUninitializedStringPtr rDest, char* pContents)
+    public static void StringNewWithWideChars(GDExtensionUninitializedStringPtr rDest, void* pContents)
     {
         s_stringNewWithWideChars(rDest, pContents);
     }
@@ -1562,7 +1562,7 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use GDExtensionInterface.StringNewWithUtf16CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf16CharsAndLen(GDExtensionUninitializedStringPtr rDest, ushort* pContents, GDExtensionInt pCharCount)
+    public static void StringNewWithUtf16CharsAndLen(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount)
     {
         s_stringNewWithUtf16CharsAndLen(rDest, pContents, pCharCount);
     }
@@ -1586,7 +1586,7 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringNewWithUtf16CharsAndLen2(GDExtensionUninitializedStringPtr rDest, ushort* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
+    public static GDExtensionInt StringNewWithUtf16CharsAndLen2(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
     {
         return s_stringNewWithUtf16CharsAndLen2(rDest, pContents, pCharCount, pDefaultLittleEndian);
     }
@@ -1622,7 +1622,7 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (not bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithWideCharsAndLen(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount)
+    public static void StringNewWithWideCharsAndLen(GDExtensionUninitializedStringPtr rDest, void* pContents, GDExtensionInt pCharCount)
     {
         s_stringNewWithWideCharsAndLen(rDest, pContents, pCharCount);
     }
@@ -1688,7 +1688,7 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToUtf16Chars(GDExtensionConstStringPtr pSelf, ushort* rText, GDExtensionInt pMaxWriteLength)
+    public static GDExtensionInt StringToUtf16Chars(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToUtf16Chars(pSelf, rText, pMaxWriteLength);
     }
@@ -1732,7 +1732,7 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToWideChars(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
+    public static GDExtensionInt StringToWideChars(GDExtensionConstStringPtr pSelf, void* rText, GDExtensionInt pMaxWriteLength)
     {
         return s_stringToWideChars(pSelf, rText, pMaxWriteLength);
     }
@@ -1828,7 +1828,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringOperatorPlusEqWcstr(GDExtensionStringPtr pSelf, char* pB)
+    public static void StringOperatorPlusEqWcstr(GDExtensionStringPtr pSelf, void* pB)
     {
         s_stringOperatorPlusEqWcstr(pSelf, pB);
     }
@@ -3663,27 +3663,27 @@ public static unsafe class GDExtensionInterface
         s_variantGetPtrUtilityFunction = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction>)Load(getProcAddress, "variant_get_ptr_utility_function"u8);
         s_stringNewWithLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void>)Load(getProcAddress, "string_new_with_latin1_chars"u8);
         s_stringNewWithUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void>)Load(getProcAddress, "string_new_with_utf8_chars"u8);
-        s_stringNewWithUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, void>)Load(getProcAddress, "string_new_with_utf16_chars"u8);
+        s_stringNewWithUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void>)Load(getProcAddress, "string_new_with_utf16_chars"u8);
         s_stringNewWithUtf32Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void>)Load(getProcAddress, "string_new_with_utf32_chars"u8);
-        s_stringNewWithWideChars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void>)Load(getProcAddress, "string_new_with_wide_chars"u8);
+        s_stringNewWithWideChars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, void>)Load(getProcAddress, "string_new_with_wide_chars"u8);
         s_stringNewWithLatin1CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_latin1_chars_and_len"u8);
         s_stringNewWithUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_utf8_chars_and_len"u8);
         s_stringNewWithUtf8CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_new_with_utf8_chars_and_len2"u8);
-        s_stringNewWithUtf16CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_utf16_chars_and_len"u8);
-        s_stringNewWithUtf16CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, ushort*, GDExtensionInt, GDExtensionBool, GDExtensionInt>)Load(getProcAddress, "string_new_with_utf16_chars_and_len2"u8);
+        s_stringNewWithUtf16CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_utf16_chars_and_len"u8);
+        s_stringNewWithUtf16CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, GDExtensionBool, GDExtensionInt>)Load(getProcAddress, "string_new_with_utf16_chars_and_len2"u8);
         s_stringNewWithUtf32CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_utf32_chars_and_len"u8);
-        s_stringNewWithWideCharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_wide_chars_and_len"u8);
+        s_stringNewWithWideCharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, GDExtensionInt, void>)Load(getProcAddress, "string_new_with_wide_chars_and_len"u8);
         s_stringToLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_latin1_chars"u8);
         s_stringToUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_utf8_chars"u8);
-        s_stringToUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, ushort*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_utf16_chars"u8);
+        s_stringToUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_utf16_chars"u8);
         s_stringToUtf32Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_utf32_chars"u8);
-        s_stringToWideChars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_wide_chars"u8);
+        s_stringToWideChars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, void*, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_to_wide_chars"u8);
         s_stringOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*>)Load(getProcAddress, "string_operator_index"u8);
         s_stringOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*>)Load(getProcAddress, "string_operator_index_const"u8);
         s_stringOperatorPlusEqString = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void>)Load(getProcAddress, "string_operator_plus_eq_string"u8);
         s_stringOperatorPlusEqChar = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void>)Load(getProcAddress, "string_operator_plus_eq_char"u8);
         s_stringOperatorPlusEqCstr = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void>)Load(getProcAddress, "string_operator_plus_eq_cstr"u8);
-        s_stringOperatorPlusEqWcstr = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, char*, void>)Load(getProcAddress, "string_operator_plus_eq_wcstr"u8);
+        s_stringOperatorPlusEqWcstr = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void>)Load(getProcAddress, "string_operator_plus_eq_wcstr"u8);
         s_stringOperatorPlusEqC32Str = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void>)Load(getProcAddress, "string_operator_plus_eq_c32str"u8);
         s_stringResize = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt>)Load(getProcAddress, "string_resize"u8);
         s_stringNameNewWithLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void>)Load(getProcAddress, "string_name_new_with_latin1_chars"u8);
