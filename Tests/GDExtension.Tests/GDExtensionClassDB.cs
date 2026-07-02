@@ -236,22 +236,16 @@ public static unsafe class GDExtensionClassDB
                                                                                         new GDExtensionInt(4047867050));
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
-        void* variantArgument1 = stackalloc byte[24];
-        void* variantArgument2 = stackalloc byte[24];
-        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeStringName).Invoke(new GDExtensionUninitializedVariantPtr(variantArgument1),
-                                                                                                    new GDExtensionTypePtr(&argument1));
-        GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeVector2).Invoke(new GDExtensionUninitializedVariantPtr(variantArgument2),
-                                                                                                 new GDExtensionTypePtr(&argument2));
+        using GDExtensionVariant variantArgument1 = new GDExtensionVariant(argument1);
+        using GDExtensionVariant variantArgument2 = new GDExtensionVariant(argument2);
+        using GDExtensionVariant variantResult = default;
         GDExtensionConstVariantPtr* arguments = stackalloc GDExtensionConstVariantPtr[]
         {
-            new GDExtensionConstVariantPtr(variantArgument1),
-            new GDExtensionConstVariantPtr(variantArgument2),
+            new GDExtensionConstVariantPtr(&variantArgument1),
+            new GDExtensionConstVariantPtr(&variantArgument2),
         };
-        void* result = stackalloc byte[24];
-        GDExtensionInterface.ObjectMethodBindCall(methodBind, instance, arguments, new GDExtensionInt(2), new GDExtensionUninitializedVariantPtr(result), null);
-        GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(variantArgument1));
-        GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(variantArgument2));
-        GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(result));
+        GDExtensionUninitializedVariantPtr result = new GDExtensionUninitializedVariantPtr(&variantResult);
+        GDExtensionInterface.ObjectMethodBindCall(methodBind, instance, arguments, new GDExtensionInt(2), result, null);
     }
 
     public static bool Equals(GDExtensionConstStringNamePtr left, GDExtensionConstStringNamePtr right)
