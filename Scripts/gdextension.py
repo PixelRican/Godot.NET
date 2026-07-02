@@ -34,8 +34,14 @@ def describe(file: IOBase, lines: list[str], tag: str = "summary", metadata: str
         file.write(f" {metadata}")
     file.write(">\n")
     for line in lines:
-        line = line.replace("`NULL`", "<see langword=\"null\"/>")
-        line = line.replace("NULL", "<see langword=\"null\"/>")
+        words: list[str] = line.split(" ")
+        for i, word in enumerate(words):
+            word = word.replace("`NULL`", "<see langword=\"null\"/>", 1)
+            word = word.replace("NULL", "<see langword=\"null\"/>", 1)
+            word = word.replace("true", "<see langword=\"true\"/>", 1)
+            word = word.replace("false", "<see langword=\"false\"/>", 1)
+            words[i] = word
+        line = " ".join(words)
         file.write(f"{spaces}/// {line}\n")
     file.write(f"{spaces}/// </{tag}>\n")
 

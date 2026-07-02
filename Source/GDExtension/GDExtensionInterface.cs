@@ -296,7 +296,7 @@ public static unsafe class GDExtensionInterface
     /// The amount of memory to allocate in bytes.
     /// </param>
     /// <param name="pPadAlign">
-    /// If true, the returned memory will have prepadding of at least 8 bytes.
+    /// If <see langword="true"/>, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
     /// <returns>
     /// A pointer to the allocated memory, or <see langword="null"/> if unsuccessful.
@@ -317,7 +317,7 @@ public static unsafe class GDExtensionInterface
     /// The number of bytes to resize the memory block to.
     /// </param>
     /// <param name="pPadAlign">
-    /// If true, the returned memory will have prepadding of at least 8 bytes.
+    /// If <see langword="true"/>, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
     /// <returns>
     /// A pointer to the allocated memory, or <see langword="null"/> if unsuccessful.
@@ -335,7 +335,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the previously allocated memory.
     /// </param>
     /// <param name="pPadAlign">
-    /// If true, the given memory was allocated with prepadding.
+    /// If <see langword="true"/>, the given memory was allocated with prepadding.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemFree2(void* pPtr, GDExtensionBool pPadAlign)
@@ -620,7 +620,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer a Variant which will be assigned the return value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionConstVariantPtr pA, GDExtensionConstVariantPtr pB, GDExtensionUninitializedVariantPtr rReturn, GDExtensionBool* rValid)
@@ -641,7 +641,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSet(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
@@ -662,7 +662,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetNamed(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
@@ -683,7 +683,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetKeyed(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
@@ -704,10 +704,10 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     /// <param name="rOob">
-    /// A pointer to a boolean which will be set to true if the index is out of bounds.
+    /// A pointer to a boolean which will be set to <see langword="true"/> if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetIndexed(GDExtensionVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid, GDExtensionBool* rOob)
@@ -728,7 +728,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGet(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
@@ -749,7 +749,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetNamed(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
@@ -770,7 +770,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetKeyed(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
@@ -791,10 +791,10 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the value.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     /// <param name="rOob">
-    /// A pointer to a boolean which will be set to true if the index is out of bounds.
+    /// A pointer to a boolean which will be set to <see langword="true"/> if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetIndexed(GDExtensionConstVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid, GDExtensionBool* rOob)
@@ -812,10 +812,10 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the iterator.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     /// <returns>
-    /// true if the operation is valid; otherwise false.
+    /// <see langword="true"/> if the operation is valid; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantIterInit(GDExtensionConstVariantPtr pSelf, GDExtensionUninitializedVariantPtr rIter, GDExtensionBool* rValid)
@@ -833,10 +833,10 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the iterator.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     /// <returns>
-    /// true if the operation is valid; otherwise false.
+    /// <see langword="true"/> if the operation is valid; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantIterNext(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionBool* rValid)
@@ -854,10 +854,10 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant which will be assigned the iterator.
     /// </param>
     /// <param name="rRet">
-    /// A pointer to a Variant which will be assigned false if the operation is invalid.
+    /// A pointer to a Variant which will be assigned <see langword="false"/> if the operation is invalid.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the operation is invalid.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantIterGet(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
@@ -989,7 +989,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the method name.
     /// </param>
     /// <returns>
-    /// true if the variant has the given method; otherwise false.
+    /// <see langword="true"/> if the variant has the given method; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHasMethod(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod)
@@ -1007,7 +1007,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the member name.
     /// </param>
     /// <returns>
-    /// true if the variant has the given method; otherwise false.
+    /// <see langword="true"/> if the variant has the given method; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHasMember(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
@@ -1025,10 +1025,10 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the key.
     /// </param>
     /// <param name="rValid">
-    /// A pointer to a boolean which will be set to false if the key doesn't exist.
+    /// A pointer to a boolean which will be set to <see langword="false"/> if the key doesn't exist.
     /// </param>
     /// <returns>
-    /// true if the key exists; otherwise false.
+    /// <see langword="true"/> if the key exists; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantHasKey(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionBool* rValid)
@@ -1093,7 +1093,7 @@ public static unsafe class GDExtensionInterface
     /// The Variant type to convert to.
     /// </param>
     /// <returns>
-    /// true if the conversion is possible; otherwise false.
+    /// <see langword="true"/> if the conversion is possible; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantCanConvert(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
@@ -1111,7 +1111,7 @@ public static unsafe class GDExtensionInterface
     /// The Variant type to convert to.
     /// </param>
     /// <returns>
-    /// true if the conversion is possible; otherwise false.
+    /// <see langword="true"/> if the conversion is possible; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool VariantCanConvertStrict(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
@@ -1580,7 +1580,7 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (not bytes).
     /// </param>
     /// <param name="pDefaultLittleEndian">
-    /// If true, UTF-16 use little endian.
+    /// If <see langword="true"/>, UTF-16 use little endian.
     /// </param>
     /// <returns>
     /// Error code signifying if the operation successful.
@@ -1873,12 +1873,12 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Creates a StringName from a Latin-1 encoded C string.
-    /// If `p_is_static` is true, then:
+    /// If `p_is_static` is <see langword="true"/>, then:
     /// - The StringName will reuse the `p_contents` buffer instead of copying it.
     /// - You must guarantee that the buffer remains valid for the duration of the application (e.g. string literal).
     /// - You must not call a destructor for this StringName. Incrementing the initial reference once should achieve this.
     /// 
-    /// `p_is_static` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to false.
+    /// `p_is_static` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to <see langword="false"/>.
     /// </summary>
     /// <param name="rDest">
     /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
@@ -2743,7 +2743,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String to receive the class name.
     /// </param>
     /// <returns>
-    /// true if successful in getting the class name; otherwise false.
+    /// <see langword="true"/> if successful in getting the class name; otherwise <see langword="false"/>.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool ObjectGetClassName(GDExtensionConstObjectPtr pObject, GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringNamePtr rClassName)
@@ -2810,7 +2810,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName identifying the method.
     /// </param>
     /// <returns>
-    /// true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
+    /// <see langword="true"/> if the object has a script and that script has a method with the given name. Returns <see langword="false"/> if the object has no script.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool ObjectHasScriptMethod(GDExtensionConstObjectPtr pObject, GDExtensionConstStringNamePtr pMethod)
@@ -3327,7 +3327,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Registers an integer constant on an extension class in the ClassDB.
-    /// Note about registering bitfield values (if p_is_bitfield is true): even though p_constant_value is signed, language bindings are
+    /// Note about registering bitfield values (if p_is_bitfield is <see langword="true"/>): even though p_constant_value is signed, language bindings are
     /// advised to treat bitfields as uint64_t, since this is generally clearer and can prevent mistakes like using -1 for setting all bits.
     /// Language APIs should thus provide an abstraction that registers bitfields (uint64_t) separately from regular constants (int64_t).
     /// </summary>
