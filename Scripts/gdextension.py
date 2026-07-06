@@ -3,12 +3,12 @@ from itertools import chain
 from typing import Any
 
 def generate(data: dict[str, Any]) -> None:
+    _copyright: list[str] = data["_copyright"]
     for type_data in data["types"]:
         name: str = type_data["name"]
         kind: str = type_data["kind"]
         with open(f"../Source/GDExtension/{name}.cs", "w") as file:
-            HeaderGenerator.generate(file, type_data)
-            CopyrightGenerator.generate(file, data)
+            header(file, name, _copyright)
             match kind:
                 case "enum":
                     EnumGenerator.generate(file, type_data)
@@ -23,9 +23,16 @@ def generate(data: dict[str, Any]) -> None:
                 case _:
                     raise ValueError(f"'{name}' has invalid kind '{kind}.'")
     with open(f"../Source/GDExtension/GDExtensionInterface.cs", "w") as file:
-        HeaderGenerator.generate(file, {"name" : "GDExtensionInterface"})
-        CopyrightGenerator.generate(file, data)
+        header(file, "GDExtensionInterface", _copyright)
         GDExtensionInterfaceGenerator.generate(file, data)
+
+def header(file: IOBase, name: str, _copyright: list[str]) -> None:
+    file.write("/**************************************************************************/\n")
+    file.write(f"/*  {name}.cs{" " * (67 - len(name))}*/\n")
+    for line in _copyright:
+        file.write(line)
+        file.write("\n")
+    file.write("\n")
 
 def describe(file: IOBase, lines: list[str], tag: str = "summary", metadata: str = "", tab: bool = False) -> None:
     spaces: str = "    " if tab else ""
@@ -125,21 +132,6 @@ class ReturnValueInfo:
     def __init__(self, typedef: str, description: list[str] | None) -> None:
         self.type: str = TypeInfo(typedef).name
         self.description: list[str] | None = description
-
-class HeaderGenerator:
-    @staticmethod
-    def generate(file: IOBase, data: dict[str, Any]) -> None:
-        name: str = data["name"]
-        file.write("/**************************************************************************/\n")
-        file.write(f"/*  {name}.cs{" " * (67 - len(name))}*/\n")
-
-class CopyrightGenerator:
-    @staticmethod
-    def generate(file: IOBase, data: dict[str, Any]) -> None:
-        for line in data["_copyright"]:
-            file.write(line)
-            file.write("\n")
-        file.write("\n")
 
 class DeprecatedGenerator:
     @staticmethod
