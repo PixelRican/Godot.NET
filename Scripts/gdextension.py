@@ -5,26 +5,132 @@ from typing import Any
 def generate(data: dict[str, Any]) -> None:
     _copyright: list[str] = data["_copyright"]
     for type_data in data["types"]:
-        name: str = type_data["name"]
-        kind: str = type_data["kind"]
-        with open(f"../Source/GDExtension/{name}.cs", "w") as file:
-            header(file, name, _copyright)
-            match kind:
-                case "enum":
-                    EnumGenerator.generate(file, type_data)
-                case "handle":
-                    HandleGenerator.generate(file, type_data)
-                case "alias":
-                    AliasGenerator.generate(file, type_data)
-                case "struct":
-                    StructGenerator.generate(file, type_data)
-                case "function":
-                    FunctionGenerator.generate(file, type_data)
-                case _:
-                    raise ValueError(f"'{name}' has invalid kind '{kind}.'")
-    with open(f"../Source/GDExtension/GDExtensionInterface.cs", "w") as file:
-        header(file, "GDExtensionInterface", _copyright)
-        GDExtensionInterfaceGenerator.generate(file, data)
+        match type_data["kind"]:
+            case "enum":
+                enum: GDExtensionEnum = GDExtensionEnum(type_data)
+                enum.generate(_copyright)
+            case "handle":
+                pass
+            case "alias":
+                pass
+            case "struct":
+                pass
+            case "function":
+                pass
+
+class GDExtensionDescription:
+    def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "", tab: bool = False) -> None:
+        self.lines: list[str] = lines
+        self.tag: str = tag
+        self.metadata: str = metadata
+        self.spacing: str = " " * 4 if tab else ""
+
+    def dump(self, file: IOBase) -> None:
+        file.write(self.spacing)
+        file.write("/// <")
+        file.write(self.tag)
+        if self.metadata:
+            file.write(" ")
+            file.write(self.metadata)
+        file.write(">\n")
+        for line in self.lines:
+            file.write(self.spacing)
+            file.write("/// ")
+            file.write(line)
+            file.write("\n")
+        file.write(self.spacing)
+        file.write("/// </")
+        file.write(self.tag)
+        file.write(">\n")
+
+class GDExtensionDeprecated:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.since: str = data["since"]
+        self.message: str | None = data.get("message")
+        self.replace_with: str | None = data.get("replace_with")
+
+    def dump(self, file: IOBase) -> None:
+        file.write("[Obsolete(\"Deprecated since Godot ")
+        file.write(self.since)
+        file.write(".")
+        if self.message:
+            file.write(" ")
+            file.write(self.message)
+        if self.replace_with:
+            file.write(" Use ")
+            file.write(self.replace_with)
+            file.write(" instead.")
+        file.write("\")]\n")
+
+class GDExtensionType:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"]
+        self.description: GDExtensionDescription | None = None
+        self.deprecated: GDExtensionDeprecated | None = None
+        data_description: list[str] | None = data.get("description")
+        data_deprecated: dict[str, Any] | None = data.get("deprecated")
+        if data_description:
+            self.data_description = GDExtensionDescription(data_description)
+        if data_deprecated:
+            self.deprecated = GDExtensionDeprecated(data_deprecated)
+
+    def generate(self, copyright_text: list[str]) -> None:
+        with open(f"../Source/GDExtension/{self.name}.cs", "w") as file:
+            file.write("/**************************************************************************/\n")
+            file.write("/*  ")
+            file.write(self.name)
+            file.write(".cs")
+            file.write(" " * (67 - len(self.name)))
+            file.write("*/\n")
+            for line in copyright_text:
+                file.write(line)
+                file.write("\n")
+            file.write("\n")
+            self.dump(file)
+
+    def dump(self, file: IOBase) -> None:
+        raise NotImplementedError()
+
+class GDExtensionEnum(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.is_bitfield: bool = data.get("is_bitfield") or False
+        self.values: list[GDExtensionEnumValue] = [
+            GDExtensionEnumValue(value_data) for value_data in data["values"]
+        ]
+
+    def dump(self, file: IOBase) -> None:
+        if self.deprecated or self.is_bitfield:
+            file.write("using System;\n")
+            file.write("\n")
+        file.write("namespace GDExtension;\n")
+        file.write("\n")
+        if self.description:
+            self.description.dump(file)
+        if self.deprecated:
+            self.deprecated.dump(file)
+        if self.is_bitfield:
+            file.write("[Flags]\n")
+        file.write(f"public enum {self.name}\n")
+        file.write("{\n")
+        for value in self.values:
+            if value.description:
+                value.description.dump(file)
+            file.write("    ")
+            file.write(value.name)
+            file.write(" = ")
+            file.write(str(value.value))
+            file.write(",\n")
+        file.write("}\n")
+
+class GDExtensionEnumValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"].title().replace("_", "").replace("Gde", "GDE", 1)
+        self.value: int = data["value"]
+        self.description: GDExtensionDescription | None = None
+        data_description: list[str] | None = data.get("description")
+        if data_description:
+            self.description = GDExtensionDescription(data_description, tab=True)
 
 def header(file: IOBase, name: str, _copyright: list[str]) -> None:
     file.write("/**************************************************************************/\n")
