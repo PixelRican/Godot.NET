@@ -23,6 +23,8 @@ def generate(data: dict[str, Any]) -> None:
                 if not alias.type.is_builtin:
                     actual = copy(types[alias.type.name])
                     actual.name = alias.name
+                    actual.description = alias.description
+                    actual.deprecated = alias.deprecated
                 types[actual.name] = actual
                 actual.generate(_copyright)
             case "struct":
