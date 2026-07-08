@@ -78,11 +78,7 @@ class GDExtensionType:
     def generate(self, copyright_text: list[str]) -> None:
         with open(f"../Source/GDExtension/{self.name}.cs", "w") as file:
             file.write("/**************************************************************************/\n")
-            file.write("/*  ")
-            file.write(self.name)
-            file.write(".cs")
-            file.write(" " * (67 - len(self.name)))
-            file.write("*/\n")
+            file.write(f"/*  {self.name}.cs  {" " * (65 - len(self.name))}*/\n")
             for line in copyright_text:
                 file.write(line)
                 file.write("\n")
