@@ -1,23 +1,77 @@
-﻿from io import IOBase
+﻿from copy import copy
+from io import IOBase
 from itertools import chain
 from typing import Any
 
 def generate(data: dict[str, Any]) -> None:
+    types: dict[str, GDExtensionType] = {}
     _copyright: list[str] = data["_copyright"]
     for type_data in data["types"]:
+        instance: GDExtensionType
         match type_data["kind"]:
             case "enum":
                 enum: GDExtensionEnum = GDExtensionEnum(type_data)
+                types[enum.name] = enum
                 enum.generate(_copyright)
             case "handle":
                 handle: GDExtensionHandle = GDExtensionHandle(type_data)
+                types[handle.name] = handle
                 handle.generate(_copyright)
             case "alias":
-                pass
+                alias: GDExtensionAlias = GDExtensionAlias(type_data)
+                actual: GDExtensionType = alias
+                if not alias.type.is_builtin:
+                    actual = copy(types[alias.type.name])
+                    actual.name = alias.name
+                types[actual.name] = actual
+                actual.generate(_copyright)
             case "struct":
                 pass
             case "function":
                 pass
+
+class GDExtensionTypeReference:
+    def __init__(self, typedef: str) -> None:
+        self.name: str
+        self.is_readonly: bool = typedef.startswith("const")
+        self.is_unsafe: bool = typedef.endswith("*")
+        self.is_builtin: bool = True
+        start: int = 6 if self.is_readonly else 0
+        end: int = -1 if self.is_unsafe else len(typedef)
+        self.name = typedef[start:end]
+        match self.name:
+            case "int8_t":
+                self.name = "sbyte"
+            case "uint8_t":
+                self.name = "byte"
+            case "int16_t":
+                self.name = "short"
+            case "uint16_t":
+                self.name = "ushort"
+            case "int32_t":
+                self.name = "int"
+            case "uint32_t":
+                self.name = "uint"
+            case "int64_t":
+                self.name = "long"
+            case "uint64_t":
+                self.name = "ulong"
+            case "size_t":
+                self.name = "nuint"
+            case "char":
+                self.name = "byte"
+            case "char16_t":
+                self.name = "char"
+            case "char32_t":
+                self.name = "uint"
+            case "wchar_t":
+                self.name = "void"
+            case "void" | "float" | "double":
+                pass
+            case _:
+                self.is_builtin = False
+        if self.is_unsafe:
+            self.name += "*"
 
 class GDExtensionDescription:
     def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "", tab: bool = False) -> None:
@@ -173,6 +227,73 @@ class GDExtensionHandle(GDExtensionType):
         file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
         file.write("    {\n")
         file.write("        return left._pointer != right._pointer;\n")
+        file.write("    }\n")
+        file.write("}\n")
+
+class GDExtensionAlias(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.type: GDExtensionTypeReference = GDExtensionTypeReference(data["type"])
+
+    def dump(self, file: IOBase) -> None:
+        file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace GDExtension;\n")
+        file.write("\n")
+        if self.description:
+            self.description.dump(file)
+        if self.deprecated:
+            self.deprecated.dump(file)
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public readonly struct {self.name} : IEquatable<{self.name}>\n")
+        file.write("{\n")
+        file.write(f"    private readonly {self.type.name} _value;\n")
+        file.write("\n")
+        if self.name.endswith("Bool"):
+            file.write(f"    public {self.name}(bool value)\n")
+            file.write("    {\n")
+            file.write("        _value = (byte)(value ? 1 : 0);\n")
+            file.write("    }\n")
+            file.write("\n")
+            file.write("    public bool Value\n")
+            file.write("    {\n")
+            file.write("        get => _value != 0;\n")
+            file.write("    }\n")
+        else:
+            file.write(f"    public {self.name}({self.type.name} value)\n")
+            file.write("    {\n")
+            file.write("        _value = value;\n")
+            file.write("    }\n")
+            file.write("\n")
+            file.write(f"    public {self.type.name} Value\n")
+            file.write("    {\n")
+            file.write("        get => _value;\n")
+            file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public bool Equals({self.name} other)\n")
+        file.write("    {\n")
+        file.write("        return _value == other._value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    {\n")
+        file.write(f"        return obj is {self.name} other && _value == other._value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override int GetHashCode()\n")
+        file.write("    {\n")
+        file.write("        return _value.GetHashCode();\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._value == right._value;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._value != right._value;\n")
         file.write("    }\n")
         file.write("}\n")
 
