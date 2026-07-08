@@ -44,7 +44,7 @@ public struct GDExtensionClassMethodInfo
     /// </summary>
     public uint MethodFlags;
     /// <summary>
-    /// If `has_return_value` is <see langword="false"/>, `return_value_info` and `return_value_metadata` are ignored.
+    /// If `has_return_value` is false, `return_value_info` and `return_value_metadata` are ignored.
     /// 
     /// @todo Consider dropping `has_return_value` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
     /// </summary>

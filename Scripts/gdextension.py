@@ -28,7 +28,9 @@ def generate(data: dict[str, Any]) -> None:
                 types[actual.name] = actual
                 actual.generate(_copyright)
             case "struct":
-                pass
+                struct: GDExtensionStruct = GDExtensionStruct(type_data)
+                types[struct.name] = struct
+                struct.generate(_copyright)
             case "function":
                 pass
 
@@ -298,6 +300,47 @@ class GDExtensionAlias(GDExtensionType):
         file.write("        return left._value != right._value;\n")
         file.write("    }\n")
         file.write("}\n")
+
+class GDExtensionStruct(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.members: list[GDExtensionStructMember] = [
+            GDExtensionStructMember(member_data) for member_data in data["members"]
+        ]
+
+    def dump(self, file: IOBase) -> None:
+        if self.deprecated:
+            file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace GDExtension;\n")
+        file.write("\n")
+        if self.description:
+            self.description.dump(file)
+        if self.deprecated:
+            self.deprecated.dump(file)
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public struct {self.name}\n")
+        file.write("{\n")
+        for member in self.members:
+            if member.description:
+                member.description.dump(file)
+            file.write("    public ")
+            if member.type.is_readonly:
+                file.write("readonly ")
+            if member.type.is_unsafe:
+                file.write("unsafe ")
+            file.write(f"{member.type.name} {member.name};\n")
+        file.write("}\n")
+
+class GDExtensionStructMember:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"].title().replace("_", "")
+        self.type: GDExtensionTypeReference = GDExtensionTypeReference(data["type"])
+        self.description: GDExtensionDescription | None = None
+        data_description: list[str] | None = data.get("description")
+        if data_description:
+            self.description = GDExtensionDescription(data_description, tab=True)
 
 def header(file: IOBase, name: str, _copyright: list[str]) -> None:
     file.write("/**************************************************************************/\n")
