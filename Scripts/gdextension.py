@@ -10,7 +10,8 @@ def generate(data: dict[str, Any]) -> None:
                 enum: GDExtensionEnum = GDExtensionEnum(type_data)
                 enum.generate(_copyright)
             case "handle":
-                pass
+                handle: GDExtensionHandle = GDExtensionHandle(type_data)
+                handle.generate(_copyright)
             case "alias":
                 pass
             case "struct":
@@ -131,6 +132,68 @@ class GDExtensionEnumValue:
         data_description: list[str] | None = data.get("description")
         if data_description:
             self.description = GDExtensionDescription(data_description, tab=True)
+
+class GDExtensionHandle(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.parent: str | None = data.get("parent")
+
+    def dump(self, file: IOBase) -> None:
+        file.write("using System;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace GDExtension;\n")
+        file.write("\n")
+        if self.description:
+            self.description.dump(file)
+        if self.deprecated:
+            self.deprecated.dump(file)
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public readonly unsafe struct {self.name} : IEquatable<{self.name}>\n")
+        file.write("{\n")
+        file.write("    private readonly void* _pointer;\n")
+        file.write("\n")
+        file.write(f"    public {self.name}(void* pointer)\n")
+        file.write("    {\n")
+        file.write("        _pointer = pointer;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public void* Pointer\n")
+        file.write("    {\n")
+        file.write("        get => _pointer;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public bool Equals({self.name} other)\n")
+        file.write("    {\n")
+        file.write("        return _pointer == other._pointer;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    {\n")
+        file.write(f"        return obj is {self.name} other && _pointer == other._pointer;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override int GetHashCode()\n")
+        file.write("    {\n")
+        file.write("        return new nint(_pointer).GetHashCode();\n")
+        file.write("    }\n")
+        if self.parent:
+            file.write("\n")
+            file.write(f"    public static implicit operator {self.name}({self.parent} parent)\n")
+            file.write("    {\n")
+            file.write(f"        return new {self.name}(parent.Pointer);\n")
+            file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._pointer == right._pointer;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._pointer != right._pointer;\n")
+        file.write("    }\n")
+        file.write("}\n")
 
 def header(file: IOBase, name: str, _copyright: list[str]) -> None:
     file.write("/**************************************************************************/\n")
