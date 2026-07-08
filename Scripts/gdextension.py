@@ -70,7 +70,7 @@ class GDExtensionType:
         data_description: list[str] | None = data.get("description")
         data_deprecated: dict[str, Any] | None = data.get("deprecated")
         if data_description:
-            self.data_description = GDExtensionDescription(data_description)
+            self.description = GDExtensionDescription(data_description)
         if data_deprecated:
             self.deprecated = GDExtensionDeprecated(data_deprecated)
 
