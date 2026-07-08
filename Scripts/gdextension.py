@@ -27,22 +27,13 @@ class GDExtensionDescription:
         self.spacing: str = " " * 4 if tab else ""
 
     def dump(self, file: IOBase) -> None:
-        file.write(self.spacing)
-        file.write("/// <")
-        file.write(self.tag)
+        file.write(f"{self.spacing}/// <{self.tag}")
         if self.metadata:
-            file.write(" ")
-            file.write(self.metadata)
+            file.write(f" {self.metadata}")
         file.write(">\n")
         for line in self.lines:
-            file.write(self.spacing)
-            file.write("/// ")
-            file.write(line)
-            file.write("\n")
-        file.write(self.spacing)
-        file.write("/// </")
-        file.write(self.tag)
-        file.write(">\n")
+            file.write(f"{self.spacing}/// {line}\n")
+        file.write(f"{self.spacing}/// </{self.tag}>\n")
 
 class GDExtensionDeprecated:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -51,16 +42,11 @@ class GDExtensionDeprecated:
         self.replace_with: str | None = data.get("replace_with")
 
     def dump(self, file: IOBase) -> None:
-        file.write("[Obsolete(\"Deprecated since Godot ")
-        file.write(self.since)
-        file.write(".")
+        file.write(f"[Obsolete(\"Deprecated since Godot {self.since}.")
         if self.message:
-            file.write(" ")
-            file.write(self.message)
+            file.write(f" {self.message}")
         if self.replace_with:
-            file.write(" Use ")
-            file.write(self.replace_with)
-            file.write(" instead.")
+            file.write(f" Use {self.replace_with} instead.")
         file.write("\")]\n")
 
 class GDExtensionType:
