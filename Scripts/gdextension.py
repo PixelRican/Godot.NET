@@ -66,8 +66,7 @@ class GDExtensionType:
             file.write("/**************************************************************************/\n")
             file.write(f"/*  {self.name}.cs  {" " * (65 - len(self.name))}*/\n")
             for line in copyright_text:
-                file.write(line)
-                file.write("\n")
+                file.write(f"{line}\n")
             file.write("\n")
             self.dump(file)
 
