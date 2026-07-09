@@ -445,7 +445,7 @@ class GDExtensionFunctionArgument:
         self.description: GDExtensionDescription | None = None
         data_description: list[str] | None = data.get("description")
         if data_description:
-            self.description = GDExtensionDescription(data_description, tag="returns", tab=True)
+            self.description = GDExtensionDescription(data_description, tag="param", metadata=f"name=\"{self.name}\"", tab=True)
 
 class GDExtensionFunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
