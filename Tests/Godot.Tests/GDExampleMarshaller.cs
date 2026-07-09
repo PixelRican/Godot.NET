@@ -6,7 +6,7 @@ namespace Godot.Tests;
 
 public static unsafe class GDExampleMarshaller
 {
-    public static void Initialize(GDExtensionClassLibraryPtr library)
+    public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
         GDExtensionClassDB.RegisterClass(library, "GDExample"u8, "Sprite2D"u8, &CreateInstance, &FreeInstance, &GetVirtual);
         GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_amplitude"u8, &PropertyGetAmplitude, &PropertyGetAmplitude, GDExtensionVariantTypeFloat);
