@@ -1,7 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using GDExtension;
 
-namespace GDExtension.Tests;
+namespace Godot.Tests;
 
 public static unsafe class GDExampleMarshaller
 {

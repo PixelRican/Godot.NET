@@ -1,6 +1,7 @@
 ﻿using System;
+using GDExtension;
 
-namespace GDExtension.Tests;
+namespace Godot.Tests;
 
 public abstract class GDExtensionObject : IDisposable
 {

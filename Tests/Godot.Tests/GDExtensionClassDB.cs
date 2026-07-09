@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Numerics;
+using GDExtension;
 
-namespace GDExtension.Tests;
+namespace Godot.Tests;
 
 public static unsafe class GDExtensionClassDB
 {

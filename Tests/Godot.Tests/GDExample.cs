@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace GDExtension.Tests;
+namespace Godot.Tests;
 
 public sealed class GDExample : GDExtensionObject
 {

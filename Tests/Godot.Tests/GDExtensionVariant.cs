@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using GDExtension;
 
-namespace GDExtension.Tests;
+namespace Godot.Tests;
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public readonly unsafe struct GDExtensionVariant : IDisposable
