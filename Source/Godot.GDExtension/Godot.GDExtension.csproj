@@ -4,5 +4,6 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <IsAotCompatible>true</IsAotCompatible>
+        <RootNamespace>GDExtension</RootNamespace>
     </PropertyGroup>
 </Project>
