@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Passed a pointer to a PackedStringArray that should be filled with the classes that may be used by the GDExtension.

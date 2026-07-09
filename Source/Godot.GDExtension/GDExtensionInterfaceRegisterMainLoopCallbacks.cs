@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Registers callbacks to be called at different phases of the main loop.

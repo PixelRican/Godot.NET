@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Creates a StringName from a Latin-1 encoded C string.

@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Converts a String to a UTF-8 encoded C string.

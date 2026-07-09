@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Creates a custom Callable object from a function pointer.

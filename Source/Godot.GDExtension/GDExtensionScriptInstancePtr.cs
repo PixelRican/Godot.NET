@@ -31,7 +31,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Pointer to ScriptInstance.

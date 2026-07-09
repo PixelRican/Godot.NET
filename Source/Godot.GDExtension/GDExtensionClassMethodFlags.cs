@@ -30,7 +30,7 @@
 
 using System;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 [Flags]
 public enum GDExtensionClassMethodFlags

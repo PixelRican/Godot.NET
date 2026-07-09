@@ -125,7 +125,7 @@ class GDExtensionType:
             self.deprecated = GDExtensionDeprecated(data_deprecated)
 
     def generate(self, copyright_text: list[str]) -> None:
-        with open(f"../Source/GDExtension/{self.name}.cs", "w") as file:
+        with open(f"../Source/Godot.GDExtension/{self.name}.cs", "w") as file:
             file.write("/**************************************************************************/\n")
             file.write(f"/*  {self.name}.cs  {" " * (65 - len(self.name))}*/\n")
             for line in copyright_text:
@@ -148,7 +148,7 @@ class GDExtensionEnum(GDExtensionType):
         if self.deprecated or self.is_bitfield:
             file.write("using System;\n")
             file.write("\n")
-        file.write("namespace GDExtension;\n")
+        file.write("namespace Godot.GDExtension;\n")
         file.write("\n")
         if self.description:
             self.description.dump(file)
@@ -186,7 +186,7 @@ class GDExtensionHandle(GDExtensionType):
         file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace GDExtension;\n")
+        file.write("namespace Godot.GDExtension;\n")
         file.write("\n")
         if self.description:
             self.description.dump(file)
@@ -248,7 +248,7 @@ class GDExtensionAlias(GDExtensionType):
         file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace GDExtension;\n")
+        file.write("namespace Godot.GDExtension;\n")
         file.write("\n")
         if self.description:
             self.description.dump(file)
@@ -318,7 +318,7 @@ class GDExtensionStruct(GDExtensionType):
             file.write("using System;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace GDExtension;\n")
+        file.write("namespace Godot.GDExtension;\n")
         file.write("\n")
         if self.description:
             self.description.dump(file)
@@ -382,7 +382,7 @@ class GDExtensionFunction(GDExtensionType):
         file.write("using System.Runtime.CompilerServices;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
-        file.write("namespace GDExtension;\n")
+        file.write("namespace Godot.GDExtension;\n")
         file.write("\n")
         if self.description:
             self.description.dump(file)

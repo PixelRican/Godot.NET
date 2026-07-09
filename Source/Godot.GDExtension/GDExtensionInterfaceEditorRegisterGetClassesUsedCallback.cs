@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Registers a callback that Godot can call to get the list of all classes (from ClassDB) that may be used by the calling GDExtension.

@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionClassNotification2 instead.")]
 [StructLayout(LayoutKind.Sequential)]

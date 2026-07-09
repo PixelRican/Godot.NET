@@ -31,7 +31,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionUninitializedTypePtr : IEquatable<GDExtensionUninitializedTypePtr>

@@ -31,7 +31,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// In this API there are multiple functions which expect the caller to pass a pointer

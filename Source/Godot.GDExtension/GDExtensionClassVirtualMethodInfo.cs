@@ -30,7 +30,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassVirtualMethodInfo

@@ -32,7 +32,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 [StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct GDExtensionClassMethodValidatedCall : IEquatable<GDExtensionClassMethodValidatedCall>

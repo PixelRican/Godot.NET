@@ -30,7 +30,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 /// <summary>
 /// Only `call_func` and `token` are strictly required, however, `object_id` should be passed if its not a static method.

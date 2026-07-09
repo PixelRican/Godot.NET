@@ -31,7 +31,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace GDExtension;
+namespace Godot.GDExtension;
 
 [Obsolete("Deprecated since Godot 4.5. Use GDExtensionGodotVersion2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
