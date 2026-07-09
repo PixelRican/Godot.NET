@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Numerics;
-using GDExtension;
+using Godot.GDExtension;
 
 namespace Godot.Tests;
 
@@ -14,7 +14,7 @@ public static unsafe class GDExtensionClassDB
     {
         nint classStringName = ConstructStringName(className);
         GDExtensionConstStringNamePtr classStringNamePointer = new GDExtensionConstStringNamePtr(&classStringName);
-        GDExtensionObjectPtr result = GDExtensionInterface.ClassdbConstructObject(classStringNamePointer);
+        GDExtensionObjectPtr result = GDExtensionInterface.ClassdbConstructObject.Invoke(classStringNamePointer);
         DestructStringName(classStringName);
         return result;
     }
@@ -27,7 +27,7 @@ public static unsafe class GDExtensionClassDB
 
         fixed (byte* reference = contents)
         {
-            GDExtensionInterface.StringNewWithUtf8CharsAndLen(destination, reference, size);
+            GDExtensionInterface.StringNewWithUtf8CharsAndLen.Invoke(destination, reference, size);
         }
 
         return pointer;
@@ -41,7 +41,7 @@ public static unsafe class GDExtensionClassDB
 
         fixed (byte* reference = contents)
         {
-            GDExtensionInterface.StringNameNewWithUtf8CharsAndLen(destination, reference, size);
+            GDExtensionInterface.StringNameNewWithUtf8CharsAndLen.Invoke(destination, reference, size);
         }
 
         return pointer;
@@ -50,14 +50,14 @@ public static unsafe class GDExtensionClassDB
     public static void DestructString(nint pointer)
     {
         GDExtensionTypePtr @base = new GDExtensionTypePtr(&pointer);
-        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeString);
+        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDExtensionVariantTypeString);
         destructor.Invoke(@base);
     }
 
     public static void DestructStringName(nint pointer)
     {
         GDExtensionTypePtr @base = new GDExtensionTypePtr(&pointer);
-        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor(GDExtensionVariantTypeStringName);
+        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDExtensionVariantTypeStringName);
         destructor.Invoke(@base);
     }
 
@@ -77,10 +77,10 @@ public static unsafe class GDExtensionClassDB
             FreeInstanceFunc = new GDExtensionClassFreeInstance(freeInstanceFunc),
             GetVirtualFunc = new GDExtensionClassGetVirtual(getVirtualFunc)
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClass(library,
-                                                           new GDExtensionConstStringNamePtr(&classStringName),
-                                                           new GDExtensionConstStringNamePtr(&parentClassStringName),
-                                                           &classInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(library,
+                                                                  new GDExtensionConstStringNamePtr(&classStringName),
+                                                                  new GDExtensionConstStringNamePtr(&parentClassStringName),
+                                                                  &classInfo);
         DestructStringName(classStringName);
         DestructStringName(parentClassStringName);
     }
@@ -113,9 +113,9 @@ public static unsafe class GDExtensionClassDB
             HasReturnValue = new GDExtensionBool(true),
             ReturnValueInfo = &returnInfo
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library,
-                                                                 new GDExtensionConstStringNamePtr(&classStringName),
-                                                                 &methodInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(library,
+                                                                        new GDExtensionConstStringNamePtr(&classStringName),
+                                                                        &methodInfo);
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
         DestructStringName(emptyStringName);
@@ -153,9 +153,9 @@ public static unsafe class GDExtensionClassDB
             ArgumentsInfo = &argumentInfo,
             ArgumentsMetadata = &argsMetadata,
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod(library,
-                                                                 new GDExtensionConstStringNamePtr(&classStringName),
-                                                                 &methodInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(library,
+                                                                        new GDExtensionConstStringNamePtr(&classStringName),
+                                                                        &methodInfo);
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
         DestructStringName(argumentStringName);
@@ -184,11 +184,11 @@ public static unsafe class GDExtensionClassDB
             ClassName = new GDExtensionStringNamePtr(&emptyStringName),
             Usage = PropertyUsageDefault
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassProperty(library,
-                                                                   new GDExtensionConstStringNamePtr(&classStringName),
-                                                                   &info,
-                                                                   new GDExtensionConstStringNamePtr(&propertySetterStringName),
-                                                                   new GDExtensionConstStringNamePtr(&propertyGetterStringName));
+        GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(library,
+                                                                          new GDExtensionConstStringNamePtr(&classStringName),
+                                                                          &info,
+                                                                          new GDExtensionConstStringNamePtr(&propertySetterStringName),
+                                                                          new GDExtensionConstStringNamePtr(&propertyGetterStringName));
         DestructStringName(classStringName);
         DestructStringName(propertyStringName);
         DestructStringName(propertyGetterStringName);
@@ -216,11 +216,11 @@ public static unsafe class GDExtensionClassDB
             ClassName = new GDExtensionStringNamePtr(&emptyStringName),
             Usage = PropertyUsageDefault
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassSignal(library,
-                                                                 new GDExtensionConstStringNamePtr(&classStringName),
-                                                                 new GDExtensionConstStringNamePtr(&signalStringName),
-                                                                 &argumentInfo,
-                                                                 new GDExtensionInt(1));
+        GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(library,
+                                                                        new GDExtensionConstStringNamePtr(&classStringName),
+                                                                        new GDExtensionConstStringNamePtr(&signalStringName),
+                                                                        &argumentInfo,
+                                                                        new GDExtensionInt(1));
         DestructStringName(classStringName);
         DestructStringName(signalStringName);
         DestructStringName(argumentStringName);
@@ -232,9 +232,9 @@ public static unsafe class GDExtensionClassDB
     {
         nint classStringName = ConstructStringName("Object"u8);
         nint methodStringName = ConstructStringName("emit_signal"u8);
-        GDExtensionMethodBindPtr methodBind = GDExtensionInterface.ClassdbGetMethodBind(new GDExtensionConstStringNamePtr(&classStringName),
-                                                                                        new GDExtensionConstStringNamePtr(&methodStringName),
-                                                                                        new GDExtensionInt(4047867050));
+        GDExtensionMethodBindPtr methodBind = GDExtensionInterface.ClassdbGetMethodBind.Invoke(new GDExtensionConstStringNamePtr(&classStringName),
+                                                                                               new GDExtensionConstStringNamePtr(&methodStringName),
+                                                                                               new GDExtensionInt(4047867050));
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
         using GDExtensionVariant variantArgument1 = new GDExtensionVariant(argument1);
@@ -246,15 +246,15 @@ public static unsafe class GDExtensionClassDB
             new GDExtensionConstVariantPtr(&variantArgument2),
         };
         GDExtensionUninitializedVariantPtr result = new GDExtensionUninitializedVariantPtr(&variantResult);
-        GDExtensionInterface.ObjectMethodBindCall(methodBind, instance, arguments, new GDExtensionInt(2), result, null);
+        GDExtensionInterface.ObjectMethodBindCall.Invoke(methodBind, instance, arguments, new GDExtensionInt(2), result, null);
     }
 
     public static bool Equals(GDExtensionConstStringNamePtr left, GDExtensionConstStringNamePtr right)
     {
         GDExtensionBool result;
-        GDExtensionPtrOperatorEvaluator evaluator = GDExtensionInterface.VariantGetPtrOperatorEvaluator(GDExtensionVariantOpEqual,
-                                                                                                        GDExtensionVariantTypeStringName,
-                                                                                                        GDExtensionVariantTypeStringName);
+        GDExtensionPtrOperatorEvaluator evaluator = GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(GDExtensionVariantOpEqual,
+                                                                                                               GDExtensionVariantTypeStringName,
+                                                                                                               GDExtensionVariantTypeStringName);
         evaluator.Invoke(new GDExtensionConstTypePtr(left.Pointer),
                          new GDExtensionConstTypePtr(right.Pointer),
                          new GDExtensionTypePtr(&result));
@@ -265,12 +265,12 @@ public static unsafe class GDExtensionClassDB
     {
         nint classStringName = ConstructStringName("Node2D"u8);
         nint methodStringName = ConstructStringName("set_position"u8);
-        GDExtensionMethodBindPtr method = GDExtensionInterface.ClassdbGetMethodBind(new GDExtensionConstStringNamePtr(&classStringName),
-                                                                                    new GDExtensionConstStringNamePtr(&methodStringName),
-                                                                                    new GDExtensionInt(743155724));
+        GDExtensionMethodBindPtr method = GDExtensionInterface.ClassdbGetMethodBind.Invoke(new GDExtensionConstStringNamePtr(&classStringName),
+                                                                                           new GDExtensionConstStringNamePtr(&methodStringName),
+                                                                                           new GDExtensionInt(743155724));
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
         GDExtensionConstTypePtr argument = new GDExtensionConstTypePtr(&value);
-        GDExtensionInterface.ObjectMethodBindPtrcall(method, obj, &argument, default);
+        GDExtensionInterface.ObjectMethodBindPtrcall.Invoke(method, obj, &argument, default);
     }
 }

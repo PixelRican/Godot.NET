@@ -1,5 +1,5 @@
 ﻿using System;
-using GDExtension;
+using Godot.GDExtension;
 
 namespace Godot.Tests;
 

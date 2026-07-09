@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using GDExtension;
+using Godot.GDExtension;
 
 namespace Godot.Tests;
 
@@ -16,9 +16,9 @@ public static unsafe class GDExtensionMarshal
         GCHandle<GDExtensionObject> handle = new GCHandle<GDExtensionObject>(target);
         GDExtensionClassInstancePtr instance = new GDExtensionClassInstancePtr((void*)GCHandle<GDExtensionObject>.ToIntPtr(handle));
         nint classStringName = GDExtensionClassDB.ConstructStringName(className);
-        GDExtensionInterface.ObjectSetInstance(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
+        GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
         GDExtensionClassDB.DestructStringName(classStringName);
-        GDExtensionInterface.ObjectSetInstanceBinding(parent, token, instance.Pointer, &callbacks);
+        GDExtensionInterface.ObjectSetInstanceBinding.Invoke(parent, token, instance.Pointer, &callbacks);
         return parent;
     }
 
@@ -77,7 +77,7 @@ public static unsafe class GDExtensionMarshal
             GDExtensionConstVariantPtr argument = arguments[i];
             GDExtensionVariantType expectedType = expectedTypes[i];
 
-            if (GDExtensionInterface.VariantGetType(argument) != expectedType)
+            if (GDExtensionInterface.VariantGetType.Invoke(argument) != expectedType)
             {
                 error->Error = GDExtensionCallErrorInvalidArgument;
                 error->Expected = (int)expectedType;

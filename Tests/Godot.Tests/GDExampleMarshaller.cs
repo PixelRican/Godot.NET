@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using GDExtension;
+using Godot.GDExtension;
 
 namespace Godot.Tests;
 

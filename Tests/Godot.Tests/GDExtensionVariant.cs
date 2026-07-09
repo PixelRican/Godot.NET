@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using GDExtension;
+using Godot.GDExtension;
 
 namespace Godot.Tests;
 
@@ -15,10 +15,10 @@ public readonly unsafe struct GDExtensionVariant : IDisposable
 
     static GDExtensionVariant()
     {
-        s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeFloat);
-        s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeStringName);
-        s_fromVector2Constructor = GDExtensionInterface.GetVariantFromTypeConstructor(GDExtensionVariantTypeVector2);
-        s_toFloatConstructor = GDExtensionInterface.GetVariantToTypeConstructor(GDExtensionVariantTypeFloat);
+        s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
+        s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeStringName);
+        s_fromVector2Constructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeVector2);
+        s_toFloatConstructor = GDExtensionInterface.GetVariantToTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
     }
 
     public static GDExtensionVariantFromTypeConstructorFunc FromFloatConstructor
@@ -61,7 +61,7 @@ public readonly unsafe struct GDExtensionVariant : IDisposable
     {
         fixed (GDExtensionVariant* self = &this)
         {
-            GDExtensionInterface.VariantDestroy(new GDExtensionVariantPtr(self));
+            GDExtensionInterface.VariantDestroy.Invoke(new GDExtensionVariantPtr(self));
         }
     }
 
