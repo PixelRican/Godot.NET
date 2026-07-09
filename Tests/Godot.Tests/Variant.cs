@@ -6,14 +6,14 @@ using Godot.GDExtension;
 namespace Godot.Tests;
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
-public readonly unsafe struct GDExtensionVariant : IDisposable
+public readonly unsafe struct Variant : IDisposable
 {
     private static readonly GDExtensionVariantFromTypeConstructorFunc s_fromFloatConstructor;
     private static readonly GDExtensionVariantFromTypeConstructorFunc s_fromStringNameConstructor;
     private static readonly GDExtensionVariantFromTypeConstructorFunc s_fromVector2Constructor;
     private static readonly GDExtensionTypeFromVariantConstructorFunc s_toFloatConstructor;
 
-    static GDExtensionVariant()
+    static Variant()
     {
         s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
         s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeStringName);
@@ -41,17 +41,17 @@ public readonly unsafe struct GDExtensionVariant : IDisposable
         get => s_toFloatConstructor;
     }
 
-    public GDExtensionVariant(nint value)
+    public Variant(nint value)
     {
-        fixed (GDExtensionVariant* self = &this)
+        fixed (Variant* self = &this)
         {
             s_fromStringNameConstructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
         }
     }
 
-    public GDExtensionVariant(Vector2 value)
+    public Variant(Vector2 value)
     {
-        fixed (GDExtensionVariant* self = &this)
+        fixed (Variant* self = &this)
         {
             s_fromVector2Constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
         }
@@ -59,7 +59,7 @@ public readonly unsafe struct GDExtensionVariant : IDisposable
 
     public void Destroy()
     {
-        fixed (GDExtensionVariant* self = &this)
+        fixed (Variant* self = &this)
         {
             GDExtensionInterface.VariantDestroy.Invoke(new GDExtensionVariantPtr(self));
         }
@@ -67,7 +67,7 @@ public readonly unsafe struct GDExtensionVariant : IDisposable
 
     public double ToFloat()
     {
-        fixed (GDExtensionVariant* self = &this)
+        fixed (Variant* self = &this)
         {
             double result;
             s_toFloatConstructor.Invoke(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(self));

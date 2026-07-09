@@ -237,9 +237,9 @@ public static unsafe class GDExtensionClassDB
                                                                                                new GDExtensionInt(4047867050));
         DestructStringName(classStringName);
         DestructStringName(methodStringName);
-        using GDExtensionVariant variantArgument1 = new GDExtensionVariant(argument1);
-        using GDExtensionVariant variantArgument2 = new GDExtensionVariant(argument2);
-        using GDExtensionVariant variantResult = default;
+        using Variant variantArgument1 = new Variant(argument1);
+        using Variant variantArgument2 = new Variant(argument2);
+        using Variant variantResult = default;
         GDExtensionConstVariantPtr* arguments = stackalloc GDExtensionConstVariantPtr[]
         {
             new GDExtensionConstVariantPtr(&variantArgument1),
