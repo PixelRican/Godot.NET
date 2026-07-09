@@ -3,16 +3,16 @@ using Godot.GDExtension;
 
 namespace Godot.Tests;
 
-public abstract class GDExtensionObject : IDisposable
+public abstract class ExtensionObject : IDisposable
 {
     private GDExtensionObjectPtr _base;
 
-    protected GDExtensionObject(ReadOnlySpan<byte> baseClassName)
+    protected ExtensionObject(ReadOnlySpan<byte> baseClassName)
     {
         _base = GDExtensionClassDB.ConstructObject(baseClassName);
     }
 
-    ~GDExtensionObject()
+    ~ExtensionObject()
     {
         Dispose(disposing: false);
     }

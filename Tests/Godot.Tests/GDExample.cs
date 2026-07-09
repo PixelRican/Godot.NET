@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Godot.Tests;
 
-public sealed class GDExample : GDExtensionObject
+public sealed class GDExample : ExtensionObject
 {
     private double _amplitude;
     private double _speed;

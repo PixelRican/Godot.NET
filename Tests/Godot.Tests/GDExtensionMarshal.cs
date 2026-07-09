@@ -7,14 +7,14 @@ namespace Godot.Tests;
 public static unsafe class GDExtensionMarshal
 {
     public static GDExtensionObjectPtr CreateInstance(void* token,
-                                                      GDExtensionObject target,
+                                                      ExtensionObject target,
                                                       ReadOnlySpan<byte> className,
                                                       GDExtensionInstanceBindingCallbacks callbacks = default)
     {
         ArgumentNullException.ThrowIfNull(target);
         GDExtensionObjectPtr parent = target.Base;
-        GCHandle<GDExtensionObject> handle = new GCHandle<GDExtensionObject>(target);
-        GDExtensionClassInstancePtr instance = new GDExtensionClassInstancePtr((void*)GCHandle<GDExtensionObject>.ToIntPtr(handle));
+        GCHandle<ExtensionObject> handle = new GCHandle<ExtensionObject>(target);
+        GDExtensionClassInstancePtr instance = new GDExtensionClassInstancePtr((void*)GCHandle<ExtensionObject>.ToIntPtr(handle));
         nint classStringName = GDExtensionClassDB.ConstructStringName(className);
         GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
         GDExtensionClassDB.DestructStringName(classStringName);
@@ -24,13 +24,13 @@ public static unsafe class GDExtensionMarshal
 
     public static void FreeInstance(GDExtensionClassInstancePtr instance)
     {
-        GCHandle<GDExtensionObject> handle = GCHandle<GDExtensionObject>.FromIntPtr((nint)instance.Pointer);
-        GDExtensionObject target = handle.Target;
+        GCHandle<ExtensionObject> handle = GCHandle<ExtensionObject>.FromIntPtr((nint)instance.Pointer);
+        ExtensionObject target = handle.Target;
         handle.Dispose();
         target.Dispose();
     }
 
-    public static T GetTarget<T>(GDExtensionClassInstancePtr instance) where T : GDExtensionObject
+    public static T GetTarget<T>(GDExtensionClassInstancePtr instance) where T : ExtensionObject
     {
         GCHandle<T> handle = GCHandle<T>.FromIntPtr((nint)instance.Pointer);
         return handle.Target;
