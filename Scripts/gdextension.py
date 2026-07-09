@@ -7,6 +7,7 @@ class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
         self.types: dict[str, GDExtensionType] = {}
+        self.interface: dict[str, GDExtensionFunction] = {}
         for type_data in data["types"]:
             instance: GDExtensionType | None = None
             match type_data["kind"]:
@@ -29,9 +30,13 @@ class GDExtensionInterface:
                     instance = GDExtensionFunction(type_data)
             assert instance
             self.types[instance.name] = instance
+        for function_data in data["interface"]:
+            function: GDExtensionFunction = GDExtensionFunction(function_data)
+            assert function.entry_point
+            self.interface[function.entry_point] = function
 
     def generate(self) -> None:
-        for instance in self.types.values():
+        for instance in chain(self.types.values(), self.interface.values()):
             instance.generate(self.copyright)
 
 class GDExtensionTypeReference:
@@ -345,6 +350,10 @@ class GDExtensionStructMember:
 class GDExtensionFunction(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
+        self.entry_point: str | None = None
+        if self.name[0].islower():
+            self.entry_point = self.name
+            self.name = "GDExtensionInterface" + self.name.title().replace("_", "")
         self.arguments: list[GDExtensionFunctionArgument] = []
         self.return_value: GDExtensionFunctionReturnValue | None = None
         type_parameters: list[str] = []
