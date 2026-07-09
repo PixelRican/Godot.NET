@@ -4,7 +4,7 @@ using Godot.GDExtension;
 
 namespace Godot.Tests;
 
-public static unsafe class GDExampleMarshaller
+public static unsafe class GDExampleBridge
 {
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {

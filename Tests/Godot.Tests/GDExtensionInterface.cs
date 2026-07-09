@@ -158,7 +158,7 @@ public static unsafe class GDExtensionInterface
     {
         if (level == GDExtensionInitializationScene)
         {
-            GDExampleMarshaller.RegisterClass(new GDExtensionClassLibraryPtr(token));
+            GDExampleBridge.RegisterClass(new GDExtensionClassLibraryPtr(token));
         }
     }
 
