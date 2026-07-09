@@ -3,38 +3,36 @@ from io import IOBase
 from itertools import chain
 from typing import Any, Iterable
 
-def generate(data: dict[str, Any]) -> None:
-    types: dict[str, GDExtensionType] = {}
-    _copyright: list[str] = data["_copyright"]
-    for type_data in data["types"]:
-        instance: GDExtensionType
-        match type_data["kind"]:
-            case "enum":
-                enum: GDExtensionEnum = GDExtensionEnum(type_data)
-                types[enum.name] = enum
-                enum.generate(_copyright)
-            case "handle":
-                handle: GDExtensionHandle = GDExtensionHandle(type_data)
-                types[handle.name] = handle
-                handle.generate(_copyright)
-            case "alias":
-                alias: GDExtensionAlias = GDExtensionAlias(type_data)
-                actual: GDExtensionType = alias
-                if not alias.type.is_builtin:
-                    actual = copy(types[alias.type.name])
-                    actual.name = alias.name
-                    actual.description = alias.description
-                    actual.deprecated = alias.deprecated
-                types[actual.name] = actual
-                actual.generate(_copyright)
-            case "struct":
-                struct: GDExtensionStruct = GDExtensionStruct(type_data)
-                types[struct.name] = struct
-                struct.generate(_copyright)
-            case "function":
-                function: GDExtensionFunction = GDExtensionFunction(type_data)
-                types[function.name] = function
-                function.generate(_copyright)
+class GDExtensionInterface:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.copyright: list[str] = data["_copyright"]
+        self.types: dict[str, GDExtensionType] = {}
+        for type_data in data["types"]:
+            instance: GDExtensionType | None = None
+            match type_data["kind"]:
+                case "enum":
+                    instance = GDExtensionEnum(type_data)
+                case "handle":
+                    instance = GDExtensionHandle(type_data)
+                case "alias":
+                    alias: GDExtensionAlias = GDExtensionAlias(type_data)
+                    if alias.type.is_builtin:
+                        instance = alias
+                    else:
+                        instance = copy(self.types[alias.type.name])
+                        instance.name = alias.name
+                        instance.description = alias.description
+                        instance.deprecated = alias.deprecated
+                case "struct":
+                    instance = GDExtensionStruct(type_data)
+                case "function":
+                    instance = GDExtensionFunction(type_data)
+            assert instance
+            self.types[instance.name] = instance
+
+    def generate(self) -> None:
+        for instance in self.types.values():
+            instance.generate(self.copyright)
 
 class GDExtensionTypeReference:
     def __init__(self, typedef: str) -> None:
