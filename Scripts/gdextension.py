@@ -1,7 +1,7 @@
 ﻿from copy import copy
 from io import IOBase
 from itertools import chain
-from typing import Any
+from typing import Any, Iterable
 
 def generate(data: dict[str, Any]) -> None:
     types: dict[str, GDExtensionType] = {}
@@ -32,7 +32,9 @@ def generate(data: dict[str, Any]) -> None:
                 types[struct.name] = struct
                 struct.generate(_copyright)
             case "function":
-                pass
+                function: GDExtensionFunction = GDExtensionFunction(type_data)
+                types[function.name] = function
+                function.generate(_copyright)
 
 class GDExtensionTypeReference:
     def __init__(self, typedef: str) -> None:
@@ -341,6 +343,119 @@ class GDExtensionStructMember:
         data_description: list[str] | None = data.get("description")
         if data_description:
             self.description = GDExtensionDescription(data_description, tab=True)
+
+class GDExtensionFunction(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.arguments: list[GDExtensionFunctionArgument] = []
+        self.return_value: GDExtensionFunctionReturnValue | None = None
+        type_parameters: list[str] = []
+        for i, argument_data in enumerate(data["arguments"]):
+            if not argument_data.get("name"):
+                argument_data = argument_data.copy()
+                argument_data["name"] = f"arg{i + 1}"
+            argument: GDExtensionFunctionArgument = GDExtensionFunctionArgument(argument_data)
+            type_parameters.append(argument.type.name)
+            self.arguments.append(argument)
+        return_value_data: dict[str, Any] | None = data.get("return_value")
+        argument_iterable: Iterable[str] = (argument.type.name for argument in self.arguments)
+        return_iterable: Iterable[str]
+        if return_value_data:
+            self.return_value = GDExtensionFunctionReturnValue(return_value_data)
+            return_iterable = (self.return_value.type.name,)
+        else:
+            return_iterable = ("void",)
+        type_parameters: chain[str] = chain(argument_iterable, return_iterable)
+        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+        self.parameter_list: str = ", ".join(f"{argument.type.name} {argument.name}" for argument in self.arguments)
+        self.argument_list: str = ", ".join(argument.name for argument in self.arguments)
+
+    def dump(self, file: IOBase) -> None:
+        file.write("using System;\n")
+        file.write("using System.Runtime.CompilerServices;\n")
+        file.write("using System.Runtime.InteropServices;\n")
+        file.write("\n")
+        file.write("namespace GDExtension;\n")
+        file.write("\n")
+        if self.description:
+            self.description.dump(file)
+        if self.deprecated:
+            self.deprecated.dump(file)
+        file.write("[StructLayout(LayoutKind.Sequential)]\n")
+        file.write(f"public readonly unsafe struct {self.name} : IEquatable<{self.name}>\n")
+        file.write("{\n")
+        file.write(f"    private readonly {self.type} _method;\n")
+        file.write("\n")
+        file.write(f"    public {self.name}({self.type} method)\n")
+        file.write("    {\n")
+        file.write("        _method = method;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public {self.type} Method\n")
+        file.write("    {\n")
+        file.write("        get => _method;\n")
+        file.write("    }\n")
+        file.write("\n")
+        for argument in self.arguments:
+            if argument.description:
+                argument.description.dump(file)
+        if self.return_value and self.return_value.description:
+            self.return_value.description.dump(file)
+        file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
+        if self.return_value:
+            file.write(f"    public {self.return_value.type.name} Invoke({self.parameter_list})\n")
+            file.write("    {\n")
+            file.write(f"        return _method({self.argument_list});\n")
+            file.write("    }\n")
+        else:
+            file.write(f"    public void Invoke({self.parameter_list})\n")
+            file.write("    {\n")
+            file.write(f"        _method({self.argument_list});\n")
+            file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public bool Equals({self.name} other)\n")
+        file.write("    {\n")
+        file.write("        return _method == other._method;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    {\n")
+        file.write(f"        return obj is {self.name} other && _method == other._method;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write("    public override int GetHashCode()\n")
+        file.write("    {\n")
+        file.write("        return new nint(_method).GetHashCode();\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._method == right._method;\n")
+        file.write("    }\n")
+        file.write("\n")
+        file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
+        file.write("    {\n")
+        file.write("        return left._method != right._method;\n")
+        file.write("    }\n")
+        file.write("}\n")
+
+class GDExtensionFunctionArgument:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.name: str = data["name"].title().replace("_", "")
+        self.name = self.name[0].lower() + self.name[1:]
+        self.type: GDExtensionTypeReference = GDExtensionTypeReference(data["type"])
+        self.description: GDExtensionDescription | None = None
+        data_description: list[str] | None = data.get("description")
+        if data_description:
+            self.description = GDExtensionDescription(data_description, tag="returns", tab=True)
+
+class GDExtensionFunctionReturnValue:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.type: GDExtensionTypeReference = GDExtensionTypeReference(data["type"])
+        self.description: GDExtensionDescription | None = None
+        data_description: list[str] | None = data.get("description")
+        if data_description:
+            self.description = GDExtensionDescription(data_description, tag="returns", tab=True)
 
 def header(file: IOBase, name: str, _copyright: list[str]) -> None:
     file.write("/**************************************************************************/\n")
