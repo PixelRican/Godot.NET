@@ -52,7 +52,8 @@ public readonly unsafe struct Variant : IDisposable
     {
         fixed (Variant* self = &this)
         {
-            GDExtensionInterface.VariantDestroy.Invoke(new GDExtensionVariantPtr(self));
+            GDExtensionInterfaceVariantDestroy destructor = GDExtensionInterface.VariantDestroy;
+            destructor.Invoke(new GDExtensionVariantPtr(self));
         }
     }
 }
