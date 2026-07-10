@@ -143,12 +143,11 @@ public static unsafe class GDExtensionInterface
         initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeLevel);
         return new GDExtensionBool(true);
 
-        void Load<T>(ReadOnlySpan<byte> name, out T result) where T : unmanaged
+        void Load<TFunction>(ReadOnlySpan<byte> name, out TFunction result) where TFunction : unmanaged
         {
             fixed (byte* reference = name)
             {
-                GDExtensionInterfaceFunctionPtr function = getProcAddress.Invoke(reference);
-                result = *(T*)&function;
+                result = Unsafe.BitCast<GDExtensionInterfaceFunctionPtr, TFunction>(getProcAddress.Invoke(reference));
             }
         }
     }
