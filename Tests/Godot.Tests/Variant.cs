@@ -35,14 +35,6 @@ public readonly unsafe struct Variant : IDisposable
         }
     }
 
-    public void Destroy()
-    {
-        fixed (Variant* self = &this)
-        {
-            GDExtensionInterface.VariantDestroy.Invoke(new GDExtensionVariantPtr(self));
-        }
-    }
-
     public double ToFloat()
     {
         double result;
@@ -58,6 +50,9 @@ public readonly unsafe struct Variant : IDisposable
 
     public void Dispose()
     {
-        Destroy();
+        fixed (Variant* self = &this)
+        {
+            GDExtensionInterface.VariantDestroy.Invoke(new GDExtensionVariantPtr(self));
+        }
     }
 }
