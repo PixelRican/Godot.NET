@@ -43,19 +43,17 @@ public static unsafe class GDExtensionMarshal
 
     public static double ReadFloat(GDExtensionConstVariantPtr pointer)
     {
-        double result;
-        Variant.ToFloatConstructor.Invoke(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(pointer.Pointer));
-        return result;
+        return ((Variant*)pointer.Pointer)->ToFloat();
     }
 
-    public static void WriteFloat(GDExtensionTypePtr pointer, double value)
+    public static void WriteFloat(GDExtensionTypePtr destination, double value)
     {
-        *(double*)pointer.Pointer = value;
+        *(double*)destination.Pointer = value;
     }
 
-    public static void WriteFloat(GDExtensionVariantPtr pointer, double value)
+    public static void WriteFloat(GDExtensionVariantPtr destination, double value)
     {
-        Variant.FromFloatConstructor.Invoke(pointer, new GDExtensionTypePtr(&value));
+        *(Variant*)destination.Pointer = new Variant(value);
     }
 
     public static bool ValidateArguments(GDExtensionConstVariantPtr* arguments,

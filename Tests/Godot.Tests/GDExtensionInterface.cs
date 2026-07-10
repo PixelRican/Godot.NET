@@ -155,10 +155,13 @@ public static unsafe class GDExtensionInterface
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void InitializeLevel(void* token, GDExtensionInitializationLevel level)
     {
-        if (level == GDExtensionInitializationScene)
+        if (level != GDExtensionInitializationScene)
         {
-            GDExampleBridge.RegisterClass(new GDExtensionClassLibraryPtr(token));
+            return;
         }
+
+        VariantBridge.Initialize();
+        GDExampleBridge.RegisterClass(new GDExtensionClassLibraryPtr(token));
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

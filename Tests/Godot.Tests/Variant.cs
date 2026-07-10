@@ -8,44 +8,21 @@ namespace Godot.Tests;
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public readonly unsafe struct Variant : IDisposable
 {
-    private static readonly GDExtensionVariantFromTypeConstructorFunc s_fromFloatConstructor;
-    private static readonly GDExtensionVariantFromTypeConstructorFunc s_fromStringNameConstructor;
-    private static readonly GDExtensionVariantFromTypeConstructorFunc s_fromVector2Constructor;
-    private static readonly GDExtensionTypeFromVariantConstructorFunc s_toFloatConstructor;
-
-    static Variant()
-    {
-        s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
-        s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeStringName);
-        s_fromVector2Constructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeVector2);
-        s_toFloatConstructor = GDExtensionInterface.GetVariantToTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
-    }
-
-    public static GDExtensionVariantFromTypeConstructorFunc FromFloatConstructor
-    {
-        get => s_fromFloatConstructor;
-    }
-
-    public static GDExtensionVariantFromTypeConstructorFunc FromStringNameConstructor
-    {
-        get => s_fromStringNameConstructor;
-    }
-
-    public static GDExtensionVariantFromTypeConstructorFunc FromVector2Constructor
-    {
-        get => s_fromVector2Constructor;
-    }
-
-    public static GDExtensionTypeFromVariantConstructorFunc ToFloatConstructor
-    {
-        get => s_toFloatConstructor;
-    }
-
     public Variant(nint value)
     {
         fixed (Variant* self = &this)
         {
-            s_fromStringNameConstructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
+            GDExtensionVariantFromTypeConstructorFunc constructor = VariantBridge.FromStringNameConstructor;
+            constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
+        }
+    }
+
+    public Variant(double value)
+    {
+        fixed (Variant* self = &this)
+        {
+            GDExtensionVariantFromTypeConstructorFunc constructor = VariantBridge.FromFloatConstructor;
+            constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
         }
     }
 
@@ -53,7 +30,8 @@ public readonly unsafe struct Variant : IDisposable
     {
         fixed (Variant* self = &this)
         {
-            s_fromVector2Constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
+            GDExtensionVariantFromTypeConstructorFunc constructor = VariantBridge.FromVector2Constructor;
+            constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
         }
     }
 
@@ -67,12 +45,15 @@ public readonly unsafe struct Variant : IDisposable
 
     public double ToFloat()
     {
+        double result;
+
         fixed (Variant* self = &this)
         {
-            double result;
-            s_toFloatConstructor.Invoke(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(self));
-            return result;
+            GDExtensionTypeFromVariantConstructorFunc constructor = VariantBridge.ToFloatConstructor;
+            constructor.Invoke(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(self));
         }
+
+        return result;
     }
 
     public void Dispose()
