@@ -5,11 +5,11 @@ namespace Godot.Tests;
 
 public sealed class GDExample : ExtensionObject
 {
+    private readonly StringName _positionChanged;
     private double _amplitude;
     private double _speed;
     private double _timePassed;
     private double _timeEmit;
-    private StringName _positionChanged;
 
     public GDExample() : base("Sprite2D"u8)
     {
