@@ -9,13 +9,13 @@ public sealed class GDExample : ExtensionObject
     private double _speed;
     private double _timePassed;
     private double _timeEmit;
-    private nint _positionChanged;
+    private StringName _positionChanged;
 
     public GDExample() : base("Sprite2D"u8)
     {
         _amplitude = 10.0;
         _speed = 1.0;
-        _positionChanged = GDExtensionClassDB.ConstructStringName("position_changed"u8);
+        _positionChanged = new StringName("position_changed"u8);
     }
 
     public double Amplitude
@@ -48,11 +48,6 @@ public sealed class GDExample : ExtensionObject
 
     protected override void Dispose(bool disposing)
     {
-        GDExtensionClassDB.DestructStringName(_positionChanged);
-
-        if (disposing)
-        {
-            _positionChanged = 0;
-        }
+        _positionChanged.Dispose();
     }
 }

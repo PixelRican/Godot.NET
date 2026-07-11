@@ -15,9 +15,12 @@ public static unsafe class GDExtensionMarshal
         GDExtensionObjectPtr parent = target.Base;
         GCHandle<ExtensionObject> handle = new GCHandle<ExtensionObject>(target);
         GDExtensionClassInstancePtr instance = new GDExtensionClassInstancePtr((void*)GCHandle<ExtensionObject>.ToIntPtr(handle));
-        nint classStringName = GDExtensionClassDB.ConstructStringName(className);
-        GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
-        GDExtensionClassDB.DestructStringName(classStringName);
+
+        using (StringName classStringName = new StringName(className))
+        {
+            GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
+        }
+
         GDExtensionInterface.ObjectSetInstanceBinding.Invoke(parent, token, instance.Pointer, &callbacks);
         return parent;
     }

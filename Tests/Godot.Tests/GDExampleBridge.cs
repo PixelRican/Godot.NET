@@ -33,16 +33,14 @@ public static unsafe class GDExampleBridge
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static GDExtensionClassCallVirtual GetVirtual(void* token, GDExtensionConstStringNamePtr methodName)
     {
-        GDExtensionClassCallVirtual result = default;
-        nint processName = GDExtensionClassDB.ConstructStringName("_process"u8);
+        using StringName processName = new StringName("_process"u8);
 
-        if (GDExtensionClassDB.Equals(methodName, new GDExtensionConstStringNamePtr(&processName)))
+        if (((StringName*)methodName.Pointer)->Equals(processName))
         {
-            result = new GDExtensionClassCallVirtual(&VirtualProcess);
+            return new GDExtensionClassCallVirtual(&VirtualProcess);
         }
 
-        GDExtensionClassDB.DestructStringName(processName);
-        return result;
+        return default;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

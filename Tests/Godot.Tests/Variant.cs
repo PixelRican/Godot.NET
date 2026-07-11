@@ -8,7 +8,7 @@ namespace Godot.Tests;
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public readonly unsafe struct Variant : IDisposable
 {
-    public Variant(nint value)
+    public Variant(StringName value)
     {
         fixed (Variant* self = &this)
         {

@@ -161,6 +161,7 @@ public static unsafe class GDExtensionInterface
         }
 
         VariantBridge.Initialize();
+        StringNameBridge.Initialize();
         GDExampleBridge.RegisterClass(new GDExtensionClassLibraryPtr(token));
     }
 
