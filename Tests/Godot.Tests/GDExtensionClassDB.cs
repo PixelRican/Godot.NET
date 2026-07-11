@@ -18,27 +18,6 @@ public static unsafe class GDExtensionClassDB
         return result;
     }
 
-    public static nint ConstructString(ReadOnlySpan<byte> contents)
-    {
-        nint pointer;
-        GDExtensionUninitializedStringPtr destination = new GDExtensionUninitializedStringPtr(&pointer);
-        GDExtensionInt size = new GDExtensionInt(contents.Length);
-
-        fixed (byte* reference = contents)
-        {
-            GDExtensionInterface.StringNewWithUtf8CharsAndLen.Invoke(destination, reference, size);
-        }
-
-        return pointer;
-    }
-
-    public static void DestructString(nint pointer)
-    {
-        GDExtensionTypePtr @base = new GDExtensionTypePtr(&pointer);
-        GDExtensionPtrDestructor destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDExtensionVariantTypeString);
-        destructor.Invoke(@base);
-    }
-
     public static void RegisterClass(GDExtensionClassLibraryPtr library,
                                      ReadOnlySpan<byte> className,
                                      ReadOnlySpan<byte> parentClassName,
@@ -71,7 +50,7 @@ public static unsafe class GDExtensionClassDB
         using StringName classStringName = new StringName(className);
         using StringName methodStringName = new StringName(methodName);
         using StringName emptyStringName = new StringName(default);
-        nint emptyString = ConstructString(default);
+        using String emptyString = new String(default);
         GDExtensionPropertyInfo returnInfo = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&emptyStringName),
@@ -92,7 +71,6 @@ public static unsafe class GDExtensionClassDB
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(library,
                                                                         new GDExtensionConstStringNamePtr(&classStringName),
                                                                         &methodInfo);
-        DestructString(emptyString);
     }
 
     public static void RegisterPropertySetter(GDExtensionClassLibraryPtr library,
@@ -106,7 +84,7 @@ public static unsafe class GDExtensionClassDB
         using StringName methodStringName = new StringName(methodName);
         using StringName argumentStringName = new StringName("value"u8);
         using StringName emptyStringName = new StringName(default);
-        nint emptyString = ConstructString(default);
+        using String emptyString = new String(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&argumentStringName),
@@ -129,7 +107,6 @@ public static unsafe class GDExtensionClassDB
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(library,
                                                                         new GDExtensionConstStringNamePtr(&classStringName),
                                                                         &methodInfo);
-        DestructString(emptyString);
     }
 
     public static void RegisterProperty(GDExtensionClassLibraryPtr library,
@@ -144,7 +121,7 @@ public static unsafe class GDExtensionClassDB
         using StringName propertyGetterStringName = new StringName(propertyGetterName);
         using StringName propertySetterStringName = new StringName(propertySetterName);
         using StringName emptyStringName = new StringName(default);
-        nint emptyString = ConstructString(default);
+        using String emptyString = new String(default);
         GDExtensionPropertyInfo info = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&propertyStringName),
@@ -158,7 +135,6 @@ public static unsafe class GDExtensionClassDB
                                                                           &info,
                                                                           new GDExtensionConstStringNamePtr(&propertySetterStringName),
                                                                           new GDExtensionConstStringNamePtr(&propertyGetterStringName));
-        DestructString(emptyString);
     }
 
     public static void RegisterSignal(GDExtensionClassLibraryPtr library,
@@ -171,7 +147,7 @@ public static unsafe class GDExtensionClassDB
         using StringName signalStringName = new StringName(signalName);
         using StringName argumentStringName = new StringName(argumentName);
         using StringName emptyStringName = new StringName(default);
-        nint emptyString = ConstructString(default);
+        using String emptyString = new String(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
             Name = new GDExtensionStringNamePtr(&argumentStringName),
@@ -185,7 +161,6 @@ public static unsafe class GDExtensionClassDB
                                                                         new GDExtensionConstStringNamePtr(&signalStringName),
                                                                         &argumentInfo,
                                                                         new GDExtensionInt(1));
-        DestructString(emptyString);
     }
 
     public static void EmitSignal(GDExtensionObjectPtr instance, StringName argument1, Vector2 argument2)
