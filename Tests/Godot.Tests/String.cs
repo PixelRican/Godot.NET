@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Godot.GDExtension;
 
 namespace Godot.Tests;
 
+#if BUILD_32
+[StructLayout(LayoutKind.Explicit, Size = 4)]
+#else
+[StructLayout(LayoutKind.Explicit, Size = 8)]
+#endif
 public readonly unsafe struct String : IDisposable
 {
-    private readonly nint _data;
-
     public String(ReadOnlySpan<byte> contents)
     {
         fixed (String* self = &this)

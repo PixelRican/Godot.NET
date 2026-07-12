@@ -5,11 +5,13 @@ using Godot.GDExtension;
 
 namespace Godot.Tests;
 
-[StructLayout(LayoutKind.Sequential)]
+#if BUILD_32
+[StructLayout(LayoutKind.Explicit, Size = 4)]
+#else
+[StructLayout(LayoutKind.Explicit, Size = 8)]
+#endif
 public readonly unsafe struct StringName : IDisposable, IEquatable<StringName>
 {
-    private readonly nint _data;
-
     public StringName(ReadOnlySpan<byte> contents)
     {
         fixed (StringName* self = &this)
