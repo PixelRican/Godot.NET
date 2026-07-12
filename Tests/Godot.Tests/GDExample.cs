@@ -13,9 +13,9 @@ public sealed class GDExample : ExtensionObject
 
     public GDExample() : base("Sprite2D"u8)
     {
+        _positionChanged = new StringName("position_changed"u8);
         _amplitude = 10.0;
         _speed = 1.0;
-        _positionChanged = new StringName("position_changed"u8);
     }
 
     public double Amplitude
