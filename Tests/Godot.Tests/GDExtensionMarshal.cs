@@ -6,10 +6,11 @@ namespace Godot.Tests;
 
 public static unsafe class GDExtensionMarshal
 {
-    public static GDExtensionObjectPtr CreateInstance(void* token,
-                                                      ExtensionObject target,
-                                                      ReadOnlySpan<byte> className,
-                                                      GDExtensionInstanceBindingCallbacks callbacks = default)
+    public static GDExtensionObjectPtr CreateInstance(
+        void* token,
+        ExtensionObject target,
+        ReadOnlySpan<byte> className,
+        GDExtensionInstanceBindingCallbacks callbacks = default)
     {
         ArgumentNullException.ThrowIfNull(target);
         GDExtensionObjectPtr parent = target.Base;
@@ -59,10 +60,11 @@ public static unsafe class GDExtensionMarshal
         *(Variant*)destination.Pointer = new Variant(value);
     }
 
-    public static bool ValidateArguments(GDExtensionConstVariantPtr* arguments,
-                                         GDExtensionInt argumentCount,
-                                         GDExtensionCallError* error,
-                                         ReadOnlySpan<GDExtensionVariantType> expectedTypes)
+    public static bool ValidateArguments(
+        GDExtensionConstVariantPtr* arguments,
+        GDExtensionInt argumentCount,
+        GDExtensionCallError* error,
+        ReadOnlySpan<GDExtensionVariantType> expectedTypes)
     {
         if (argumentCount.Value != expectedTypes.Length)
         {

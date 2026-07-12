@@ -9,12 +9,13 @@ public static unsafe class GDExtensionClassDB
     private const uint PropertyUsageEditor = 4;
     private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
 
-    public static void RegisterClass(GDExtensionClassLibraryPtr library,
-                                     ReadOnlySpan<byte> className,
-                                     ReadOnlySpan<byte> parentClassName,
-                                     delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> createInstanceFunc,
-                                     delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, void> freeInstanceFunc,
-                                     delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, GDExtensionClassCallVirtual> getVirtualFunc)
+    public static void RegisterClass(
+        GDExtensionClassLibraryPtr library,
+        ReadOnlySpan<byte> className,
+        ReadOnlySpan<byte> parentClassName,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> createInstanceFunc,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, void> freeInstanceFunc,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, GDExtensionClassCallVirtual> getVirtualFunc)
     {
         using StringName classStringName = new StringName(className);
         using StringName parentClassStringName = new StringName(parentClassName);
@@ -25,18 +26,20 @@ public static unsafe class GDExtensionClassDB
             FreeInstanceFunc = new GDExtensionClassFreeInstance(freeInstanceFunc),
             GetVirtualFunc = new GDExtensionClassGetVirtual(getVirtualFunc)
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(library,
-                                                                  new GDExtensionConstStringNamePtr(&classStringName),
-                                                                  new GDExtensionConstStringNamePtr(&parentClassStringName),
-                                                                  &classInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(
+            library,
+            new GDExtensionConstStringNamePtr(&classStringName),
+            new GDExtensionConstStringNamePtr(&parentClassStringName),
+            &classInfo);
     }
 
-    public static void RegisterPropertyGetter(GDExtensionClassLibraryPtr library,
-                                              ReadOnlySpan<byte> className,
-                                              ReadOnlySpan<byte> methodName,
-                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
-                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
-                                              GDExtensionVariantType type)
+    public static void RegisterPropertyGetter(
+        GDExtensionClassLibraryPtr library,
+        ReadOnlySpan<byte> className,
+        ReadOnlySpan<byte> methodName,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
+        GDExtensionVariantType type)
     {
         using StringName classStringName = new StringName(className);
         using StringName methodStringName = new StringName(methodName);
@@ -59,17 +62,19 @@ public static unsafe class GDExtensionClassDB
             HasReturnValue = new GDExtensionBool(true),
             ReturnValueInfo = &returnInfo
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(library,
-                                                                        new GDExtensionConstStringNamePtr(&classStringName),
-                                                                        &methodInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
+            library,
+            new GDExtensionConstStringNamePtr(&classStringName),
+            &methodInfo);
     }
 
-    public static void RegisterPropertySetter(GDExtensionClassLibraryPtr library,
-                                              ReadOnlySpan<byte> className,
-                                              ReadOnlySpan<byte> methodName,
-                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
-                                              delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
-                                              GDExtensionVariantType type)
+    public static void RegisterPropertySetter(
+        GDExtensionClassLibraryPtr library,
+        ReadOnlySpan<byte> className,
+        ReadOnlySpan<byte> methodName,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
+        GDExtensionVariantType type)
     {
         using StringName classStringName = new StringName(className);
         using StringName methodStringName = new StringName(methodName);
@@ -95,17 +100,19 @@ public static unsafe class GDExtensionClassDB
             ArgumentsInfo = &argumentInfo,
             ArgumentsMetadata = &argsMetadata,
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(library,
-                                                                        new GDExtensionConstStringNamePtr(&classStringName),
-                                                                        &methodInfo);
+        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
+            library,
+            new GDExtensionConstStringNamePtr(&classStringName),
+            &methodInfo);
     }
 
-    public static void RegisterProperty(GDExtensionClassLibraryPtr library,
-                                        ReadOnlySpan<byte> className,
-                                        ReadOnlySpan<byte> propertyName,
-                                        ReadOnlySpan<byte> propertyGetterName,
-                                        ReadOnlySpan<byte> propertySetterName,
-                                        GDExtensionVariantType type)
+    public static void RegisterProperty(
+        GDExtensionClassLibraryPtr library,
+        ReadOnlySpan<byte> className,
+        ReadOnlySpan<byte> propertyName,
+        ReadOnlySpan<byte> propertyGetterName,
+        ReadOnlySpan<byte> propertySetterName,
+        GDExtensionVariantType type)
     {
         using StringName classStringName = new StringName(className);
         using StringName propertyStringName = new StringName(propertyName);
@@ -121,18 +128,20 @@ public static unsafe class GDExtensionClassDB
             ClassName = new GDExtensionStringNamePtr(&emptyStringName),
             Usage = PropertyUsageDefault
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(library,
-                                                                          new GDExtensionConstStringNamePtr(&classStringName),
-                                                                          &info,
-                                                                          new GDExtensionConstStringNamePtr(&propertySetterStringName),
-                                                                          new GDExtensionConstStringNamePtr(&propertyGetterStringName));
+        GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(
+            library,
+            new GDExtensionConstStringNamePtr(&classStringName),
+            &info,
+            new GDExtensionConstStringNamePtr(&propertySetterStringName),
+            new GDExtensionConstStringNamePtr(&propertyGetterStringName));
     }
 
-    public static void RegisterSignal(GDExtensionClassLibraryPtr library,
-                                      ReadOnlySpan<byte> className,
-                                      ReadOnlySpan<byte> signalName,
-                                      ReadOnlySpan<byte> argumentName,
-                                      GDExtensionVariantType argumentType)
+    public static void RegisterSignal(
+        GDExtensionClassLibraryPtr library,
+        ReadOnlySpan<byte> className,
+        ReadOnlySpan<byte> signalName,
+        ReadOnlySpan<byte> argumentName,
+        GDExtensionVariantType argumentType)
     {
         using StringName classStringName = new StringName(className);
         using StringName signalStringName = new StringName(signalName);
@@ -147,10 +156,11 @@ public static unsafe class GDExtensionClassDB
             ClassName = new GDExtensionStringNamePtr(&emptyStringName),
             Usage = PropertyUsageDefault
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(library,
-                                                                        new GDExtensionConstStringNamePtr(&classStringName),
-                                                                        new GDExtensionConstStringNamePtr(&signalStringName),
-                                                                        &argumentInfo,
-                                                                        new GDExtensionInt(1));
+        GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(
+            library,
+            new GDExtensionConstStringNamePtr(&classStringName),
+            new GDExtensionConstStringNamePtr(&signalStringName),
+            &argumentInfo,
+            new GDExtensionInt(1));
     }
 }
