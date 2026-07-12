@@ -7,6 +7,10 @@ public abstract unsafe class ExtensionObject : IDisposable
 {
     private GDExtensionObjectPtr _base;
 
+    protected ExtensionObject() : this("Object"u8)
+    {
+    }
+
     protected ExtensionObject(ReadOnlySpan<byte> baseClassName)
     {
         using StringName nameOfBase = new StringName(baseClassName);
