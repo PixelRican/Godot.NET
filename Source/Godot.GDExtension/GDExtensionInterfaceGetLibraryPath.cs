@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceGetLibraryPath : IEquatable<GD
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceGetLibraryPath(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceGetLibraryPath((delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceGetLibraryPath left, GDExtensionInterfaceGetLibraryPath right)
     {
         return left._method == right._method;

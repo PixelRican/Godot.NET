@@ -91,6 +91,11 @@ public readonly unsafe struct GDExtensionInterfaceObjectCallScriptMethod : IEqua
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceObjectCallScriptMethod(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceObjectCallScriptMethod((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceObjectCallScriptMethod left, GDExtensionInterfaceObjectCallScriptMethod right)
     {
         return left._method == right._method;

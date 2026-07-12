@@ -76,6 +76,11 @@ public readonly unsafe struct GDExtensionInterfaceEditorRemovePlugin : IEquatabl
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceEditorRemovePlugin(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceEditorRemovePlugin((delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceEditorRemovePlugin left, GDExtensionInterfaceEditorRemovePlugin right)
     {
         return left._method == right._method;

@@ -76,6 +76,11 @@ public readonly unsafe struct GDExtensionInterfaceObjectDestroy : IEquatable<GDE
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceObjectDestroy(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceObjectDestroy((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceObjectDestroy left, GDExtensionInterfaceObjectDestroy right)
     {
         return left._method == right._method;

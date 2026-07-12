@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrKeyedChecker : IE
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantGetPtrKeyedChecker(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantGetPtrKeyedChecker((delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantGetPtrKeyedChecker left, GDExtensionInterfaceVariantGetPtrKeyedChecker right)
     {
         return left._method == right._method;

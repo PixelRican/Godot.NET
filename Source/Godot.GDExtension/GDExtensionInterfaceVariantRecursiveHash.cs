@@ -82,6 +82,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantRecursiveHash : IEquata
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantRecursiveHash(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantRecursiveHash((delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantRecursiveHash left, GDExtensionInterfaceVariantRecursiveHash right)
     {
         return left._method == right._method;

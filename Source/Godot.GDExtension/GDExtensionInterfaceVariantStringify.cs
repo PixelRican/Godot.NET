@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantStringify : IEquatable<
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantStringify(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantStringify((delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionStringPtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantStringify left, GDExtensionInterfaceVariantStringify right)
     {
         return left._method == right._method;

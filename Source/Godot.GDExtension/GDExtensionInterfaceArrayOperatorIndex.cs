@@ -82,6 +82,11 @@ public readonly unsafe struct GDExtensionInterfaceArrayOperatorIndex : IEquatabl
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceArrayOperatorIndex(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceArrayOperatorIndex((delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceArrayOperatorIndex left, GDExtensionInterfaceArrayOperatorIndex right)
     {
         return left._method == right._method;

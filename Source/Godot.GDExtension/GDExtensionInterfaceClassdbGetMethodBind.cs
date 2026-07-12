@@ -85,6 +85,11 @@ public readonly unsafe struct GDExtensionInterfaceClassdbGetMethodBind : IEquata
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceClassdbGetMethodBind(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceClassdbGetMethodBind((delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceClassdbGetMethodBind left, GDExtensionInterfaceClassdbGetMethodBind right)
     {
         return left._method == right._method;

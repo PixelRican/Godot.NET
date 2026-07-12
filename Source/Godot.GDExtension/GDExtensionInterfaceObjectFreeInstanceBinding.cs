@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceObjectFreeInstanceBinding : IE
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceObjectFreeInstanceBinding(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceObjectFreeInstanceBinding((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceObjectFreeInstanceBinding left, GDExtensionInterfaceObjectFreeInstanceBinding right)
     {
         return left._method == right._method;

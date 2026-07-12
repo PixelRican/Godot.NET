@@ -86,6 +86,11 @@ public readonly unsafe struct GDExtensionInterfaceStringToLatin1Chars : IEquatab
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceStringToLatin1Chars(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceStringToLatin1Chars((delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceStringToLatin1Chars left, GDExtensionInterfaceStringToLatin1Chars right)
     {
         return left._method == right._method;

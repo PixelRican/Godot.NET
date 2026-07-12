@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceObjectGetInstanceId : IEquatab
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceObjectGetInstanceId(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceObjectGetInstanceId((delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDObjectInstanceID>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceObjectGetInstanceId left, GDExtensionInterfaceObjectGetInstanceId right)
     {
         return left._method == right._method;

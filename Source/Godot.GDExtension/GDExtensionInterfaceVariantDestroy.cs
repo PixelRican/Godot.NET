@@ -76,6 +76,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantDestroy : IEquatable<GD
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantDestroy(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantDestroy((delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantDestroy left, GDExtensionInterfaceVariantDestroy right)
     {
         return left._method == right._method;

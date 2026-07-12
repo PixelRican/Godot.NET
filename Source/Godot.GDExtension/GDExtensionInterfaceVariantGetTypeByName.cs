@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetTypeByName : IEquata
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantGetTypeByName(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantGetTypeByName((delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantGetTypeByName left, GDExtensionInterfaceVariantGetTypeByName right)
     {
         return left._method == right._method;

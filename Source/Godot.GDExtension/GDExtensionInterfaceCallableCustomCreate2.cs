@@ -80,6 +80,11 @@ public readonly unsafe struct GDExtensionInterfaceCallableCustomCreate2 : IEquat
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceCallableCustomCreate2(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceCallableCustomCreate2((delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceCallableCustomCreate2 left, GDExtensionInterfaceCallableCustomCreate2 right)
     {
         return left._method == right._method;

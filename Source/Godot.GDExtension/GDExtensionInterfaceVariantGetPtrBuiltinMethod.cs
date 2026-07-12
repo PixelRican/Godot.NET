@@ -85,6 +85,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrBuiltinMethod : I
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantGetPtrBuiltinMethod(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantGetPtrBuiltinMethod((delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantGetPtrBuiltinMethod left, GDExtensionInterfaceVariantGetPtrBuiltinMethod right)
     {
         return left._method == right._method;

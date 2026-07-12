@@ -82,6 +82,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantHasMethod : IEquatable<
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantHasMethod(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantHasMethod((delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionBool>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantHasMethod left, GDExtensionInterfaceVariantHasMethod right)
     {
         return left._method == right._method;

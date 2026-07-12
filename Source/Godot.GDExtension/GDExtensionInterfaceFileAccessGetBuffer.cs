@@ -85,6 +85,11 @@ public readonly unsafe struct GDExtensionInterfaceFileAccessGetBuffer : IEquatab
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceFileAccessGetBuffer(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceFileAccessGetBuffer((delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, byte*, ulong, ulong>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceFileAccessGetBuffer left, GDExtensionInterfaceFileAccessGetBuffer right)
     {
         return left._method == right._method;

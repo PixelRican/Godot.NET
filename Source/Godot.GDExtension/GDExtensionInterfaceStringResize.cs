@@ -87,6 +87,11 @@ public readonly unsafe struct GDExtensionInterfaceStringResize : IEquatable<GDEx
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceStringResize(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceStringResize((delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceStringResize left, GDExtensionInterfaceStringResize right)
     {
         return left._method == right._method;

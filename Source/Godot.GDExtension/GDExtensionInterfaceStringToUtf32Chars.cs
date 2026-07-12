@@ -86,6 +86,11 @@ public readonly unsafe struct GDExtensionInterfaceStringToUtf32Chars : IEquatabl
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceStringToUtf32Chars(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceStringToUtf32Chars((delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceStringToUtf32Chars left, GDExtensionInterfaceStringToUtf32Chars right)
     {
         return left._method == right._method;

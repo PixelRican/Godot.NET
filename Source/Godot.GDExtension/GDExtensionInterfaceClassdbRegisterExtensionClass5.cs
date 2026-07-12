@@ -87,6 +87,11 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClass5
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceClassdbRegisterExtensionClass5(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceClassdbRegisterExtensionClass5((delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceClassdbRegisterExtensionClass5 left, GDExtensionInterfaceClassdbRegisterExtensionClass5 right)
     {
         return left._method == right._method;

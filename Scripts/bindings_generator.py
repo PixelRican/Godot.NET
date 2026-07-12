@@ -435,6 +435,12 @@ class GDExtensionFunction(GDExtensionType):
         file.write("    {\n")
         file.write("        return new nint(_method).GetHashCode();\n")
         file.write("    }\n")
+        if self.entry_point:
+            file.write("\n")
+            file.write(f"    public static explicit operator {self.name}(GDExtensionInterfaceFunctionPtr function)\n")
+            file.write("    {\n")
+            file.write(f"        return new {self.name}(({self.type})function.Method);\n")
+            file.write("    }\n")
         file.write("\n")
         file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
         file.write("    {\n")

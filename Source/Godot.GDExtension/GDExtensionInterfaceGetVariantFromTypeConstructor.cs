@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceGetVariantFromTypeConstructor 
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceGetVariantFromTypeConstructor(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceGetVariantFromTypeConstructor((delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceGetVariantFromTypeConstructor left, GDExtensionInterfaceGetVariantFromTypeConstructor right)
     {
         return left._method == right._method;

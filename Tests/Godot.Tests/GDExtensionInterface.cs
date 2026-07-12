@@ -119,35 +119,35 @@ public static unsafe class GDExtensionInterface
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)], EntryPoint = "GDExample_Initialize")]
     private static GDExtensionBool Initialize(GDExtensionInterfaceGetProcAddress getProcAddress, GDExtensionClassLibraryPtr library, GDExtensionInitialization* initialization)
     {
-        Load("classdb_construct_object"u8, out s_classdbConstructObject);
-        Load("classdb_get_method_bind"u8, out s_classdbGetMethodBind);
-        Load("classdb_register_extension_class"u8, out s_classdbRegisterExtensionClass);
-        Load("classdb_register_extension_class_method"u8, out s_classdbRegisterExtensionClassMethod);
-        Load("classdb_register_extension_class_property"u8, out s_classdbRegisterExtensionClassProperty);
-        Load("classdb_register_extension_class_signal"u8, out s_classdbRegisterExtensionClassSignal);
-        Load("get_variant_from_type_constructor"u8, out s_getVariantFromTypeConstructor);
-        Load("get_variant_to_type_constructor"u8, out s_getVariantToTypeConstructor);
-        Load("object_method_bind_call"u8, out s_objectMethodBindCall);
-        Load("object_method_bind_ptrcall"u8, out s_objectMethodBindPtrcall);
-        Load("object_set_instance"u8, out s_objectSetInstance);
-        Load("object_set_instance_binding"u8, out s_objectSetInstanceBinding);
-        Load("string_new_with_utf8_chars_and_len"u8, out s_stringNewWithUtf8CharsAndLen);
-        Load("string_name_new_with_utf8_chars_and_len"u8, out s_stringNameNewWithUtf8CharsAndLen);
-        Load("variant_destroy"u8, out s_variantDestroy);
-        Load("variant_get_ptr_destructor"u8, out s_variantGetPtrDestructor);
-        Load("variant_get_ptr_operator_evaluator"u8, out s_variantGetPtrOperatorEvaluator);
-        Load("variant_get_type"u8, out s_variantGetType);
+        s_classdbConstructObject = (GDExtensionInterfaceClassdbConstructObject)Load("classdb_construct_object"u8);
+        s_classdbGetMethodBind = (GDExtensionInterfaceClassdbGetMethodBind)Load("classdb_get_method_bind"u8);
+        s_classdbRegisterExtensionClass = (GDExtensionInterfaceClassdbRegisterExtensionClass)Load("classdb_register_extension_class"u8);
+        s_classdbRegisterExtensionClassMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassMethod)Load("classdb_register_extension_class_method"u8);
+        s_classdbRegisterExtensionClassProperty = (GDExtensionInterfaceClassdbRegisterExtensionClassProperty)Load("classdb_register_extension_class_property"u8);
+        s_classdbRegisterExtensionClassSignal = (GDExtensionInterfaceClassdbRegisterExtensionClassSignal)Load("classdb_register_extension_class_signal"u8);
+        s_getVariantFromTypeConstructor = (GDExtensionInterfaceGetVariantFromTypeConstructor)Load("get_variant_from_type_constructor"u8);
+        s_getVariantToTypeConstructor = (GDExtensionInterfaceGetVariantToTypeConstructor)Load("get_variant_to_type_constructor"u8);
+        s_objectMethodBindCall = (GDExtensionInterfaceObjectMethodBindCall)Load("object_method_bind_call"u8);
+        s_objectMethodBindPtrcall = (GDExtensionInterfaceObjectMethodBindPtrcall)Load("object_method_bind_ptrcall"u8);
+        s_objectSetInstance = (GDExtensionInterfaceObjectSetInstance)Load("object_set_instance"u8);
+        s_objectSetInstanceBinding = (GDExtensionInterfaceObjectSetInstanceBinding)Load("object_set_instance_binding"u8);
+        s_stringNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen)Load("string_new_with_utf8_chars_and_len"u8);
+        s_stringNameNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen)Load("string_name_new_with_utf8_chars_and_len"u8);
+        s_variantDestroy = (GDExtensionInterfaceVariantDestroy)Load("variant_destroy"u8);
+        s_variantGetPtrDestructor = (GDExtensionInterfaceVariantGetPtrDestructor)Load("variant_get_ptr_destructor"u8);
+        s_variantGetPtrOperatorEvaluator = (GDExtensionInterfaceVariantGetPtrOperatorEvaluator)Load("variant_get_ptr_operator_evaluator"u8);
+        s_variantGetType = (GDExtensionInterfaceVariantGetType)Load("variant_get_type"u8);
         initialization->MinimumInitializationLevel = GDExtensionInitializationScene;
         initialization->Userdata = library.Pointer;
         initialization->Initialize = new GDExtensionInitializeCallback(&InitializeLevel);
         initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeLevel);
         return new GDExtensionBool(true);
 
-        void Load<TFunction>(ReadOnlySpan<byte> name, out TFunction result) where TFunction : unmanaged
+        GDExtensionInterfaceFunctionPtr Load(ReadOnlySpan<byte> functionName)
         {
-            fixed (byte* reference = name)
+            fixed (byte* reference = functionName)
             {
-                result = Unsafe.BitCast<GDExtensionInterfaceFunctionPtr, TFunction>(getProcAddress.Invoke(reference));
+                return getProcAddress.Invoke(reference);
             }
         }
     }

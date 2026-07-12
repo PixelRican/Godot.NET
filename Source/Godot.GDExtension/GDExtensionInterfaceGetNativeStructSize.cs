@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceGetNativeStructSize : IEquatab
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceGetNativeStructSize(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceGetNativeStructSize((delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceGetNativeStructSize left, GDExtensionInterfaceGetNativeStructSize right)
     {
         return left._method == right._method;

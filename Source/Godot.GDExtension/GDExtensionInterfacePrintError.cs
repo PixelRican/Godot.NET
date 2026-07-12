@@ -88,6 +88,11 @@ public readonly unsafe struct GDExtensionInterfacePrintError : IEquatable<GDExte
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfacePrintError(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfacePrintError((delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfacePrintError left, GDExtensionInterfacePrintError right)
     {
         return left._method == right._method;

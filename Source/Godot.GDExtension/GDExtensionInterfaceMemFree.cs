@@ -77,6 +77,11 @@ public readonly unsafe struct GDExtensionInterfaceMemFree : IEquatable<GDExtensi
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceMemFree(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceMemFree((delegate* unmanaged[Cdecl]<void*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceMemFree left, GDExtensionInterfaceMemFree right)
     {
         return left._method == right._method;

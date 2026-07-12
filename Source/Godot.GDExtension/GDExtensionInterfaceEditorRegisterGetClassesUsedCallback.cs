@@ -83,6 +83,11 @@ public readonly unsafe struct GDExtensionInterfaceEditorRegisterGetClassesUsedCa
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceEditorRegisterGetClassesUsedCallback(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceEditorRegisterGetClassesUsedCallback((delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceEditorRegisterGetClassesUsedCallback left, GDExtensionInterfaceEditorRegisterGetClassesUsedCallback right)
     {
         return left._method == right._method;

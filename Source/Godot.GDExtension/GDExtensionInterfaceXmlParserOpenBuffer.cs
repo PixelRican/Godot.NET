@@ -85,6 +85,11 @@ public readonly unsafe struct GDExtensionInterfaceXmlParserOpenBuffer : IEquatab
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceXmlParserOpenBuffer(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceXmlParserOpenBuffer((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, nuint, GDExtensionInt>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceXmlParserOpenBuffer left, GDExtensionInterfaceXmlParserOpenBuffer right)
     {
         return left._method == right._method;

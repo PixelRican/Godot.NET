@@ -85,6 +85,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantIterGet : IEquatable<GD
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantIterGet(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantIterGet((delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantIterGet left, GDExtensionInterfaceVariantIterGet right)
     {
         return left._method == right._method;

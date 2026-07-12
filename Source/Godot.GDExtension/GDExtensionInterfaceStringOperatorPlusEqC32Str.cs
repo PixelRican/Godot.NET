@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceStringOperatorPlusEqC32Str : I
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceStringOperatorPlusEqC32Str(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceStringOperatorPlusEqC32Str((delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceStringOperatorPlusEqC32Str left, GDExtensionInterfaceStringOperatorPlusEqC32Str right)
     {
         return left._method == right._method;

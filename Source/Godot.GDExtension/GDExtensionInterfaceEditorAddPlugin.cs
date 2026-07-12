@@ -77,6 +77,11 @@ public readonly unsafe struct GDExtensionInterfaceEditorAddPlugin : IEquatable<G
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceEditorAddPlugin(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceEditorAddPlugin((delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceEditorAddPlugin left, GDExtensionInterfaceEditorAddPlugin right)
     {
         return left._method == right._method;

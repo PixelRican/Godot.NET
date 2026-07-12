@@ -80,6 +80,11 @@ public readonly unsafe struct GDExtensionInterfaceArrayRef : IEquatable<GDExtens
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceArrayRef(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceArrayRef((delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceArrayRef left, GDExtensionInterfaceArrayRef right)
     {
         return left._method == right._method;

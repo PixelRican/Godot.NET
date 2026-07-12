@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithWideChars : IEqua
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceStringNewWithWideChars(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceStringNewWithWideChars((delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceStringNewWithWideChars left, GDExtensionInterfaceStringNewWithWideChars right)
     {
         return left._method == right._method;

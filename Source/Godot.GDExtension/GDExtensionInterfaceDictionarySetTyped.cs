@@ -94,6 +94,11 @@ public readonly unsafe struct GDExtensionInterfaceDictionarySetTyped : IEquatabl
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceDictionarySetTyped(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceDictionarySetTyped((delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceDictionarySetTyped left, GDExtensionInterfaceDictionarySetTyped right)
     {
         return left._method == right._method;

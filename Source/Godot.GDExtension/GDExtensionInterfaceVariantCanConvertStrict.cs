@@ -82,6 +82,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantCanConvertStrict : IEqu
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantCanConvertStrict(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantCanConvertStrict((delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantCanConvertStrict left, GDExtensionInterfaceVariantCanConvertStrict right)
     {
         return left._method == right._method;

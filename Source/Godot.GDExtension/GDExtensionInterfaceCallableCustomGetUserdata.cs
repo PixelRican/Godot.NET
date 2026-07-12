@@ -83,6 +83,11 @@ public readonly unsafe struct GDExtensionInterfaceCallableCustomGetUserdata : IE
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceCallableCustomGetUserdata(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceCallableCustomGetUserdata((delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceCallableCustomGetUserdata left, GDExtensionInterfaceCallableCustomGetUserdata right)
     {
         return left._method == right._method;

@@ -97,6 +97,11 @@ public readonly unsafe struct GDExtensionInterfaceWorkerThreadPoolAddNativeGroup
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask left, GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask right)
     {
         return left._method == right._method;

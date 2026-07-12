@@ -80,6 +80,11 @@ public readonly unsafe struct GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen((delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen left, GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen right)
     {
         return left._method == right._method;

@@ -91,6 +91,11 @@ public readonly unsafe struct GDExtensionInterfacePrintScriptErrorWithMessage : 
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfacePrintScriptErrorWithMessage(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfacePrintScriptErrorWithMessage((delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfacePrintScriptErrorWithMessage left, GDExtensionInterfacePrintScriptErrorWithMessage right)
     {
         return left._method == right._method;

@@ -86,6 +86,11 @@ public readonly unsafe struct GDExtensionInterfacePlaceholderScriptInstanceCreat
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfacePlaceholderScriptInstanceCreate(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfacePlaceholderScriptInstanceCreate((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfacePlaceholderScriptInstanceCreate left, GDExtensionInterfacePlaceholderScriptInstanceCreate right)
     {
         return left._method == right._method;

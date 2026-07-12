@@ -82,6 +82,11 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrGetter : IEquatab
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceVariantGetPtrGetter(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceVariantGetPtrGetter((delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrGetter>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceVariantGetPtrGetter left, GDExtensionInterfaceVariantGetPtrGetter right)
     {
         return left._method == right._method;

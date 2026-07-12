@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceRegisterMainLoopCallbacks : IE
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceRegisterMainLoopCallbacks(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceRegisterMainLoopCallbacks((delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceRegisterMainLoopCallbacks left, GDExtensionInterfaceRegisterMainLoopCallbacks right)
     {
         return left._method == right._method;

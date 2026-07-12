@@ -79,6 +79,11 @@ public readonly unsafe struct GDExtensionInterfaceGlobalGetSingleton : IEquatabl
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceGlobalGetSingleton(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceGlobalGetSingleton((delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceGlobalGetSingleton left, GDExtensionInterfaceGlobalGetSingleton right)
     {
         return left._method == right._method;

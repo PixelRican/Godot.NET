@@ -76,6 +76,11 @@ public readonly unsafe struct GDExtensionInterfaceGetGodotVersion2 : IEquatable<
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceGetGodotVersion2(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceGetGodotVersion2((delegate* unmanaged[Cdecl]<GDExtensionGodotVersion2*, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceGetGodotVersion2 left, GDExtensionInterfaceGetGodotVersion2 right)
     {
         return left._method == right._method;

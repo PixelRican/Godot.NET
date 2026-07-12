@@ -83,6 +83,11 @@ public readonly unsafe struct GDExtensionInterfaceObjectSetInstance : IEquatable
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceObjectSetInstance(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceObjectSetInstance((delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceObjectSetInstance left, GDExtensionInterfaceObjectSetInstance right)
     {
         return left._method == right._method;

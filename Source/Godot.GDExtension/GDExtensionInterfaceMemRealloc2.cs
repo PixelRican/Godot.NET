@@ -85,6 +85,11 @@ public readonly unsafe struct GDExtensionInterfaceMemRealloc2 : IEquatable<GDExt
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceMemRealloc2(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceMemRealloc2((delegate* unmanaged[Cdecl]<void*, nuint, GDExtensionBool, void*>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceMemRealloc2 left, GDExtensionInterfaceMemRealloc2 right)
     {
         return left._method == right._method;

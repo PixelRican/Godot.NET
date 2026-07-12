@@ -80,6 +80,11 @@ public readonly unsafe struct GDExtensionInterfaceClassdbGetClassTag : IEquatabl
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceClassdbGetClassTag(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceClassdbGetClassTag((delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceClassdbGetClassTag left, GDExtensionInterfaceClassdbGetClassTag right)
     {
         return left._method == right._method;

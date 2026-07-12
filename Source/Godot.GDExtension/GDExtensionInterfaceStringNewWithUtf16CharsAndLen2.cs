@@ -88,6 +88,11 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf16CharsAndLen2
         return new nint(_method).GetHashCode();
     }
 
+    public static explicit operator GDExtensionInterfaceStringNewWithUtf16CharsAndLen2(GDExtensionInterfaceFunctionPtr function)
+    {
+        return new GDExtensionInterfaceStringNewWithUtf16CharsAndLen2((delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, GDExtensionBool, GDExtensionInt>)function.Method);
+    }
+
     public static bool operator ==(GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 left, GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 right)
     {
         return left._method == right._method;
