@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Godot.GDExtension;
 
 namespace Godot.Tests;
@@ -153,16 +152,5 @@ public static unsafe class GDExtensionClassDB
                                                                         new GDExtensionConstStringNamePtr(&signalStringName),
                                                                         &argumentInfo,
                                                                         new GDExtensionInt(1));
-    }
-
-    public static void SetPosition(GDExtensionObjectPtr obj, Vector2 value)
-    {
-        using StringName classStringName = new StringName("Node2D"u8);
-        using StringName methodStringName = new StringName("set_position"u8);
-        GDExtensionMethodBindPtr method = GDExtensionInterface.ClassdbGetMethodBind.Invoke(new GDExtensionConstStringNamePtr(&classStringName),
-                                                                                           new GDExtensionConstStringNamePtr(&methodStringName),
-                                                                                           new GDExtensionInt(743155724));
-        GDExtensionConstTypePtr argument = new GDExtensionConstTypePtr(&value);
-        GDExtensionInterface.ObjectMethodBindPtrcall.Invoke(method, obj, &argument, default);
     }
 }

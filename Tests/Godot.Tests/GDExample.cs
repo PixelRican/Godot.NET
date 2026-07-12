@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Godot.Tests;
 
-public sealed class GDExample : ExtensionObject
+public sealed class GDExample : ExtensionSprite2D
 {
     private readonly StringName _positionChanged;
     private double _amplitude;
@@ -11,7 +11,7 @@ public sealed class GDExample : ExtensionObject
     private double _timePassed;
     private double _timeEmit;
 
-    public GDExample() : base("Sprite2D"u8)
+    public GDExample()
     {
         _positionChanged = new StringName("position_changed"u8);
         _amplitude = 10.0;
@@ -37,7 +37,7 @@ public sealed class GDExample : ExtensionObject
         Vector2 newPosition = new Vector2(
             x: (float)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
             y: (float)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5))));
-        GDExtensionClassDB.SetPosition(Base, newPosition);
+        SetPosition(newPosition);
 
         if (_timeEmit >= 1.0)
         {
