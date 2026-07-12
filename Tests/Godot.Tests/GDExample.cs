@@ -49,5 +49,6 @@ public sealed class GDExample : ExtensionObject
     protected override void Dispose(bool disposing)
     {
         _positionChanged.Dispose();
+        base.Dispose(disposing);
     }
 }
