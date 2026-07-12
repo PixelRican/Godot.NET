@@ -3,13 +3,14 @@ using Godot.GDExtension;
 
 namespace Godot.Tests;
 
-public abstract class ExtensionObject : IDisposable
+public abstract unsafe class ExtensionObject : IDisposable
 {
     private GDExtensionObjectPtr _base;
 
     protected ExtensionObject(ReadOnlySpan<byte> baseClassName)
     {
-        _base = GDExtensionClassDB.ConstructObject(baseClassName);
+        using StringName nameOfBase = new StringName(baseClassName);
+        _base = GDExtensionInterface.ClassdbConstructObject.Invoke(new GDExtensionConstStringNamePtr(&nameOfBase));
     }
 
     ~ExtensionObject()

@@ -10,14 +10,6 @@ public static unsafe class GDExtensionClassDB
     private const uint PropertyUsageEditor = 4;
     private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
 
-    public static GDExtensionObjectPtr ConstructObject(ReadOnlySpan<byte> className)
-    {
-        using StringName classStringName = new StringName(className);
-        GDExtensionConstStringNamePtr classStringNamePointer = new GDExtensionConstStringNamePtr(&classStringName);
-        GDExtensionObjectPtr result = GDExtensionInterface.ClassdbConstructObject.Invoke(classStringNamePointer);
-        return result;
-    }
-
     public static void RegisterClass(GDExtensionClassLibraryPtr library,
                                      ReadOnlySpan<byte> className,
                                      ReadOnlySpan<byte> parentClassName,
