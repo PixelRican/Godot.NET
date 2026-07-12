@@ -155,25 +155,6 @@ public static unsafe class GDExtensionClassDB
                                                                         new GDExtensionInt(1));
     }
 
-    public static void EmitSignal(GDExtensionObjectPtr instance, StringName argument1, Vector2 argument2)
-    {
-        using StringName classStringName = new StringName("Object"u8);
-        using StringName methodStringName = new StringName("emit_signal"u8);
-        GDExtensionMethodBindPtr methodBind = GDExtensionInterface.ClassdbGetMethodBind.Invoke(new GDExtensionConstStringNamePtr(&classStringName),
-                                                                                               new GDExtensionConstStringNamePtr(&methodStringName),
-                                                                                               new GDExtensionInt(4047867050));
-        using Variant variantArgument1 = new Variant(argument1);
-        using Variant variantArgument2 = new Variant(argument2);
-        using Variant variantResult = default;
-        GDExtensionConstVariantPtr* arguments = stackalloc GDExtensionConstVariantPtr[]
-        {
-            new GDExtensionConstVariantPtr(&variantArgument1),
-            new GDExtensionConstVariantPtr(&variantArgument2),
-        };
-        GDExtensionUninitializedVariantPtr result = new GDExtensionUninitializedVariantPtr(&variantResult);
-        GDExtensionInterface.ObjectMethodBindCall.Invoke(methodBind, instance, arguments, new GDExtensionInt(2), result, null);
-    }
-
     public static void SetPosition(GDExtensionObjectPtr obj, Vector2 value)
     {
         using StringName classStringName = new StringName("Node2D"u8);

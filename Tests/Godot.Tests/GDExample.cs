@@ -41,7 +41,8 @@ public sealed class GDExample : ExtensionObject
 
         if (_timeEmit >= 1.0)
         {
-            GDExtensionClassDB.EmitSignal(Base, _positionChanged, newPosition);
+            using Variant argument = new Variant(newPosition);
+            EmitSignal(_positionChanged, argument);
             _timeEmit = 0.0;
         }
     }
