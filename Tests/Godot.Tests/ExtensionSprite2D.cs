@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Godot.GDExtension;
 
 namespace Godot.Tests;

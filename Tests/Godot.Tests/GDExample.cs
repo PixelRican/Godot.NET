@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 
 namespace Godot.Tests;
 
@@ -35,8 +34,8 @@ public sealed class GDExample : ExtensionSprite2D
         _timePassed += _speed * delta;
         _timeEmit += delta;
         Vector2 newPosition = new Vector2(
-            x: (float)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
-            y: (float)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5))));
+            x: (Real)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
+            y: (Real)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5))));
         SetPosition(newPosition);
 
         if (_timeEmit >= 1.0)

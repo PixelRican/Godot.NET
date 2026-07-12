@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Numerics;
 using System.Runtime.InteropServices;
 using Godot.GDExtension;
 
 namespace Godot.Tests;
 
+#if REAL_IS_DOUBLE
+[StructLayout(LayoutKind.Explicit, Size = 40)]
+#else
 [StructLayout(LayoutKind.Explicit, Size = 24)]
+#endif
 public readonly unsafe struct Variant : IDisposable
 {
     public Variant(StringName value)
