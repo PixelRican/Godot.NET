@@ -1,10 +1,10 @@
 # Godot.NET
 
-C# bindings for GDExtension development.
+An experimental repository containing C# bindings for GDExtension development.
 
 ## Overview
 
-Godot.NET is a code library that provides C# bindings for [GDExtension](https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/what_is_gdextension.html), a [Godot Engine](https://godotengine.org/) technology that allows it to interact with native shared libraries at runtime. This library ports every GDExtension type and function as C# structs and enums, providing a thin layer between managed C# code and unmanaged engine code. Eventually, this library will also provide memory-safe wrappers that make writing GDExtensions easier for C# developers.
+This experimental repository contains C# bindings for [GDExtension](https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/what_is_gdextension.html), a [Godot Engine](https://godotengine.org/) technology that allows it to interact with native shared libraries at runtime. The main purpose of this repository is to experiment with GDExtension features using C#. This repository should not be confused for [Godot .NET](https://github.com/godotengine/godot-dotnet), the official repository containing .NET bindings for Godot using the GDExtension APIs. The official repository provides a much more comprehensive C# API than what is provided by this repository, so it is highly recommended that C# developers use it instead.
 
 ## Executing Tests
 
