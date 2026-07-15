@@ -52,31 +52,31 @@ public readonly unsafe struct GDExtensionInterfaceDictionarySetTyped : IEquatabl
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Dictionary.
     /// </param>
-    /// <param name="pKeyType">
+    /// <param name="p_key_type">
     /// The type of Variant the Dictionary key will store.
     /// </param>
-    /// <param name="pKeyClassName">
+    /// <param name="p_key_class_name">
     /// A pointer to a StringName with the name of the object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
     /// </param>
-    /// <param name="pKeyScript">
+    /// <param name="p_key_script">
     /// A pointer to a Script object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
     /// </param>
-    /// <param name="pValueType">
+    /// <param name="p_value_type">
     /// The type of Variant the Dictionary value will store.
     /// </param>
-    /// <param name="pValueClassName">
+    /// <param name="p_value_class_name">
     /// A pointer to a StringName with the name of the object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
     /// </param>
-    /// <param name="pValueScript">
+    /// <param name="p_value_script">
     /// A pointer to a Script object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionTypePtr pSelf, GDExtensionVariantType pKeyType, GDExtensionConstStringNamePtr pKeyClassName, GDExtensionConstVariantPtr pKeyScript, GDExtensionVariantType pValueType, GDExtensionConstStringNamePtr pValueClassName, GDExtensionConstVariantPtr pValueScript)
+    public void Invoke(GDExtensionTypePtr p_self, GDExtensionVariantType p_key_type, GDExtensionConstStringNamePtr p_key_class_name, GDExtensionConstVariantPtr p_key_script, GDExtensionVariantType p_value_type, GDExtensionConstStringNamePtr p_value_class_name, GDExtensionConstVariantPtr p_value_script)
     {
-        _method(pSelf, pKeyType, pKeyClassName, pKeyScript, pValueType, pValueClassName, pValueScript);
+        _method(p_self, p_key_type, p_key_class_name, p_key_script, p_value_type, p_value_class_name, p_value_script);
     }
 
     public bool Equals(GDExtensionInterfaceDictionarySetTyped other)

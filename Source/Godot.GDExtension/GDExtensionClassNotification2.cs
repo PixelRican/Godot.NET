@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassNotification2 : IEquatable<GDExten
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassInstancePtr pInstance, int pWhat, GDExtensionBool pReversed)
+    public void Invoke(GDExtensionClassInstancePtr p_instance, int p_what, GDExtensionBool p_reversed)
     {
-        _method(pInstance, pWhat, pReversed);
+        _method(p_instance, p_what, p_reversed);
     }
 
     public bool Equals(GDExtensionClassNotification2 other)

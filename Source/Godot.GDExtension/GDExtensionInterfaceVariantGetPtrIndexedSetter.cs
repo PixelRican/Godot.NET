@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrIndexedSetter : I
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
     /// <returns>
     /// A pointer to a function that can set an index on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrIndexedSetter Invoke(GDExtensionVariantType pType)
+    public GDExtensionPtrIndexedSetter Invoke(GDExtensionVariantType p_type)
     {
-        return _method(pType);
+        return _method(p_type);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrIndexedSetter other)

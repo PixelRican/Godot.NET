@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceGetOwner : IEquatable<GDE
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    public GDExtensionObjectPtr Invoke(GDExtensionScriptInstanceDataPtr p_instance)
     {
-        return _method(pInstance);
+        return _method(p_instance);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetOwner other)

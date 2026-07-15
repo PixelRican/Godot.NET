@@ -57,16 +57,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrInternalGetter : 
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
     /// <returns>
     /// A pointer to a type-specific function that returns a pointer to the internal value of a variant. Check the implementation of this function (gdextension_variant_get_ptr_internal_getter) for pointee type info of each variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionVariantGetInternalPtrFunc Invoke(GDExtensionVariantType pType)
+    public GDExtensionVariantGetInternalPtrFunc Invoke(GDExtensionVariantType p_type)
     {
-        return _method(pType);
+        return _method(p_type);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrInternalGetter other)

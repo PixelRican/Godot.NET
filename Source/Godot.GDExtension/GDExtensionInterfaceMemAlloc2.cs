@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceMemAlloc2 : IEquatable<GDExten
         get => _method;
     }
 
-    /// <param name="pBytes">
+    /// <param name="p_bytes">
     /// The amount of memory to allocate in bytes.
     /// </param>
-    /// <param name="pPadAlign">
+    /// <param name="p_pad_align">
     /// If true, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
     /// <returns>
     /// A pointer to the allocated memory, or NULL if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(nuint pBytes, GDExtensionBool pPadAlign)
+    public void* Invoke(nuint p_bytes, GDExtensionBool p_pad_align)
     {
-        return _method(pBytes, pPadAlign);
+        return _method(p_bytes, p_pad_align);
     }
 
     public bool Equals(GDExtensionInterfaceMemAlloc2 other)

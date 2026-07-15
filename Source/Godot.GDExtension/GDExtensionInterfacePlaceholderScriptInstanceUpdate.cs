@@ -54,19 +54,19 @@ public readonly unsafe struct GDExtensionInterfacePlaceholderScriptInstanceUpdat
         get => _method;
     }
 
-    /// <param name="pPlaceholder">
+    /// <param name="p_placeholder">
     /// A pointer to a PlaceHolderScriptInstance.
     /// </param>
-    /// <param name="pProperties">
+    /// <param name="p_properties">
     /// A pointer to an Array of Dictionary representing PropertyInfo.
     /// </param>
-    /// <param name="pValues">
+    /// <param name="p_values">
     /// A pointer to a Dictionary mapping StringName to Variant values.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstancePtr pPlaceholder, GDExtensionConstTypePtr pProperties, GDExtensionConstTypePtr pValues)
+    public void Invoke(GDExtensionScriptInstancePtr p_placeholder, GDExtensionConstTypePtr p_properties, GDExtensionConstTypePtr p_values)
     {
-        _method(pPlaceholder, pProperties, pValues);
+        _method(p_placeholder, p_properties, p_values);
     }
 
     public bool Equals(GDExtensionInterfacePlaceholderScriptInstanceUpdate other)

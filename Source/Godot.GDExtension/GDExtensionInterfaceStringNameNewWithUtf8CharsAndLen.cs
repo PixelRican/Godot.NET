@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceStringNameNewWithUtf8CharsAndL
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
     /// </param>
-    /// <param name="pContents">
+    /// <param name="p_contents">
     /// A pointer to a C string (null terminated and UTF-8 encoded).
     /// </param>
-    /// <param name="pSize">
+    /// <param name="p_size">
     /// The number of bytes (not UTF-8 code points).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionInt pSize)
+    public void Invoke(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents, GDExtensionInt p_size)
     {
-        _method(rDest, pContents, pSize);
+        _method(r_dest, p_contents, p_size);
     }
 
     public bool Equals(GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen other)

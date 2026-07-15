@@ -54,22 +54,22 @@ public readonly unsafe struct GDExtensionInterfaceObjectGetClassName : IEquatabl
         get => _method;
     }
 
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="rClassName">
+    /// <param name="r_class_name">
     /// A pointer to a String to receive the class name.
     /// </param>
     /// <returns>
     /// true if successful in getting the class name; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionConstObjectPtr pObject, GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringNamePtr rClassName)
+    public GDExtensionBool Invoke(GDExtensionConstObjectPtr p_object, GDExtensionClassLibraryPtr p_library, GDExtensionUninitializedStringNamePtr r_class_name)
     {
-        return _method(pObject, pLibrary, rClassName);
+        return _method(p_object, p_library, r_class_name);
     }
 
     public bool Equals(GDExtensionInterfaceObjectGetClassName other)

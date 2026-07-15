@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceGetClassCategory : IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionPropertyInfo* pClassCategory)
+    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionPropertyInfo* p_class_category)
     {
-        return _method(pInstance, pClassCategory);
+        return _method(p_instance, p_class_category);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetClassCategory other)

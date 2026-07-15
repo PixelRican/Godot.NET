@@ -53,13 +53,13 @@ public readonly unsafe struct GDExtensionInterfaceEditorAddPlugin : IEquatable<G
         get => _method;
     }
 
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstStringNamePtr pClassName)
+    public void Invoke(GDExtensionConstStringNamePtr p_class_name)
     {
-        _method(pClassName);
+        _method(p_class_name);
     }
 
     public bool Equals(GDExtensionInterfaceEditorAddPlugin other)

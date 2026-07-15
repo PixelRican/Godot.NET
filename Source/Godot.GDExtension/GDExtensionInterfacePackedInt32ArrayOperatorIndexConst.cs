@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfacePackedInt32ArrayOperatorIndexC
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A const pointer to a PackedInt32Array object.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index of the integer to get.
     /// </param>
     /// <returns>
     /// A const pointer to the requested 32-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int* Invoke(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public int* Invoke(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return _method(pSelf, pIndex);
+        return _method(p_self, p_index);
     }
 
     public bool Equals(GDExtensionInterfacePackedInt32ArrayOperatorIndexConst other)

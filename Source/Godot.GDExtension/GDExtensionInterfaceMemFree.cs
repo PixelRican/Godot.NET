@@ -53,13 +53,13 @@ public readonly unsafe struct GDExtensionInterfaceMemFree : IEquatable<GDExtensi
         get => _method;
     }
 
-    /// <param name="pPtr">
+    /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(void* pPtr)
+    public void Invoke(void* p_ptr)
     {
-        _method(pPtr);
+        _method(p_ptr);
     }
 
     public bool Equals(GDExtensionInterfaceMemFree other)

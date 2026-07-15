@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionInstanceBindingReferenceCallback : IEqu
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(void* pToken, void* pBinding, GDExtensionBool pReference)
+    public GDExtensionBool Invoke(void* p_token, void* p_binding, GDExtensionBool p_reference)
     {
-        return _method(pToken, pBinding, pReference);
+        return _method(p_token, p_binding, p_reference);
     }
 
     public bool Equals(GDExtensionInstanceBindingReferenceCallback other)

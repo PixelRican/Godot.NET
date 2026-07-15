@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrKeyedSetter : IEq
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
     /// <returns>
     /// A pointer to a function that can set a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrKeyedSetter Invoke(GDExtensionVariantType pType)
+    public GDExtensionPtrKeyedSetter Invoke(GDExtensionVariantType p_type)
     {
-        return _method(pType);
+        return _method(p_type);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrKeyedSetter other)

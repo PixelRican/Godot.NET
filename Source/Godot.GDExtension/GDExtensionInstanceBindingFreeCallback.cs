@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionInstanceBindingFreeCallback : IEquatabl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(void* pToken, void* pInstance, void* pBinding)
+    public void Invoke(void* p_token, void* p_instance, void* p_binding)
     {
-        _method(pToken, pInstance, pBinding);
+        _method(p_token, p_instance, p_binding);
     }
 
     public bool Equals(GDExtensionInstanceBindingFreeCallback other)

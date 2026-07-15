@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfacePackedStringArrayOperatorIndex
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to a PackedStringArray object.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index of the String to get.
     /// </param>
     /// <returns>
     /// A pointer to the requested String.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionStringPtr Invoke(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public GDExtensionStringPtr Invoke(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return _method(pSelf, pIndex);
+        return _method(p_self, p_index);
     }
 
     public bool Equals(GDExtensionInterfacePackedStringArrayOperatorIndex other)

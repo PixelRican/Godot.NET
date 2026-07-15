@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassGetVirtualCallData2 : IEquatable<G
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(void* pClassUserdata, GDExtensionConstStringNamePtr pName, uint pHash)
+    public void* Invoke(void* p_class_userdata, GDExtensionConstStringNamePtr p_name, uint p_hash)
     {
-        return _method(pClassUserdata, pName, pHash);
+        return _method(p_class_userdata, p_name, p_hash);
     }
 
     public bool Equals(GDExtensionClassGetVirtualCallData2 other)

@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceFileAccessStoreBuffer : IEquat
         get => _method;
     }
 
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to a FileAccess object.
     /// </param>
-    /// <param name="pSrc">
+    /// <param name="p_src">
     /// A pointer to the buffer.
     /// </param>
-    /// <param name="pLength">
+    /// <param name="p_length">
     /// The size of the buffer.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionObjectPtr pInstance, byte* pSrc, ulong pLength)
+    public void Invoke(GDExtensionObjectPtr p_instance, byte* p_src, ulong p_length)
     {
-        _method(pInstance, pSrc, pLength);
+        _method(p_instance, p_src, p_length);
     }
 
     public bool Equals(GDExtensionInterfaceFileAccessStoreBuffer other)

@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceObjectGetInstanceBinding : IEq
         get => _method;
     }
 
-    /// <param name="pO">
+    /// <param name="p_o">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pToken">
+    /// <param name="p_token">
     /// A token the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pCallbacks">
+    /// <param name="p_callbacks">
     /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
     /// </param>
     /// <returns>
     /// A pointer to the instance binding.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(GDExtensionObjectPtr pO, void* pToken, GDExtensionInstanceBindingCallbacks* pCallbacks)
+    public void* Invoke(GDExtensionObjectPtr p_o, void* p_token, GDExtensionInstanceBindingCallbacks* p_callbacks)
     {
-        return _method(pO, pToken, pCallbacks);
+        return _method(p_o, p_token, p_callbacks);
     }
 
     public bool Equals(GDExtensionInterfaceObjectGetInstanceBinding other)

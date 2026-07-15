@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceVariantHasKey : IEquatable<GDE
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="pKey">
+    /// <param name="p_key">
     /// A pointer to a Variant representing the key.
     /// </param>
-    /// <param name="rValid">
+    /// <param name="r_valid">
     /// A pointer to a boolean which will be set to false if the key doesn't exist.
     /// </param>
     /// <returns>
     /// true if the key exists; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionBool* rValid)
+    public GDExtensionBool Invoke(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionBool* r_valid)
     {
-        return _method(pSelf, pKey, rValid);
+        return _method(p_self, p_key, r_valid);
     }
 
     public bool Equals(GDExtensionInterfaceVariantHasKey other)

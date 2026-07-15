@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceRegisterMainLoopCallbacks : IE
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pCallbacks">
+    /// <param name="p_callbacks">
     /// A pointer to the structure that contains the callbacks.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionMainLoopCallbacks* p_callbacks)
     {
-        _method(pLibrary, pCallbacks);
+        _method(p_library, p_callbacks);
     }
 
     public bool Equals(GDExtensionInterfaceRegisterMainLoopCallbacks other)

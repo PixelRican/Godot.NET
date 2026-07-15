@@ -53,9 +53,9 @@ public readonly unsafe struct GDExtensionEditorGetClassesUsedCallback : IEquatab
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionTypePtr pPackedStringArray)
+    public void Invoke(GDExtensionTypePtr p_packed_string_array)
     {
-        _method(pPackedStringArray);
+        _method(p_packed_string_array);
     }
 
     public bool Equals(GDExtensionEditorGetClassesUsedCallback other)

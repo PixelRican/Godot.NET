@@ -53,13 +53,13 @@ public readonly unsafe struct GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars
         get => _method;
     }
 
-    /// <param name="pData">
+    /// <param name="p_data">
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(byte* pData)
+    public void Invoke(byte* p_data)
     {
-        _method(pData);
+        _method(p_data);
     }
 
     public bool Equals(GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars other)

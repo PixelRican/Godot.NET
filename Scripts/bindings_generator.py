@@ -171,7 +171,7 @@ class GDExtensionEnum(GDExtensionType):
 
 class GDExtensionEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"].title().replace("_", "").replace("Gde", "GDE", 1)
+        self.name: str = data["name"]
         self.value: int = data["value"]
         self.description: GDExtensionDescription | None = None
         data_description: list[str] | None = data.get("description")
@@ -341,7 +341,9 @@ class GDExtensionStruct(GDExtensionType):
 
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"].title().replace("_", "")
+        self.name: str = data["name"]
+        if self.name == "string":
+            self.name = "@string"
         self.type: GDExtensionTypeReference = GDExtensionTypeReference(data["type"])
         self.description: GDExtensionDescription | None = None
         data_description: list[str] | None = data.get("description")
@@ -361,7 +363,7 @@ class GDExtensionFunction(GDExtensionType):
         for i, argument_data in enumerate(data["arguments"]):
             if not argument_data.get("name"):
                 argument_data = argument_data.copy()
-                argument_data["name"] = f"arg{i + 1}"
+                argument_data["name"] = f"p_{i}"
             argument: GDExtensionFunctionArgument = GDExtensionFunctionArgument(argument_data)
             type_parameters.append(argument.type.name)
             self.arguments.append(argument)
@@ -455,8 +457,7 @@ class GDExtensionFunction(GDExtensionType):
 
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"].title().replace("_", "")
-        self.name = self.name[0].lower() + self.name[1:]
+        self.name: str = data["name"]
         self.type: GDExtensionTypeReference = GDExtensionTypeReference(data["type"])
         self.description: GDExtensionDescription | None = None
         data_description: list[str] | None = data.get("description")

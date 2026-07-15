@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceStringOperatorPlusEqCstr : IEq
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the String.
     /// </param>
-    /// <param name="pB">
+    /// <param name="p_b">
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionStringPtr pSelf, byte* pB)
+    public void Invoke(GDExtensionStringPtr p_self, byte* p_b)
     {
-        _method(pSelf, pB);
+        _method(p_self, p_b);
     }
 
     public bool Equals(GDExtensionInterfaceStringOperatorPlusEqCstr other)

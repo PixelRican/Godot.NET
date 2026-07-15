@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionInitializeCallback : IEquatable<GDExten
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(void* pUserdata, GDExtensionInitializationLevel pLevel)
+    public void Invoke(void* p_userdata, GDExtensionInitializationLevel p_level)
     {
-        _method(pUserdata, pLevel);
+        _method(p_userdata, p_level);
     }
 
     public bool Equals(GDExtensionInitializeCallback other)

@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithWideChars : IEqua
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.
     /// </param>
-    /// <param name="pContents">
+    /// <param name="p_contents">
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedStringPtr rDest, void* pContents)
+    public void Invoke(GDExtensionUninitializedStringPtr r_dest, void* p_contents)
     {
-        _method(rDest, pContents);
+        _method(r_dest, p_contents);
     }
 
     public bool Equals(GDExtensionInterfaceStringNewWithWideChars other)

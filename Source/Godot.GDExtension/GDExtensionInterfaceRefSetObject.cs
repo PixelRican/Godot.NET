@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceRefSetObject : IEquatable<GDEx
         get => _method;
     }
 
-    /// <param name="pRef">
+    /// <param name="p_ref">
     /// A pointer to the reference.
     /// </param>
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object to refer to.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionRefPtr pRef, GDExtensionObjectPtr pObject)
+    public void Invoke(GDExtensionRefPtr p_ref, GDExtensionObjectPtr p_object)
     {
-        _method(pRef, pObject);
+        _method(p_ref, p_object);
     }
 
     public bool Equals(GDExtensionInterfaceRefSetObject other)

@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionWorkerThreadPoolTask : IEquatable<GDExt
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(void* arg1)
+    public void Invoke(void* p_0)
     {
-        _method(arg1);
+        _method(p_0);
     }
 
     public bool Equals(GDExtensionWorkerThreadPoolTask other)

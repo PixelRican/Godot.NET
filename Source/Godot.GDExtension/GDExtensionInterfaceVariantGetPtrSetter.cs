@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrSetter : IEquatab
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
-    /// <param name="pMember">
+    /// <param name="p_member">
     /// A pointer to a StringName with the member name.
     /// </param>
     /// <returns>
     /// A pointer to a function that can call a member's setter on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrSetter Invoke(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
+    public GDExtensionPtrSetter Invoke(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
     {
-        return _method(pType, pMember);
+        return _method(p_type, p_member);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrSetter other)

@@ -9,13 +9,13 @@ public static unsafe class GDExampleBridge
     public static void RegisterClass(GDExtensionClassLibraryPtr library)
     {
         GDExtensionClassDB.RegisterClass(library, "GDExample"u8, "Sprite2D"u8, &CreateInstance, &FreeInstance, &GetVirtual);
-        GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_amplitude"u8, &PropertyGetAmplitude, &PropertyGetAmplitude, GDExtensionVariantTypeFloat);
-        GDExtensionClassDB.RegisterPropertySetter(library, "GDExample"u8, "_set_amplitude"u8, &PropertySetAmplitude, &PropertySetAmplitude, GDExtensionVariantTypeFloat);
-        GDExtensionClassDB.RegisterProperty(library, "GDExample"u8, "amplitude"u8, "_get_amplitude"u8, "_set_amplitude"u8, GDExtensionVariantTypeFloat);
-        GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_speed"u8, &PropertyGetSpeed, &PropertyGetSpeed, GDExtensionVariantTypeFloat);
-        GDExtensionClassDB.RegisterPropertySetter(library, "GDExample"u8, "_set_speed"u8, &PropertySetSpeed, &PropertySetSpeed, GDExtensionVariantTypeFloat);
-        GDExtensionClassDB.RegisterProperty(library, "GDExample"u8, "speed"u8, "_get_speed"u8, "_set_speed"u8, GDExtensionVariantTypeFloat);
-        GDExtensionClassDB.RegisterSignal(library, "GDExample"u8, "position_changed"u8, "new_position"u8, GDExtensionVariantTypeVector2);
+        GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_amplitude"u8, &PropertyGetAmplitude, &PropertyGetAmplitude, GDEXTENSION_VARIANT_TYPE_FLOAT);
+        GDExtensionClassDB.RegisterPropertySetter(library, "GDExample"u8, "_set_amplitude"u8, &PropertySetAmplitude, &PropertySetAmplitude, GDEXTENSION_VARIANT_TYPE_FLOAT);
+        GDExtensionClassDB.RegisterProperty(library, "GDExample"u8, "amplitude"u8, "_get_amplitude"u8, "_set_amplitude"u8, GDEXTENSION_VARIANT_TYPE_FLOAT);
+        GDExtensionClassDB.RegisterPropertyGetter(library, "GDExample"u8, "_get_speed"u8, &PropertyGetSpeed, &PropertyGetSpeed, GDEXTENSION_VARIANT_TYPE_FLOAT);
+        GDExtensionClassDB.RegisterPropertySetter(library, "GDExample"u8, "_set_speed"u8, &PropertySetSpeed, &PropertySetSpeed, GDEXTENSION_VARIANT_TYPE_FLOAT);
+        GDExtensionClassDB.RegisterProperty(library, "GDExample"u8, "speed"u8, "_get_speed"u8, "_set_speed"u8, GDEXTENSION_VARIANT_TYPE_FLOAT);
+        GDExtensionClassDB.RegisterSignal(library, "GDExample"u8, "position_changed"u8, "new_position"u8, GDEXTENSION_VARIANT_TYPE_VECTOR2);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -63,7 +63,7 @@ public static unsafe class GDExampleBridge
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void PropertySetAmplitude(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
     {
-        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDEXTENSION_VARIANT_TYPE_FLOAT]))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
             target.Amplitude = GDExtensionMarshal.ReadFloat(arguments[0]);
@@ -97,7 +97,7 @@ public static unsafe class GDExampleBridge
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void PropertySetSpeed(void* token, GDExtensionClassInstancePtr instance, GDExtensionConstVariantPtr* arguments, GDExtensionInt argumentCount, GDExtensionVariantPtr result, GDExtensionCallError* error)
     {
-        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDExtensionVariantTypeFloat]))
+        if (GDExtensionMarshal.ValidateArguments(arguments, argumentCount, error, [GDEXTENSION_VARIANT_TYPE_FLOAT]))
         {
             GDExample target = GDExtensionMarshal.GetTarget<GDExample>(instance);
             target.Speed = GDExtensionMarshal.ReadFloat(arguments[0]);

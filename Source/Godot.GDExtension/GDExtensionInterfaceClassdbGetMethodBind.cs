@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceClassdbGetMethodBind : IEquata
         get => _method;
     }
 
-    /// <param name="pClassname">
+    /// <param name="p_classname">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pMethodname">
+    /// <param name="p_methodname">
     /// A pointer to a StringName with the method name.
     /// </param>
-    /// <param name="pHash">
+    /// <param name="p_hash">
     /// A hash representing the function signature.
     /// </param>
     /// <returns>
     /// A pointer to the MethodBind from ClassDB.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionMethodBindPtr Invoke(GDExtensionConstStringNamePtr pClassname, GDExtensionConstStringNamePtr pMethodname, GDExtensionInt pHash)
+    public GDExtensionMethodBindPtr Invoke(GDExtensionConstStringNamePtr p_classname, GDExtensionConstStringNamePtr p_methodname, GDExtensionInt p_hash)
     {
-        return _method(pClassname, pMethodname, pHash);
+        return _method(p_classname, p_methodname, p_hash);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbGetMethodBind other)

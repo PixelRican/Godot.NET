@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf8CharsAndLen2 
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.
     /// </param>
-    /// <param name="pContents">
+    /// <param name="p_contents">
     /// A pointer to a UTF-8 encoded C string.
     /// </param>
-    /// <param name="pSize">
+    /// <param name="p_size">
     /// The number of bytes (not code units).
     /// </param>
     /// <returns>
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
+    public GDExtensionInt Invoke(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
     {
-        return _method(rDest, pContents, pSize);
+        return _method(r_dest, p_contents, p_size);
     }
 
     public bool Equals(GDExtensionInterfaceStringNewWithUtf8CharsAndLen2 other)

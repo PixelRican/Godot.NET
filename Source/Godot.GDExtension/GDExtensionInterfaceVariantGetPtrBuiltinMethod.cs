@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrBuiltinMethod : I
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
-    /// <param name="pMethod">
+    /// <param name="p_method">
     /// A pointer to a StringName with the method name.
     /// </param>
-    /// <param name="pHash">
+    /// <param name="p_hash">
     /// A hash representing the method signature.
     /// </param>
     /// <returns>
     /// A pointer to a function that can call a builtin method on a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrBuiltInMethod Invoke(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionInt pHash)
+    public GDExtensionPtrBuiltInMethod Invoke(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_method, GDExtensionInt p_hash)
     {
-        return _method(pType, pMethod, pHash);
+        return _method(p_type, p_method, p_hash);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrBuiltinMethod other)

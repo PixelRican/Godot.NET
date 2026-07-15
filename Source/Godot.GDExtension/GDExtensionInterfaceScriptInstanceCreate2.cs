@@ -53,19 +53,19 @@ public readonly unsafe struct GDExtensionInterfaceScriptInstanceCreate2 : IEquat
         get => _method;
     }
 
-    /// <param name="pInfo">
+    /// <param name="p_info">
     /// A pointer to a GDExtensionScriptInstanceInfo2 struct.
     /// </param>
-    /// <param name="pInstanceData">
+    /// <param name="p_instance_data">
     /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
     /// </param>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionScriptInstancePtr Invoke(GDExtensionScriptInstanceInfo2* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
+    public GDExtensionScriptInstancePtr Invoke(GDExtensionScriptInstanceInfo2* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
     {
-        return _method(pInfo, pInstanceData);
+        return _method(p_info, p_instance_data);
     }
 
     public bool Equals(GDExtensionInterfaceScriptInstanceCreate2 other)

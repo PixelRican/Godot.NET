@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceObjectFreeInstanceBinding : IE
         get => _method;
     }
 
-    /// <param name="pO">
+    /// <param name="p_o">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pToken">
+    /// <param name="p_token">
     /// A token the library received by the GDExtension's entry point function.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionObjectPtr pO, void* pToken)
+    public void Invoke(GDExtensionObjectPtr p_o, void* p_token)
     {
-        _method(pO, pToken);
+        _method(p_o, p_token);
     }
 
     public bool Equals(GDExtensionInterfaceObjectFreeInstanceBinding other)

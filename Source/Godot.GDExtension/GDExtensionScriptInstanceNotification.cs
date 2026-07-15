@@ -51,9 +51,9 @@ public readonly unsafe struct GDExtensionScriptInstanceNotification : IEquatable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance, int pWhat)
+    public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, int p_what)
     {
-        _method(pInstance, pWhat);
+        _method(p_instance, p_what);
     }
 
     public bool Equals(GDExtensionScriptInstanceNotification other)

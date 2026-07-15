@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceArrayOperatorIndex : IEquatabl
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to an Array object.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index of the Variant to get.
     /// </param>
     /// <returns>
     /// A pointer to the requested Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionVariantPtr Invoke(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public GDExtensionVariantPtr Invoke(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return _method(pSelf, pIndex);
+        return _method(p_self, p_index);
     }
 
     public bool Equals(GDExtensionInterfaceArrayOperatorIndex other)

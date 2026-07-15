@@ -84,9 +84,9 @@ public readonly unsafe struct GDExtensionInitializationFunction : IEquatable<GDE
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionInterfaceGetProcAddress pGetProcAddress, GDExtensionClassLibraryPtr pLibrary, GDExtensionInitialization* rInitialization)
+    public GDExtensionBool Invoke(GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library, GDExtensionInitialization* r_initialization)
     {
-        return _method(pGetProcAddress, pLibrary, rInitialization);
+        return _method(p_get_proc_address, p_library, r_initialization);
     }
 
     public bool Equals(GDExtensionInitializationFunction other)

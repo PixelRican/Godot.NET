@@ -53,19 +53,19 @@ public readonly unsafe struct GDExtensionInterfaceMemRealloc : IEquatable<GDExte
         get => _method;
     }
 
-    /// <param name="pPtr">
+    /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.
     /// </param>
-    /// <param name="pBytes">
+    /// <param name="p_bytes">
     /// The number of bytes to resize the memory block to.
     /// </param>
     /// <returns>
     /// A pointer to the allocated memory, or NULL if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(void* pPtr, nuint pBytes)
+    public void* Invoke(void* p_ptr, nuint p_bytes)
     {
-        return _method(pPtr, pBytes);
+        return _method(p_ptr, p_bytes);
     }
 
     public bool Equals(GDExtensionInterfaceMemRealloc other)

@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceRefCountIncremented : IEq
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    public void Invoke(GDExtensionScriptInstanceDataPtr p_instance)
     {
-        _method(pInstance);
+        _method(p_instance);
     }
 
     public bool Equals(GDExtensionScriptInstanceRefCountIncremented other)

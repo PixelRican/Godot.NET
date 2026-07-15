@@ -37,33 +37,33 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassCreationInfo2
 {
-    public GDExtensionBool IsVirtual;
-    public GDExtensionBool IsAbstract;
-    public GDExtensionBool IsExposed;
-    public GDExtensionClassSet SetFunc;
-    public GDExtensionClassGet GetFunc;
-    public GDExtensionClassGetPropertyList GetPropertyListFunc;
-    public GDExtensionClassFreePropertyList FreePropertyListFunc;
-    public GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
-    public GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
-    public GDExtensionClassValidateProperty ValidatePropertyFunc;
-    public GDExtensionClassNotification2 NotificationFunc;
-    public GDExtensionClassToString ToStringFunc;
-    public GDExtensionClassReference ReferenceFunc;
-    public GDExtensionClassUnreference UnreferenceFunc;
+    public GDExtensionBool is_virtual;
+    public GDExtensionBool is_abstract;
+    public GDExtensionBool is_exposed;
+    public GDExtensionClassSet set_func;
+    public GDExtensionClassGet get_func;
+    public GDExtensionClassGetPropertyList get_property_list_func;
+    public GDExtensionClassFreePropertyList free_property_list_func;
+    public GDExtensionClassPropertyCanRevert property_can_revert_func;
+    public GDExtensionClassPropertyGetRevert property_get_revert_func;
+    public GDExtensionClassValidateProperty validate_property_func;
+    public GDExtensionClassNotification2 notification_func;
+    public GDExtensionClassToString to_string_func;
+    public GDExtensionClassReference reference_func;
+    public GDExtensionClassUnreference unreference_func;
     /// <summary>
     /// Class constructor. Required unless the class is virtual or abstract.
     /// </summary>
-    public GDExtensionClassCreateInstance CreateInstanceFunc;
+    public GDExtensionClassCreateInstance create_instance_func;
     /// <summary>
     /// Destructor; mandatory.
     /// </summary>
-    public GDExtensionClassFreeInstance FreeInstanceFunc;
-    public GDExtensionClassRecreateInstance RecreateInstanceFunc;
+    public GDExtensionClassFreeInstance free_instance_func;
+    public GDExtensionClassRecreateInstance recreate_instance_func;
     /// <summary>
     /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
     /// </summary>
-    public GDExtensionClassGetVirtual GetVirtualFunc;
+    public GDExtensionClassGetVirtual get_virtual_func;
     /// <summary>
     /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that
     /// need or benefit from extra data when calling virtual functions.
@@ -72,14 +72,14 @@ public struct GDExtensionClassCreationInfo2
     /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.
     /// You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`.
     /// </summary>
-    public GDExtensionClassGetVirtualCallData GetVirtualCallDataFunc;
+    public GDExtensionClassGetVirtualCallData get_virtual_call_data_func;
     /// <summary>
     /// Used to call virtual functions when `get_virtual_call_data_func` is not null.
     /// </summary>
-    public GDExtensionClassCallVirtualWithData CallVirtualWithDataFunc;
-    public GDExtensionClassGetRID GetRidFunc;
+    public GDExtensionClassCallVirtualWithData call_virtual_with_data_func;
+    public GDExtensionClassGetRID get_rid_func;
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.
     /// </summary>
-    public unsafe void* ClassUserdata;
+    public unsafe void* class_userdata;
 }

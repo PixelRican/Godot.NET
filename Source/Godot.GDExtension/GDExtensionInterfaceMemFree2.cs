@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceMemFree2 : IEquatable<GDExtens
         get => _method;
     }
 
-    /// <param name="pPtr">
+    /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.
     /// </param>
-    /// <param name="pPadAlign">
+    /// <param name="p_pad_align">
     /// If true, the given memory was allocated with prepadding.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(void* pPtr, GDExtensionBool pPadAlign)
+    public void Invoke(void* p_ptr, GDExtensionBool p_pad_align)
     {
-        _method(pPtr, pPadAlign);
+        _method(p_ptr, p_pad_align);
     }
 
     public bool Equals(GDExtensionInterfaceMemFree2 other)

@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassFreePropertyList2 : IEquatable<GDE
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassInstancePtr pInstance, GDExtensionPropertyInfo* pList, uint pCount)
+    public void Invoke(GDExtensionClassInstancePtr p_instance, GDExtensionPropertyInfo* p_list, uint p_count)
     {
-        _method(pInstance, pList, pCount);
+        _method(p_instance, p_list, p_count);
     }
 
     public bool Equals(GDExtensionClassFreePropertyList2 other)

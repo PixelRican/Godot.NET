@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionCallableCustomCall : IEquatable<GDExten
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(void* callableUserdata, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionVariantPtr rReturn, GDExtensionCallError* rError)
+    public void Invoke(void* callable_userdata, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionVariantPtr r_return, GDExtensionCallError* r_error)
     {
-        _method(callableUserdata, pArgs, pArgumentCount, rReturn, rError);
+        _method(callable_userdata, p_args, p_argument_count, r_return, r_error);
     }
 
     public bool Equals(GDExtensionCallableCustomCall other)

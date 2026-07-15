@@ -53,16 +53,16 @@ public readonly unsafe struct GDExtensionInterfaceArrayRef : IEquatable<GDExtens
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Array object to update.
     /// </param>
-    /// <param name="pFrom">
+    /// <param name="p_from">
     /// A pointer to the Array object to reference.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionTypePtr pSelf, GDExtensionConstTypePtr pFrom)
+    public void Invoke(GDExtensionTypePtr p_self, GDExtensionConstTypePtr p_from)
     {
-        _method(pSelf, pFrom);
+        _method(p_self, p_from);
     }
 
     public bool Equals(GDExtensionInterfaceArrayRef other)

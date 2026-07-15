@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassReference : IEquatable<GDExtension
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassInstancePtr pInstance)
+    public void Invoke(GDExtensionClassInstancePtr p_instance)
     {
-        _method(pInstance);
+        _method(p_instance);
     }
 
     public bool Equals(GDExtensionClassReference other)

@@ -37,8 +37,8 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionGodotVersion
 {
-    public uint Major;
-    public uint Minor;
-    public uint Patch;
-    public readonly unsafe byte* String;
+    public uint major;
+    public uint minor;
+    public uint patch;
+    public readonly unsafe byte* @string;
 }

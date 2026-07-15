@@ -52,28 +52,28 @@ public readonly unsafe struct GDExtensionInterfaceVariantCallStatic : IEquatable
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The variant type.
     /// </param>
-    /// <param name="pMethod">
+    /// <param name="p_method">
     /// A pointer to a StringName identifying the method.
     /// </param>
-    /// <param name="pArgs">
+    /// <param name="p_args">
     /// A pointer to a C array of Variant.
     /// </param>
-    /// <param name="pArgumentCount">
+    /// <param name="p_argument_count">
     /// The number of arguments.
     /// </param>
-    /// <param name="rReturn">
+    /// <param name="r_return">
     /// A pointer a Variant which will be assigned the return value.
     /// </param>
-    /// <param name="rError">
+    /// <param name="r_error">
     /// A pointer the structure which will be updated with error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
+    public void Invoke(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
     {
-        _method(pType, pMethod, pArgs, pArgumentCount, rReturn, rError);
+        _method(p_type, p_method, p_args, p_argument_count, r_return, r_error);
     }
 
     public bool Equals(GDExtensionInterfaceVariantCallStatic other)

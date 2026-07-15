@@ -53,16 +53,16 @@ public readonly unsafe struct GDExtensionInterfaceClassdbGetClassTag : IEquatabl
         get => _method;
     }
 
-    /// <param name="pClassname">
+    /// <param name="p_classname">
     /// A pointer to a StringName with the class name.
     /// </param>
     /// <returns>
     /// A pointer uniquely identifying the built-in class in the ClassDB.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(GDExtensionConstStringNamePtr pClassname)
+    public void* Invoke(GDExtensionConstStringNamePtr p_classname)
     {
-        return _method(pClassname);
+        return _method(p_classname);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbGetClassTag other)

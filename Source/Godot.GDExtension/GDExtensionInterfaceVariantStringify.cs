@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantStringify : IEquatable<
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to a String to store the resulting value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionStringPtr rRet)
+    public void Invoke(GDExtensionConstVariantPtr p_self, GDExtensionStringPtr r_ret)
     {
-        _method(pSelf, rRet);
+        _method(p_self, r_ret);
     }
 
     public bool Equals(GDExtensionInterfaceVariantStringify other)

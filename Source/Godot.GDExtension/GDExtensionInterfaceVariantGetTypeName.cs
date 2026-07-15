@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetTypeName : IEquatabl
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
-    /// <param name="rName">
+    /// <param name="r_name">
     /// A pointer to a String to store the Variant type name.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantType pType, GDExtensionUninitializedStringPtr rName)
+    public void Invoke(GDExtensionVariantType p_type, GDExtensionUninitializedStringPtr r_name)
     {
-        _method(pType, rName);
+        _method(p_type, r_name);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetTypeName other)

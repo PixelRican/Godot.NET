@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceStringOperatorIndex : IEquatab
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the String.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index.
     /// </param>
     /// <returns>
     /// A pointer to the requested character.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public uint* Invoke(GDExtensionStringPtr pSelf, GDExtensionInt pIndex)
+    public uint* Invoke(GDExtensionStringPtr p_self, GDExtensionInt p_index)
     {
-        return _method(pSelf, pIndex);
+        return _method(p_self, p_index);
     }
 
     public bool Equals(GDExtensionInterfaceStringOperatorIndex other)

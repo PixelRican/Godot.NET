@@ -35,16 +35,16 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionPropertyInfo
 {
-    public GDExtensionVariantType Type;
-    public GDExtensionStringNamePtr Name;
-    public GDExtensionStringNamePtr ClassName;
+    public GDExtensionVariantType type;
+    public GDExtensionStringNamePtr name;
+    public GDExtensionStringNamePtr class_name;
     /// <summary>
     /// Bitfield of `PropertyHint` (defined in `extension_api.json`).
     /// </summary>
-    public uint Hint;
-    public GDExtensionStringPtr HintString;
+    public uint hint;
+    public GDExtensionStringPtr hint_string;
     /// <summary>
     /// Bitfield of `PropertyUsageFlags` (defined in `extension_api.json`).
     /// </summary>
-    public uint Usage;
+    public uint usage;
 }

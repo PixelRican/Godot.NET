@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionCallableCustomGetArgumentCount : IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(void* callableUserdata, GDExtensionBool* rIsValid)
+    public GDExtensionInt Invoke(void* callable_userdata, GDExtensionBool* r_is_valid)
     {
-        return _method(callableUserdata, rIsValid);
+        return _method(callable_userdata, r_is_valid);
     }
 
     public bool Equals(GDExtensionCallableCustomGetArgumentCount other)

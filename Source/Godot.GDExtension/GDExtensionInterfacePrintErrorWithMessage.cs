@@ -52,28 +52,28 @@ public readonly unsafe struct GDExtensionInterfacePrintErrorWithMessage : IEquat
         get => _method;
     }
 
-    /// <param name="pDescription">
+    /// <param name="p_description">
     /// The code triggering the error.
     /// </param>
-    /// <param name="pMessage">
+    /// <param name="p_message">
     /// The message to show along with the error.
     /// </param>
-    /// <param name="pFunction">
+    /// <param name="p_function">
     /// The function name where the error occurred.
     /// </param>
-    /// <param name="pFile">
+    /// <param name="p_file">
     /// The file where the error occurred.
     /// </param>
-    /// <param name="pLine">
+    /// <param name="p_line">
     /// The line where the error occurred.
     /// </param>
-    /// <param name="pEditorNotify">
+    /// <param name="p_editor_notify">
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public void Invoke(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        _method(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
+        _method(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
     }
 
     public bool Equals(GDExtensionInterfacePrintErrorWithMessage other)

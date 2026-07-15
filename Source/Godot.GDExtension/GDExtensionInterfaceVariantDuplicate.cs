@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantDuplicate : IEquatable<
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to a Variant to store the duplicated value.
     /// </param>
-    /// <param name="pDeep">
+    /// <param name="p_deep">
     /// Whether or not to duplicate deeply (when supported by the Variant type).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rRet, GDExtensionBool pDeep)
+    public void Invoke(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_ret, GDExtensionBool p_deep)
     {
-        _method(pSelf, rRet, pDeep);
+        _method(p_self, r_ret, p_deep);
     }
 
     public bool Equals(GDExtensionInterfaceVariantDuplicate other)

@@ -53,19 +53,19 @@ public readonly unsafe struct GDExtensionInterfaceObjectSetInstance : IEquatable
         get => _method;
     }
 
-    /// <param name="pO">
+    /// <param name="p_o">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pClassname">
+    /// <param name="p_classname">
     /// A pointer to a StringName with the registered extension class's name.
     /// </param>
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to the extension class instance.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassname, GDExtensionClassInstancePtr pInstance)
+    public void Invoke(GDExtensionObjectPtr p_o, GDExtensionConstStringNamePtr p_classname, GDExtensionClassInstancePtr p_instance)
     {
-        _method(pO, pClassname, pInstance);
+        _method(p_o, p_classname, p_instance);
     }
 
     public bool Equals(GDExtensionInterfaceObjectSetInstance other)

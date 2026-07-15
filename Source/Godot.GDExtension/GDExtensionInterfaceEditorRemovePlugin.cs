@@ -52,13 +52,13 @@ public readonly unsafe struct GDExtensionInterfaceEditorRemovePlugin : IEquatabl
         get => _method;
     }
 
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the name of a class that was previously added as an editor plugin.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstStringNamePtr pClassName)
+    public void Invoke(GDExtensionConstStringNamePtr p_class_name)
     {
-        _method(pClassName);
+        _method(p_class_name);
     }
 
     public bool Equals(GDExtensionInterfaceEditorRemovePlugin other)

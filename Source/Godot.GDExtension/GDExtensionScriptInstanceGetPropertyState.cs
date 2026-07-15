@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceGetPropertyState : IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionScriptInstancePropertyStateAdd pAddFunc, void* pUserdata)
+    public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionScriptInstancePropertyStateAdd p_add_func, void* p_userdata)
     {
-        _method(pInstance, pAddFunc, pUserdata);
+        _method(p_instance, p_add_func, p_userdata);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetPropertyState other)

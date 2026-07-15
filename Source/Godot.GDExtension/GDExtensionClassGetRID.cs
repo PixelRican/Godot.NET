@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassGetRID : IEquatable<GDExtensionCla
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ulong Invoke(GDExtensionClassInstancePtr pInstance)
+    public ulong Invoke(GDExtensionClassInstancePtr p_instance)
     {
-        return _method(pInstance);
+        return _method(p_instance);
     }
 
     public bool Equals(GDExtensionClassGetRID other)

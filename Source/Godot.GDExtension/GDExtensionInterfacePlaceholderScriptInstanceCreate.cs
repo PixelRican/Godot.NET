@@ -53,22 +53,22 @@ public readonly unsafe struct GDExtensionInterfacePlaceholderScriptInstanceCreat
         get => _method;
     }
 
-    /// <param name="pLanguage">
+    /// <param name="p_language">
     /// A pointer to a ScriptLanguage.
     /// </param>
-    /// <param name="pScript">
+    /// <param name="p_script">
     /// A pointer to a Script.
     /// </param>
-    /// <param name="pOwner">
+    /// <param name="p_owner">
     /// A pointer to an Object.
     /// </param>
     /// <returns>
     /// A pointer to a PlaceHolderScriptInstance object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionScriptInstancePtr Invoke(GDExtensionObjectPtr pLanguage, GDExtensionObjectPtr pScript, GDExtensionObjectPtr pOwner)
+    public GDExtensionScriptInstancePtr Invoke(GDExtensionObjectPtr p_language, GDExtensionObjectPtr p_script, GDExtensionObjectPtr p_owner)
     {
-        return _method(pLanguage, pScript, pOwner);
+        return _method(p_language, p_script, p_owner);
     }
 
     public bool Equals(GDExtensionInterfacePlaceholderScriptInstanceCreate other)

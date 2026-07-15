@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceFileAccessGetBuffer : IEquatab
         get => _method;
     }
 
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to a FileAccess object.
     /// </param>
-    /// <param name="pDst">
+    /// <param name="p_dst">
     /// A pointer to the buffer to store the data.
     /// </param>
-    /// <param name="pLength">
+    /// <param name="p_length">
     /// The requested number of bytes to read.
     /// </param>
     /// <returns>
     /// The actual number of bytes read (may be less than requested).
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ulong Invoke(GDExtensionConstObjectPtr pInstance, byte* pDst, ulong pLength)
+    public ulong Invoke(GDExtensionConstObjectPtr p_instance, byte* p_dst, ulong p_length)
     {
-        return _method(pInstance, pDst, pLength);
+        return _method(p_instance, p_dst, p_length);
     }
 
     public bool Equals(GDExtensionInterfaceFileAccessGetBuffer other)

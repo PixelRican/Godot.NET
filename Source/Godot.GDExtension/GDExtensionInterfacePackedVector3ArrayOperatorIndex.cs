@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfacePackedVector3ArrayOperatorInde
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to a PackedVector3Array object.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index of the Vector3 to get.
     /// </param>
     /// <returns>
     /// A pointer to the requested Vector3.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionTypePtr Invoke(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public GDExtensionTypePtr Invoke(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return _method(pSelf, pIndex);
+        return _method(p_self, p_index);
     }
 
     public bool Equals(GDExtensionInterfacePackedVector3ArrayOperatorIndex other)

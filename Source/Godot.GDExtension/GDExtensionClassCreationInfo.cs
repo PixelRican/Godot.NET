@@ -37,33 +37,33 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassCreationInfo
 {
-    public GDExtensionBool IsVirtual;
-    public GDExtensionBool IsAbstract;
-    public GDExtensionClassSet SetFunc;
-    public GDExtensionClassGet GetFunc;
-    public GDExtensionClassGetPropertyList GetPropertyListFunc;
-    public GDExtensionClassFreePropertyList FreePropertyListFunc;
-    public GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
-    public GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
-    public GDExtensionClassNotification NotificationFunc;
-    public GDExtensionClassToString ToStringFunc;
-    public GDExtensionClassReference ReferenceFunc;
-    public GDExtensionClassUnreference UnreferenceFunc;
+    public GDExtensionBool is_virtual;
+    public GDExtensionBool is_abstract;
+    public GDExtensionClassSet set_func;
+    public GDExtensionClassGet get_func;
+    public GDExtensionClassGetPropertyList get_property_list_func;
+    public GDExtensionClassFreePropertyList free_property_list_func;
+    public GDExtensionClassPropertyCanRevert property_can_revert_func;
+    public GDExtensionClassPropertyGetRevert property_get_revert_func;
+    public GDExtensionClassNotification notification_func;
+    public GDExtensionClassToString to_string_func;
+    public GDExtensionClassReference reference_func;
+    public GDExtensionClassUnreference unreference_func;
     /// <summary>
     /// Class constructor. Required unless the class is virtual or abstract.
     /// </summary>
-    public GDExtensionClassCreateInstance CreateInstanceFunc;
+    public GDExtensionClassCreateInstance create_instance_func;
     /// <summary>
     /// Destructor; mandatory.
     /// </summary>
-    public GDExtensionClassFreeInstance FreeInstanceFunc;
+    public GDExtensionClassFreeInstance free_instance_func;
     /// <summary>
     /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
     /// </summary>
-    public GDExtensionClassGetVirtual GetVirtualFunc;
-    public GDExtensionClassGetRID GetRidFunc;
+    public GDExtensionClassGetVirtual get_virtual_func;
+    public GDExtensionClassGetRID get_rid_func;
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.
     /// </summary>
-    public unsafe void* ClassUserdata;
+    public unsafe void* class_userdata;
 }

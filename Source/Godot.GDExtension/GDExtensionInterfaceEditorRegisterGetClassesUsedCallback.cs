@@ -56,16 +56,16 @@ public readonly unsafe struct GDExtensionInterfaceEditorRegisterGetClassesUsedCa
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pCallback">
+    /// <param name="p_callback">
     /// The callback to retrieve the list of classes used.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionEditorGetClassesUsedCallback pCallback)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionEditorGetClassesUsedCallback p_callback)
     {
-        _method(pLibrary, pCallback);
+        _method(p_library, p_callback);
     }
 
     public bool Equals(GDExtensionInterfaceEditorRegisterGetClassesUsedCallback other)

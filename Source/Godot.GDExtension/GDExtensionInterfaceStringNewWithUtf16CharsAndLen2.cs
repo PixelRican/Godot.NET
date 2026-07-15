@@ -52,25 +52,25 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf16CharsAndLen2
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.
     /// </param>
-    /// <param name="pContents">
+    /// <param name="p_contents">
     /// A pointer to a UTF-16 encoded C string.
     /// </param>
-    /// <param name="pCharCount">
+    /// <param name="p_char_count">
     /// The number of characters (not bytes).
     /// </param>
-    /// <param name="pDefaultLittleEndian">
+    /// <param name="p_default_little_endian">
     /// If true, UTF-16 use little endian.
     /// </param>
     /// <returns>
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
+    public GDExtensionInt Invoke(GDExtensionUninitializedStringPtr r_dest, char* p_contents, GDExtensionInt p_char_count, GDExtensionBool p_default_little_endian)
     {
-        return _method(rDest, pContents, pCharCount, pDefaultLittleEndian);
+        return _method(r_dest, p_contents, p_char_count, p_default_little_endian);
     }
 
     public bool Equals(GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 other)

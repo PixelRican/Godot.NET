@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionTypeFromVariantConstructorFunc : IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedTypePtr arg1, GDExtensionVariantPtr arg2)
+    public void Invoke(GDExtensionUninitializedTypePtr p_0, GDExtensionVariantPtr p_1)
     {
-        _method(arg1, arg2);
+        _method(p_0, p_1);
     }
 
     public bool Equals(GDExtensionTypeFromVariantConstructorFunc other)

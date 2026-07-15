@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceObjectGetScriptInstance : IEqu
         get => _method;
     }
 
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pLanguage">
+    /// <param name="p_language">
     /// A pointer to the language expected for this script instance.
     /// </param>
     /// <returns>
     /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of script_instance_create.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionScriptInstanceDataPtr Invoke(GDExtensionConstObjectPtr pObject, GDExtensionObjectPtr pLanguage)
+    public GDExtensionScriptInstanceDataPtr Invoke(GDExtensionConstObjectPtr p_object, GDExtensionObjectPtr p_language)
     {
-        return _method(pObject, pLanguage);
+        return _method(p_object, p_language);
     }
 
     public bool Equals(GDExtensionInterfaceObjectGetScriptInstance other)

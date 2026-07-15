@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceObjectSetScriptInstance : IEqu
         get => _method;
     }
 
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pScriptInstance">
+    /// <param name="p_script_instance">
     /// A pointer to the script instance data to attach to this object.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionObjectPtr pObject, GDExtensionScriptInstanceDataPtr pScriptInstance)
+    public void Invoke(GDExtensionObjectPtr p_object, GDExtensionScriptInstanceDataPtr p_script_instance)
     {
-        _method(pObject, pScriptInstance);
+        _method(p_object, p_script_instance);
     }
 
     public bool Equals(GDExtensionInterfaceObjectSetScriptInstance other)

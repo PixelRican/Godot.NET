@@ -51,9 +51,9 @@ public readonly unsafe struct GDExtensionScriptInstanceFreeMethodList : IEquatab
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionMethodInfo* pList)
+    public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionMethodInfo* p_list)
     {
-        _method(pInstance, pList);
+        _method(p_instance, p_list);
     }
 
     public bool Equals(GDExtensionScriptInstanceFreeMethodList other)

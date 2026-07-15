@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassPropertyCanRevert : IEquatable<GDE
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionClassInstancePtr pInstance, GDExtensionConstStringNamePtr pName)
+    public GDExtensionBool Invoke(GDExtensionClassInstancePtr p_instance, GDExtensionConstStringNamePtr p_name)
     {
-        return _method(pInstance, pName);
+        return _method(p_instance, p_name);
     }
 
     public bool Equals(GDExtensionClassPropertyCanRevert other)

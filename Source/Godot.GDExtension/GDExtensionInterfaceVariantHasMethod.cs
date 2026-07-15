@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantHasMethod : IEquatable<
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="pMethod">
+    /// <param name="p_method">
     /// A pointer to a StringName with the method name.
     /// </param>
     /// <returns>
     /// true if the variant has the given method; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod)
+    public GDExtensionBool Invoke(GDExtensionConstVariantPtr p_self, GDExtensionConstStringNamePtr p_method)
     {
-        return _method(pSelf, pMethod);
+        return _method(p_self, p_method);
     }
 
     public bool Equals(GDExtensionInterfaceVariantHasMethod other)

@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClassP
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pGroupName">
+    /// <param name="p_group_name">
     /// A pointer to a String with the group name.
     /// </param>
-    /// <param name="pPrefix">
+    /// <param name="p_prefix">
     /// A pointer to a String with the prefix used by properties in this group.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pGroupName, GDExtensionConstStringPtr pPrefix)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringPtr p_group_name, GDExtensionConstStringPtr p_prefix)
     {
-        _method(pLibrary, pClassName, pGroupName, pPrefix);
+        _method(p_library, p_class_name, p_group_name, p_prefix);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup other)

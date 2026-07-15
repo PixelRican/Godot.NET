@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf8Chars : IEqua
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.
     /// </param>
-    /// <param name="pContents">
+    /// <param name="p_contents">
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedStringPtr rDest, byte* pContents)
+    public void Invoke(GDExtensionUninitializedStringPtr r_dest, byte* p_contents)
     {
-        _method(rDest, pContents);
+        _method(r_dest, p_contents);
     }
 
     public bool Equals(GDExtensionInterfaceStringNewWithUtf8Chars other)

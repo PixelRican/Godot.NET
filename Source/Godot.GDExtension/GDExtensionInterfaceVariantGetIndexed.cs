@@ -52,25 +52,25 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetIndexed : IEquatable
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to a Variant which will be assigned the value.
     /// </param>
-    /// <param name="rValid">
+    /// <param name="r_valid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
-    /// <param name="rOob">
+    /// <param name="r_oob">
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid, GDExtensionBool* rOob)
+    public void Invoke(GDExtensionConstVariantPtr p_self, GDExtensionInt p_index, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid, GDExtensionBool* r_oob)
     {
-        _method(pSelf, pIndex, rRet, rValid, rOob);
+        _method(p_self, p_index, r_ret, r_valid, r_oob);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetIndexed other)

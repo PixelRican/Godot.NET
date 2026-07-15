@@ -53,16 +53,16 @@ public readonly unsafe struct GDExtensionInterfaceMemAlloc : IEquatable<GDExtens
         get => _method;
     }
 
-    /// <param name="pBytes">
+    /// <param name="p_bytes">
     /// The amount of memory to allocate in bytes.
     /// </param>
     /// <returns>
     /// A pointer to the allocated memory, or NULL if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(nuint pBytes)
+    public void* Invoke(nuint p_bytes)
     {
-        return _method(pBytes);
+        return _method(p_bytes);
     }
 
     public bool Equals(GDExtensionInterfaceMemAlloc other)

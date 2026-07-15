@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrDestructor : IEqu
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
     /// <returns>
     /// A pointer to a function than can call the destructor for a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrDestructor Invoke(GDExtensionVariantType pType)
+    public GDExtensionPtrDestructor Invoke(GDExtensionVariantType p_type)
     {
-        return _method(pType);
+        return _method(p_type);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrDestructor other)

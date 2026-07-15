@@ -58,19 +58,19 @@ public readonly unsafe struct GDExtensionInterfaceStringNameNewWithLatin1Chars :
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
     /// </param>
-    /// <param name="pContents">
+    /// <param name="p_contents">
     /// A pointer to a C string (null terminated and Latin-1 or ASCII encoded).
     /// </param>
-    /// <param name="pIsStatic">
+    /// <param name="p_is_static">
     /// Whether the StringName reuses the buffer directly (see above).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionBool pIsStatic)
+    public void Invoke(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents, GDExtensionBool p_is_static)
     {
-        _method(rDest, pContents, pIsStatic);
+        _method(r_dest, p_contents, p_is_static);
     }
 
     public bool Equals(GDExtensionInterfaceStringNameNewWithLatin1Chars other)

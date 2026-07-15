@@ -68,10 +68,10 @@ public static unsafe class GDExtensionMarshal
     {
         if (argumentCount.Value != expectedTypes.Length)
         {
-            error->Error = argumentCount.Value < expectedTypes.Length
-                ? GDExtensionCallErrorTooFewArguments
-                : GDExtensionCallErrorTooManyArguments;
-            error->Expected = expectedTypes.Length;
+            error->error = argumentCount.Value < expectedTypes.Length
+                ? GDEXTENSION_CALL_ERROR_TOO_FEW_ARGUMENTS
+                : GDEXTENSION_CALL_ERROR_TOO_MANY_ARGUMENTS;
+            error->expected = expectedTypes.Length;
             return false;
         }
 
@@ -82,9 +82,9 @@ public static unsafe class GDExtensionMarshal
 
             if (GDExtensionInterface.VariantGetType.Invoke(argument) != expectedType)
             {
-                error->Error = GDExtensionCallErrorInvalidArgument;
-                error->Expected = (int)expectedType;
-                error->Argument = i;
+                error->error = GDEXTENSION_CALL_ERROR_INVALID_ARGUMENT;
+                error->expected = (int)expectedType;
+                error->argument = i;
                 return false;
             }
         }

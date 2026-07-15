@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceGetVariantToTypeConstructor : 
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
     /// <returns>
     /// A pointer to a function that can get the raw value from a Variant of the given type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionTypeFromVariantConstructorFunc Invoke(GDExtensionVariantType pType)
+    public GDExtensionTypeFromVariantConstructorFunc Invoke(GDExtensionVariantType p_type)
     {
-        return _method(pType);
+        return _method(p_type);
     }
 
     public bool Equals(GDExtensionInterfaceGetVariantToTypeConstructor other)

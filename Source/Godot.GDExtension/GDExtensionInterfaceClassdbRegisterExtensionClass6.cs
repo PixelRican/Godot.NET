@@ -53,22 +53,22 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClass6
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pParentClassName">
+    /// <param name="p_parent_class_name">
     /// A pointer to a StringName with the parent class name.
     /// </param>
-    /// <param name="pExtensionFuncs">
+    /// <param name="p_extension_funcs">
     /// A pointer to a GDExtensionClassCreationInfo6 struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo6* p_extension_funcs)
     {
-        _method(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
+        _method(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbRegisterExtensionClass6 other)

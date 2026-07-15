@@ -53,19 +53,19 @@ public readonly unsafe struct GDExtensionInterfaceObjectCastTo : IEquatable<GDEx
         get => _method;
     }
 
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pClassTag">
+    /// <param name="p_class_tag">
     /// A pointer uniquely identifying a built-in class in the ClassDB.
     /// </param>
     /// <returns>
     /// Returns a pointer to the Object, or NULL if it can't be cast to the requested type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(GDExtensionConstObjectPtr pObject, void* pClassTag)
+    public GDExtensionObjectPtr Invoke(GDExtensionConstObjectPtr p_object, void* p_class_tag)
     {
-        return _method(pObject, pClassTag);
+        return _method(p_object, p_class_tag);
     }
 
     public bool Equals(GDExtensionInterfaceObjectCastTo other)

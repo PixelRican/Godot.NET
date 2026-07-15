@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetConstantValue : IEqu
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
-    /// <param name="pConstant">
+    /// <param name="p_constant">
     /// A pointer to a StringName with the constant name.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to a Variant to store the value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pConstant, GDExtensionUninitializedVariantPtr rRet)
+    public void Invoke(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_constant, GDExtensionUninitializedVariantPtr r_ret)
     {
-        _method(pType, pConstant, rRet);
+        _method(p_type, p_constant, r_ret);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetConstantValue other)

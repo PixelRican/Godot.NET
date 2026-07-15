@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrUtilityFunction :
         get => _method;
     }
 
-    /// <param name="pFunction">
+    /// <param name="p_function">
     /// A pointer to a StringName with the function name.
     /// </param>
-    /// <param name="pHash">
+    /// <param name="p_hash">
     /// A hash representing the function signature.
     /// </param>
     /// <returns>
     /// A pointer to a function that can call a Variant utility function.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrUtilityFunction Invoke(GDExtensionConstStringNamePtr pFunction, GDExtensionInt pHash)
+    public GDExtensionPtrUtilityFunction Invoke(GDExtensionConstStringNamePtr p_function, GDExtensionInt p_hash)
     {
-        return _method(pFunction, pHash);
+        return _method(p_function, p_hash);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrUtilityFunction other)

@@ -52,13 +52,13 @@ public readonly unsafe struct GDExtensionInterfaceVariantDestroy : IEquatable<GD
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant to destroy.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantPtr pSelf)
+    public void Invoke(GDExtensionVariantPtr p_self)
     {
-        _method(pSelf);
+        _method(p_self);
     }
 
     public bool Equals(GDExtensionInterfaceVariantDestroy other)

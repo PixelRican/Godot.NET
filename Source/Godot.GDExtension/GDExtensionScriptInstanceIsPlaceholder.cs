@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceIsPlaceholder : IEquatabl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr p_instance)
     {
-        return _method(pInstance);
+        return _method(p_instance);
     }
 
     public bool Equals(GDExtensionScriptInstanceIsPlaceholder other)

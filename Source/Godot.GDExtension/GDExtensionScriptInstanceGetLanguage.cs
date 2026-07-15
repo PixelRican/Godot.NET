@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceGetLanguage : IEquatable<
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionScriptLanguagePtr Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    public GDExtensionScriptLanguagePtr Invoke(GDExtensionScriptInstanceDataPtr p_instance)
     {
-        return _method(pInstance);
+        return _method(p_instance);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetLanguage other)

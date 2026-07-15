@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceImagePtrw : IEquatable<GDExten
         get => _method;
     }
 
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to a Image object.
     /// </param>
     /// <returns>
     /// Pointer to internal Image buffer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public byte* Invoke(GDExtensionObjectPtr pInstance)
+    public byte* Invoke(GDExtensionObjectPtr p_instance)
     {
-        return _method(pInstance);
+        return _method(p_instance);
     }
 
     public bool Equals(GDExtensionInterfaceImagePtrw other)

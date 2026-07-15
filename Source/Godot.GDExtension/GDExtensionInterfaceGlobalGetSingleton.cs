@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceGlobalGetSingleton : IEquatabl
         get => _method;
     }
 
-    /// <param name="pName">
+    /// <param name="p_name">
     /// A pointer to a StringName with the singleton name.
     /// </param>
     /// <returns>
     /// A pointer to the singleton Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(GDExtensionConstStringNamePtr pName)
+    public GDExtensionObjectPtr Invoke(GDExtensionConstStringNamePtr p_name)
     {
-        return _method(pName);
+        return _method(p_name);
     }
 
     public bool Equals(GDExtensionInterfaceGlobalGetSingleton other)

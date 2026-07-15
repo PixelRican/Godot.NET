@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceVariantSetNamed : IEquatable<G
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="pKey">
+    /// <param name="p_key">
     /// A pointer to a StringName representing the key.
     /// </param>
-    /// <param name="pValue">
+    /// <param name="p_value">
     /// A pointer to a Variant representing the value.
     /// </param>
-    /// <param name="rValid">
+    /// <param name="r_valid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
+    public void Invoke(GDExtensionVariantPtr p_self, GDExtensionConstStringNamePtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
     {
-        _method(pSelf, pKey, pValue, rValid);
+        _method(p_self, p_key, p_value, r_valid);
     }
 
     public bool Equals(GDExtensionInterfaceVariantSetNamed other)

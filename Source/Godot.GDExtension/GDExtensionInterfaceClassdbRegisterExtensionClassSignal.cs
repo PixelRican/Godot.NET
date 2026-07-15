@@ -53,25 +53,25 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClassS
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pSignalName">
+    /// <param name="p_signal_name">
     /// A pointer to a StringName with the signal name.
     /// </param>
-    /// <param name="pArgumentInfo">
+    /// <param name="p_argument_info">
     /// A pointer to a GDExtensionPropertyInfo struct.
     /// </param>
-    /// <param name="pArgumentCount">
+    /// <param name="p_argument_count">
     /// The number of arguments the signal receives.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pSignalName, GDExtensionPropertyInfo* pArgumentInfo, GDExtensionInt pArgumentCount)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_signal_name, GDExtensionPropertyInfo* p_argument_info, GDExtensionInt p_argument_count)
     {
-        _method(pLibrary, pClassName, pSignalName, pArgumentInfo, pArgumentCount);
+        _method(p_library, p_class_name, p_signal_name, p_argument_info, p_argument_count);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbRegisterExtensionClassSignal other)

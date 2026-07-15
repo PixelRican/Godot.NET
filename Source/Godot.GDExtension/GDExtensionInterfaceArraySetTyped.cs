@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceArraySetTyped : IEquatable<GDE
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Array.
     /// </param>
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The type of Variant the Array will store.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the name of the object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
     /// </param>
-    /// <param name="pScript">
+    /// <param name="p_script">
     /// A pointer to a Script object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionTypePtr pSelf, GDExtensionVariantType pType, GDExtensionConstStringNamePtr pClassName, GDExtensionConstVariantPtr pScript)
+    public void Invoke(GDExtensionTypePtr p_self, GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstVariantPtr p_script)
     {
-        _method(pSelf, pType, pClassName, pScript);
+        _method(p_self, p_type, p_class_name, p_script);
     }
 
     public bool Equals(GDExtensionInterfaceArraySetTyped other)

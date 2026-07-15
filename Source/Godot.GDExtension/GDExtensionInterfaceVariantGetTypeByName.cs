@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetTypeByName : IEquata
         get => _method;
     }
 
-    /// <param name="pTypeName">
+    /// <param name="p_type_name">
     /// The variant type name.
     /// </param>
     /// <returns>
     /// The variant type for the given name; otherwise VARIANT_MAX if name is invalid.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionVariantType Invoke(GDExtensionConstStringPtr pTypeName)
+    public GDExtensionVariantType Invoke(GDExtensionConstStringPtr p_type_name)
     {
-        return _method(pTypeName);
+        return _method(p_type_name);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetTypeByName other)

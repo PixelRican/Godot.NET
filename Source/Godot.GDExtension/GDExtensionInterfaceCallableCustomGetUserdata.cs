@@ -53,19 +53,19 @@ public readonly unsafe struct GDExtensionInterfaceCallableCustomGetUserdata : IE
         get => _method;
     }
 
-    /// <param name="pCallable">
+    /// <param name="p_callable">
     /// A pointer to a Callable.
     /// </param>
-    /// <param name="pToken">
+    /// <param name="p_token">
     /// A pointer to an address that uniquely identifies the GDExtension.
     /// </param>
     /// <returns>
     /// The userdata pointer given when creating this custom Callable.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(GDExtensionConstTypePtr pCallable, void* pToken)
+    public void* Invoke(GDExtensionConstTypePtr p_callable, void* p_token)
     {
-        return _method(pCallable, pToken);
+        return _method(p_callable, p_token);
     }
 
     public bool Equals(GDExtensionInterfaceCallableCustomGetUserdata other)

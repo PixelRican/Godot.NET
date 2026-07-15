@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrOperatorEvaluator
         get => _method;
     }
 
-    /// <param name="pOperator">
+    /// <param name="p_operator">
     /// The variant operator.
     /// </param>
-    /// <param name="pTypeA">
+    /// <param name="p_type_a">
     /// The type of the first Variant.
     /// </param>
-    /// <param name="pTypeB">
+    /// <param name="p_type_b">
     /// The type of the second Variant.
     /// </param>
     /// <returns>
     /// A pointer to a function that can evaluate the given Variant operator on the given Variant types.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrOperatorEvaluator Invoke(GDExtensionVariantOperator pOperator, GDExtensionVariantType pTypeA, GDExtensionVariantType pTypeB)
+    public GDExtensionPtrOperatorEvaluator Invoke(GDExtensionVariantOperator p_operator, GDExtensionVariantType p_type_a, GDExtensionVariantType p_type_b)
     {
-        return _method(pOperator, pTypeA, pTypeB);
+        return _method(p_operator, p_type_a, p_type_b);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrOperatorEvaluator other)

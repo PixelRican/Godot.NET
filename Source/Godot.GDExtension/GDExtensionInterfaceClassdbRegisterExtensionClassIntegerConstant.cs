@@ -55,28 +55,28 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClassI
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pEnumName">
+    /// <param name="p_enum_name">
     /// A pointer to a StringName with the enum name.
     /// </param>
-    /// <param name="pConstantName">
+    /// <param name="p_constant_name">
     /// A pointer to a StringName with the constant name.
     /// </param>
-    /// <param name="pConstantValue">
+    /// <param name="p_constant_value">
     /// The constant value.
     /// </param>
-    /// <param name="pIsBitfield">
+    /// <param name="p_is_bitfield">
     /// Whether or not this constant is part of a bitfield.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pEnumName, GDExtensionConstStringNamePtr pConstantName, GDExtensionInt pConstantValue, GDExtensionBool pIsBitfield)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_enum_name, GDExtensionConstStringNamePtr p_constant_name, GDExtensionInt p_constant_value, GDExtensionBool p_is_bitfield)
     {
-        _method(pLibrary, pClassName, pEnumName, pConstantName, pConstantValue, pIsBitfield);
+        _method(p_library, p_class_name, p_enum_name, p_constant_name, p_constant_value, p_is_bitfield);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant other)

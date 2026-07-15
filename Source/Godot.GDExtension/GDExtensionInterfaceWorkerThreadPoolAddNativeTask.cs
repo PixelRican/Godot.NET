@@ -52,28 +52,28 @@ public readonly unsafe struct GDExtensionInterfaceWorkerThreadPoolAddNativeTask 
         get => _method;
     }
 
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to a WorkerThreadPool object.
     /// </param>
-    /// <param name="pFunc">
+    /// <param name="p_func">
     /// A pointer to a function to run in the thread pool.
     /// </param>
-    /// <param name="pUserdata">
+    /// <param name="p_userdata">
     /// A pointer to arbitrary data which will be passed to p_func.
     /// </param>
-    /// <param name="pHighPriority">
+    /// <param name="p_high_priority">
     /// Whether or not this is a high priority task.
     /// </param>
-    /// <param name="pDescription">
+    /// <param name="p_description">
     /// A pointer to a String with the task description.
     /// </param>
     /// <returns>
     /// The task ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public long Invoke(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserdata, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
+    public long Invoke(GDExtensionObjectPtr p_instance, GDExtensionWorkerThreadPoolTask p_func, void* p_userdata, GDExtensionBool p_high_priority, GDExtensionConstStringPtr p_description)
     {
-        return _method(pInstance, pFunc, pUserdata, pHighPriority, pDescription);
+        return _method(p_instance, p_func, p_userdata, p_high_priority, p_description);
     }
 
     public bool Equals(GDExtensionInterfaceWorkerThreadPoolAddNativeTask other)

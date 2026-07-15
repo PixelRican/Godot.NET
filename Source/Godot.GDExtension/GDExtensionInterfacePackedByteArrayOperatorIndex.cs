@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfacePackedByteArrayOperatorIndex :
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to a PackedByteArray object.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index of the byte to get.
     /// </param>
     /// <returns>
     /// A pointer to the requested byte.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public byte* Invoke(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public byte* Invoke(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return _method(pSelf, pIndex);
+        return _method(p_self, p_index);
     }
 
     public bool Equals(GDExtensionInterfacePackedByteArrayOperatorIndex other)

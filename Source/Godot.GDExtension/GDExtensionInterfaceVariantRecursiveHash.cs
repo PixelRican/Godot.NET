@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantRecursiveHash : IEquata
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="pRecursionCount">
+    /// <param name="p_recursion_count">
     /// The number of recursive loops so far.
     /// </param>
     /// <returns>
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionInt pRecursionCount)
+    public GDExtensionInt Invoke(GDExtensionConstVariantPtr p_self, GDExtensionInt p_recursion_count)
     {
-        return _method(pSelf, pRecursionCount);
+        return _method(p_self, p_recursion_count);
     }
 
     public bool Equals(GDExtensionInterfaceVariantRecursiveHash other)

@@ -52,13 +52,13 @@ public readonly unsafe struct GDExtensionInterfaceVariantNewNil : IEquatable<GDE
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to the destination Variant.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedVariantPtr rDest)
+    public void Invoke(GDExtensionUninitializedVariantPtr r_dest)
     {
-        _method(rDest);
+        _method(r_dest);
     }
 
     public bool Equals(GDExtensionInterfaceVariantNewNil other)

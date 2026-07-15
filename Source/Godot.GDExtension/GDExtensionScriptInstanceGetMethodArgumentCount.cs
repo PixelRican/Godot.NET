@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceGetMethodArgumentCount : 
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionConstStringNamePtr pName, GDExtensionBool* rIsValid)
+    public GDExtensionInt Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionConstStringNamePtr p_name, GDExtensionBool* r_is_valid)
     {
-        return _method(pInstance, pName, rIsValid);
+        return _method(p_instance, p_name, r_is_valid);
     }
 
     public bool Equals(GDExtensionScriptInstanceGetMethodArgumentCount other)

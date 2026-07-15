@@ -137,10 +137,10 @@ public static unsafe class GDExtensionInterface
         s_variantGetPtrDestructor = (GDExtensionInterfaceVariantGetPtrDestructor)Load("variant_get_ptr_destructor"u8);
         s_variantGetPtrOperatorEvaluator = (GDExtensionInterfaceVariantGetPtrOperatorEvaluator)Load("variant_get_ptr_operator_evaluator"u8);
         s_variantGetType = (GDExtensionInterfaceVariantGetType)Load("variant_get_type"u8);
-        initialization->MinimumInitializationLevel = GDExtensionInitializationScene;
-        initialization->Userdata = library.Pointer;
-        initialization->Initialize = new GDExtensionInitializeCallback(&InitializeLevel);
-        initialization->Deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeLevel);
+        initialization->minimum_initialization_level = GDEXTENSION_INITIALIZATION_SCENE;
+        initialization->userdata = library.Pointer;
+        initialization->initialize = new GDExtensionInitializeCallback(&InitializeLevel);
+        initialization->deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeLevel);
         return new GDExtensionBool(true);
 
         GDExtensionInterfaceFunctionPtr Load(ReadOnlySpan<byte> functionName)
@@ -155,7 +155,7 @@ public static unsafe class GDExtensionInterface
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void InitializeLevel(void* token, GDExtensionInitializationLevel level)
     {
-        if (level != GDExtensionInitializationScene)
+        if (level != GDEXTENSION_INITIALIZATION_SCENE)
         {
             return;
         }

@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantHashCompare : IEquatabl
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="pOther">
+    /// <param name="p_other">
     /// A pointer to the other Variant to compare it to.
     /// </param>
     /// <returns>
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pOther)
+    public GDExtensionBool Invoke(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_other)
     {
-        return _method(pSelf, pOther);
+        return _method(p_self, p_other);
     }
 
     public bool Equals(GDExtensionInterfaceVariantHashCompare other)

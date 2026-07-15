@@ -51,9 +51,9 @@ public readonly unsafe struct GDExtensionScriptInstanceFreePropertyList : IEquat
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionPropertyInfo* pList)
+    public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionPropertyInfo* p_list)
     {
-        _method(pInstance, pList);
+        _method(p_instance, p_list);
     }
 
     public bool Equals(GDExtensionScriptInstanceFreePropertyList other)

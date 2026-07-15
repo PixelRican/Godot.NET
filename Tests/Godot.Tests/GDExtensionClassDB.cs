@@ -21,10 +21,10 @@ public static unsafe class GDExtensionClassDB
         using StringName parentClassStringName = new StringName(parentClassName);
         GDExtensionClassCreationInfo classInfo = new GDExtensionClassCreationInfo
         {
-            ClassUserdata = library.Pointer,
-            CreateInstanceFunc = new GDExtensionClassCreateInstance(createInstanceFunc),
-            FreeInstanceFunc = new GDExtensionClassFreeInstance(freeInstanceFunc),
-            GetVirtualFunc = new GDExtensionClassGetVirtual(getVirtualFunc)
+            class_userdata = library.Pointer,
+            create_instance_func = new GDExtensionClassCreateInstance(createInstanceFunc),
+            free_instance_func = new GDExtensionClassFreeInstance(freeInstanceFunc),
+            get_virtual_func = new GDExtensionClassGetVirtual(getVirtualFunc)
         };
         GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(
             library,
@@ -47,20 +47,20 @@ public static unsafe class GDExtensionClassDB
         using String emptyString = new String(default);
         GDExtensionPropertyInfo returnInfo = new GDExtensionPropertyInfo
         {
-            Name = new GDExtensionStringNamePtr(&emptyStringName),
-            Type = type,
-            HintString = new GDExtensionStringPtr(&emptyString),
-            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
-            Usage = PropertyUsageDefault
+            name = new GDExtensionStringNamePtr(&emptyStringName),
+            type = type,
+            hint_string = new GDExtensionStringPtr(&emptyString),
+            class_name = new GDExtensionStringNamePtr(&emptyStringName),
+            usage = PropertyUsageDefault
         };
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
-            Name = new GDExtensionStringNamePtr(&methodStringName),
-            CallFunc = new GDExtensionClassMethodCall(callFunc),
-            PtrcallFunc = new GDExtensionClassMethodPtrCall(ptrcallFunc),
-            MethodFlags = (uint)GDExtensionMethodFlagsDefault,
-            HasReturnValue = new GDExtensionBool(true),
-            ReturnValueInfo = &returnInfo
+            name = new GDExtensionStringNamePtr(&methodStringName),
+            call_func = new GDExtensionClassMethodCall(callFunc),
+            ptrcall_func = new GDExtensionClassMethodPtrCall(ptrcallFunc),
+            method_flags = (uint)GDEXTENSION_METHOD_FLAGS_DEFAULT,
+            has_return_value = new GDExtensionBool(true),
+            return_value_info = &returnInfo
         };
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
             library,
@@ -83,22 +83,22 @@ public static unsafe class GDExtensionClassDB
         using String emptyString = new String(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
-            Name = new GDExtensionStringNamePtr(&argumentStringName),
-            Type = type,
-            HintString = new GDExtensionStringPtr(&emptyString),
-            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
-            Usage = PropertyUsageDefault
+            name = new GDExtensionStringNamePtr(&argumentStringName),
+            type = type,
+            hint_string = new GDExtensionStringPtr(&emptyString),
+            class_name = new GDExtensionStringNamePtr(&emptyStringName),
+            usage = PropertyUsageDefault
         };
-        GDExtensionClassMethodArgumentMetadata argsMetadata = GDExtensionMethodArgumentMetadataNone;
+        GDExtensionClassMethodArgumentMetadata argsMetadata = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE;
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
-            Name = new GDExtensionStringNamePtr(&methodStringName),
-            CallFunc = new GDExtensionClassMethodCall(callFunc),
-            PtrcallFunc = new GDExtensionClassMethodPtrCall(ptrcallFunc),
-            MethodFlags = (uint)GDExtensionMethodFlagsDefault,
-            ArgumentCount = 1,
-            ArgumentsInfo = &argumentInfo,
-            ArgumentsMetadata = &argsMetadata,
+            name = new GDExtensionStringNamePtr(&methodStringName),
+            call_func = new GDExtensionClassMethodCall(callFunc),
+            ptrcall_func = new GDExtensionClassMethodPtrCall(ptrcallFunc),
+            method_flags = (uint)GDEXTENSION_METHOD_FLAGS_DEFAULT,
+            argument_count = 1,
+            arguments_info = &argumentInfo,
+            arguments_metadata = &argsMetadata,
         };
         GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
             library,
@@ -122,11 +122,11 @@ public static unsafe class GDExtensionClassDB
         using String emptyString = new String(default);
         GDExtensionPropertyInfo info = new GDExtensionPropertyInfo
         {
-            Name = new GDExtensionStringNamePtr(&propertyStringName),
-            Type = type,
-            HintString = new GDExtensionStringPtr(&emptyString),
-            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
-            Usage = PropertyUsageDefault
+            name = new GDExtensionStringNamePtr(&propertyStringName),
+            type = type,
+            hint_string = new GDExtensionStringPtr(&emptyString),
+            class_name = new GDExtensionStringNamePtr(&emptyStringName),
+            usage = PropertyUsageDefault
         };
         GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(
             library,
@@ -150,11 +150,11 @@ public static unsafe class GDExtensionClassDB
         using String emptyString = new String(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
-            Name = new GDExtensionStringNamePtr(&argumentStringName),
-            Type = argumentType,
-            HintString = new GDExtensionStringPtr(&emptyString),
-            ClassName = new GDExtensionStringNamePtr(&emptyStringName),
-            Usage = PropertyUsageDefault
+            name = new GDExtensionStringNamePtr(&argumentStringName),
+            type = argumentType,
+            hint_string = new GDExtensionStringPtr(&emptyString),
+            class_name = new GDExtensionStringNamePtr(&emptyStringName),
+            usage = PropertyUsageDefault
         };
         GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(
             library,

@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionInstanceBindingCreateCallback : IEquata
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(void* pToken, void* pInstance)
+    public void* Invoke(void* p_token, void* p_instance)
     {
-        return _method(pToken, pInstance);
+        return _method(p_token, p_instance);
     }
 
     public bool Equals(GDExtensionInstanceBindingCreateCallback other)

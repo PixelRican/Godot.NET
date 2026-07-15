@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceDictionaryOperatorIndex : IEqu
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to a Dictionary object.
     /// </param>
-    /// <param name="pKey">
+    /// <param name="p_key">
     /// A pointer to a Variant representing the key.
     /// </param>
     /// <returns>
     /// A pointer to a Variant representing the value at the given key.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionVariantPtr Invoke(GDExtensionTypePtr pSelf, GDExtensionConstVariantPtr pKey)
+    public GDExtensionVariantPtr Invoke(GDExtensionTypePtr p_self, GDExtensionConstVariantPtr p_key)
     {
-        return _method(pSelf, pKey);
+        return _method(p_self, p_key);
     }
 
     public bool Equals(GDExtensionInterfaceDictionaryOperatorIndex other)

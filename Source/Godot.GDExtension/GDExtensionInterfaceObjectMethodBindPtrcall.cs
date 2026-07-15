@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceObjectMethodBindPtrcall : IEqu
         get => _method;
     }
 
-    /// <param name="pMethodBind">
+    /// <param name="p_method_bind">
     /// A pointer to the MethodBind representing the method on the Object's class.
     /// </param>
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pArgs">
+    /// <param name="p_args">
     /// A pointer to a C array representing the arguments.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to the Object that will receive the return value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstTypePtr* pArgs, GDExtensionTypePtr rRet)
+    public void Invoke(GDExtensionMethodBindPtr p_method_bind, GDExtensionObjectPtr p_instance, GDExtensionConstTypePtr* p_args, GDExtensionTypePtr r_ret)
     {
-        _method(pMethodBind, pInstance, pArgs, rRet);
+        _method(p_method_bind, p_instance, p_args, r_ret);
     }
 
     public bool Equals(GDExtensionInterfaceObjectMethodBindPtrcall other)

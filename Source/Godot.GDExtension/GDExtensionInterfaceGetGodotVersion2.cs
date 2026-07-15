@@ -52,13 +52,13 @@ public readonly unsafe struct GDExtensionInterfaceGetGodotVersion2 : IEquatable<
         get => _method;
     }
 
-    /// <param name="rGodotVersion">
+    /// <param name="r_godot_version">
     /// A pointer to the structure to write the version information into.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionGodotVersion2* rGodotVersion)
+    public void Invoke(GDExtensionGodotVersion2* r_godot_version)
     {
-        _method(rGodotVersion);
+        _method(r_godot_version);
     }
 
     public bool Equals(GDExtensionInterfaceGetGodotVersion2 other)

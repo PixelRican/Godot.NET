@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrKeyedChecker : IE
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
     /// <returns>
     /// A pointer to a function that can check a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrKeyedChecker Invoke(GDExtensionVariantType pType)
+    public GDExtensionPtrKeyedChecker Invoke(GDExtensionVariantType p_type)
     {
-        return _method(pType);
+        return _method(p_type);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrKeyedChecker other)

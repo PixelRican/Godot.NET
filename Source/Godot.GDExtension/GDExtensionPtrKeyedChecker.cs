@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionPtrKeyedChecker : IEquatable<GDExtensio
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public uint Invoke(GDExtensionConstVariantPtr pBase, GDExtensionConstVariantPtr pKey)
+    public uint Invoke(GDExtensionConstVariantPtr p_base, GDExtensionConstVariantPtr p_key)
     {
-        return _method(pBase, pKey);
+        return _method(p_base, p_key);
     }
 
     public bool Equals(GDExtensionPtrKeyedChecker other)

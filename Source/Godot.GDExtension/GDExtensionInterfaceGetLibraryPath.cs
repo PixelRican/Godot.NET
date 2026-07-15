@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceGetLibraryPath : IEquatable<GD
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="rPath">
+    /// <param name="r_path">
     /// A pointer to a String which will receive the path.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringPtr rPath)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionUninitializedStringPtr r_path)
     {
-        _method(pLibrary, rPath);
+        _method(p_library, r_path);
     }
 
     public bool Equals(GDExtensionInterfaceGetLibraryPath other)

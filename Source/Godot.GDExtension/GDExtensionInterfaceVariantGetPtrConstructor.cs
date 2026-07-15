@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrConstructor : IEq
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
-    /// <param name="pConstructor">
+    /// <param name="p_constructor">
     /// The index of the constructor.
     /// </param>
     /// <returns>
     /// A pointer to a function that can call one of the constructors for a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionPtrConstructor Invoke(GDExtensionVariantType pType, int pConstructor)
+    public GDExtensionPtrConstructor Invoke(GDExtensionVariantType p_type, int p_constructor)
     {
-        return _method(pType, pConstructor);
+        return _method(p_type, p_constructor);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetPtrConstructor other)

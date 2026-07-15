@@ -55,9 +55,9 @@ public readonly unsafe struct GDExtensionClassCreateInstance : IEquatable<GDExte
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(void* pClassUserdata)
+    public GDExtensionObjectPtr Invoke(void* p_class_userdata)
     {
-        return _method(pClassUserdata);
+        return _method(p_class_userdata);
     }
 
     public bool Equals(GDExtensionClassCreateInstance other)

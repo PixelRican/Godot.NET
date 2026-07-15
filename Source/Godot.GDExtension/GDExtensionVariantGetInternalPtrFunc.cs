@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionVariantGetInternalPtrFunc : IEquatable<
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(GDExtensionVariantPtr arg1)
+    public void* Invoke(GDExtensionVariantPtr p_0)
     {
-        return _method(arg1);
+        return _method(p_0);
     }
 
     public bool Equals(GDExtensionVariantGetInternalPtrFunc other)

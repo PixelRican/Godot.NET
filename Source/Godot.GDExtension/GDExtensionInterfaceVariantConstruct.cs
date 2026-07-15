@@ -52,25 +52,25 @@ public readonly unsafe struct GDExtensionInterfaceVariantConstruct : IEquatable<
         get => _method;
     }
 
-    /// <param name="pType">
+    /// <param name="p_type">
     /// The Variant type.
     /// </param>
-    /// <param name="rBase">
+    /// <param name="r_base">
     /// A pointer to a Variant to store the constructed value.
     /// </param>
-    /// <param name="pArgs">
+    /// <param name="p_args">
     /// A pointer to a C array of Variant pointers representing the arguments for the constructor.
     /// </param>
-    /// <param name="pArgumentCount">
+    /// <param name="p_argument_count">
     /// The number of arguments to pass to the constructor.
     /// </param>
-    /// <param name="rError">
+    /// <param name="r_error">
     /// A pointer the structure which will be updated with error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantType pType, GDExtensionUninitializedVariantPtr rBase, GDExtensionConstVariantPtr* pArgs, int pArgumentCount, GDExtensionCallError* rError)
+    public void Invoke(GDExtensionVariantType p_type, GDExtensionUninitializedVariantPtr r_base, GDExtensionConstVariantPtr* p_args, int p_argument_count, GDExtensionCallError* r_error)
     {
-        _method(pType, rBase, pArgs, pArgumentCount, rError);
+        _method(p_type, r_base, p_args, p_argument_count, r_error);
     }
 
     public bool Equals(GDExtensionInterfaceVariantConstruct other)

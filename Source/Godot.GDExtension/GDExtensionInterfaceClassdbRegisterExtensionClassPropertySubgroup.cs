@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClassP
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pSubgroupName">
+    /// <param name="p_subgroup_name">
     /// A pointer to a String with the subgroup name.
     /// </param>
-    /// <param name="pPrefix">
+    /// <param name="p_prefix">
     /// A pointer to a String with the prefix used by properties in this subgroup.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pSubgroupName, GDExtensionConstStringPtr pPrefix)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringPtr p_subgroup_name, GDExtensionConstStringPtr p_prefix)
     {
-        _method(pLibrary, pClassName, pSubgroupName, pPrefix);
+        _method(p_library, p_class_name, p_subgroup_name, p_prefix);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup other)

@@ -25,14 +25,14 @@ public static class StringNameBridge
 
     public static void Initialize()
     {
-        s_destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDExtensionVariantTypeStringName);
+        s_destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING_NAME);
         s_operatorEqual = GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(
-            GDExtensionVariantOpEqual,
-            GDExtensionVariantTypeStringName,
-            GDExtensionVariantTypeStringName);
+            GDEXTENSION_VARIANT_OP_EQUAL,
+            GDEXTENSION_VARIANT_TYPE_STRING_NAME,
+            GDEXTENSION_VARIANT_TYPE_STRING_NAME);
         s_operatorNotEqual = GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(
-            GDExtensionVariantOpNotEqual,
-            GDExtensionVariantTypeStringName,
-            GDExtensionVariantTypeStringName);
+            GDEXTENSION_VARIANT_OP_NOT_EQUAL,
+            GDEXTENSION_VARIANT_TYPE_STRING_NAME,
+            GDEXTENSION_VARIANT_TYPE_STRING_NAME);
     }
 }

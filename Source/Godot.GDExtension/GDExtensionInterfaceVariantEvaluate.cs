@@ -52,25 +52,25 @@ public readonly unsafe struct GDExtensionInterfaceVariantEvaluate : IEquatable<G
         get => _method;
     }
 
-    /// <param name="pOp">
+    /// <param name="p_op">
     /// The operator to evaluate.
     /// </param>
-    /// <param name="pA">
+    /// <param name="p_a">
     /// The first Variant.
     /// </param>
-    /// <param name="pB">
+    /// <param name="p_b">
     /// The second Variant.
     /// </param>
-    /// <param name="rReturn">
+    /// <param name="r_return">
     /// A pointer a Variant which will be assigned the return value.
     /// </param>
-    /// <param name="rValid">
+    /// <param name="r_valid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionVariantOperator pOp, GDExtensionConstVariantPtr pA, GDExtensionConstVariantPtr pB, GDExtensionUninitializedVariantPtr rReturn, GDExtensionBool* rValid)
+    public void Invoke(GDExtensionVariantOperator p_op, GDExtensionConstVariantPtr p_a, GDExtensionConstVariantPtr p_b, GDExtensionUninitializedVariantPtr r_return, GDExtensionBool* r_valid)
     {
-        _method(pOp, pA, pB, rReturn, rValid);
+        _method(p_op, p_a, p_b, r_return, r_valid);
     }
 
     public bool Equals(GDExtensionInterfaceVariantEvaluate other)

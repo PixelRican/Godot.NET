@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceGet : IEquatable<GDExtens
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionConstStringNamePtr pName, GDExtensionVariantPtr rRet)
+    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionConstStringNamePtr p_name, GDExtensionVariantPtr r_ret)
     {
-        return _method(pInstance, pName, rRet);
+        return _method(p_instance, p_name, r_ret);
     }
 
     public bool Equals(GDExtensionScriptInstanceGet other)

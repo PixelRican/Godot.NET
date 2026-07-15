@@ -54,16 +54,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetObjectInstanceId : I
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
     /// <returns>
     /// The instance ID for the contained object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDObjectInstanceID Invoke(GDExtensionConstVariantPtr pSelf)
+    public GDObjectInstanceID Invoke(GDExtensionConstVariantPtr p_self)
     {
-        return _method(pSelf);
+        return _method(p_self);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetObjectInstanceId other)

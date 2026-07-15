@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionCallableCustomLessThan : IEquatable<GDE
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(void* callableUserdataA, void* callableUserdataB)
+    public GDExtensionBool Invoke(void* callable_userdata_a, void* callable_userdata_b)
     {
-        return _method(callableUserdataA, callableUserdataB);
+        return _method(callable_userdata_a, callable_userdata_b);
     }
 
     public bool Equals(GDExtensionCallableCustomLessThan other)

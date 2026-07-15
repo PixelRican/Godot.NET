@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionInterfaceGetProcAddress : IEquatable<GD
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInterfaceFunctionPtr Invoke(byte* pFunctionName)
+    public GDExtensionInterfaceFunctionPtr Invoke(byte* p_function_name)
     {
-        return _method(pFunctionName);
+        return _method(p_function_name);
     }
 
     public bool Equals(GDExtensionInterfaceGetProcAddress other)

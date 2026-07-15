@@ -52,13 +52,13 @@ public readonly unsafe struct GDExtensionInterfaceObjectDestroy : IEquatable<GDE
         get => _method;
     }
 
-    /// <param name="pO">
+    /// <param name="p_o">
     /// A pointer to the Object.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionObjectPtr pO)
+    public void Invoke(GDExtensionObjectPtr p_o)
     {
-        _method(pO);
+        _method(p_o);
     }
 
     public bool Equals(GDExtensionInterfaceObjectDestroy other)

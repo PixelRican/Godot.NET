@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceStringOperatorPlusEqString : I
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the String.
     /// </param>
-    /// <param name="pB">
+    /// <param name="p_b">
     /// A pointer to the other String to append.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionStringPtr pSelf, GDExtensionConstStringPtr pB)
+    public void Invoke(GDExtensionStringPtr p_self, GDExtensionConstStringPtr p_b)
     {
-        _method(pSelf, pB);
+        _method(p_self, p_b);
     }
 
     public bool Equals(GDExtensionInterfaceStringOperatorPlusEqString other)

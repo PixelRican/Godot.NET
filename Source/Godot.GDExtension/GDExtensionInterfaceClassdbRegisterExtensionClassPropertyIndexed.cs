@@ -53,28 +53,28 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClassP
         get => _method;
     }
 
-    /// <param name="pLibrary">
+    /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.
     /// </param>
-    /// <param name="pClassName">
+    /// <param name="p_class_name">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pInfo">
+    /// <param name="p_info">
     /// A pointer to a GDExtensionPropertyInfo struct.
     /// </param>
-    /// <param name="pSetter">
+    /// <param name="p_setter">
     /// A pointer to a StringName with the name of the setter method.
     /// </param>
-    /// <param name="pGetter">
+    /// <param name="p_getter">
     /// A pointer to a StringName with the name of the getter method.
     /// </param>
-    /// <param name="pIndex">
+    /// <param name="p_index">
     /// The index to pass as the first argument to the getter and setter methods.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter, GDExtensionInt pIndex)
+    public void Invoke(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionPropertyInfo* p_info, GDExtensionConstStringNamePtr p_setter, GDExtensionConstStringNamePtr p_getter, GDExtensionInt p_index)
     {
-        _method(pLibrary, pClassName, pInfo, pSetter, pGetter, pIndex);
+        _method(p_library, p_class_name, p_info, p_setter, p_getter, p_index);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed other)

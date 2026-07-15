@@ -54,16 +54,16 @@ public readonly unsafe struct GDExtensionInterfaceCallableCustomCreate : IEquata
         get => _method;
     }
 
-    /// <param name="rCallable">
+    /// <param name="r_callable">
     /// A pointer that will receive the new Callable.
     /// </param>
-    /// <param name="pCallableCustomInfo">
+    /// <param name="p_callable_custom_info">
     /// The info required to construct a Callable.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
+    public void Invoke(GDExtensionUninitializedTypePtr r_callable, GDExtensionCallableCustomInfo* p_callable_custom_info)
     {
-        _method(rCallable, pCallableCustomInfo);
+        _method(r_callable, p_callable_custom_info);
     }
 
     public bool Equals(GDExtensionInterfaceCallableCustomCreate other)

@@ -31,9 +31,9 @@ public static class VariantBridge
 
     public static void Initialize()
     {
-        s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
-        s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeStringName);
-        s_fromVector2Constructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDExtensionVariantTypeVector2);
-        s_toFloatConstructor = GDExtensionInterface.GetVariantToTypeConstructor.Invoke(GDExtensionVariantTypeFloat);
+        s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_FLOAT);
+        s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING_NAME);
+        s_fromVector2Constructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_VECTOR2);
+        s_toFloatConstructor = GDExtensionInterface.GetVariantToTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_FLOAT);
     }
 }

@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceVariantCanConvert : IEquatable
         get => _method;
     }
 
-    /// <param name="pFrom">
+    /// <param name="p_from">
     /// The Variant type to convert from.
     /// </param>
-    /// <param name="pTo">
+    /// <param name="p_to">
     /// The Variant type to convert to.
     /// </param>
     /// <returns>
     /// true if the conversion is possible; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
+    public GDExtensionBool Invoke(GDExtensionVariantType p_from, GDExtensionVariantType p_to)
     {
-        return _method(pFrom, pTo);
+        return _method(p_from, p_to);
     }
 
     public bool Equals(GDExtensionInterfaceVariantCanConvert other)

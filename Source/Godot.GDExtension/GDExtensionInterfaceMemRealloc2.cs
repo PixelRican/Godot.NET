@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceMemRealloc2 : IEquatable<GDExt
         get => _method;
     }
 
-    /// <param name="pPtr">
+    /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.
     /// </param>
-    /// <param name="pBytes">
+    /// <param name="p_bytes">
     /// The number of bytes to resize the memory block to.
     /// </param>
-    /// <param name="pPadAlign">
+    /// <param name="p_pad_align">
     /// If true, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
     /// <returns>
     /// A pointer to the allocated memory, or NULL if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void* Invoke(void* pPtr, nuint pBytes, GDExtensionBool pPadAlign)
+    public void* Invoke(void* p_ptr, nuint p_bytes, GDExtensionBool p_pad_align)
     {
-        return _method(pPtr, pBytes, pPadAlign);
+        return _method(p_ptr, p_bytes, p_pad_align);
     }
 
     public bool Equals(GDExtensionInterfaceMemRealloc2 other)

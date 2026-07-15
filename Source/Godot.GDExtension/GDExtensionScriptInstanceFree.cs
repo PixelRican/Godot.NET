@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstanceFree : IEquatable<GDExten
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionScriptInstanceDataPtr pInstance)
+    public void Invoke(GDExtensionScriptInstanceDataPtr p_instance)
     {
-        _method(pInstance);
+        _method(p_instance);
     }
 
     public bool Equals(GDExtensionScriptInstanceFree other)

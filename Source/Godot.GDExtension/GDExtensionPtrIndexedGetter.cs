@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionPtrIndexedGetter : IEquatable<GDExtensi
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstTypePtr pBase, GDExtensionInt pIndex, GDExtensionTypePtr rValue)
+    public void Invoke(GDExtensionConstTypePtr p_base, GDExtensionInt p_index, GDExtensionTypePtr r_value)
     {
-        _method(pBase, pIndex, rValue);
+        _method(p_base, p_index, r_value);
     }
 
     public bool Equals(GDExtensionPtrIndexedGetter other)

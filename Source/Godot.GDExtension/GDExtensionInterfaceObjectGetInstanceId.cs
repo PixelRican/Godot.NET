@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceObjectGetInstanceId : IEquatab
         get => _method;
     }
 
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object.
     /// </param>
     /// <returns>
     /// The instance ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDObjectInstanceID Invoke(GDExtensionConstObjectPtr pObject)
+    public GDObjectInstanceID Invoke(GDExtensionConstObjectPtr p_object)
     {
-        return _method(pObject);
+        return _method(p_object);
     }
 
     public bool Equals(GDExtensionInterfaceObjectGetInstanceId other)

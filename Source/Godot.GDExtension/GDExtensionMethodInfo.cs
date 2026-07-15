@@ -35,21 +35,21 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionMethodInfo
 {
-    public GDExtensionStringNamePtr Name;
-    public GDExtensionPropertyInfo ReturnValue;
+    public GDExtensionStringNamePtr name;
+    public GDExtensionPropertyInfo return_value;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
-    public uint Flags;
-    public int Id;
+    public uint flags;
+    public int id;
     /// <summary>
     /// Arguments: `default_arguments` is an array of size `argument_count`.
     /// </summary>
-    public uint ArgumentCount;
-    public unsafe GDExtensionPropertyInfo* Arguments;
+    public uint argument_count;
+    public unsafe GDExtensionPropertyInfo* arguments;
     /// <summary>
     /// Default arguments: `default_arguments` is an array of size `default_argument_count`.
     /// </summary>
-    public uint DefaultArgumentCount;
-    public unsafe GDExtensionVariantPtr* DefaultArguments;
+    public uint default_argument_count;
+    public unsafe GDExtensionVariantPtr* default_arguments;
 }

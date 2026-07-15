@@ -54,16 +54,16 @@ public readonly unsafe struct GDExtensionInterfaceClassdbConstructObject : IEqua
         get => _method;
     }
 
-    /// <param name="pClassname">
+    /// <param name="p_classname">
     /// A pointer to a StringName with the class name.
     /// </param>
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionObjectPtr Invoke(GDExtensionConstStringNamePtr pClassname)
+    public GDExtensionObjectPtr Invoke(GDExtensionConstStringNamePtr p_classname)
     {
-        return _method(pClassname);
+        return _method(p_classname);
     }
 
     public bool Equals(GDExtensionInterfaceClassdbConstructObject other)

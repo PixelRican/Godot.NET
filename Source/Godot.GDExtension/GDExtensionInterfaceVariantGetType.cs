@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetType : IEquatable<GD
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
     /// <returns>
     /// The variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionVariantType Invoke(GDExtensionConstVariantPtr pSelf)
+    public GDExtensionVariantType Invoke(GDExtensionConstVariantPtr p_self)
     {
-        return _method(pSelf);
+        return _method(p_self);
     }
 
     public bool Equals(GDExtensionInterfaceVariantGetType other)

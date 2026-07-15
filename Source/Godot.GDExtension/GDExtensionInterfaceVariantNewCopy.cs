@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceVariantNewCopy : IEquatable<GD
         get => _method;
     }
 
-    /// <param name="rDest">
+    /// <param name="r_dest">
     /// A pointer to the destination Variant.
     /// </param>
-    /// <param name="pSrc">
+    /// <param name="p_src">
     /// A pointer to the source Variant.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionUninitializedVariantPtr rDest, GDExtensionConstVariantPtr pSrc)
+    public void Invoke(GDExtensionUninitializedVariantPtr r_dest, GDExtensionConstVariantPtr p_src)
     {
-        _method(rDest, pSrc);
+        _method(r_dest, p_src);
     }
 
     public bool Equals(GDExtensionInterfaceVariantNewCopy other)

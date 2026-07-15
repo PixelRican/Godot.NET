@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceVariantIterGet : IEquatable<GD
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the Variant.
     /// </param>
-    /// <param name="rIter">
+    /// <param name="r_iter">
     /// A pointer to a Variant which will be assigned the iterator.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to a Variant which will be assigned false if the operation is invalid.
     /// </param>
-    /// <param name="rValid">
+    /// <param name="r_valid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
+    public void Invoke(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_iter, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
     {
-        _method(pSelf, rIter, rRet, rValid);
+        _method(p_self, r_iter, r_ret, r_valid);
     }
 
     public bool Equals(GDExtensionInterfaceVariantIterGet other)

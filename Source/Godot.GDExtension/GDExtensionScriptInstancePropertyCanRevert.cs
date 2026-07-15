@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionScriptInstancePropertyCanRevert : IEqua
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr pInstance, GDExtensionConstStringNamePtr pName)
+    public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionConstStringNamePtr p_name)
     {
-        return _method(pInstance, pName);
+        return _method(p_instance, p_name);
     }
 
     public bool Equals(GDExtensionScriptInstancePropertyCanRevert other)

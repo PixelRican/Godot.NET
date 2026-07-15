@@ -52,16 +52,16 @@ public readonly unsafe struct GDExtensionInterfaceGetNativeStructSize : IEquatab
         get => _method;
     }
 
-    /// <param name="pName">
+    /// <param name="p_name">
     /// A pointer to a StringName identifying the struct name.
     /// </param>
     /// <returns>
     /// The size in bytes.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ulong Invoke(GDExtensionConstStringNamePtr pName)
+    public ulong Invoke(GDExtensionConstStringNamePtr p_name)
     {
-        return _method(pName);
+        return _method(p_name);
     }
 
     public bool Equals(GDExtensionInterfaceGetNativeStructSize other)

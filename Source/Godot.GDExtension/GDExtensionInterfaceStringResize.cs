@@ -57,19 +57,19 @@ public readonly unsafe struct GDExtensionInterfaceStringResize : IEquatable<GDEx
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the String.
     /// </param>
-    /// <param name="pResize">
+    /// <param name="p_resize">
     /// The new length for the String.
     /// </param>
     /// <returns>
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionStringPtr pSelf, GDExtensionInt pResize)
+    public GDExtensionInt Invoke(GDExtensionStringPtr p_self, GDExtensionInt p_resize)
     {
-        return _method(pSelf, pResize);
+        return _method(p_self, p_resize);
     }
 
     public bool Equals(GDExtensionInterfaceStringResize other)

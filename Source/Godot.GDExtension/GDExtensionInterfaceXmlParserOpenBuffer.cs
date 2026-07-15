@@ -52,22 +52,22 @@ public readonly unsafe struct GDExtensionInterfaceXmlParserOpenBuffer : IEquatab
         get => _method;
     }
 
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to an XMLParser object.
     /// </param>
-    /// <param name="pBuffer">
+    /// <param name="p_buffer">
     /// A pointer to the buffer.
     /// </param>
-    /// <param name="pSize">
+    /// <param name="p_size">
     /// The size of the buffer.
     /// </param>
     /// <returns>
     /// A Godot error code (ex. OK, ERR_INVALID_DATA, etc).
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionObjectPtr pInstance, byte* pBuffer, nuint pSize)
+    public GDExtensionInt Invoke(GDExtensionObjectPtr p_instance, byte* p_buffer, nuint p_size)
     {
-        return _method(pInstance, pBuffer, pSize);
+        return _method(p_instance, p_buffer, p_size);
     }
 
     public bool Equals(GDExtensionInterfaceXmlParserOpenBuffer other)

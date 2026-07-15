@@ -52,19 +52,19 @@ public readonly unsafe struct GDExtensionInterfaceObjectHasScriptMethod : IEquat
         get => _method;
     }
 
-    /// <param name="pObject">
+    /// <param name="p_object">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pMethod">
+    /// <param name="p_method">
     /// A pointer to a StringName identifying the method.
     /// </param>
     /// <returns>
     /// true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionConstObjectPtr pObject, GDExtensionConstStringNamePtr pMethod)
+    public GDExtensionBool Invoke(GDExtensionConstObjectPtr p_object, GDExtensionConstStringNamePtr p_method)
     {
-        return _method(pObject, pMethod);
+        return _method(p_object, p_method);
     }
 
     public bool Equals(GDExtensionInterfaceObjectHasScriptMethod other)

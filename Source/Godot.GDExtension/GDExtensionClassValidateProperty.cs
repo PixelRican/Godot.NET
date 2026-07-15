@@ -50,9 +50,9 @@ public readonly unsafe struct GDExtensionClassValidateProperty : IEquatable<GDEx
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionBool Invoke(GDExtensionClassInstancePtr pInstance, GDExtensionPropertyInfo* pProperty)
+    public GDExtensionBool Invoke(GDExtensionClassInstancePtr p_instance, GDExtensionPropertyInfo* p_property)
     {
-        return _method(pInstance, pProperty);
+        return _method(p_instance, p_property);
     }
 
     public bool Equals(GDExtensionClassValidateProperty other)

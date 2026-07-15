@@ -52,34 +52,34 @@ public readonly unsafe struct GDExtensionInterfaceWorkerThreadPoolAddNativeGroup
         get => _method;
     }
 
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to a WorkerThreadPool object.
     /// </param>
-    /// <param name="pFunc">
+    /// <param name="p_func">
     /// A pointer to a function to run in the thread pool.
     /// </param>
-    /// <param name="pUserdata">
+    /// <param name="p_userdata">
     /// A pointer to arbitrary data which will be passed to p_func.
     /// </param>
-    /// <param name="pElements">
+    /// <param name="p_elements">
     /// The number of element needed in the group.
     /// </param>
-    /// <param name="pTasks">
+    /// <param name="p_tasks">
     /// The number of tasks needed in the group.
     /// </param>
-    /// <param name="pHighPriority">
+    /// <param name="p_high_priority">
     /// Whether or not this is a high priority task.
     /// </param>
-    /// <param name="pDescription">
+    /// <param name="p_description">
     /// A pointer to a String with the task description.
     /// </param>
     /// <returns>
     /// The task group ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public long Invoke(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserdata, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
+    public long Invoke(GDExtensionObjectPtr p_instance, GDExtensionWorkerThreadPoolGroupTask p_func, void* p_userdata, int p_elements, int p_tasks, GDExtensionBool p_high_priority, GDExtensionConstStringPtr p_description)
     {
-        return _method(pInstance, pFunc, pUserdata, pElements, pTasks, pHighPriority, pDescription);
+        return _method(p_instance, p_func, p_userdata, p_elements, p_tasks, p_high_priority, p_description);
     }
 
     public bool Equals(GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask other)

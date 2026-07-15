@@ -52,28 +52,28 @@ public readonly unsafe struct GDExtensionInterfaceObjectMethodBindCall : IEquata
         get => _method;
     }
 
-    /// <param name="pMethodBind">
+    /// <param name="p_method_bind">
     /// A pointer to the MethodBind representing the method on the Object's class.
     /// </param>
-    /// <param name="pInstance">
+    /// <param name="p_instance">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pArgs">
+    /// <param name="p_args">
     /// A pointer to a C array of Variants representing the arguments.
     /// </param>
-    /// <param name="pArgCount">
+    /// <param name="p_arg_count">
     /// The number of arguments.
     /// </param>
-    /// <param name="rRet">
+    /// <param name="r_ret">
     /// A pointer to Variant which will receive the return value.
     /// </param>
-    /// <param name="rError">
+    /// <param name="r_error">
     /// A pointer to a GDExtensionCallError struct that will receive error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Invoke(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgCount, GDExtensionUninitializedVariantPtr rRet, GDExtensionCallError* rError)
+    public void Invoke(GDExtensionMethodBindPtr p_method_bind, GDExtensionObjectPtr p_instance, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_arg_count, GDExtensionUninitializedVariantPtr r_ret, GDExtensionCallError* r_error)
     {
-        _method(pMethodBind, pInstance, pArgs, pArgCount, rRet, rError);
+        _method(p_method_bind, p_instance, p_args, p_arg_count, r_ret, r_error);
     }
 
     public bool Equals(GDExtensionInterfaceObjectMethodBindCall other)

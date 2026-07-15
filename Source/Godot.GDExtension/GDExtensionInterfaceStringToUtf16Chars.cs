@@ -53,22 +53,22 @@ public readonly unsafe struct GDExtensionInterfaceStringToUtf16Chars : IEquatabl
         get => _method;
     }
 
-    /// <param name="pSelf">
+    /// <param name="p_self">
     /// A pointer to the String.
     /// </param>
-    /// <param name="rText">
+    /// <param name="r_text">
     /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
     /// </param>
-    /// <param name="pMaxWriteLength">
+    /// <param name="p_max_write_length">
     /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
     /// </param>
     /// <returns>
     /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GDExtensionInt Invoke(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
+    public GDExtensionInt Invoke(GDExtensionConstStringPtr p_self, char* r_text, GDExtensionInt p_max_write_length)
     {
-        return _method(pSelf, rText, pMaxWriteLength);
+        return _method(p_self, r_text, p_max_write_length);
     }
 
     public bool Equals(GDExtensionInterfaceStringToUtf16Chars other)
