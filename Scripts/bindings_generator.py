@@ -162,11 +162,7 @@ class GDExtensionEnum(GDExtensionType):
         for value in self.values:
             if value.description:
                 value.description.dump(file)
-            file.write("    ")
-            file.write(value.name)
-            file.write(" = ")
-            file.write(str(value.value))
-            file.write(",\n")
+            file.write(f"    {value.name} = {value.value},\n")
         file.write("}\n")
 
 class GDExtensionEnumValue:
