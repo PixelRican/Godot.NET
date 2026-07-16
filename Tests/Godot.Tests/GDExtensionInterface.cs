@@ -1,175 +1,74 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using Godot.GDExtension;
 
 namespace Godot.Tests;
 
-public static unsafe class GDExtensionInterface
+public sealed unsafe class GDExtensionInterface
 {
-    private static GDExtensionInterfaceClassdbConstructObject s_classdbConstructObject;
-    private static GDExtensionInterfaceClassdbGetMethodBind s_classdbGetMethodBind;
-    private static GDExtensionInterfaceClassdbRegisterExtensionClass s_classdbRegisterExtensionClass;
-    private static GDExtensionInterfaceClassdbRegisterExtensionClassMethod s_classdbRegisterExtensionClassMethod;
-    private static GDExtensionInterfaceClassdbRegisterExtensionClassProperty s_classdbRegisterExtensionClassProperty;
-    private static GDExtensionInterfaceClassdbRegisterExtensionClassSignal s_classdbRegisterExtensionClassSignal;
-    private static GDExtensionInterfaceGetVariantFromTypeConstructor s_getVariantFromTypeConstructor;
-    private static GDExtensionInterfaceGetVariantToTypeConstructor s_getVariantToTypeConstructor;
-    private static GDExtensionInterfaceObjectMethodBindCall s_objectMethodBindCall;
-    private static GDExtensionInterfaceObjectMethodBindPtrcall s_objectMethodBindPtrcall;
-    private static GDExtensionInterfaceObjectSetInstance s_objectSetInstance;
-    private static GDExtensionInterfaceObjectSetInstanceBinding s_objectSetInstanceBinding;
-    private static GDExtensionInterfaceStringNewWithUtf8CharsAndLen s_stringNewWithUtf8CharsAndLen;
-    private static GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen s_stringNameNewWithUtf8CharsAndLen;
-    private static GDExtensionInterfaceVariantDestroy s_variantDestroy;
-    private static GDExtensionInterfaceVariantGetPtrDestructor s_variantGetPtrDestructor;
-    private static GDExtensionInterfaceVariantGetPtrOperatorEvaluator s_variantGetPtrOperatorEvaluator;
-    private static GDExtensionInterfaceVariantGetType s_variantGetType;
-
-    public static GDExtensionInterfaceClassdbConstructObject ClassdbConstructObject
+    public GDExtensionInterface(GDExtensionInterfaceGetProcAddress getProcAddress)
     {
-        get => s_classdbConstructObject;
+        ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));
+        ClassdbConstructObject = (GDExtensionInterfaceClassdbConstructObject)Load(getProcAddress, "classdb_construct_object"u8);
+        ClassdbGetMethodBind = (GDExtensionInterfaceClassdbGetMethodBind)Load(getProcAddress, "classdb_get_method_bind"u8);
+        ClassdbRegisterExtensionClass = (GDExtensionInterfaceClassdbRegisterExtensionClass)Load(getProcAddress, "classdb_register_extension_class"u8);
+        ClassdbRegisterExtensionClassMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassMethod)Load(getProcAddress, "classdb_register_extension_clas_method"u8);
+        ClassdbRegisterExtensionClassProperty = (GDExtensionInterfaceClassdbRegisterExtensionClassProperty)Load(getProcAddress, "classdb_register_extension_clas_property"u8);
+        ClassdbRegisterExtensionClassSignal = (GDExtensionInterfaceClassdbRegisterExtensionClassSignal)Load(getProcAddress, "classdb_register_extension_clas_signal"u8);
+        GetVariantFromTypeConstructor = (GDExtensionInterfaceGetVariantFromTypeConstructor)Load(getProcAddress, "get_variant_from_type_constructor"u8);
+        GetVariantToTypeConstructor = (GDExtensionInterfaceGetVariantToTypeConstructor)Load(getProcAddress, "get_variant_to_type_constructor"u8);
+        ObjectMethodBindCall = (GDExtensionInterfaceObjectMethodBindCall)Load(getProcAddress, "object_method_bind_call"u8);
+        ObjectMethodBindPtrcall = (GDExtensionInterfaceObjectMethodBindPtrcall)Load(getProcAddress, "object_method_bind_ptrcall"u8);
+        ObjectSetInstance = (GDExtensionInterfaceObjectSetInstance)Load(getProcAddress, "object_set_instance"u8);
+        ObjectSetInstanceBinding = (GDExtensionInterfaceObjectSetInstanceBinding)Load(getProcAddress, "object_set_instance_binding"u8);
+        StringNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen)Load(getProcAddress, "string_new_with_utf8_char_and_len"u8);
+        StringNameNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen)Load(getProcAddress, "string_name_new_with_utf8_char_and_len"u8);
+        VariantDestroy = (GDExtensionInterfaceVariantDestroy)Load(getProcAddress, "variant_destroy"u8);
+        VariantGetPtrDestructor = (GDExtensionInterfaceVariantGetPtrDestructor)Load(getProcAddress, "variant_get_ptr_destructor"u8);
+        VariantGetPtrOperatorEvaluator = (GDExtensionInterfaceVariantGetPtrOperatorEvaluator)Load(getProcAddress, "variant_get_ptr_operator_evaluator"u8);
+        VariantGetType = (GDExtensionInterfaceVariantGetType)Load(getProcAddress, "variant_get_type"u8);
     }
 
-    public static GDExtensionInterfaceClassdbGetMethodBind ClassdbGetMethodBind
-    {
-        get => s_classdbGetMethodBind;
-    }
+    public GDExtensionInterfaceClassdbConstructObject ClassdbConstructObject { get; }
 
-    public static GDExtensionInterfaceClassdbRegisterExtensionClass ClassdbRegisterExtensionClass
-    {
-        get => s_classdbRegisterExtensionClass;
-    }
+    public GDExtensionInterfaceClassdbGetMethodBind ClassdbGetMethodBind { get; }
 
-    public static GDExtensionInterfaceClassdbRegisterExtensionClassMethod ClassdbRegisterExtensionClassMethod
-    {
-        get => s_classdbRegisterExtensionClassMethod;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass ClassdbRegisterExtensionClass { get; }
 
-    public static GDExtensionInterfaceClassdbRegisterExtensionClassProperty ClassdbRegisterExtensionClassProperty
-    {
-        get => s_classdbRegisterExtensionClassProperty;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassMethod ClassdbRegisterExtensionClassMethod { get; }
 
-    public static GDExtensionInterfaceClassdbRegisterExtensionClassSignal ClassdbRegisterExtensionClassSignal
-    {
-        get => s_classdbRegisterExtensionClassSignal;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassProperty ClassdbRegisterExtensionClassProperty { get; }
 
-    public static GDExtensionInterfaceGetVariantFromTypeConstructor GetVariantFromTypeConstructor
-    {
-        get => s_getVariantFromTypeConstructor;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassSignal ClassdbRegisterExtensionClassSignal { get; }
 
-    public static GDExtensionInterfaceGetVariantToTypeConstructor GetVariantToTypeConstructor
-    {
-        get => s_getVariantToTypeConstructor;
-    }
+    public GDExtensionInterfaceGetVariantFromTypeConstructor GetVariantFromTypeConstructor { get; }
 
-    public static GDExtensionInterfaceObjectMethodBindCall ObjectMethodBindCall
-    {
-        get => s_objectMethodBindCall;
-    }
+    public GDExtensionInterfaceGetVariantToTypeConstructor GetVariantToTypeConstructor { get; }
 
-    public static GDExtensionInterfaceObjectMethodBindPtrcall ObjectMethodBindPtrcall
-    {
-        get => s_objectMethodBindPtrcall;
-    }
+    public GDExtensionInterfaceObjectMethodBindCall ObjectMethodBindCall { get; }
 
-    public static GDExtensionInterfaceObjectSetInstance ObjectSetInstance
-    {
-        get => s_objectSetInstance;
-    }
+    public GDExtensionInterfaceObjectMethodBindPtrcall ObjectMethodBindPtrcall { get; }
 
-    public static GDExtensionInterfaceObjectSetInstanceBinding ObjectSetInstanceBinding
-    {
-        get => s_objectSetInstanceBinding;
-    }
+    public GDExtensionInterfaceObjectSetInstance ObjectSetInstance { get; }
 
-    public static GDExtensionInterfaceStringNewWithUtf8CharsAndLen StringNewWithUtf8CharsAndLen
-    {
-        get => s_stringNewWithUtf8CharsAndLen;
-    }
+    public GDExtensionInterfaceObjectSetInstanceBinding ObjectSetInstanceBinding { get; }
 
-    public static GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen StringNameNewWithUtf8CharsAndLen
-    {
-        get => s_stringNameNewWithUtf8CharsAndLen;
-    }
+    public GDExtensionInterfaceStringNewWithUtf8CharsAndLen StringNewWithUtf8CharsAndLen { get; }
 
-    public static GDExtensionInterfaceVariantDestroy VariantDestroy
-    {
-        get => s_variantDestroy;
-    }
+    public GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen StringNameNewWithUtf8CharsAndLen { get; }
 
-    public static GDExtensionInterfaceVariantGetPtrDestructor VariantGetPtrDestructor
-    {
-        get => s_variantGetPtrDestructor;
-    }
+    public GDExtensionInterfaceVariantDestroy VariantDestroy { get; }
 
-    public static GDExtensionInterfaceVariantGetPtrOperatorEvaluator VariantGetPtrOperatorEvaluator
-    {
-        get => s_variantGetPtrOperatorEvaluator;
-    }
+    public GDExtensionInterfaceVariantGetPtrDestructor VariantGetPtrDestructor { get; }
 
-    public static GDExtensionInterfaceVariantGetType VariantGetType
-    {
-        get => s_variantGetType;
-    }
+    public GDExtensionInterfaceVariantGetPtrOperatorEvaluator VariantGetPtrOperatorEvaluator { get; }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)], EntryPoint = "GDExample_Initialize")]
-    private static GDExtensionBool Initialize(GDExtensionInterfaceGetProcAddress getProcAddress, GDExtensionClassLibraryPtr library, GDExtensionInitialization* initialization)
-    {
-        s_classdbConstructObject = (GDExtensionInterfaceClassdbConstructObject)Load("classdb_construct_object"u8);
-        s_classdbGetMethodBind = (GDExtensionInterfaceClassdbGetMethodBind)Load("classdb_get_method_bind"u8);
-        s_classdbRegisterExtensionClass = (GDExtensionInterfaceClassdbRegisterExtensionClass)Load("classdb_register_extension_class"u8);
-        s_classdbRegisterExtensionClassMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassMethod)Load("classdb_register_extension_class_method"u8);
-        s_classdbRegisterExtensionClassProperty = (GDExtensionInterfaceClassdbRegisterExtensionClassProperty)Load("classdb_register_extension_class_property"u8);
-        s_classdbRegisterExtensionClassSignal = (GDExtensionInterfaceClassdbRegisterExtensionClassSignal)Load("classdb_register_extension_class_signal"u8);
-        s_getVariantFromTypeConstructor = (GDExtensionInterfaceGetVariantFromTypeConstructor)Load("get_variant_from_type_constructor"u8);
-        s_getVariantToTypeConstructor = (GDExtensionInterfaceGetVariantToTypeConstructor)Load("get_variant_to_type_constructor"u8);
-        s_objectMethodBindCall = (GDExtensionInterfaceObjectMethodBindCall)Load("object_method_bind_call"u8);
-        s_objectMethodBindPtrcall = (GDExtensionInterfaceObjectMethodBindPtrcall)Load("object_method_bind_ptrcall"u8);
-        s_objectSetInstance = (GDExtensionInterfaceObjectSetInstance)Load("object_set_instance"u8);
-        s_objectSetInstanceBinding = (GDExtensionInterfaceObjectSetInstanceBinding)Load("object_set_instance_binding"u8);
-        s_stringNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen)Load("string_new_with_utf8_chars_and_len"u8);
-        s_stringNameNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen)Load("string_name_new_with_utf8_chars_and_len"u8);
-        s_variantDestroy = (GDExtensionInterfaceVariantDestroy)Load("variant_destroy"u8);
-        s_variantGetPtrDestructor = (GDExtensionInterfaceVariantGetPtrDestructor)Load("variant_get_ptr_destructor"u8);
-        s_variantGetPtrOperatorEvaluator = (GDExtensionInterfaceVariantGetPtrOperatorEvaluator)Load("variant_get_ptr_operator_evaluator"u8);
-        s_variantGetType = (GDExtensionInterfaceVariantGetType)Load("variant_get_type"u8);
-        initialization->minimum_initialization_level = GDEXTENSION_INITIALIZATION_SCENE;
-        initialization->userdata = library.Pointer;
-        initialization->initialize = new GDExtensionInitializeCallback(&InitializeLevel);
-        initialization->deinitialize = new GDExtensionDeinitializeCallback(&DeinitializeLevel);
-        return new GDExtensionBool(true);
+    public GDExtensionInterfaceVariantGetType VariantGetType { get; }
 
-        GDExtensionInterfaceFunctionPtr Load(ReadOnlySpan<byte> functionName)
+    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)
+    {
+        fixed (byte* p_function_name = functionName)
         {
-            fixed (byte* reference = functionName)
-            {
-                return getProcAddress.Invoke(reference);
-            }
+            return getProcAddress.Invoke(p_function_name);
         }
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void InitializeLevel(void* token, GDExtensionInitializationLevel level)
-    {
-        if (level != GDEXTENSION_INITIALIZATION_SCENE)
-        {
-            return;
-        }
-
-        VariantBridge.Initialize();
-        StringBridge.Initialize();
-        StringNameBridge.Initialize();
-        ObjectBridge.Initialize();
-        Sprite2DBridge.Initialize();
-        GDExampleBridge.RegisterClass(new GDExtensionClassLibraryPtr(token));
-    }
-
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static void DeinitializeLevel(void* token, GDExtensionInitializationLevel level)
-    {
     }
 }

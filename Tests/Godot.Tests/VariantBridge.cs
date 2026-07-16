@@ -31,9 +31,9 @@ public static class VariantBridge
 
     public static void Initialize()
     {
-        s_fromFloatConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_FLOAT);
-        s_fromStringNameConstructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING_NAME);
-        s_fromVector2Constructor = GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_VECTOR2);
-        s_toFloatConstructor = GDExtensionInterface.GetVariantToTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_FLOAT);
+        s_fromFloatConstructor = GodotBridge.GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_FLOAT);
+        s_fromStringNameConstructor = GodotBridge.GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING_NAME);
+        s_fromVector2Constructor = GodotBridge.GDExtensionInterface.GetVariantFromTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_VECTOR2);
+        s_toFloatConstructor = GodotBridge.GDExtensionInterface.GetVariantToTypeConstructor.Invoke(GDEXTENSION_VARIANT_TYPE_FLOAT);
     }
 }

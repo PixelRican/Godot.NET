@@ -26,7 +26,7 @@ public static unsafe class GDExtensionClassDB
             free_instance_func = new GDExtensionClassFreeInstance(freeInstanceFunc),
             get_virtual_func = new GDExtensionClassGetVirtual(getVirtualFunc)
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(
+        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(
             library,
             new GDExtensionConstStringNamePtr(&classStringName),
             new GDExtensionConstStringNamePtr(&parentClassStringName),
@@ -62,7 +62,7 @@ public static unsafe class GDExtensionClassDB
             has_return_value = new GDExtensionBool(true),
             return_value_info = &returnInfo
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
+        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
             library,
             new GDExtensionConstStringNamePtr(&classStringName),
             &methodInfo);
@@ -100,7 +100,7 @@ public static unsafe class GDExtensionClassDB
             arguments_info = &argumentInfo,
             arguments_metadata = &argsMetadata,
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
+        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
             library,
             new GDExtensionConstStringNamePtr(&classStringName),
             &methodInfo);
@@ -128,7 +128,7 @@ public static unsafe class GDExtensionClassDB
             class_name = new GDExtensionStringNamePtr(&emptyStringName),
             usage = PropertyUsageDefault
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(
+        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(
             library,
             new GDExtensionConstStringNamePtr(&classStringName),
             &info,
@@ -156,7 +156,7 @@ public static unsafe class GDExtensionClassDB
             class_name = new GDExtensionStringNamePtr(&emptyStringName),
             usage = PropertyUsageDefault
         };
-        GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(
+        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(
             library,
             new GDExtensionConstStringNamePtr(&classStringName),
             new GDExtensionConstStringNamePtr(&signalStringName),

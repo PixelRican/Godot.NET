@@ -55,7 +55,7 @@ public readonly unsafe struct Variant : IDisposable
     {
         fixed (Variant* self = &this)
         {
-            GDExtensionInterfaceVariantDestroy destructor = GDExtensionInterface.VariantDestroy;
+            GDExtensionInterfaceVariantDestroy destructor = GodotBridge.GDExtensionInterface.VariantDestroy;
             destructor.Invoke(new GDExtensionVariantPtr(self));
         }
     }

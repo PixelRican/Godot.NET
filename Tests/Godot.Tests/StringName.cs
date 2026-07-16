@@ -17,7 +17,7 @@ public readonly unsafe struct StringName : IDisposable, IEquatable<StringName>
         fixed (StringName* self = &this)
         fixed (byte* reference = contents)
         {
-            GDExtensionInterface.StringNameNewWithUtf8CharsAndLen.Invoke(
+            GodotBridge.GDExtensionInterface.StringNameNewWithUtf8CharsAndLen.Invoke(
                 new GDExtensionUninitializedStringNamePtr(self),
                 reference,
                 new GDExtensionInt(contents.Length));

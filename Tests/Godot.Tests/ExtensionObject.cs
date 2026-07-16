@@ -14,7 +14,7 @@ public abstract unsafe class ExtensionObject : IDisposable
     protected ExtensionObject(ReadOnlySpan<byte> baseClassName)
     {
         using StringName nameOfBase = new StringName(baseClassName);
-        _base = GDExtensionInterface.ClassdbConstructObject.Invoke(new GDExtensionConstStringNamePtr(&nameOfBase));
+        _base = GodotBridge.GDExtensionInterface.ClassdbConstructObject.Invoke(new GDExtensionConstStringNamePtr(&nameOfBase));
     }
 
     ~ExtensionObject()
@@ -45,7 +45,7 @@ public abstract unsafe class ExtensionObject : IDisposable
             }
 
             Variant result;
-            GDExtensionInterface.ObjectMethodBindCall.Invoke(
+            GodotBridge.GDExtensionInterface.ObjectMethodBindCall.Invoke(
                 ObjectBridge.EmitSignal,
                 _base,
                 destination,

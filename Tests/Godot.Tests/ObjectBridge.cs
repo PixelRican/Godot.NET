@@ -15,7 +15,7 @@ public static unsafe class ObjectBridge
     {
         using StringName nameOfObject = new StringName("Object"u8);
         using StringName nameOfEmitSignal = new StringName("emit_signal"u8);
-        s_emitSignal = GDExtensionInterface.ClassdbGetMethodBind.Invoke(
+        s_emitSignal = GodotBridge.GDExtensionInterface.ClassdbGetMethodBind.Invoke(
             new GDExtensionConstStringNamePtr(&nameOfObject),
             new GDExtensionConstStringNamePtr(&nameOfEmitSignal),
             new GDExtensionInt(4047867050));

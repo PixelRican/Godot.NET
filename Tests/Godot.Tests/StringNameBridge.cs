@@ -25,12 +25,12 @@ public static class StringNameBridge
 
     public static void Initialize()
     {
-        s_destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING_NAME);
-        s_operatorEqual = GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(
+        s_destructor = GodotBridge.GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING_NAME);
+        s_operatorEqual = GodotBridge.GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(
             GDEXTENSION_VARIANT_OP_EQUAL,
             GDEXTENSION_VARIANT_TYPE_STRING_NAME,
             GDEXTENSION_VARIANT_TYPE_STRING_NAME);
-        s_operatorNotEqual = GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(
+        s_operatorNotEqual = GodotBridge.GDExtensionInterface.VariantGetPtrOperatorEvaluator.Invoke(
             GDEXTENSION_VARIANT_OP_NOT_EQUAL,
             GDEXTENSION_VARIANT_TYPE_STRING_NAME,
             GDEXTENSION_VARIANT_TYPE_STRING_NAME);

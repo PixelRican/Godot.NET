@@ -15,7 +15,7 @@ public static unsafe class Sprite2DBridge
     {
         using StringName nameOfNode2D = new StringName("Node2D"u8);
         using StringName nameOfSetPosition = new StringName("set_position"u8);
-        s_setPosition = GDExtensionInterface.ClassdbGetMethodBind.Invoke(
+        s_setPosition = GodotBridge.GDExtensionInterface.ClassdbGetMethodBind.Invoke(
             new GDExtensionConstStringNamePtr(&nameOfNode2D),
             new GDExtensionConstStringNamePtr(&nameOfSetPosition),
             new GDExtensionInt(743155724));

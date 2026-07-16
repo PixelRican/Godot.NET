@@ -13,6 +13,6 @@ public static class StringBridge
 
     public static void Initialize()
     {
-        s_destructor = GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING);
+        s_destructor = GodotBridge.GDExtensionInterface.VariantGetPtrDestructor.Invoke(GDEXTENSION_VARIANT_TYPE_STRING);
     }
 }

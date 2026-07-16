@@ -19,10 +19,10 @@ public static unsafe class GDExtensionMarshal
 
         using (StringName classStringName = new StringName(className))
         {
-            GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
+            GodotBridge.GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
         }
 
-        GDExtensionInterface.ObjectSetInstanceBinding.Invoke(parent, token, instance.Pointer, &callbacks);
+        GodotBridge.GDExtensionInterface.ObjectSetInstanceBinding.Invoke(parent, token, instance.Pointer, &callbacks);
         return parent;
     }
 
@@ -80,7 +80,7 @@ public static unsafe class GDExtensionMarshal
             GDExtensionConstVariantPtr argument = arguments[i];
             GDExtensionVariantType expectedType = expectedTypes[i];
 
-            if (GDExtensionInterface.VariantGetType.Invoke(argument) != expectedType)
+            if (GodotBridge.GDExtensionInterface.VariantGetType.Invoke(argument) != expectedType)
             {
                 error->error = GDEXTENSION_CALL_ERROR_INVALID_ARGUMENT;
                 error->expected = (int)expectedType;
