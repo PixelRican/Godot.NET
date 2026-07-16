@@ -371,8 +371,9 @@ class GDExtensionFunction(GDExtensionType):
         argument_iterable: Iterable[str] = (argument.type.name for argument in self.arguments)
         return_iterable: Iterable[str]
         if return_value_data:
-            self.return_value = GDExtensionFunctionReturnValue(return_value_data)
-            return_iterable = (self.return_value.type.name,)
+            return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value_data)
+            return_iterable = (return_value.type.name,)
+            self.return_value = return_value
         else:
             return_iterable = ("void",)
         type_parameters: chain[str] = chain(argument_iterable, return_iterable)
