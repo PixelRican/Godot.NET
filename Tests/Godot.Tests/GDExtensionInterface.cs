@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Godot.GDExtension;
 
 namespace Godot.Tests;
@@ -66,9 +67,18 @@ public sealed unsafe class GDExtensionInterface
 
     private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)
     {
+        GDExtensionInterfaceFunctionPtr function;
+
         fixed (byte* p_function_name = functionName)
         {
-            return getProcAddress.Invoke(p_function_name);
+            function = getProcAddress.Invoke(p_function_name);
         }
+
+        if (function.Method == null)
+        {
+            throw new ArgumentException($"Could not load \"{Encoding.UTF8.GetString(functionName)}\" from the specified function.");
+        }
+
+        return function;
     }
 }
