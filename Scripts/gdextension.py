@@ -40,15 +40,15 @@ class GDExtensionInfo:
         for instance in chain(self.types.values(), self.interface.values()):
             instance.generate(self.copyright)
 
-class TypeReference:
-    def __init__(self, typedef: str) -> None:
+class Type:
+    def __init__(self, name: str) -> None:
         self.name: str
-        self.is_readonly: bool = typedef.startswith("const")
-        self.is_unsafe: bool = typedef.endswith("*")
+        self.is_readonly: bool = name.startswith("const")
+        self.is_unsafe: bool = name.endswith("*")
         self.is_builtin: bool = True
         start: int = 6 if self.is_readonly else 0
-        end: int = -1 if self.is_unsafe else len(typedef)
-        self.name = typedef[start:end]
+        end: int = -1 if self.is_unsafe else len(name)
+        self.name = name[start:end]
         match self.name:
             case "int8_t":
                 self.name = "sbyte"
@@ -239,7 +239,7 @@ class HandleInfo(TypeInfo):
 class AliasInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.type: TypeReference = TypeReference(data["type"])
+        self.type: Type = Type(data["type"])
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
@@ -340,7 +340,7 @@ class StructMemberInfo:
         self.name: str = data["name"]
         if self.name == "string":
             self.name = "@string"
-        self.type: TypeReference = TypeReference(data["type"])
+        self.type: Type = Type(data["type"])
         self.description: Description | None = None
         data_description: list[str] | None = data.get("description")
         if data_description:
@@ -455,7 +455,7 @@ class FunctionInfo(TypeInfo):
 class ArgumentInfo:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.type: TypeReference = TypeReference(data["type"])
+        self.type: Type = Type(data["type"])
         self.description: Description | None = None
         data_description: list[str] | None = data.get("description")
         if data_description:
@@ -463,7 +463,7 @@ class ArgumentInfo:
 
 class ReturnInfo:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.type: TypeReference = TypeReference(data["type"])
+        self.type: Type = Type(data["type"])
         self.description: Description | None = None
         data_description: list[str] | None = data.get("description")
         if data_description:
