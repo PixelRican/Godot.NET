@@ -141,8 +141,8 @@ class EnumInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.is_bitfield: bool = data.get("is_bitfield") or False
-        self.values: list[EnumValueInfo] = [
-            EnumValueInfo(value_data) for value_data in data["values"]
+        self.values: list[EnumValue] = [
+            EnumValue(value_data) for value_data in data["values"]
         ]
 
     def dump(self, file: IOBase) -> None:
@@ -165,7 +165,7 @@ class EnumInfo(TypeInfo):
             file.write(f"    {value.name} = {value.value},\n")
         file.write("}\n")
 
-class EnumValueInfo:
+class EnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
@@ -306,8 +306,8 @@ class AliasInfo(TypeInfo):
 class StructInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.members: list[StructMemberInfo] = [
-            StructMemberInfo(member_data) for member_data in data["members"]
+        self.members: list[StructMember] = [
+            StructMember(member_data) for member_data in data["members"]
         ]
 
     def dump(self, file: IOBase) -> None:
@@ -335,7 +335,7 @@ class StructInfo(TypeInfo):
             file.write(f"{member.type.name} {member.name};\n")
         file.write("}\n")
 
-class StructMemberInfo:
+class StructMember:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         if self.name == "string":
@@ -353,21 +353,21 @@ class FunctionInfo(TypeInfo):
         if self.name[0].islower():
             self.entry_point = self.name
             self.name = "GDExtensionInterface" + self.name.title().replace("_", "")
-        self.arguments: list[ArgumentInfo] = []
-        self.return_value: ReturnInfo | None = None
+        self.arguments: list[FunctionArgument] = []
+        self.return_value: FunctionReturnValue | None = None
         type_parameters: list[str] = []
         for i, argument_data in enumerate(data["arguments"]):
             if not argument_data.get("name"):
                 argument_data = argument_data.copy()
                 argument_data["name"] = f"p_{i}"
-            argument: ArgumentInfo = ArgumentInfo(argument_data)
+            argument: FunctionArgument = FunctionArgument(argument_data)
             type_parameters.append(argument.type.name)
             self.arguments.append(argument)
         return_value_data: dict[str, Any] | None = data.get("return_value")
         argument_iterable: Iterable[str] = (argument.type.name for argument in self.arguments)
         return_iterable: Iterable[str]
         if return_value_data:
-            return_value: ReturnInfo = ReturnInfo(return_value_data)
+            return_value: FunctionReturnValue = FunctionReturnValue(return_value_data)
             return_iterable = (return_value.type.name,)
             self.return_value = return_value
         else:
@@ -452,7 +452,7 @@ class FunctionInfo(TypeInfo):
         file.write("    }\n")
         file.write("}\n")
 
-class ArgumentInfo:
+class FunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: Type = Type(data["type"])
@@ -461,7 +461,7 @@ class ArgumentInfo:
         if data_description:
             self.description = Description(data_description, tag="param", metadata=f"name=\"{self.name}\"", tab=True)
 
-class ReturnInfo:
+class FunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.type: Type = Type(data["type"])
         self.description: Description | None = None
