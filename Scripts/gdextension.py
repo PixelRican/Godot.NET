@@ -4,7 +4,7 @@ from itertools import chain
 from typing import Any, Iterable
 import json
 
-class GDExtensionInfo:
+class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
         self.types: dict[str, TypeInfo] = {}
@@ -472,7 +472,7 @@ class ReturnInfo:
 def main() -> None:
     with open("gdextension_interface.json", "r") as file:
         data: dict[str, Any] = json.load(file)
-    interface: GDExtensionInfo = GDExtensionInfo(data)
+    interface: GDExtensionInterface = GDExtensionInterface(data)
     interface.generate()
 
 if __name__ == "__main__":
