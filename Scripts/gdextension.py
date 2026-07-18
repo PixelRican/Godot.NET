@@ -3,7 +3,7 @@ from io import IOBase
 from itertools import chain
 from typing import Any, Iterable
 
-class GDExtensionInterface:
+class GDExtensionBindings:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
         self.types: dict[str, TypeInfo] = {}
