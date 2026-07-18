@@ -118,12 +118,12 @@ class TypeInfo:
         self.name: str = data["name"]
         self.description: Description | None = None
         self.deprecated: Deprecated | None = None
-        data_description: list[str] | None = data.get("description")
-        data_deprecated: dict[str, Any] | None = data.get("deprecated")
-        if data_description:
-            self.description = Description(data_description)
-        if data_deprecated:
-            self.deprecated = Deprecated(data_deprecated)
+        description: list[str] | None = data.get("description")
+        deprecated: dict[str, Any] | None = data.get("deprecated")
+        if description:
+            self.description = Description(description)
+        if deprecated:
+            self.deprecated = Deprecated(deprecated)
 
     def generate(self, copyright_text: list[str]) -> None:
         with open(f"../Source/Godot.GDExtension/{self.name}.cs", "w") as file:
@@ -170,9 +170,9 @@ class EnumValue:
         self.name: str = data["name"]
         self.value: int = data["value"]
         self.description: Description | None = None
-        data_description: list[str] | None = data.get("description")
-        if data_description:
-            self.description = Description(data_description, tab=True)
+        description: list[str] | None = data.get("description")
+        if description:
+            self.description = Description(description, tab=True)
 
 class HandleInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -342,9 +342,9 @@ class StructMember:
             self.name = "@string"
         self.type: Type = Type(data["type"])
         self.description: Description | None = None
-        data_description: list[str] | None = data.get("description")
-        if data_description:
-            self.description = Description(data_description, tab=True)
+        description: list[str] | None = data.get("description")
+        if description:
+            self.description = Description(description, tab=True)
 
 class FunctionInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -457,17 +457,17 @@ class FunctionArgument:
         self.name: str = data["name"]
         self.type: Type = Type(data["type"])
         self.description: Description | None = None
-        data_description: list[str] | None = data.get("description")
-        if data_description:
-            self.description = Description(data_description, tag="param", metadata=f"name=\"{self.name}\"", tab=True)
+        description: list[str] | None = data.get("description")
+        if description:
+            self.description = Description(description, tag="param", metadata=f"name=\"{self.name}\"", tab=True)
 
 class FunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.type: Type = Type(data["type"])
         self.description: Description | None = None
-        data_description: list[str] | None = data.get("description")
-        if data_description:
-            self.description = Description(data_description, tag="returns", tab=True)
+        description: list[str] | None = data.get("description")
+        if description:
+            self.description = Description(description, tag="returns", tab=True)
 
 def main() -> None:
     with open("gdextension_interface.json", "r") as file:
