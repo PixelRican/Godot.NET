@@ -2,7 +2,6 @@
 from io import IOBase
 from itertools import chain
 from typing import Any, Iterable
-import json
 
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -468,12 +467,3 @@ class FunctionReturnValue:
         description: list[str] | None = data.get("description")
         if description:
             self.description = Description(description, tag="returns", tab=True)
-
-def main() -> None:
-    with open("gdextension_interface.json", "r") as file:
-        data: dict[str, Any] = json.load(file)
-    interface: GDExtensionInterface = GDExtensionInterface(data)
-    interface.generate()
-
-if __name__ == "__main__":
-    main()
