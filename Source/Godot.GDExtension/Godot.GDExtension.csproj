@@ -4,5 +4,6 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <IsAotCompatible>true</IsAotCompatible>
+        <NoWarn>CS0618;CS8909</NoWarn>
     </PropertyGroup>
 </Project>
