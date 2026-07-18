@@ -13,5 +13,6 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Source\Godot.GDExtension\Godot.GDExtension.csproj" />
+        <ProjectReference Include="..\..\Source\Godot.InteropServices\Godot.InteropServices.csproj" />
     </ItemGroup>
 </Project>
