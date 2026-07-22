@@ -33,6 +33,7 @@ using Godot.GDExtension;
 
 namespace Godot.InteropServices;
 
+#pragma warning disable CS0618 // Deprecated functions are loaded to maintain backwards compatibility.
 public sealed unsafe class GDExtensionInterface
 {
     private readonly GDExtensionInterfaceGetGodotVersion _getGodotVersion;
@@ -1309,3 +1310,4 @@ public sealed unsafe class GDExtensionInterface
         }
     }
 }
+#pragma warning restore CS0618 // Deprecated functions are loaded to maintain backwards compatibility.
