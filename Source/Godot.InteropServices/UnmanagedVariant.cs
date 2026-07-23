@@ -36,24 +36,24 @@ namespace Godot.InteropServices;
 public struct UnmanagedVariant
 {
     [FieldOffset(0)] public int Type;
-    [FieldOffset(8)] public UnmanagedVariantData Data;
-}
+    [FieldOffset(8)] public DataUnion Data;
 
-[StructLayout(LayoutKind.Explicit)]
-public unsafe struct UnmanagedVariantData
-{
-    [FieldOffset(0)] public byte Bool;
-    [FieldOffset(0)] public long Int;
-    [FieldOffset(0)] public double Float;
-    [FieldOffset(0)] public void* Transform2D;
-    [FieldOffset(0)] public void* Aabb;
-    [FieldOffset(0)] public void* Basis;
-    [FieldOffset(0)] public void* Transform3D;
-    [FieldOffset(0)] public void* Projection;
-    [FieldOffset(0)] public void* PackedArray;
-    [FieldOffset(0)] public void* Ptr;
-    [FieldOffset(0)] public UnmanagedVariantMem Mem;
-}
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe struct DataUnion
+    {
+        [FieldOffset(0)] public byte Bool;
+        [FieldOffset(0)] public long Int;
+        [FieldOffset(0)] public double Float;
+        [FieldOffset(0)] public void* Transform2D;
+        [FieldOffset(0)] public void* Aabb;
+        [FieldOffset(0)] public void* Basis;
+        [FieldOffset(0)] public void* Transform3D;
+        [FieldOffset(0)] public void* Projection;
+        [FieldOffset(0)] public void* PackedArray;
+        [FieldOffset(0)] public void* Ptr;
+        [FieldOffset(0)] public MemUnion Mem;
+    }
 
-[StructLayout(LayoutKind.Explicit, Size = sizeof(real_t) * 4)]
-public struct UnmanagedVariantMem;
+    [StructLayout(LayoutKind.Explicit, Size = sizeof(real_t) * 4)]
+    public struct MemUnion;
+}
