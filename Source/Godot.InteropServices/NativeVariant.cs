@@ -1,5 +1,5 @@
 ﻿/**************************************************************************/
-/*  UnmanagedVariant.cs                                                   */
+/*  NativeVariant.cs                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 namespace Godot.InteropServices;
 
 [StructLayout(LayoutKind.Explicit)]
-public struct UnmanagedVariant
+public struct NativeVariant
 {
     [FieldOffset(0)] public int Type;
     [FieldOffset(8)] public DataUnion Data;

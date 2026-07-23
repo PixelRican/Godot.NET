@@ -34,9 +34,9 @@ namespace Godot;
 
 public sealed class Variant
 {
-    private UnmanagedVariant _instance;
+    private NativeVariant _instance;
 
-    public ref readonly UnmanagedVariant GetPinnableReference()
+    public ref readonly NativeVariant GetPinnableReference()
     {
         return ref _instance;
     }
