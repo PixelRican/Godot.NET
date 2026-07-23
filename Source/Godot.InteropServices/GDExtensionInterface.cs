@@ -36,1264 +36,547 @@ namespace Godot.InteropServices;
 #pragma warning disable CS0618 // Deprecated functions are loaded to maintain backwards compatibility with earlier versions.
 public sealed unsafe class GDExtensionInterface
 {
-    private readonly GDExtensionInterfaceGetGodotVersion _getGodotVersion;
-    private readonly GDExtensionInterfaceGetGodotVersion2 _getGodotVersion2;
-    private readonly GDExtensionInterfaceMemAlloc _memAlloc;
-    private readonly GDExtensionInterfaceMemRealloc _memRealloc;
-    private readonly GDExtensionInterfaceMemFree _memFree;
-    private readonly GDExtensionInterfaceMemAlloc2 _memAlloc2;
-    private readonly GDExtensionInterfaceMemRealloc2 _memRealloc2;
-    private readonly GDExtensionInterfaceMemFree2 _memFree2;
-    private readonly GDExtensionInterfacePrintError _printError;
-    private readonly GDExtensionInterfacePrintErrorWithMessage _printErrorWithMessage;
-    private readonly GDExtensionInterfacePrintWarning _printWarning;
-    private readonly GDExtensionInterfacePrintWarningWithMessage _printWarningWithMessage;
-    private readonly GDExtensionInterfacePrintScriptError _printScriptError;
-    private readonly GDExtensionInterfacePrintScriptErrorWithMessage _printScriptErrorWithMessage;
-    private readonly GDExtensionInterfaceGetNativeStructSize _getNativeStructSize;
-    private readonly GDExtensionInterfaceVariantNewCopy _variantNewCopy;
-    private readonly GDExtensionInterfaceVariantNewNil _variantNewNil;
-    private readonly GDExtensionInterfaceVariantDestroy _variantDestroy;
-    private readonly GDExtensionInterfaceVariantCall _variantCall;
-    private readonly GDExtensionInterfaceVariantCallStatic _variantCallStatic;
-    private readonly GDExtensionInterfaceVariantEvaluate _variantEvaluate;
-    private readonly GDExtensionInterfaceVariantSet _variantSet;
-    private readonly GDExtensionInterfaceVariantSetNamed _variantSetNamed;
-    private readonly GDExtensionInterfaceVariantSetKeyed _variantSetKeyed;
-    private readonly GDExtensionInterfaceVariantSetIndexed _variantSetIndexed;
-    private readonly GDExtensionInterfaceVariantGet _variantGet;
-    private readonly GDExtensionInterfaceVariantGetNamed _variantGetNamed;
-    private readonly GDExtensionInterfaceVariantGetKeyed _variantGetKeyed;
-    private readonly GDExtensionInterfaceVariantGetIndexed _variantGetIndexed;
-    private readonly GDExtensionInterfaceVariantIterInit _variantIterInit;
-    private readonly GDExtensionInterfaceVariantIterNext _variantIterNext;
-    private readonly GDExtensionInterfaceVariantIterGet _variantIterGet;
-    private readonly GDExtensionInterfaceVariantHash _variantHash;
-    private readonly GDExtensionInterfaceVariantRecursiveHash _variantRecursiveHash;
-    private readonly GDExtensionInterfaceVariantHashCompare _variantHashCompare;
-    private readonly GDExtensionInterfaceVariantBooleanize _variantBooleanize;
-    private readonly GDExtensionInterfaceVariantDuplicate _variantDuplicate;
-    private readonly GDExtensionInterfaceVariantStringify _variantStringify;
-    private readonly GDExtensionInterfaceVariantGetType _variantGetType;
-    private readonly GDExtensionInterfaceVariantHasMethod _variantHasMethod;
-    private readonly GDExtensionInterfaceVariantHasMember _variantHasMember;
-    private readonly GDExtensionInterfaceVariantHasKey _variantHasKey;
-    private readonly GDExtensionInterfaceVariantGetObjectInstanceId _variantGetObjectInstanceId;
-    private readonly GDExtensionInterfaceVariantGetTypeName _variantGetTypeName;
-    private readonly GDExtensionInterfaceVariantGetTypeByName _variantGetTypeByName;
-    private readonly GDExtensionInterfaceVariantCanConvert _variantCanConvert;
-    private readonly GDExtensionInterfaceVariantCanConvertStrict _variantCanConvertStrict;
-    private readonly GDExtensionInterfaceGetVariantFromTypeConstructor _getVariantFromTypeConstructor;
-    private readonly GDExtensionInterfaceGetVariantToTypeConstructor _getVariantToTypeConstructor;
-    private readonly GDExtensionInterfaceVariantGetPtrInternalGetter _variantGetPtrInternalGetter;
-    private readonly GDExtensionInterfaceVariantGetPtrOperatorEvaluator _variantGetPtrOperatorEvaluator;
-    private readonly GDExtensionInterfaceVariantGetPtrBuiltinMethod _variantGetPtrBuiltinMethod;
-    private readonly GDExtensionInterfaceVariantGetPtrConstructor _variantGetPtrConstructor;
-    private readonly GDExtensionInterfaceVariantGetPtrDestructor _variantGetPtrDestructor;
-    private readonly GDExtensionInterfaceVariantConstruct _variantConstruct;
-    private readonly GDExtensionInterfaceVariantGetPtrSetter _variantGetPtrSetter;
-    private readonly GDExtensionInterfaceVariantGetPtrGetter _variantGetPtrGetter;
-    private readonly GDExtensionInterfaceVariantGetPtrIndexedSetter _variantGetPtrIndexedSetter;
-    private readonly GDExtensionInterfaceVariantGetPtrIndexedGetter _variantGetPtrIndexedGetter;
-    private readonly GDExtensionInterfaceVariantGetPtrKeyedSetter _variantGetPtrKeyedSetter;
-    private readonly GDExtensionInterfaceVariantGetPtrKeyedGetter _variantGetPtrKeyedGetter;
-    private readonly GDExtensionInterfaceVariantGetPtrKeyedChecker _variantGetPtrKeyedChecker;
-    private readonly GDExtensionInterfaceVariantGetConstantValue _variantGetConstantValue;
-    private readonly GDExtensionInterfaceVariantGetPtrUtilityFunction _variantGetPtrUtilityFunction;
-    private readonly GDExtensionInterfaceStringNewWithLatin1Chars _stringNewWithLatin1Chars;
-    private readonly GDExtensionInterfaceStringNewWithUtf8Chars _stringNewWithUtf8Chars;
-    private readonly GDExtensionInterfaceStringNewWithUtf16Chars _stringNewWithUtf16Chars;
-    private readonly GDExtensionInterfaceStringNewWithUtf32Chars _stringNewWithUtf32Chars;
-    private readonly GDExtensionInterfaceStringNewWithWideChars _stringNewWithWideChars;
-    private readonly GDExtensionInterfaceStringNewWithLatin1CharsAndLen _stringNewWithLatin1CharsAndLen;
-    private readonly GDExtensionInterfaceStringNewWithUtf8CharsAndLen _stringNewWithUtf8CharsAndLen;
-    private readonly GDExtensionInterfaceStringNewWithUtf8CharsAndLen2 _stringNewWithUtf8CharsAndLen2;
-    private readonly GDExtensionInterfaceStringNewWithUtf16CharsAndLen _stringNewWithUtf16CharsAndLen;
-    private readonly GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 _stringNewWithUtf16CharsAndLen2;
-    private readonly GDExtensionInterfaceStringNewWithUtf32CharsAndLen _stringNewWithUtf32CharsAndLen;
-    private readonly GDExtensionInterfaceStringNewWithWideCharsAndLen _stringNewWithWideCharsAndLen;
-    private readonly GDExtensionInterfaceStringToLatin1Chars _stringToLatin1Chars;
-    private readonly GDExtensionInterfaceStringToUtf8Chars _stringToUtf8Chars;
-    private readonly GDExtensionInterfaceStringToUtf16Chars _stringToUtf16Chars;
-    private readonly GDExtensionInterfaceStringToUtf32Chars _stringToUtf32Chars;
-    private readonly GDExtensionInterfaceStringToWideChars _stringToWideChars;
-    private readonly GDExtensionInterfaceStringOperatorIndex _stringOperatorIndex;
-    private readonly GDExtensionInterfaceStringOperatorIndexConst _stringOperatorIndexConst;
-    private readonly GDExtensionInterfaceStringOperatorPlusEqString _stringOperatorPlusEqString;
-    private readonly GDExtensionInterfaceStringOperatorPlusEqChar _stringOperatorPlusEqChar;
-    private readonly GDExtensionInterfaceStringOperatorPlusEqCstr _stringOperatorPlusEqCstr;
-    private readonly GDExtensionInterfaceStringOperatorPlusEqWcstr _stringOperatorPlusEqWcstr;
-    private readonly GDExtensionInterfaceStringOperatorPlusEqC32Str _stringOperatorPlusEqC32Str;
-    private readonly GDExtensionInterfaceStringResize _stringResize;
-    private readonly GDExtensionInterfaceStringNameNewWithLatin1Chars _stringNameNewWithLatin1Chars;
-    private readonly GDExtensionInterfaceStringNameNewWithUtf8Chars _stringNameNewWithUtf8Chars;
-    private readonly GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen _stringNameNewWithUtf8CharsAndLen;
-    private readonly GDExtensionInterfaceXmlParserOpenBuffer _xmlParserOpenBuffer;
-    private readonly GDExtensionInterfaceFileAccessStoreBuffer _fileAccessStoreBuffer;
-    private readonly GDExtensionInterfaceFileAccessGetBuffer _fileAccessGetBuffer;
-    private readonly GDExtensionInterfaceImagePtrw _imagePtrw;
-    private readonly GDExtensionInterfaceImagePtr _imagePtr;
-    private readonly GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask _workerThreadPoolAddNativeGroupTask;
-    private readonly GDExtensionInterfaceWorkerThreadPoolAddNativeTask _workerThreadPoolAddNativeTask;
-    private readonly GDExtensionInterfacePackedByteArrayOperatorIndex _packedByteArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedByteArrayOperatorIndexConst _packedByteArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedFloat32ArrayOperatorIndex _packedFloat32ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedFloat32ArrayOperatorIndexConst _packedFloat32ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedFloat64ArrayOperatorIndex _packedFloat64ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedFloat64ArrayOperatorIndexConst _packedFloat64ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedInt32ArrayOperatorIndex _packedInt32ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedInt32ArrayOperatorIndexConst _packedInt32ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedInt64ArrayOperatorIndex _packedInt64ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedInt64ArrayOperatorIndexConst _packedInt64ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedStringArrayOperatorIndex _packedStringArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedStringArrayOperatorIndexConst _packedStringArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedVector2ArrayOperatorIndex _packedVector2ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedVector2ArrayOperatorIndexConst _packedVector2ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedVector3ArrayOperatorIndex _packedVector3ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedVector3ArrayOperatorIndexConst _packedVector3ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedVector4ArrayOperatorIndex _packedVector4ArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedVector4ArrayOperatorIndexConst _packedVector4ArrayOperatorIndexConst;
-    private readonly GDExtensionInterfacePackedColorArrayOperatorIndex _packedColorArrayOperatorIndex;
-    private readonly GDExtensionInterfacePackedColorArrayOperatorIndexConst _packedColorArrayOperatorIndexConst;
-    private readonly GDExtensionInterfaceArrayOperatorIndex _arrayOperatorIndex;
-    private readonly GDExtensionInterfaceArrayOperatorIndexConst _arrayOperatorIndexConst;
-    private readonly GDExtensionInterfaceArrayRef _arrayRef;
-    private readonly GDExtensionInterfaceArraySetTyped _arraySetTyped;
-    private readonly GDExtensionInterfaceDictionaryOperatorIndex _dictionaryOperatorIndex;
-    private readonly GDExtensionInterfaceDictionaryOperatorIndexConst _dictionaryOperatorIndexConst;
-    private readonly GDExtensionInterfaceDictionarySetTyped _dictionarySetTyped;
-    private readonly GDExtensionInterfaceObjectMethodBindCall _objectMethodBindCall;
-    private readonly GDExtensionInterfaceObjectMethodBindPtrcall _objectMethodBindPtrcall;
-    private readonly GDExtensionInterfaceObjectDestroy _objectDestroy;
-    private readonly GDExtensionInterfaceGlobalGetSingleton _globalGetSingleton;
-    private readonly GDExtensionInterfaceObjectGetInstanceBinding _objectGetInstanceBinding;
-    private readonly GDExtensionInterfaceObjectSetInstanceBinding _objectSetInstanceBinding;
-    private readonly GDExtensionInterfaceObjectFreeInstanceBinding _objectFreeInstanceBinding;
-    private readonly GDExtensionInterfaceObjectSetInstance _objectSetInstance;
-    private readonly GDExtensionInterfaceObjectGetClassName _objectGetClassName;
-    private readonly GDExtensionInterfaceObjectCastTo _objectCastTo;
-    private readonly GDExtensionInterfaceObjectGetInstanceFromId _objectGetInstanceFromId;
-    private readonly GDExtensionInterfaceObjectGetInstanceId _objectGetInstanceId;
-    private readonly GDExtensionInterfaceObjectHasScriptMethod _objectHasScriptMethod;
-    private readonly GDExtensionInterfaceObjectCallScriptMethod _objectCallScriptMethod;
-    private readonly GDExtensionInterfaceRefGetObject _refGetObject;
-    private readonly GDExtensionInterfaceRefSetObject _refSetObject;
-    private readonly GDExtensionInterfaceScriptInstanceCreate _scriptInstanceCreate;
-    private readonly GDExtensionInterfaceScriptInstanceCreate2 _scriptInstanceCreate2;
-    private readonly GDExtensionInterfaceScriptInstanceCreate3 _scriptInstanceCreate3;
-    private readonly GDExtensionInterfacePlaceholderScriptInstanceCreate _placeholderScriptInstanceCreate;
-    private readonly GDExtensionInterfacePlaceholderScriptInstanceUpdate _placeholderScriptInstanceUpdate;
-    private readonly GDExtensionInterfaceObjectGetScriptInstance _objectGetScriptInstance;
-    private readonly GDExtensionInterfaceObjectSetScriptInstance _objectSetScriptInstance;
-    private readonly GDExtensionInterfaceCallableCustomCreate _callableCustomCreate;
-    private readonly GDExtensionInterfaceCallableCustomCreate2 _callableCustomCreate2;
-    private readonly GDExtensionInterfaceCallableCustomGetUserdata _callableCustomGetUserdata;
-    private readonly GDExtensionInterfaceClassdbConstructObject _classdbConstructObject;
-    private readonly GDExtensionInterfaceClassdbConstructObject2 _classdbConstructObject2;
-    private readonly GDExtensionInterfaceClassdbConstructObject3 _classdbConstructObject3;
-    private readonly GDExtensionInterfaceClassdbGetMethodBind _classdbGetMethodBind;
-    private readonly GDExtensionInterfaceClassdbGetClassTag _classdbGetClassTag;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClass _classdbRegisterExtensionClass;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClass2 _classdbRegisterExtensionClass2;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClass3 _classdbRegisterExtensionClass3;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClass4 _classdbRegisterExtensionClass4;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClass5 _classdbRegisterExtensionClass5;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClass6 _classdbRegisterExtensionClass6;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassMethod _classdbRegisterExtensionClassMethod;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassVirtualMethod _classdbRegisterExtensionClassVirtualMethod;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant _classdbRegisterExtensionClassIntegerConstant;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassProperty _classdbRegisterExtensionClassProperty;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed _classdbRegisterExtensionClassPropertyIndexed;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup _classdbRegisterExtensionClassPropertyGroup;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup _classdbRegisterExtensionClassPropertySubgroup;
-    private readonly GDExtensionInterfaceClassdbRegisterExtensionClassSignal _classdbRegisterExtensionClassSignal;
-    private readonly GDExtensionInterfaceClassdbUnregisterExtensionClass _classdbUnregisterExtensionClass;
-    private readonly GDExtensionInterfaceGetLibraryPath _getLibraryPath;
-    private readonly GDExtensionInterfaceEditorAddPlugin _editorAddPlugin;
-    private readonly GDExtensionInterfaceEditorRemovePlugin _editorRemovePlugin;
-    private readonly GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars _editorHelpLoadXmlFromUtf8Chars;
-    private readonly GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen _editorHelpLoadXmlFromUtf8CharsAndLen;
-    private readonly GDExtensionInterfaceEditorRegisterGetClassesUsedCallback _editorRegisterGetClassesUsedCallback;
-    private readonly GDExtensionInterfaceRegisterMainLoopCallbacks _registerMainLoopCallbacks;
-
     public GDExtensionInterface(GDExtensionInterfaceGetProcAddress getProcAddress)
     {
         ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));
-        _getGodotVersion = (GDExtensionInterfaceGetGodotVersion)Load(getProcAddress, "get_godot_version"u8);
-        _getGodotVersion2 = (GDExtensionInterfaceGetGodotVersion2)Load(getProcAddress, "get_godot_version2"u8);
-        _memAlloc = (GDExtensionInterfaceMemAlloc)Load(getProcAddress, "mem_alloc"u8);
-        _memRealloc = (GDExtensionInterfaceMemRealloc)Load(getProcAddress, "mem_realloc"u8);
-        _memFree = (GDExtensionInterfaceMemFree)Load(getProcAddress, "mem_free"u8);
-        _memAlloc2 = (GDExtensionInterfaceMemAlloc2)Load(getProcAddress, "mem_alloc2"u8);
-        _memRealloc2 = (GDExtensionInterfaceMemRealloc2)Load(getProcAddress, "mem_realloc2"u8);
-        _memFree2 = (GDExtensionInterfaceMemFree2)Load(getProcAddress, "mem_free2"u8);
-        _printError = (GDExtensionInterfacePrintError)Load(getProcAddress, "print_error"u8);
-        _printErrorWithMessage = (GDExtensionInterfacePrintErrorWithMessage)Load(getProcAddress, "print_error_with_message"u8);
-        _printWarning = (GDExtensionInterfacePrintWarning)Load(getProcAddress, "print_warning"u8);
-        _printWarningWithMessage = (GDExtensionInterfacePrintWarningWithMessage)Load(getProcAddress, "print_warning_with_message"u8);
-        _printScriptError = (GDExtensionInterfacePrintScriptError)Load(getProcAddress, "print_script_error"u8);
-        _printScriptErrorWithMessage = (GDExtensionInterfacePrintScriptErrorWithMessage)Load(getProcAddress, "print_script_error_with_message"u8);
-        _getNativeStructSize = (GDExtensionInterfaceGetNativeStructSize)Load(getProcAddress, "get_native_struct_size"u8);
-        _variantNewCopy = (GDExtensionInterfaceVariantNewCopy)Load(getProcAddress, "variant_new_copy"u8);
-        _variantNewNil = (GDExtensionInterfaceVariantNewNil)Load(getProcAddress, "variant_new_nil"u8);
-        _variantDestroy = (GDExtensionInterfaceVariantDestroy)Load(getProcAddress, "variant_destroy"u8);
-        _variantCall = (GDExtensionInterfaceVariantCall)Load(getProcAddress, "variant_call"u8);
-        _variantCallStatic = (GDExtensionInterfaceVariantCallStatic)Load(getProcAddress, "variant_call_static"u8);
-        _variantEvaluate = (GDExtensionInterfaceVariantEvaluate)Load(getProcAddress, "variant_evaluate"u8);
-        _variantSet = (GDExtensionInterfaceVariantSet)Load(getProcAddress, "variant_set"u8);
-        _variantSetNamed = (GDExtensionInterfaceVariantSetNamed)Load(getProcAddress, "variant_set_named"u8);
-        _variantSetKeyed = (GDExtensionInterfaceVariantSetKeyed)Load(getProcAddress, "variant_set_keyed"u8);
-        _variantSetIndexed = (GDExtensionInterfaceVariantSetIndexed)Load(getProcAddress, "variant_set_indexed"u8);
-        _variantGet = (GDExtensionInterfaceVariantGet)Load(getProcAddress, "variant_get"u8);
-        _variantGetNamed = (GDExtensionInterfaceVariantGetNamed)Load(getProcAddress, "variant_get_named"u8);
-        _variantGetKeyed = (GDExtensionInterfaceVariantGetKeyed)Load(getProcAddress, "variant_get_keyed"u8);
-        _variantGetIndexed = (GDExtensionInterfaceVariantGetIndexed)Load(getProcAddress, "variant_get_indexed"u8);
-        _variantIterInit = (GDExtensionInterfaceVariantIterInit)Load(getProcAddress, "variant_iter_init"u8);
-        _variantIterNext = (GDExtensionInterfaceVariantIterNext)Load(getProcAddress, "variant_iter_next"u8);
-        _variantIterGet = (GDExtensionInterfaceVariantIterGet)Load(getProcAddress, "variant_iter_get"u8);
-        _variantHash = (GDExtensionInterfaceVariantHash)Load(getProcAddress, "variant_hash"u8);
-        _variantRecursiveHash = (GDExtensionInterfaceVariantRecursiveHash)Load(getProcAddress, "variant_recursive_hash"u8);
-        _variantHashCompare = (GDExtensionInterfaceVariantHashCompare)Load(getProcAddress, "variant_hash_compare"u8);
-        _variantBooleanize = (GDExtensionInterfaceVariantBooleanize)Load(getProcAddress, "variant_booleanize"u8);
-        _variantDuplicate = (GDExtensionInterfaceVariantDuplicate)Load(getProcAddress, "variant_duplicate"u8);
-        _variantStringify = (GDExtensionInterfaceVariantStringify)Load(getProcAddress, "variant_stringify"u8);
-        _variantGetType = (GDExtensionInterfaceVariantGetType)Load(getProcAddress, "variant_get_type"u8);
-        _variantHasMethod = (GDExtensionInterfaceVariantHasMethod)Load(getProcAddress, "variant_has_method"u8);
-        _variantHasMember = (GDExtensionInterfaceVariantHasMember)Load(getProcAddress, "variant_has_member"u8);
-        _variantHasKey = (GDExtensionInterfaceVariantHasKey)Load(getProcAddress, "variant_has_key"u8);
-        _variantGetObjectInstanceId = (GDExtensionInterfaceVariantGetObjectInstanceId)Load(getProcAddress, "variant_get_object_instance_id"u8);
-        _variantGetTypeName = (GDExtensionInterfaceVariantGetTypeName)Load(getProcAddress, "variant_get_type_name"u8);
-        _variantGetTypeByName = (GDExtensionInterfaceVariantGetTypeByName)Load(getProcAddress, "variant_get_type_by_name"u8);
-        _variantCanConvert = (GDExtensionInterfaceVariantCanConvert)Load(getProcAddress, "variant_can_convert"u8);
-        _variantCanConvertStrict = (GDExtensionInterfaceVariantCanConvertStrict)Load(getProcAddress, "variant_can_convert_strict"u8);
-        _getVariantFromTypeConstructor = (GDExtensionInterfaceGetVariantFromTypeConstructor)Load(getProcAddress, "get_variant_from_type_constructor"u8);
-        _getVariantToTypeConstructor = (GDExtensionInterfaceGetVariantToTypeConstructor)Load(getProcAddress, "get_variant_to_type_constructor"u8);
-        _variantGetPtrInternalGetter = (GDExtensionInterfaceVariantGetPtrInternalGetter)Load(getProcAddress, "variant_get_ptr_internal_getter"u8);
-        _variantGetPtrOperatorEvaluator = (GDExtensionInterfaceVariantGetPtrOperatorEvaluator)Load(getProcAddress, "variant_get_ptr_operator_evaluator"u8);
-        _variantGetPtrBuiltinMethod = (GDExtensionInterfaceVariantGetPtrBuiltinMethod)Load(getProcAddress, "variant_get_ptr_builtin_method"u8);
-        _variantGetPtrConstructor = (GDExtensionInterfaceVariantGetPtrConstructor)Load(getProcAddress, "variant_get_ptr_constructor"u8);
-        _variantGetPtrDestructor = (GDExtensionInterfaceVariantGetPtrDestructor)Load(getProcAddress, "variant_get_ptr_destructor"u8);
-        _variantConstruct = (GDExtensionInterfaceVariantConstruct)Load(getProcAddress, "variant_construct"u8);
-        _variantGetPtrSetter = (GDExtensionInterfaceVariantGetPtrSetter)Load(getProcAddress, "variant_get_ptr_setter"u8);
-        _variantGetPtrGetter = (GDExtensionInterfaceVariantGetPtrGetter)Load(getProcAddress, "variant_get_ptr_getter"u8);
-        _variantGetPtrIndexedSetter = (GDExtensionInterfaceVariantGetPtrIndexedSetter)Load(getProcAddress, "variant_get_ptr_indexed_setter"u8);
-        _variantGetPtrIndexedGetter = (GDExtensionInterfaceVariantGetPtrIndexedGetter)Load(getProcAddress, "variant_get_ptr_indexed_getter"u8);
-        _variantGetPtrKeyedSetter = (GDExtensionInterfaceVariantGetPtrKeyedSetter)Load(getProcAddress, "variant_get_ptr_keyed_setter"u8);
-        _variantGetPtrKeyedGetter = (GDExtensionInterfaceVariantGetPtrKeyedGetter)Load(getProcAddress, "variant_get_ptr_keyed_getter"u8);
-        _variantGetPtrKeyedChecker = (GDExtensionInterfaceVariantGetPtrKeyedChecker)Load(getProcAddress, "variant_get_ptr_keyed_checker"u8);
-        _variantGetConstantValue = (GDExtensionInterfaceVariantGetConstantValue)Load(getProcAddress, "variant_get_constant_value"u8);
-        _variantGetPtrUtilityFunction = (GDExtensionInterfaceVariantGetPtrUtilityFunction)Load(getProcAddress, "variant_get_ptr_utility_function"u8);
-        _stringNewWithLatin1Chars = (GDExtensionInterfaceStringNewWithLatin1Chars)Load(getProcAddress, "string_new_with_latin1_chars"u8);
-        _stringNewWithUtf8Chars = (GDExtensionInterfaceStringNewWithUtf8Chars)Load(getProcAddress, "string_new_with_utf8_chars"u8);
-        _stringNewWithUtf16Chars = (GDExtensionInterfaceStringNewWithUtf16Chars)Load(getProcAddress, "string_new_with_utf16_chars"u8);
-        _stringNewWithUtf32Chars = (GDExtensionInterfaceStringNewWithUtf32Chars)Load(getProcAddress, "string_new_with_utf32_chars"u8);
-        _stringNewWithWideChars = (GDExtensionInterfaceStringNewWithWideChars)Load(getProcAddress, "string_new_with_wide_chars"u8);
-        _stringNewWithLatin1CharsAndLen = (GDExtensionInterfaceStringNewWithLatin1CharsAndLen)Load(getProcAddress, "string_new_with_latin1_chars_and_len"u8);
-        _stringNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen)Load(getProcAddress, "string_new_with_utf8_chars_and_len"u8);
-        _stringNewWithUtf8CharsAndLen2 = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen2)Load(getProcAddress, "string_new_with_utf8_chars_and_len2"u8);
-        _stringNewWithUtf16CharsAndLen = (GDExtensionInterfaceStringNewWithUtf16CharsAndLen)Load(getProcAddress, "string_new_with_utf16_chars_and_len"u8);
-        _stringNewWithUtf16CharsAndLen2 = (GDExtensionInterfaceStringNewWithUtf16CharsAndLen2)Load(getProcAddress, "string_new_with_utf16_chars_and_len2"u8);
-        _stringNewWithUtf32CharsAndLen = (GDExtensionInterfaceStringNewWithUtf32CharsAndLen)Load(getProcAddress, "string_new_with_utf32_chars_and_len"u8);
-        _stringNewWithWideCharsAndLen = (GDExtensionInterfaceStringNewWithWideCharsAndLen)Load(getProcAddress, "string_new_with_wide_chars_and_len"u8);
-        _stringToLatin1Chars = (GDExtensionInterfaceStringToLatin1Chars)Load(getProcAddress, "string_to_latin1_chars"u8);
-        _stringToUtf8Chars = (GDExtensionInterfaceStringToUtf8Chars)Load(getProcAddress, "string_to_utf8_chars"u8);
-        _stringToUtf16Chars = (GDExtensionInterfaceStringToUtf16Chars)Load(getProcAddress, "string_to_utf16_chars"u8);
-        _stringToUtf32Chars = (GDExtensionInterfaceStringToUtf32Chars)Load(getProcAddress, "string_to_utf32_chars"u8);
-        _stringToWideChars = (GDExtensionInterfaceStringToWideChars)Load(getProcAddress, "string_to_wide_chars"u8);
-        _stringOperatorIndex = (GDExtensionInterfaceStringOperatorIndex)Load(getProcAddress, "string_operator_index"u8);
-        _stringOperatorIndexConst = (GDExtensionInterfaceStringOperatorIndexConst)Load(getProcAddress, "string_operator_index_const"u8);
-        _stringOperatorPlusEqString = (GDExtensionInterfaceStringOperatorPlusEqString)Load(getProcAddress, "string_operator_plus_eq_string"u8);
-        _stringOperatorPlusEqChar = (GDExtensionInterfaceStringOperatorPlusEqChar)Load(getProcAddress, "string_operator_plus_eq_char"u8);
-        _stringOperatorPlusEqCstr = (GDExtensionInterfaceStringOperatorPlusEqCstr)Load(getProcAddress, "string_operator_plus_eq_cstr"u8);
-        _stringOperatorPlusEqWcstr = (GDExtensionInterfaceStringOperatorPlusEqWcstr)Load(getProcAddress, "string_operator_plus_eq_wcstr"u8);
-        _stringOperatorPlusEqC32Str = (GDExtensionInterfaceStringOperatorPlusEqC32Str)Load(getProcAddress, "string_operator_plus_eq_c32str"u8);
-        _stringResize = (GDExtensionInterfaceStringResize)Load(getProcAddress, "string_resize"u8);
-        _stringNameNewWithLatin1Chars = (GDExtensionInterfaceStringNameNewWithLatin1Chars)Load(getProcAddress, "string_name_new_with_latin1_chars"u8);
-        _stringNameNewWithUtf8Chars = (GDExtensionInterfaceStringNameNewWithUtf8Chars)Load(getProcAddress, "string_name_new_with_utf8_chars"u8);
-        _stringNameNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen)Load(getProcAddress, "string_name_new_with_utf8_chars_and_len"u8);
-        _xmlParserOpenBuffer = (GDExtensionInterfaceXmlParserOpenBuffer)Load(getProcAddress, "xml_parser_open_buffer"u8);
-        _fileAccessStoreBuffer = (GDExtensionInterfaceFileAccessStoreBuffer)Load(getProcAddress, "file_access_store_buffer"u8);
-        _fileAccessGetBuffer = (GDExtensionInterfaceFileAccessGetBuffer)Load(getProcAddress, "file_access_get_buffer"u8);
-        _imagePtrw = (GDExtensionInterfaceImagePtrw)Load(getProcAddress, "image_ptrw"u8);
-        _imagePtr = (GDExtensionInterfaceImagePtr)Load(getProcAddress, "image_ptr"u8);
-        _workerThreadPoolAddNativeGroupTask = (GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask)Load(getProcAddress, "worker_thread_pool_add_native_group_task"u8);
-        _workerThreadPoolAddNativeTask = (GDExtensionInterfaceWorkerThreadPoolAddNativeTask)Load(getProcAddress, "worker_thread_pool_add_native_task"u8);
-        _packedByteArrayOperatorIndex = (GDExtensionInterfacePackedByteArrayOperatorIndex)Load(getProcAddress, "packed_byte_array_operator_index"u8);
-        _packedByteArrayOperatorIndexConst = (GDExtensionInterfacePackedByteArrayOperatorIndexConst)Load(getProcAddress, "packed_byte_array_operator_index_const"u8);
-        _packedFloat32ArrayOperatorIndex = (GDExtensionInterfacePackedFloat32ArrayOperatorIndex)Load(getProcAddress, "packed_float32_array_operator_index"u8);
-        _packedFloat32ArrayOperatorIndexConst = (GDExtensionInterfacePackedFloat32ArrayOperatorIndexConst)Load(getProcAddress, "packed_float32_array_operator_index_const"u8);
-        _packedFloat64ArrayOperatorIndex = (GDExtensionInterfacePackedFloat64ArrayOperatorIndex)Load(getProcAddress, "packed_float64_array_operator_index"u8);
-        _packedFloat64ArrayOperatorIndexConst = (GDExtensionInterfacePackedFloat64ArrayOperatorIndexConst)Load(getProcAddress, "packed_float64_array_operator_index_const"u8);
-        _packedInt32ArrayOperatorIndex = (GDExtensionInterfacePackedInt32ArrayOperatorIndex)Load(getProcAddress, "packed_int32_array_operator_index"u8);
-        _packedInt32ArrayOperatorIndexConst = (GDExtensionInterfacePackedInt32ArrayOperatorIndexConst)Load(getProcAddress, "packed_int32_array_operator_index_const"u8);
-        _packedInt64ArrayOperatorIndex = (GDExtensionInterfacePackedInt64ArrayOperatorIndex)Load(getProcAddress, "packed_int64_array_operator_index"u8);
-        _packedInt64ArrayOperatorIndexConst = (GDExtensionInterfacePackedInt64ArrayOperatorIndexConst)Load(getProcAddress, "packed_int64_array_operator_index_const"u8);
-        _packedStringArrayOperatorIndex = (GDExtensionInterfacePackedStringArrayOperatorIndex)Load(getProcAddress, "packed_string_array_operator_index"u8);
-        _packedStringArrayOperatorIndexConst = (GDExtensionInterfacePackedStringArrayOperatorIndexConst)Load(getProcAddress, "packed_string_array_operator_index_const"u8);
-        _packedVector2ArrayOperatorIndex = (GDExtensionInterfacePackedVector2ArrayOperatorIndex)Load(getProcAddress, "packed_vector2_array_operator_index"u8);
-        _packedVector2ArrayOperatorIndexConst = (GDExtensionInterfacePackedVector2ArrayOperatorIndexConst)Load(getProcAddress, "packed_vector2_array_operator_index_const"u8);
-        _packedVector3ArrayOperatorIndex = (GDExtensionInterfacePackedVector3ArrayOperatorIndex)Load(getProcAddress, "packed_vector3_array_operator_index"u8);
-        _packedVector3ArrayOperatorIndexConst = (GDExtensionInterfacePackedVector3ArrayOperatorIndexConst)Load(getProcAddress, "packed_vector3_array_operator_index_const"u8);
-        _packedVector4ArrayOperatorIndex = (GDExtensionInterfacePackedVector4ArrayOperatorIndex)Load(getProcAddress, "packed_vector4_array_operator_index"u8);
-        _packedVector4ArrayOperatorIndexConst = (GDExtensionInterfacePackedVector4ArrayOperatorIndexConst)Load(getProcAddress, "packed_vector4_array_operator_index_const"u8);
-        _packedColorArrayOperatorIndex = (GDExtensionInterfacePackedColorArrayOperatorIndex)Load(getProcAddress, "packed_color_array_operator_index"u8);
-        _packedColorArrayOperatorIndexConst = (GDExtensionInterfacePackedColorArrayOperatorIndexConst)Load(getProcAddress, "packed_color_array_operator_index_const"u8);
-        _arrayOperatorIndex = (GDExtensionInterfaceArrayOperatorIndex)Load(getProcAddress, "array_operator_index"u8);
-        _arrayOperatorIndexConst = (GDExtensionInterfaceArrayOperatorIndexConst)Load(getProcAddress, "array_operator_index_const"u8);
-        _arrayRef = (GDExtensionInterfaceArrayRef)Load(getProcAddress, "array_ref"u8);
-        _arraySetTyped = (GDExtensionInterfaceArraySetTyped)Load(getProcAddress, "array_set_typed"u8);
-        _dictionaryOperatorIndex = (GDExtensionInterfaceDictionaryOperatorIndex)Load(getProcAddress, "dictionary_operator_index"u8);
-        _dictionaryOperatorIndexConst = (GDExtensionInterfaceDictionaryOperatorIndexConst)Load(getProcAddress, "dictionary_operator_index_const"u8);
-        _dictionarySetTyped = (GDExtensionInterfaceDictionarySetTyped)Load(getProcAddress, "dictionary_set_typed"u8);
-        _objectMethodBindCall = (GDExtensionInterfaceObjectMethodBindCall)Load(getProcAddress, "object_method_bind_call"u8);
-        _objectMethodBindPtrcall = (GDExtensionInterfaceObjectMethodBindPtrcall)Load(getProcAddress, "object_method_bind_ptrcall"u8);
-        _objectDestroy = (GDExtensionInterfaceObjectDestroy)Load(getProcAddress, "object_destroy"u8);
-        _globalGetSingleton = (GDExtensionInterfaceGlobalGetSingleton)Load(getProcAddress, "global_get_singleton"u8);
-        _objectGetInstanceBinding = (GDExtensionInterfaceObjectGetInstanceBinding)Load(getProcAddress, "object_get_instance_binding"u8);
-        _objectSetInstanceBinding = (GDExtensionInterfaceObjectSetInstanceBinding)Load(getProcAddress, "object_set_instance_binding"u8);
-        _objectFreeInstanceBinding = (GDExtensionInterfaceObjectFreeInstanceBinding)Load(getProcAddress, "object_free_instance_binding"u8);
-        _objectSetInstance = (GDExtensionInterfaceObjectSetInstance)Load(getProcAddress, "object_set_instance"u8);
-        _objectGetClassName = (GDExtensionInterfaceObjectGetClassName)Load(getProcAddress, "object_get_class_name"u8);
-        _objectCastTo = (GDExtensionInterfaceObjectCastTo)Load(getProcAddress, "object_cast_to"u8);
-        _objectGetInstanceFromId = (GDExtensionInterfaceObjectGetInstanceFromId)Load(getProcAddress, "object_get_instance_from_id"u8);
-        _objectGetInstanceId = (GDExtensionInterfaceObjectGetInstanceId)Load(getProcAddress, "object_get_instance_id"u8);
-        _objectHasScriptMethod = (GDExtensionInterfaceObjectHasScriptMethod)Load(getProcAddress, "object_has_script_method"u8);
-        _objectCallScriptMethod = (GDExtensionInterfaceObjectCallScriptMethod)Load(getProcAddress, "object_call_script_method"u8);
-        _refGetObject = (GDExtensionInterfaceRefGetObject)Load(getProcAddress, "ref_get_object"u8);
-        _refSetObject = (GDExtensionInterfaceRefSetObject)Load(getProcAddress, "ref_set_object"u8);
-        _scriptInstanceCreate = (GDExtensionInterfaceScriptInstanceCreate)Load(getProcAddress, "script_instance_create"u8);
-        _scriptInstanceCreate2 = (GDExtensionInterfaceScriptInstanceCreate2)Load(getProcAddress, "script_instance_create2"u8);
-        _scriptInstanceCreate3 = (GDExtensionInterfaceScriptInstanceCreate3)Load(getProcAddress, "script_instance_create3"u8);
-        _placeholderScriptInstanceCreate = (GDExtensionInterfacePlaceholderScriptInstanceCreate)Load(getProcAddress, "placeholder_script_instance_create"u8);
-        _placeholderScriptInstanceUpdate = (GDExtensionInterfacePlaceholderScriptInstanceUpdate)Load(getProcAddress, "placeholder_script_instance_update"u8);
-        _objectGetScriptInstance = (GDExtensionInterfaceObjectGetScriptInstance)Load(getProcAddress, "object_get_script_instance"u8);
-        _objectSetScriptInstance = (GDExtensionInterfaceObjectSetScriptInstance)Load(getProcAddress, "object_set_script_instance"u8);
-        _callableCustomCreate = (GDExtensionInterfaceCallableCustomCreate)Load(getProcAddress, "callable_custom_create"u8);
-        _callableCustomCreate2 = (GDExtensionInterfaceCallableCustomCreate2)Load(getProcAddress, "callable_custom_create2"u8);
-        _callableCustomGetUserdata = (GDExtensionInterfaceCallableCustomGetUserdata)Load(getProcAddress, "callable_custom_get_userdata"u8);
-        _classdbConstructObject = (GDExtensionInterfaceClassdbConstructObject)Load(getProcAddress, "classdb_construct_object"u8);
-        _classdbConstructObject2 = (GDExtensionInterfaceClassdbConstructObject2)Load(getProcAddress, "classdb_construct_object2"u8);
-        _classdbConstructObject3 = (GDExtensionInterfaceClassdbConstructObject3)Load(getProcAddress, "classdb_construct_object3"u8);
-        _classdbGetMethodBind = (GDExtensionInterfaceClassdbGetMethodBind)Load(getProcAddress, "classdb_get_method_bind"u8);
-        _classdbGetClassTag = (GDExtensionInterfaceClassdbGetClassTag)Load(getProcAddress, "classdb_get_class_tag"u8);
-        _classdbRegisterExtensionClass = (GDExtensionInterfaceClassdbRegisterExtensionClass)Load(getProcAddress, "classdb_register_extension_class"u8);
-        _classdbRegisterExtensionClass2 = (GDExtensionInterfaceClassdbRegisterExtensionClass2)Load(getProcAddress, "classdb_register_extension_class2"u8);
-        _classdbRegisterExtensionClass3 = (GDExtensionInterfaceClassdbRegisterExtensionClass3)Load(getProcAddress, "classdb_register_extension_class3"u8);
-        _classdbRegisterExtensionClass4 = (GDExtensionInterfaceClassdbRegisterExtensionClass4)Load(getProcAddress, "classdb_register_extension_class4"u8);
-        _classdbRegisterExtensionClass5 = (GDExtensionInterfaceClassdbRegisterExtensionClass5)Load(getProcAddress, "classdb_register_extension_class5"u8);
-        _classdbRegisterExtensionClass6 = (GDExtensionInterfaceClassdbRegisterExtensionClass6)Load(getProcAddress, "classdb_register_extension_class6"u8);
-        _classdbRegisterExtensionClassMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassMethod)Load(getProcAddress, "classdb_register_extension_class_method"u8);
-        _classdbRegisterExtensionClassVirtualMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassVirtualMethod)Load(getProcAddress, "classdb_register_extension_class_virtual_method"u8);
-        _classdbRegisterExtensionClassIntegerConstant = (GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant)Load(getProcAddress, "classdb_register_extension_class_integer_constant"u8);
-        _classdbRegisterExtensionClassProperty = (GDExtensionInterfaceClassdbRegisterExtensionClassProperty)Load(getProcAddress, "classdb_register_extension_class_property"u8);
-        _classdbRegisterExtensionClassPropertyIndexed = (GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed)Load(getProcAddress, "classdb_register_extension_class_property_indexed"u8);
-        _classdbRegisterExtensionClassPropertyGroup = (GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup)Load(getProcAddress, "classdb_register_extension_class_property_group"u8);
-        _classdbRegisterExtensionClassPropertySubgroup = (GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup)Load(getProcAddress, "classdb_register_extension_class_property_subgroup"u8);
-        _classdbRegisterExtensionClassSignal = (GDExtensionInterfaceClassdbRegisterExtensionClassSignal)Load(getProcAddress, "classdb_register_extension_class_signal"u8);
-        _classdbUnregisterExtensionClass = (GDExtensionInterfaceClassdbUnregisterExtensionClass)Load(getProcAddress, "classdb_unregister_extension_class"u8);
-        _getLibraryPath = (GDExtensionInterfaceGetLibraryPath)Load(getProcAddress, "get_library_path"u8);
-        _editorAddPlugin = (GDExtensionInterfaceEditorAddPlugin)Load(getProcAddress, "editor_add_plugin"u8);
-        _editorRemovePlugin = (GDExtensionInterfaceEditorRemovePlugin)Load(getProcAddress, "editor_remove_plugin"u8);
-        _editorHelpLoadXmlFromUtf8Chars = (GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars)Load(getProcAddress, "editor_help_load_xml_from_utf8_chars"u8);
-        _editorHelpLoadXmlFromUtf8CharsAndLen = (GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen)Load(getProcAddress, "editor_help_load_xml_from_utf8_chars_and_len"u8);
-        _editorRegisterGetClassesUsedCallback = (GDExtensionInterfaceEditorRegisterGetClassesUsedCallback)Load(getProcAddress, "editor_register_get_classes_used_callback"u8);
-        _registerMainLoopCallbacks = (GDExtensionInterfaceRegisterMainLoopCallbacks)Load(getProcAddress, "register_main_loop_callbacks"u8);
+        GetGodotVersion = (GDExtensionInterfaceGetGodotVersion)Load(getProcAddress, "get_godot_version"u8);
+        GetGodotVersion2 = (GDExtensionInterfaceGetGodotVersion2)Load(getProcAddress, "get_godot_version2"u8);
+        MemAlloc = (GDExtensionInterfaceMemAlloc)Load(getProcAddress, "mem_alloc"u8);
+        MemRealloc = (GDExtensionInterfaceMemRealloc)Load(getProcAddress, "mem_realloc"u8);
+        MemFree = (GDExtensionInterfaceMemFree)Load(getProcAddress, "mem_free"u8);
+        MemAlloc2 = (GDExtensionInterfaceMemAlloc2)Load(getProcAddress, "mem_alloc2"u8);
+        MemRealloc2 = (GDExtensionInterfaceMemRealloc2)Load(getProcAddress, "mem_realloc2"u8);
+        MemFree2 = (GDExtensionInterfaceMemFree2)Load(getProcAddress, "mem_free2"u8);
+        PrintError = (GDExtensionInterfacePrintError)Load(getProcAddress, "print_error"u8);
+        PrintErrorWithMessage = (GDExtensionInterfacePrintErrorWithMessage)Load(getProcAddress, "print_error_with_message"u8);
+        PrintWarning = (GDExtensionInterfacePrintWarning)Load(getProcAddress, "print_warning"u8);
+        PrintWarningWithMessage = (GDExtensionInterfacePrintWarningWithMessage)Load(getProcAddress, "print_warning_with_message"u8);
+        PrintScriptError = (GDExtensionInterfacePrintScriptError)Load(getProcAddress, "print_script_error"u8);
+        PrintScriptErrorWithMessage = (GDExtensionInterfacePrintScriptErrorWithMessage)Load(getProcAddress, "print_script_error_with_message"u8);
+        GetNativeStructSize = (GDExtensionInterfaceGetNativeStructSize)Load(getProcAddress, "get_native_struct_size"u8);
+        VariantNewCopy = (GDExtensionInterfaceVariantNewCopy)Load(getProcAddress, "variant_new_copy"u8);
+        VariantNewNil = (GDExtensionInterfaceVariantNewNil)Load(getProcAddress, "variant_new_nil"u8);
+        VariantDestroy = (GDExtensionInterfaceVariantDestroy)Load(getProcAddress, "variant_destroy"u8);
+        VariantCall = (GDExtensionInterfaceVariantCall)Load(getProcAddress, "variant_call"u8);
+        VariantCallStatic = (GDExtensionInterfaceVariantCallStatic)Load(getProcAddress, "variant_call_static"u8);
+        VariantEvaluate = (GDExtensionInterfaceVariantEvaluate)Load(getProcAddress, "variant_evaluate"u8);
+        VariantSet = (GDExtensionInterfaceVariantSet)Load(getProcAddress, "variant_set"u8);
+        VariantSetNamed = (GDExtensionInterfaceVariantSetNamed)Load(getProcAddress, "variant_set_named"u8);
+        VariantSetKeyed = (GDExtensionInterfaceVariantSetKeyed)Load(getProcAddress, "variant_set_keyed"u8);
+        VariantSetIndexed = (GDExtensionInterfaceVariantSetIndexed)Load(getProcAddress, "variant_set_indexed"u8);
+        VariantGet = (GDExtensionInterfaceVariantGet)Load(getProcAddress, "variant_get"u8);
+        VariantGetNamed = (GDExtensionInterfaceVariantGetNamed)Load(getProcAddress, "variant_get_named"u8);
+        VariantGetKeyed = (GDExtensionInterfaceVariantGetKeyed)Load(getProcAddress, "variant_get_keyed"u8);
+        VariantGetIndexed = (GDExtensionInterfaceVariantGetIndexed)Load(getProcAddress, "variant_get_indexed"u8);
+        VariantIterInit = (GDExtensionInterfaceVariantIterInit)Load(getProcAddress, "variant_iter_init"u8);
+        VariantIterNext = (GDExtensionInterfaceVariantIterNext)Load(getProcAddress, "variant_iter_next"u8);
+        VariantIterGet = (GDExtensionInterfaceVariantIterGet)Load(getProcAddress, "variant_iter_get"u8);
+        VariantHash = (GDExtensionInterfaceVariantHash)Load(getProcAddress, "variant_hash"u8);
+        VariantRecursiveHash = (GDExtensionInterfaceVariantRecursiveHash)Load(getProcAddress, "variant_recursive_hash"u8);
+        VariantHashCompare = (GDExtensionInterfaceVariantHashCompare)Load(getProcAddress, "variant_hash_compare"u8);
+        VariantBooleanize = (GDExtensionInterfaceVariantBooleanize)Load(getProcAddress, "variant_booleanize"u8);
+        VariantDuplicate = (GDExtensionInterfaceVariantDuplicate)Load(getProcAddress, "variant_duplicate"u8);
+        VariantStringify = (GDExtensionInterfaceVariantStringify)Load(getProcAddress, "variant_stringify"u8);
+        VariantGetType = (GDExtensionInterfaceVariantGetType)Load(getProcAddress, "variant_get_type"u8);
+        VariantHasMethod = (GDExtensionInterfaceVariantHasMethod)Load(getProcAddress, "variant_has_method"u8);
+        VariantHasMember = (GDExtensionInterfaceVariantHasMember)Load(getProcAddress, "variant_has_member"u8);
+        VariantHasKey = (GDExtensionInterfaceVariantHasKey)Load(getProcAddress, "variant_has_key"u8);
+        VariantGetObjectInstanceId = (GDExtensionInterfaceVariantGetObjectInstanceId)Load(getProcAddress, "variant_get_object_instance_id"u8);
+        VariantGetTypeName = (GDExtensionInterfaceVariantGetTypeName)Load(getProcAddress, "variant_get_type_name"u8);
+        VariantGetTypeByName = (GDExtensionInterfaceVariantGetTypeByName)Load(getProcAddress, "variant_get_type_by_name"u8);
+        VariantCanConvert = (GDExtensionInterfaceVariantCanConvert)Load(getProcAddress, "variant_can_convert"u8);
+        VariantCanConvertStrict = (GDExtensionInterfaceVariantCanConvertStrict)Load(getProcAddress, "variant_can_convert_strict"u8);
+        GetVariantFromTypeConstructor = (GDExtensionInterfaceGetVariantFromTypeConstructor)Load(getProcAddress, "get_variant_from_type_constructor"u8);
+        GetVariantToTypeConstructor = (GDExtensionInterfaceGetVariantToTypeConstructor)Load(getProcAddress, "get_variant_to_type_constructor"u8);
+        VariantGetPtrInternalGetter = (GDExtensionInterfaceVariantGetPtrInternalGetter)Load(getProcAddress, "variant_get_ptr_internal_getter"u8);
+        VariantGetPtrOperatorEvaluator = (GDExtensionInterfaceVariantGetPtrOperatorEvaluator)Load(getProcAddress, "variant_get_ptr_operator_evaluator"u8);
+        VariantGetPtrBuiltinMethod = (GDExtensionInterfaceVariantGetPtrBuiltinMethod)Load(getProcAddress, "variant_get_ptr_builtin_method"u8);
+        VariantGetPtrConstructor = (GDExtensionInterfaceVariantGetPtrConstructor)Load(getProcAddress, "variant_get_ptr_constructor"u8);
+        VariantGetPtrDestructor = (GDExtensionInterfaceVariantGetPtrDestructor)Load(getProcAddress, "variant_get_ptr_destructor"u8);
+        VariantConstruct = (GDExtensionInterfaceVariantConstruct)Load(getProcAddress, "variant_construct"u8);
+        VariantGetPtrSetter = (GDExtensionInterfaceVariantGetPtrSetter)Load(getProcAddress, "variant_get_ptr_setter"u8);
+        VariantGetPtrGetter = (GDExtensionInterfaceVariantGetPtrGetter)Load(getProcAddress, "variant_get_ptr_getter"u8);
+        VariantGetPtrIndexedSetter = (GDExtensionInterfaceVariantGetPtrIndexedSetter)Load(getProcAddress, "variant_get_ptr_indexed_setter"u8);
+        VariantGetPtrIndexedGetter = (GDExtensionInterfaceVariantGetPtrIndexedGetter)Load(getProcAddress, "variant_get_ptr_indexed_getter"u8);
+        VariantGetPtrKeyedSetter = (GDExtensionInterfaceVariantGetPtrKeyedSetter)Load(getProcAddress, "variant_get_ptr_keyed_setter"u8);
+        VariantGetPtrKeyedGetter = (GDExtensionInterfaceVariantGetPtrKeyedGetter)Load(getProcAddress, "variant_get_ptr_keyed_getter"u8);
+        VariantGetPtrKeyedChecker = (GDExtensionInterfaceVariantGetPtrKeyedChecker)Load(getProcAddress, "variant_get_ptr_keyed_checker"u8);
+        VariantGetConstantValue = (GDExtensionInterfaceVariantGetConstantValue)Load(getProcAddress, "variant_get_constant_value"u8);
+        VariantGetPtrUtilityFunction = (GDExtensionInterfaceVariantGetPtrUtilityFunction)Load(getProcAddress, "variant_get_ptr_utility_function"u8);
+        StringNewWithLatin1Chars = (GDExtensionInterfaceStringNewWithLatin1Chars)Load(getProcAddress, "string_new_with_latin1_chars"u8);
+        StringNewWithUtf8Chars = (GDExtensionInterfaceStringNewWithUtf8Chars)Load(getProcAddress, "string_new_with_utf8_chars"u8);
+        StringNewWithUtf16Chars = (GDExtensionInterfaceStringNewWithUtf16Chars)Load(getProcAddress, "string_new_with_utf16_chars"u8);
+        StringNewWithUtf32Chars = (GDExtensionInterfaceStringNewWithUtf32Chars)Load(getProcAddress, "string_new_with_utf32_chars"u8);
+        StringNewWithWideChars = (GDExtensionInterfaceStringNewWithWideChars)Load(getProcAddress, "string_new_with_wide_chars"u8);
+        StringNewWithLatin1CharsAndLen = (GDExtensionInterfaceStringNewWithLatin1CharsAndLen)Load(getProcAddress, "string_new_with_latin1_chars_and_len"u8);
+        StringNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen)Load(getProcAddress, "string_new_with_utf8_chars_and_len"u8);
+        StringNewWithUtf8CharsAndLen2 = (GDExtensionInterfaceStringNewWithUtf8CharsAndLen2)Load(getProcAddress, "string_new_with_utf8_chars_and_len2"u8);
+        StringNewWithUtf16CharsAndLen = (GDExtensionInterfaceStringNewWithUtf16CharsAndLen)Load(getProcAddress, "string_new_with_utf16_chars_and_len"u8);
+        StringNewWithUtf16CharsAndLen2 = (GDExtensionInterfaceStringNewWithUtf16CharsAndLen2)Load(getProcAddress, "string_new_with_utf16_chars_and_len2"u8);
+        StringNewWithUtf32CharsAndLen = (GDExtensionInterfaceStringNewWithUtf32CharsAndLen)Load(getProcAddress, "string_new_with_utf32_chars_and_len"u8);
+        StringNewWithWideCharsAndLen = (GDExtensionInterfaceStringNewWithWideCharsAndLen)Load(getProcAddress, "string_new_with_wide_chars_and_len"u8);
+        StringToLatin1Chars = (GDExtensionInterfaceStringToLatin1Chars)Load(getProcAddress, "string_to_latin1_chars"u8);
+        StringToUtf8Chars = (GDExtensionInterfaceStringToUtf8Chars)Load(getProcAddress, "string_to_utf8_chars"u8);
+        StringToUtf16Chars = (GDExtensionInterfaceStringToUtf16Chars)Load(getProcAddress, "string_to_utf16_chars"u8);
+        StringToUtf32Chars = (GDExtensionInterfaceStringToUtf32Chars)Load(getProcAddress, "string_to_utf32_chars"u8);
+        StringToWideChars = (GDExtensionInterfaceStringToWideChars)Load(getProcAddress, "string_to_wide_chars"u8);
+        StringOperatorIndex = (GDExtensionInterfaceStringOperatorIndex)Load(getProcAddress, "string_operator_index"u8);
+        StringOperatorIndexConst = (GDExtensionInterfaceStringOperatorIndexConst)Load(getProcAddress, "string_operator_index_const"u8);
+        StringOperatorPlusEqString = (GDExtensionInterfaceStringOperatorPlusEqString)Load(getProcAddress, "string_operator_plus_eq_string"u8);
+        StringOperatorPlusEqChar = (GDExtensionInterfaceStringOperatorPlusEqChar)Load(getProcAddress, "string_operator_plus_eq_char"u8);
+        StringOperatorPlusEqCstr = (GDExtensionInterfaceStringOperatorPlusEqCstr)Load(getProcAddress, "string_operator_plus_eq_cstr"u8);
+        StringOperatorPlusEqWcstr = (GDExtensionInterfaceStringOperatorPlusEqWcstr)Load(getProcAddress, "string_operator_plus_eq_wcstr"u8);
+        StringOperatorPlusEqC32Str = (GDExtensionInterfaceStringOperatorPlusEqC32Str)Load(getProcAddress, "string_operator_plus_eq_c32str"u8);
+        StringResize = (GDExtensionInterfaceStringResize)Load(getProcAddress, "string_resize"u8);
+        StringNameNewWithLatin1Chars = (GDExtensionInterfaceStringNameNewWithLatin1Chars)Load(getProcAddress, "string_name_new_with_latin1_chars"u8);
+        StringNameNewWithUtf8Chars = (GDExtensionInterfaceStringNameNewWithUtf8Chars)Load(getProcAddress, "string_name_new_with_utf8_chars"u8);
+        StringNameNewWithUtf8CharsAndLen = (GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen)Load(getProcAddress, "string_name_new_with_utf8_chars_and_len"u8);
+        XmlParserOpenBuffer = (GDExtensionInterfaceXmlParserOpenBuffer)Load(getProcAddress, "xml_parser_open_buffer"u8);
+        FileAccessStoreBuffer = (GDExtensionInterfaceFileAccessStoreBuffer)Load(getProcAddress, "file_access_store_buffer"u8);
+        FileAccessGetBuffer = (GDExtensionInterfaceFileAccessGetBuffer)Load(getProcAddress, "file_access_get_buffer"u8);
+        ImagePtrw = (GDExtensionInterfaceImagePtrw)Load(getProcAddress, "image_ptrw"u8);
+        ImagePtr = (GDExtensionInterfaceImagePtr)Load(getProcAddress, "image_ptr"u8);
+        WorkerThreadPoolAddNativeGroupTask = (GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask)Load(getProcAddress, "worker_thread_pool_add_native_group_task"u8);
+        WorkerThreadPoolAddNativeTask = (GDExtensionInterfaceWorkerThreadPoolAddNativeTask)Load(getProcAddress, "worker_thread_pool_add_native_task"u8);
+        PackedByteArrayOperatorIndex = (GDExtensionInterfacePackedByteArrayOperatorIndex)Load(getProcAddress, "packed_byte_array_operator_index"u8);
+        PackedByteArrayOperatorIndexConst = (GDExtensionInterfacePackedByteArrayOperatorIndexConst)Load(getProcAddress, "packed_byte_array_operator_index_const"u8);
+        PackedFloat32ArrayOperatorIndex = (GDExtensionInterfacePackedFloat32ArrayOperatorIndex)Load(getProcAddress, "packed_float32_array_operator_index"u8);
+        PackedFloat32ArrayOperatorIndexConst = (GDExtensionInterfacePackedFloat32ArrayOperatorIndexConst)Load(getProcAddress, "packed_float32_array_operator_index_const"u8);
+        PackedFloat64ArrayOperatorIndex = (GDExtensionInterfacePackedFloat64ArrayOperatorIndex)Load(getProcAddress, "packed_float64_array_operator_index"u8);
+        PackedFloat64ArrayOperatorIndexConst = (GDExtensionInterfacePackedFloat64ArrayOperatorIndexConst)Load(getProcAddress, "packed_float64_array_operator_index_const"u8);
+        PackedInt32ArrayOperatorIndex = (GDExtensionInterfacePackedInt32ArrayOperatorIndex)Load(getProcAddress, "packed_int32_array_operator_index"u8);
+        PackedInt32ArrayOperatorIndexConst = (GDExtensionInterfacePackedInt32ArrayOperatorIndexConst)Load(getProcAddress, "packed_int32_array_operator_index_const"u8);
+        PackedInt64ArrayOperatorIndex = (GDExtensionInterfacePackedInt64ArrayOperatorIndex)Load(getProcAddress, "packed_int64_array_operator_index"u8);
+        PackedInt64ArrayOperatorIndexConst = (GDExtensionInterfacePackedInt64ArrayOperatorIndexConst)Load(getProcAddress, "packed_int64_array_operator_index_const"u8);
+        PackedStringArrayOperatorIndex = (GDExtensionInterfacePackedStringArrayOperatorIndex)Load(getProcAddress, "packed_string_array_operator_index"u8);
+        PackedStringArrayOperatorIndexConst = (GDExtensionInterfacePackedStringArrayOperatorIndexConst)Load(getProcAddress, "packed_string_array_operator_index_const"u8);
+        PackedVector2ArrayOperatorIndex = (GDExtensionInterfacePackedVector2ArrayOperatorIndex)Load(getProcAddress, "packed_vector2_array_operator_index"u8);
+        PackedVector2ArrayOperatorIndexConst = (GDExtensionInterfacePackedVector2ArrayOperatorIndexConst)Load(getProcAddress, "packed_vector2_array_operator_index_const"u8);
+        PackedVector3ArrayOperatorIndex = (GDExtensionInterfacePackedVector3ArrayOperatorIndex)Load(getProcAddress, "packed_vector3_array_operator_index"u8);
+        PackedVector3ArrayOperatorIndexConst = (GDExtensionInterfacePackedVector3ArrayOperatorIndexConst)Load(getProcAddress, "packed_vector3_array_operator_index_const"u8);
+        PackedVector4ArrayOperatorIndex = (GDExtensionInterfacePackedVector4ArrayOperatorIndex)Load(getProcAddress, "packed_vector4_array_operator_index"u8);
+        PackedVector4ArrayOperatorIndexConst = (GDExtensionInterfacePackedVector4ArrayOperatorIndexConst)Load(getProcAddress, "packed_vector4_array_operator_index_const"u8);
+        PackedColorArrayOperatorIndex = (GDExtensionInterfacePackedColorArrayOperatorIndex)Load(getProcAddress, "packed_color_array_operator_index"u8);
+        PackedColorArrayOperatorIndexConst = (GDExtensionInterfacePackedColorArrayOperatorIndexConst)Load(getProcAddress, "packed_color_array_operator_index_const"u8);
+        ArrayOperatorIndex = (GDExtensionInterfaceArrayOperatorIndex)Load(getProcAddress, "array_operator_index"u8);
+        ArrayOperatorIndexConst = (GDExtensionInterfaceArrayOperatorIndexConst)Load(getProcAddress, "array_operator_index_const"u8);
+        ArrayRef = (GDExtensionInterfaceArrayRef)Load(getProcAddress, "array_ref"u8);
+        ArraySetTyped = (GDExtensionInterfaceArraySetTyped)Load(getProcAddress, "array_set_typed"u8);
+        DictionaryOperatorIndex = (GDExtensionInterfaceDictionaryOperatorIndex)Load(getProcAddress, "dictionary_operator_index"u8);
+        DictionaryOperatorIndexConst = (GDExtensionInterfaceDictionaryOperatorIndexConst)Load(getProcAddress, "dictionary_operator_index_const"u8);
+        DictionarySetTyped = (GDExtensionInterfaceDictionarySetTyped)Load(getProcAddress, "dictionary_set_typed"u8);
+        ObjectMethodBindCall = (GDExtensionInterfaceObjectMethodBindCall)Load(getProcAddress, "object_method_bind_call"u8);
+        ObjectMethodBindPtrcall = (GDExtensionInterfaceObjectMethodBindPtrcall)Load(getProcAddress, "object_method_bind_ptrcall"u8);
+        ObjectDestroy = (GDExtensionInterfaceObjectDestroy)Load(getProcAddress, "object_destroy"u8);
+        GlobalGetSingleton = (GDExtensionInterfaceGlobalGetSingleton)Load(getProcAddress, "global_get_singleton"u8);
+        ObjectGetInstanceBinding = (GDExtensionInterfaceObjectGetInstanceBinding)Load(getProcAddress, "object_get_instance_binding"u8);
+        ObjectSetInstanceBinding = (GDExtensionInterfaceObjectSetInstanceBinding)Load(getProcAddress, "object_set_instance_binding"u8);
+        ObjectFreeInstanceBinding = (GDExtensionInterfaceObjectFreeInstanceBinding)Load(getProcAddress, "object_free_instance_binding"u8);
+        ObjectSetInstance = (GDExtensionInterfaceObjectSetInstance)Load(getProcAddress, "object_set_instance"u8);
+        ObjectGetClassName = (GDExtensionInterfaceObjectGetClassName)Load(getProcAddress, "object_get_class_name"u8);
+        ObjectCastTo = (GDExtensionInterfaceObjectCastTo)Load(getProcAddress, "object_cast_to"u8);
+        ObjectGetInstanceFromId = (GDExtensionInterfaceObjectGetInstanceFromId)Load(getProcAddress, "object_get_instance_from_id"u8);
+        ObjectGetInstanceId = (GDExtensionInterfaceObjectGetInstanceId)Load(getProcAddress, "object_get_instance_id"u8);
+        ObjectHasScriptMethod = (GDExtensionInterfaceObjectHasScriptMethod)Load(getProcAddress, "object_has_script_method"u8);
+        ObjectCallScriptMethod = (GDExtensionInterfaceObjectCallScriptMethod)Load(getProcAddress, "object_call_script_method"u8);
+        RefGetObject = (GDExtensionInterfaceRefGetObject)Load(getProcAddress, "ref_get_object"u8);
+        RefSetObject = (GDExtensionInterfaceRefSetObject)Load(getProcAddress, "ref_set_object"u8);
+        ScriptInstanceCreate = (GDExtensionInterfaceScriptInstanceCreate)Load(getProcAddress, "script_instance_create"u8);
+        ScriptInstanceCreate2 = (GDExtensionInterfaceScriptInstanceCreate2)Load(getProcAddress, "script_instance_create2"u8);
+        ScriptInstanceCreate3 = (GDExtensionInterfaceScriptInstanceCreate3)Load(getProcAddress, "script_instance_create3"u8);
+        PlaceholderScriptInstanceCreate = (GDExtensionInterfacePlaceholderScriptInstanceCreate)Load(getProcAddress, "placeholder_script_instance_create"u8);
+        PlaceholderScriptInstanceUpdate = (GDExtensionInterfacePlaceholderScriptInstanceUpdate)Load(getProcAddress, "placeholder_script_instance_update"u8);
+        ObjectGetScriptInstance = (GDExtensionInterfaceObjectGetScriptInstance)Load(getProcAddress, "object_get_script_instance"u8);
+        ObjectSetScriptInstance = (GDExtensionInterfaceObjectSetScriptInstance)Load(getProcAddress, "object_set_script_instance"u8);
+        CallableCustomCreate = (GDExtensionInterfaceCallableCustomCreate)Load(getProcAddress, "callable_custom_create"u8);
+        CallableCustomCreate2 = (GDExtensionInterfaceCallableCustomCreate2)Load(getProcAddress, "callable_custom_create2"u8);
+        CallableCustomGetUserdata = (GDExtensionInterfaceCallableCustomGetUserdata)Load(getProcAddress, "callable_custom_get_userdata"u8);
+        ClassdbConstructObject = (GDExtensionInterfaceClassdbConstructObject)Load(getProcAddress, "classdb_construct_object"u8);
+        ClassdbConstructObject2 = (GDExtensionInterfaceClassdbConstructObject2)Load(getProcAddress, "classdb_construct_object2"u8);
+        ClassdbConstructObject3 = (GDExtensionInterfaceClassdbConstructObject3)Load(getProcAddress, "classdb_construct_object3"u8);
+        ClassdbGetMethodBind = (GDExtensionInterfaceClassdbGetMethodBind)Load(getProcAddress, "classdb_get_method_bind"u8);
+        ClassdbGetClassTag = (GDExtensionInterfaceClassdbGetClassTag)Load(getProcAddress, "classdb_get_class_tag"u8);
+        ClassdbRegisterExtensionClass = (GDExtensionInterfaceClassdbRegisterExtensionClass)Load(getProcAddress, "classdb_register_extension_class"u8);
+        ClassdbRegisterExtensionClass2 = (GDExtensionInterfaceClassdbRegisterExtensionClass2)Load(getProcAddress, "classdb_register_extension_class2"u8);
+        ClassdbRegisterExtensionClass3 = (GDExtensionInterfaceClassdbRegisterExtensionClass3)Load(getProcAddress, "classdb_register_extension_class3"u8);
+        ClassdbRegisterExtensionClass4 = (GDExtensionInterfaceClassdbRegisterExtensionClass4)Load(getProcAddress, "classdb_register_extension_class4"u8);
+        ClassdbRegisterExtensionClass5 = (GDExtensionInterfaceClassdbRegisterExtensionClass5)Load(getProcAddress, "classdb_register_extension_class5"u8);
+        ClassdbRegisterExtensionClass6 = (GDExtensionInterfaceClassdbRegisterExtensionClass6)Load(getProcAddress, "classdb_register_extension_class6"u8);
+        ClassdbRegisterExtensionClassMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassMethod)Load(getProcAddress, "classdb_register_extension_class_method"u8);
+        ClassdbRegisterExtensionClassVirtualMethod = (GDExtensionInterfaceClassdbRegisterExtensionClassVirtualMethod)Load(getProcAddress, "classdb_register_extension_class_virtual_method"u8);
+        ClassdbRegisterExtensionClassIntegerConstant = (GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant)Load(getProcAddress, "classdb_register_extension_class_integer_constant"u8);
+        ClassdbRegisterExtensionClassProperty = (GDExtensionInterfaceClassdbRegisterExtensionClassProperty)Load(getProcAddress, "classdb_register_extension_class_property"u8);
+        ClassdbRegisterExtensionClassPropertyIndexed = (GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed)Load(getProcAddress, "classdb_register_extension_class_property_indexed"u8);
+        ClassdbRegisterExtensionClassPropertyGroup = (GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup)Load(getProcAddress, "classdb_register_extension_class_property_group"u8);
+        ClassdbRegisterExtensionClassPropertySubgroup = (GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup)Load(getProcAddress, "classdb_register_extension_class_property_subgroup"u8);
+        ClassdbRegisterExtensionClassSignal = (GDExtensionInterfaceClassdbRegisterExtensionClassSignal)Load(getProcAddress, "classdb_register_extension_class_signal"u8);
+        ClassdbUnregisterExtensionClass = (GDExtensionInterfaceClassdbUnregisterExtensionClass)Load(getProcAddress, "classdb_unregister_extension_class"u8);
+        GetLibraryPath = (GDExtensionInterfaceGetLibraryPath)Load(getProcAddress, "get_library_path"u8);
+        EditorAddPlugin = (GDExtensionInterfaceEditorAddPlugin)Load(getProcAddress, "editor_add_plugin"u8);
+        EditorRemovePlugin = (GDExtensionInterfaceEditorRemovePlugin)Load(getProcAddress, "editor_remove_plugin"u8);
+        EditorHelpLoadXmlFromUtf8Chars = (GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars)Load(getProcAddress, "editor_help_load_xml_from_utf8_chars"u8);
+        EditorHelpLoadXmlFromUtf8CharsAndLen = (GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen)Load(getProcAddress, "editor_help_load_xml_from_utf8_chars_and_len"u8);
+        EditorRegisterGetClassesUsedCallback = (GDExtensionInterfaceEditorRegisterGetClassesUsedCallback)Load(getProcAddress, "editor_register_get_classes_used_callback"u8);
+        RegisterMainLoopCallbacks = (GDExtensionInterfaceRegisterMainLoopCallbacks)Load(getProcAddress, "register_main_loop_callbacks"u8);
     }
 
-    public GDExtensionInterfaceGetGodotVersion GetGodotVersion
-    {
-        get => _getGodotVersion;
-    }
+    public GDExtensionInterfaceGetGodotVersion GetGodotVersion { get; }
 
-    public GDExtensionInterfaceGetGodotVersion2 GetGodotVersion2
-    {
-        get => _getGodotVersion2;
-    }
+    public GDExtensionInterfaceGetGodotVersion2 GetGodotVersion2 { get; }
 
-    public GDExtensionInterfaceMemAlloc MemAlloc
-    {
-        get => _memAlloc;
-    }
+    public GDExtensionInterfaceMemAlloc MemAlloc { get; }
 
-    public GDExtensionInterfaceMemRealloc MemRealloc
-    {
-        get => _memRealloc;
-    }
+    public GDExtensionInterfaceMemRealloc MemRealloc { get; }
 
-    public GDExtensionInterfaceMemFree MemFree
-    {
-        get => _memFree;
-    }
+    public GDExtensionInterfaceMemFree MemFree { get; }
 
-    public GDExtensionInterfaceMemAlloc2 MemAlloc2
-    {
-        get => _memAlloc2;
-    }
+    public GDExtensionInterfaceMemAlloc2 MemAlloc2 { get; }
 
-    public GDExtensionInterfaceMemRealloc2 MemRealloc2
-    {
-        get => _memRealloc2;
-    }
+    public GDExtensionInterfaceMemRealloc2 MemRealloc2 { get; }
 
-    public GDExtensionInterfaceMemFree2 MemFree2
-    {
-        get => _memFree2;
-    }
+    public GDExtensionInterfaceMemFree2 MemFree2 { get; }
 
-    public GDExtensionInterfacePrintError PrintError
-    {
-        get => _printError;
-    }
+    public GDExtensionInterfacePrintError PrintError { get; }
 
-    public GDExtensionInterfacePrintErrorWithMessage PrintErrorWithMessage
-    {
-        get => _printErrorWithMessage;
-    }
+    public GDExtensionInterfacePrintErrorWithMessage PrintErrorWithMessage { get; }
 
-    public GDExtensionInterfacePrintWarning PrintWarning
-    {
-        get => _printWarning;
-    }
+    public GDExtensionInterfacePrintWarning PrintWarning { get; }
 
-    public GDExtensionInterfacePrintWarningWithMessage PrintWarningWithMessage
-    {
-        get => _printWarningWithMessage;
-    }
+    public GDExtensionInterfacePrintWarningWithMessage PrintWarningWithMessage { get; }
 
-    public GDExtensionInterfacePrintScriptError PrintScriptError
-    {
-        get => _printScriptError;
-    }
+    public GDExtensionInterfacePrintScriptError PrintScriptError { get; }
 
-    public GDExtensionInterfacePrintScriptErrorWithMessage PrintScriptErrorWithMessage
-    {
-        get => _printScriptErrorWithMessage;
-    }
+    public GDExtensionInterfacePrintScriptErrorWithMessage PrintScriptErrorWithMessage { get; }
 
-    public GDExtensionInterfaceGetNativeStructSize GetNativeStructSize
-    {
-        get => _getNativeStructSize;
-    }
+    public GDExtensionInterfaceGetNativeStructSize GetNativeStructSize { get; }
 
-    public GDExtensionInterfaceVariantNewCopy VariantNewCopy
-    {
-        get => _variantNewCopy;
-    }
+    public GDExtensionInterfaceVariantNewCopy VariantNewCopy { get; }
 
-    public GDExtensionInterfaceVariantNewNil VariantNewNil
-    {
-        get => _variantNewNil;
-    }
+    public GDExtensionInterfaceVariantNewNil VariantNewNil { get; }
 
-    public GDExtensionInterfaceVariantDestroy VariantDestroy
-    {
-        get => _variantDestroy;
-    }
+    public GDExtensionInterfaceVariantDestroy VariantDestroy { get; }
 
-    public GDExtensionInterfaceVariantCall VariantCall
-    {
-        get => _variantCall;
-    }
+    public GDExtensionInterfaceVariantCall VariantCall { get; }
 
-    public GDExtensionInterfaceVariantCallStatic VariantCallStatic
-    {
-        get => _variantCallStatic;
-    }
+    public GDExtensionInterfaceVariantCallStatic VariantCallStatic { get; }
 
-    public GDExtensionInterfaceVariantEvaluate VariantEvaluate
-    {
-        get => _variantEvaluate;
-    }
+    public GDExtensionInterfaceVariantEvaluate VariantEvaluate { get; }
 
-    public GDExtensionInterfaceVariantSet VariantSet
-    {
-        get => _variantSet;
-    }
+    public GDExtensionInterfaceVariantSet VariantSet { get; }
 
-    public GDExtensionInterfaceVariantSetNamed VariantSetNamed
-    {
-        get => _variantSetNamed;
-    }
+    public GDExtensionInterfaceVariantSetNamed VariantSetNamed { get; }
 
-    public GDExtensionInterfaceVariantSetKeyed VariantSetKeyed
-    {
-        get => _variantSetKeyed;
-    }
+    public GDExtensionInterfaceVariantSetKeyed VariantSetKeyed { get; }
 
-    public GDExtensionInterfaceVariantSetIndexed VariantSetIndexed
-    {
-        get => _variantSetIndexed;
-    }
+    public GDExtensionInterfaceVariantSetIndexed VariantSetIndexed { get; }
 
-    public GDExtensionInterfaceVariantGet VariantGet
-    {
-        get => _variantGet;
-    }
+    public GDExtensionInterfaceVariantGet VariantGet { get; }
 
-    public GDExtensionInterfaceVariantGetNamed VariantGetNamed
-    {
-        get => _variantGetNamed;
-    }
+    public GDExtensionInterfaceVariantGetNamed VariantGetNamed { get; }
 
-    public GDExtensionInterfaceVariantGetKeyed VariantGetKeyed
-    {
-        get => _variantGetKeyed;
-    }
+    public GDExtensionInterfaceVariantGetKeyed VariantGetKeyed { get; }
 
-    public GDExtensionInterfaceVariantGetIndexed VariantGetIndexed
-    {
-        get => _variantGetIndexed;
-    }
+    public GDExtensionInterfaceVariantGetIndexed VariantGetIndexed { get; }
 
-    public GDExtensionInterfaceVariantIterInit VariantIterInit
-    {
-        get => _variantIterInit;
-    }
+    public GDExtensionInterfaceVariantIterInit VariantIterInit { get; }
 
-    public GDExtensionInterfaceVariantIterNext VariantIterNext
-    {
-        get => _variantIterNext;
-    }
+    public GDExtensionInterfaceVariantIterNext VariantIterNext { get; }
 
-    public GDExtensionInterfaceVariantIterGet VariantIterGet
-    {
-        get => _variantIterGet;
-    }
+    public GDExtensionInterfaceVariantIterGet VariantIterGet { get; }
 
-    public GDExtensionInterfaceVariantHash VariantHash
-    {
-        get => _variantHash;
-    }
+    public GDExtensionInterfaceVariantHash VariantHash { get; }
 
-    public GDExtensionInterfaceVariantRecursiveHash VariantRecursiveHash
-    {
-        get => _variantRecursiveHash;
-    }
+    public GDExtensionInterfaceVariantRecursiveHash VariantRecursiveHash { get; }
 
-    public GDExtensionInterfaceVariantHashCompare VariantHashCompare
-    {
-        get => _variantHashCompare;
-    }
+    public GDExtensionInterfaceVariantHashCompare VariantHashCompare { get; }
 
-    public GDExtensionInterfaceVariantBooleanize VariantBooleanize
-    {
-        get => _variantBooleanize;
-    }
+    public GDExtensionInterfaceVariantBooleanize VariantBooleanize { get; }
 
-    public GDExtensionInterfaceVariantDuplicate VariantDuplicate
-    {
-        get => _variantDuplicate;
-    }
+    public GDExtensionInterfaceVariantDuplicate VariantDuplicate { get; }
 
-    public GDExtensionInterfaceVariantStringify VariantStringify
-    {
-        get => _variantStringify;
-    }
+    public GDExtensionInterfaceVariantStringify VariantStringify { get; }
 
-    public GDExtensionInterfaceVariantGetType VariantGetType
-    {
-        get => _variantGetType;
-    }
+    public GDExtensionInterfaceVariantGetType VariantGetType { get; }
 
-    public GDExtensionInterfaceVariantHasMethod VariantHasMethod
-    {
-        get => _variantHasMethod;
-    }
+    public GDExtensionInterfaceVariantHasMethod VariantHasMethod { get; }
 
-    public GDExtensionInterfaceVariantHasMember VariantHasMember
-    {
-        get => _variantHasMember;
-    }
+    public GDExtensionInterfaceVariantHasMember VariantHasMember { get; }
 
-    public GDExtensionInterfaceVariantHasKey VariantHasKey
-    {
-        get => _variantHasKey;
-    }
+    public GDExtensionInterfaceVariantHasKey VariantHasKey { get; }
 
-    public GDExtensionInterfaceVariantGetObjectInstanceId VariantGetObjectInstanceId
-    {
-        get => _variantGetObjectInstanceId;
-    }
+    public GDExtensionInterfaceVariantGetObjectInstanceId VariantGetObjectInstanceId { get; }
 
-    public GDExtensionInterfaceVariantGetTypeName VariantGetTypeName
-    {
-        get => _variantGetTypeName;
-    }
+    public GDExtensionInterfaceVariantGetTypeName VariantGetTypeName { get; }
 
-    public GDExtensionInterfaceVariantGetTypeByName VariantGetTypeByName
-    {
-        get => _variantGetTypeByName;
-    }
+    public GDExtensionInterfaceVariantGetTypeByName VariantGetTypeByName { get; }
 
-    public GDExtensionInterfaceVariantCanConvert VariantCanConvert
-    {
-        get => _variantCanConvert;
-    }
+    public GDExtensionInterfaceVariantCanConvert VariantCanConvert { get; }
 
-    public GDExtensionInterfaceVariantCanConvertStrict VariantCanConvertStrict
-    {
-        get => _variantCanConvertStrict;
-    }
+    public GDExtensionInterfaceVariantCanConvertStrict VariantCanConvertStrict { get; }
 
-    public GDExtensionInterfaceGetVariantFromTypeConstructor GetVariantFromTypeConstructor
-    {
-        get => _getVariantFromTypeConstructor;
-    }
+    public GDExtensionInterfaceGetVariantFromTypeConstructor GetVariantFromTypeConstructor { get; }
 
-    public GDExtensionInterfaceGetVariantToTypeConstructor GetVariantToTypeConstructor
-    {
-        get => _getVariantToTypeConstructor;
-    }
+    public GDExtensionInterfaceGetVariantToTypeConstructor GetVariantToTypeConstructor { get; }
 
-    public GDExtensionInterfaceVariantGetPtrInternalGetter VariantGetPtrInternalGetter
-    {
-        get => _variantGetPtrInternalGetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrInternalGetter VariantGetPtrInternalGetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrOperatorEvaluator VariantGetPtrOperatorEvaluator
-    {
-        get => _variantGetPtrOperatorEvaluator;
-    }
+    public GDExtensionInterfaceVariantGetPtrOperatorEvaluator VariantGetPtrOperatorEvaluator { get; }
 
-    public GDExtensionInterfaceVariantGetPtrBuiltinMethod VariantGetPtrBuiltinMethod
-    {
-        get => _variantGetPtrBuiltinMethod;
-    }
+    public GDExtensionInterfaceVariantGetPtrBuiltinMethod VariantGetPtrBuiltinMethod { get; }
 
-    public GDExtensionInterfaceVariantGetPtrConstructor VariantGetPtrConstructor
-    {
-        get => _variantGetPtrConstructor;
-    }
+    public GDExtensionInterfaceVariantGetPtrConstructor VariantGetPtrConstructor { get; }
 
-    public GDExtensionInterfaceVariantGetPtrDestructor VariantGetPtrDestructor
-    {
-        get => _variantGetPtrDestructor;
-    }
+    public GDExtensionInterfaceVariantGetPtrDestructor VariantGetPtrDestructor { get; }
 
-    public GDExtensionInterfaceVariantConstruct VariantConstruct
-    {
-        get => _variantConstruct;
-    }
+    public GDExtensionInterfaceVariantConstruct VariantConstruct { get; }
 
-    public GDExtensionInterfaceVariantGetPtrSetter VariantGetPtrSetter
-    {
-        get => _variantGetPtrSetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrSetter VariantGetPtrSetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrGetter VariantGetPtrGetter
-    {
-        get => _variantGetPtrGetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrGetter VariantGetPtrGetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrIndexedSetter VariantGetPtrIndexedSetter
-    {
-        get => _variantGetPtrIndexedSetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrIndexedSetter VariantGetPtrIndexedSetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrIndexedGetter VariantGetPtrIndexedGetter
-    {
-        get => _variantGetPtrIndexedGetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrIndexedGetter VariantGetPtrIndexedGetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrKeyedSetter VariantGetPtrKeyedSetter
-    {
-        get => _variantGetPtrKeyedSetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrKeyedSetter VariantGetPtrKeyedSetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrKeyedGetter VariantGetPtrKeyedGetter
-    {
-        get => _variantGetPtrKeyedGetter;
-    }
+    public GDExtensionInterfaceVariantGetPtrKeyedGetter VariantGetPtrKeyedGetter { get; }
 
-    public GDExtensionInterfaceVariantGetPtrKeyedChecker VariantGetPtrKeyedChecker
-    {
-        get => _variantGetPtrKeyedChecker;
-    }
+    public GDExtensionInterfaceVariantGetPtrKeyedChecker VariantGetPtrKeyedChecker { get; }
 
-    public GDExtensionInterfaceVariantGetConstantValue VariantGetConstantValue
-    {
-        get => _variantGetConstantValue;
-    }
+    public GDExtensionInterfaceVariantGetConstantValue VariantGetConstantValue { get; }
 
-    public GDExtensionInterfaceVariantGetPtrUtilityFunction VariantGetPtrUtilityFunction
-    {
-        get => _variantGetPtrUtilityFunction;
-    }
+    public GDExtensionInterfaceVariantGetPtrUtilityFunction VariantGetPtrUtilityFunction { get; }
 
-    public GDExtensionInterfaceStringNewWithLatin1Chars StringNewWithLatin1Chars
-    {
-        get => _stringNewWithLatin1Chars;
-    }
+    public GDExtensionInterfaceStringNewWithLatin1Chars StringNewWithLatin1Chars { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf8Chars StringNewWithUtf8Chars
-    {
-        get => _stringNewWithUtf8Chars;
-    }
+    public GDExtensionInterfaceStringNewWithUtf8Chars StringNewWithUtf8Chars { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf16Chars StringNewWithUtf16Chars
-    {
-        get => _stringNewWithUtf16Chars;
-    }
+    public GDExtensionInterfaceStringNewWithUtf16Chars StringNewWithUtf16Chars { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf32Chars StringNewWithUtf32Chars
-    {
-        get => _stringNewWithUtf32Chars;
-    }
+    public GDExtensionInterfaceStringNewWithUtf32Chars StringNewWithUtf32Chars { get; }
 
-    public GDExtensionInterfaceStringNewWithWideChars StringNewWithWideChars
-    {
-        get => _stringNewWithWideChars;
-    }
+    public GDExtensionInterfaceStringNewWithWideChars StringNewWithWideChars { get; }
 
-    public GDExtensionInterfaceStringNewWithLatin1CharsAndLen StringNewWithLatin1CharsAndLen
-    {
-        get => _stringNewWithLatin1CharsAndLen;
-    }
+    public GDExtensionInterfaceStringNewWithLatin1CharsAndLen StringNewWithLatin1CharsAndLen { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf8CharsAndLen StringNewWithUtf8CharsAndLen
-    {
-        get => _stringNewWithUtf8CharsAndLen;
-    }
+    public GDExtensionInterfaceStringNewWithUtf8CharsAndLen StringNewWithUtf8CharsAndLen { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf8CharsAndLen2 StringNewWithUtf8CharsAndLen2
-    {
-        get => _stringNewWithUtf8CharsAndLen2;
-    }
+    public GDExtensionInterfaceStringNewWithUtf8CharsAndLen2 StringNewWithUtf8CharsAndLen2 { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf16CharsAndLen StringNewWithUtf16CharsAndLen
-    {
-        get => _stringNewWithUtf16CharsAndLen;
-    }
+    public GDExtensionInterfaceStringNewWithUtf16CharsAndLen StringNewWithUtf16CharsAndLen { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 StringNewWithUtf16CharsAndLen2
-    {
-        get => _stringNewWithUtf16CharsAndLen2;
-    }
+    public GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 StringNewWithUtf16CharsAndLen2 { get; }
 
-    public GDExtensionInterfaceStringNewWithUtf32CharsAndLen StringNewWithUtf32CharsAndLen
-    {
-        get => _stringNewWithUtf32CharsAndLen;
-    }
+    public GDExtensionInterfaceStringNewWithUtf32CharsAndLen StringNewWithUtf32CharsAndLen { get; }
 
-    public GDExtensionInterfaceStringNewWithWideCharsAndLen StringNewWithWideCharsAndLen
-    {
-        get => _stringNewWithWideCharsAndLen;
-    }
+    public GDExtensionInterfaceStringNewWithWideCharsAndLen StringNewWithWideCharsAndLen { get; }
 
-    public GDExtensionInterfaceStringToLatin1Chars StringToLatin1Chars
-    {
-        get => _stringToLatin1Chars;
-    }
+    public GDExtensionInterfaceStringToLatin1Chars StringToLatin1Chars { get; }
 
-    public GDExtensionInterfaceStringToUtf8Chars StringToUtf8Chars
-    {
-        get => _stringToUtf8Chars;
-    }
+    public GDExtensionInterfaceStringToUtf8Chars StringToUtf8Chars { get; }
 
-    public GDExtensionInterfaceStringToUtf16Chars StringToUtf16Chars
-    {
-        get => _stringToUtf16Chars;
-    }
+    public GDExtensionInterfaceStringToUtf16Chars StringToUtf16Chars { get; }
 
-    public GDExtensionInterfaceStringToUtf32Chars StringToUtf32Chars
-    {
-        get => _stringToUtf32Chars;
-    }
+    public GDExtensionInterfaceStringToUtf32Chars StringToUtf32Chars { get; }
 
-    public GDExtensionInterfaceStringToWideChars StringToWideChars
-    {
-        get => _stringToWideChars;
-    }
+    public GDExtensionInterfaceStringToWideChars StringToWideChars { get; }
 
-    public GDExtensionInterfaceStringOperatorIndex StringOperatorIndex
-    {
-        get => _stringOperatorIndex;
-    }
+    public GDExtensionInterfaceStringOperatorIndex StringOperatorIndex { get; }
 
-    public GDExtensionInterfaceStringOperatorIndexConst StringOperatorIndexConst
-    {
-        get => _stringOperatorIndexConst;
-    }
+    public GDExtensionInterfaceStringOperatorIndexConst StringOperatorIndexConst { get; }
 
-    public GDExtensionInterfaceStringOperatorPlusEqString StringOperatorPlusEqString
-    {
-        get => _stringOperatorPlusEqString;
-    }
+    public GDExtensionInterfaceStringOperatorPlusEqString StringOperatorPlusEqString { get; }
 
-    public GDExtensionInterfaceStringOperatorPlusEqChar StringOperatorPlusEqChar
-    {
-        get => _stringOperatorPlusEqChar;
-    }
+    public GDExtensionInterfaceStringOperatorPlusEqChar StringOperatorPlusEqChar { get; }
 
-    public GDExtensionInterfaceStringOperatorPlusEqCstr StringOperatorPlusEqCstr
-    {
-        get => _stringOperatorPlusEqCstr;
-    }
+    public GDExtensionInterfaceStringOperatorPlusEqCstr StringOperatorPlusEqCstr { get; }
 
-    public GDExtensionInterfaceStringOperatorPlusEqWcstr StringOperatorPlusEqWcstr
-    {
-        get => _stringOperatorPlusEqWcstr;
-    }
+    public GDExtensionInterfaceStringOperatorPlusEqWcstr StringOperatorPlusEqWcstr { get; }
 
-    public GDExtensionInterfaceStringOperatorPlusEqC32Str StringOperatorPlusEqC32Str
-    {
-        get => _stringOperatorPlusEqC32Str;
-    }
+    public GDExtensionInterfaceStringOperatorPlusEqC32Str StringOperatorPlusEqC32Str { get; }
 
-    public GDExtensionInterfaceStringResize StringResize
-    {
-        get => _stringResize;
-    }
+    public GDExtensionInterfaceStringResize StringResize { get; }
 
-    public GDExtensionInterfaceStringNameNewWithLatin1Chars StringNameNewWithLatin1Chars
-    {
-        get => _stringNameNewWithLatin1Chars;
-    }
+    public GDExtensionInterfaceStringNameNewWithLatin1Chars StringNameNewWithLatin1Chars { get; }
 
-    public GDExtensionInterfaceStringNameNewWithUtf8Chars StringNameNewWithUtf8Chars
-    {
-        get => _stringNameNewWithUtf8Chars;
-    }
+    public GDExtensionInterfaceStringNameNewWithUtf8Chars StringNameNewWithUtf8Chars { get; }
 
-    public GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen StringNameNewWithUtf8CharsAndLen
-    {
-        get => _stringNameNewWithUtf8CharsAndLen;
-    }
+    public GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen StringNameNewWithUtf8CharsAndLen { get; }
 
-    public GDExtensionInterfaceXmlParserOpenBuffer XmlParserOpenBuffer
-    {
-        get => _xmlParserOpenBuffer;
-    }
+    public GDExtensionInterfaceXmlParserOpenBuffer XmlParserOpenBuffer { get; }
 
-    public GDExtensionInterfaceFileAccessStoreBuffer FileAccessStoreBuffer
-    {
-        get => _fileAccessStoreBuffer;
-    }
+    public GDExtensionInterfaceFileAccessStoreBuffer FileAccessStoreBuffer { get; }
 
-    public GDExtensionInterfaceFileAccessGetBuffer FileAccessGetBuffer
-    {
-        get => _fileAccessGetBuffer;
-    }
+    public GDExtensionInterfaceFileAccessGetBuffer FileAccessGetBuffer { get; }
 
-    public GDExtensionInterfaceImagePtrw ImagePtrw
-    {
-        get => _imagePtrw;
-    }
+    public GDExtensionInterfaceImagePtrw ImagePtrw { get; }
 
-    public GDExtensionInterfaceImagePtr ImagePtr
-    {
-        get => _imagePtr;
-    }
+    public GDExtensionInterfaceImagePtr ImagePtr { get; }
 
-    public GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask WorkerThreadPoolAddNativeGroupTask
-    {
-        get => _workerThreadPoolAddNativeGroupTask;
-    }
+    public GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask WorkerThreadPoolAddNativeGroupTask { get; }
 
-    public GDExtensionInterfaceWorkerThreadPoolAddNativeTask WorkerThreadPoolAddNativeTask
-    {
-        get => _workerThreadPoolAddNativeTask;
-    }
+    public GDExtensionInterfaceWorkerThreadPoolAddNativeTask WorkerThreadPoolAddNativeTask { get; }
 
-    public GDExtensionInterfacePackedByteArrayOperatorIndex PackedByteArrayOperatorIndex
-    {
-        get => _packedByteArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedByteArrayOperatorIndex PackedByteArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedByteArrayOperatorIndexConst PackedByteArrayOperatorIndexConst
-    {
-        get => _packedByteArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedByteArrayOperatorIndexConst PackedByteArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedFloat32ArrayOperatorIndex PackedFloat32ArrayOperatorIndex
-    {
-        get => _packedFloat32ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedFloat32ArrayOperatorIndex PackedFloat32ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedFloat32ArrayOperatorIndexConst PackedFloat32ArrayOperatorIndexConst
-    {
-        get => _packedFloat32ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedFloat32ArrayOperatorIndexConst PackedFloat32ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedFloat64ArrayOperatorIndex PackedFloat64ArrayOperatorIndex
-    {
-        get => _packedFloat64ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedFloat64ArrayOperatorIndex PackedFloat64ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedFloat64ArrayOperatorIndexConst PackedFloat64ArrayOperatorIndexConst
-    {
-        get => _packedFloat64ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedFloat64ArrayOperatorIndexConst PackedFloat64ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedInt32ArrayOperatorIndex PackedInt32ArrayOperatorIndex
-    {
-        get => _packedInt32ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedInt32ArrayOperatorIndex PackedInt32ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedInt32ArrayOperatorIndexConst PackedInt32ArrayOperatorIndexConst
-    {
-        get => _packedInt32ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedInt32ArrayOperatorIndexConst PackedInt32ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedInt64ArrayOperatorIndex PackedInt64ArrayOperatorIndex
-    {
-        get => _packedInt64ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedInt64ArrayOperatorIndex PackedInt64ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedInt64ArrayOperatorIndexConst PackedInt64ArrayOperatorIndexConst
-    {
-        get => _packedInt64ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedInt64ArrayOperatorIndexConst PackedInt64ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedStringArrayOperatorIndex PackedStringArrayOperatorIndex
-    {
-        get => _packedStringArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedStringArrayOperatorIndex PackedStringArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedStringArrayOperatorIndexConst PackedStringArrayOperatorIndexConst
-    {
-        get => _packedStringArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedStringArrayOperatorIndexConst PackedStringArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedVector2ArrayOperatorIndex PackedVector2ArrayOperatorIndex
-    {
-        get => _packedVector2ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedVector2ArrayOperatorIndex PackedVector2ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedVector2ArrayOperatorIndexConst PackedVector2ArrayOperatorIndexConst
-    {
-        get => _packedVector2ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedVector2ArrayOperatorIndexConst PackedVector2ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedVector3ArrayOperatorIndex PackedVector3ArrayOperatorIndex
-    {
-        get => _packedVector3ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedVector3ArrayOperatorIndex PackedVector3ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedVector3ArrayOperatorIndexConst PackedVector3ArrayOperatorIndexConst
-    {
-        get => _packedVector3ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedVector3ArrayOperatorIndexConst PackedVector3ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedVector4ArrayOperatorIndex PackedVector4ArrayOperatorIndex
-    {
-        get => _packedVector4ArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedVector4ArrayOperatorIndex PackedVector4ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedVector4ArrayOperatorIndexConst PackedVector4ArrayOperatorIndexConst
-    {
-        get => _packedVector4ArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedVector4ArrayOperatorIndexConst PackedVector4ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfacePackedColorArrayOperatorIndex PackedColorArrayOperatorIndex
-    {
-        get => _packedColorArrayOperatorIndex;
-    }
+    public GDExtensionInterfacePackedColorArrayOperatorIndex PackedColorArrayOperatorIndex { get; }
 
-    public GDExtensionInterfacePackedColorArrayOperatorIndexConst PackedColorArrayOperatorIndexConst
-    {
-        get => _packedColorArrayOperatorIndexConst;
-    }
+    public GDExtensionInterfacePackedColorArrayOperatorIndexConst PackedColorArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfaceArrayOperatorIndex ArrayOperatorIndex
-    {
-        get => _arrayOperatorIndex;
-    }
+    public GDExtensionInterfaceArrayOperatorIndex ArrayOperatorIndex { get; }
 
-    public GDExtensionInterfaceArrayOperatorIndexConst ArrayOperatorIndexConst
-    {
-        get => _arrayOperatorIndexConst;
-    }
+    public GDExtensionInterfaceArrayOperatorIndexConst ArrayOperatorIndexConst { get; }
 
-    public GDExtensionInterfaceArrayRef ArrayRef
-    {
-        get => _arrayRef;
-    }
+    public GDExtensionInterfaceArrayRef ArrayRef { get; }
 
-    public GDExtensionInterfaceArraySetTyped ArraySetTyped
-    {
-        get => _arraySetTyped;
-    }
+    public GDExtensionInterfaceArraySetTyped ArraySetTyped { get; }
 
-    public GDExtensionInterfaceDictionaryOperatorIndex DictionaryOperatorIndex
-    {
-        get => _dictionaryOperatorIndex;
-    }
+    public GDExtensionInterfaceDictionaryOperatorIndex DictionaryOperatorIndex { get; }
 
-    public GDExtensionInterfaceDictionaryOperatorIndexConst DictionaryOperatorIndexConst
-    {
-        get => _dictionaryOperatorIndexConst;
-    }
+    public GDExtensionInterfaceDictionaryOperatorIndexConst DictionaryOperatorIndexConst { get; }
 
-    public GDExtensionInterfaceDictionarySetTyped DictionarySetTyped
-    {
-        get => _dictionarySetTyped;
-    }
+    public GDExtensionInterfaceDictionarySetTyped DictionarySetTyped { get; }
 
-    public GDExtensionInterfaceObjectMethodBindCall ObjectMethodBindCall
-    {
-        get => _objectMethodBindCall;
-    }
+    public GDExtensionInterfaceObjectMethodBindCall ObjectMethodBindCall { get; }
 
-    public GDExtensionInterfaceObjectMethodBindPtrcall ObjectMethodBindPtrcall
-    {
-        get => _objectMethodBindPtrcall;
-    }
+    public GDExtensionInterfaceObjectMethodBindPtrcall ObjectMethodBindPtrcall { get; }
 
-    public GDExtensionInterfaceObjectDestroy ObjectDestroy
-    {
-        get => _objectDestroy;
-    }
+    public GDExtensionInterfaceObjectDestroy ObjectDestroy { get; }
 
-    public GDExtensionInterfaceGlobalGetSingleton GlobalGetSingleton
-    {
-        get => _globalGetSingleton;
-    }
+    public GDExtensionInterfaceGlobalGetSingleton GlobalGetSingleton { get; }
 
-    public GDExtensionInterfaceObjectGetInstanceBinding ObjectGetInstanceBinding
-    {
-        get => _objectGetInstanceBinding;
-    }
+    public GDExtensionInterfaceObjectGetInstanceBinding ObjectGetInstanceBinding { get; }
 
-    public GDExtensionInterfaceObjectSetInstanceBinding ObjectSetInstanceBinding
-    {
-        get => _objectSetInstanceBinding;
-    }
+    public GDExtensionInterfaceObjectSetInstanceBinding ObjectSetInstanceBinding { get; }
 
-    public GDExtensionInterfaceObjectFreeInstanceBinding ObjectFreeInstanceBinding
-    {
-        get => _objectFreeInstanceBinding;
-    }
+    public GDExtensionInterfaceObjectFreeInstanceBinding ObjectFreeInstanceBinding { get; }
 
-    public GDExtensionInterfaceObjectSetInstance ObjectSetInstance
-    {
-        get => _objectSetInstance;
-    }
+    public GDExtensionInterfaceObjectSetInstance ObjectSetInstance { get; }
 
-    public GDExtensionInterfaceObjectGetClassName ObjectGetClassName
-    {
-        get => _objectGetClassName;
-    }
+    public GDExtensionInterfaceObjectGetClassName ObjectGetClassName { get; }
 
-    public GDExtensionInterfaceObjectCastTo ObjectCastTo
-    {
-        get => _objectCastTo;
-    }
+    public GDExtensionInterfaceObjectCastTo ObjectCastTo { get; }
 
-    public GDExtensionInterfaceObjectGetInstanceFromId ObjectGetInstanceFromId
-    {
-        get => _objectGetInstanceFromId;
-    }
+    public GDExtensionInterfaceObjectGetInstanceFromId ObjectGetInstanceFromId { get; }
 
-    public GDExtensionInterfaceObjectGetInstanceId ObjectGetInstanceId
-    {
-        get => _objectGetInstanceId;
-    }
+    public GDExtensionInterfaceObjectGetInstanceId ObjectGetInstanceId { get; }
 
-    public GDExtensionInterfaceObjectHasScriptMethod ObjectHasScriptMethod
-    {
-        get => _objectHasScriptMethod;
-    }
+    public GDExtensionInterfaceObjectHasScriptMethod ObjectHasScriptMethod { get; }
 
-    public GDExtensionInterfaceObjectCallScriptMethod ObjectCallScriptMethod
-    {
-        get => _objectCallScriptMethod;
-    }
+    public GDExtensionInterfaceObjectCallScriptMethod ObjectCallScriptMethod { get; }
 
-    public GDExtensionInterfaceRefGetObject RefGetObject
-    {
-        get => _refGetObject;
-    }
+    public GDExtensionInterfaceRefGetObject RefGetObject { get; }
 
-    public GDExtensionInterfaceRefSetObject RefSetObject
-    {
-        get => _refSetObject;
-    }
+    public GDExtensionInterfaceRefSetObject RefSetObject { get; }
 
-    public GDExtensionInterfaceScriptInstanceCreate ScriptInstanceCreate
-    {
-        get => _scriptInstanceCreate;
-    }
+    public GDExtensionInterfaceScriptInstanceCreate ScriptInstanceCreate { get; }
 
-    public GDExtensionInterfaceScriptInstanceCreate2 ScriptInstanceCreate2
-    {
-        get => _scriptInstanceCreate2;
-    }
+    public GDExtensionInterfaceScriptInstanceCreate2 ScriptInstanceCreate2 { get; }
 
-    public GDExtensionInterfaceScriptInstanceCreate3 ScriptInstanceCreate3
-    {
-        get => _scriptInstanceCreate3;
-    }
+    public GDExtensionInterfaceScriptInstanceCreate3 ScriptInstanceCreate3 { get; }
 
-    public GDExtensionInterfacePlaceholderScriptInstanceCreate PlaceholderScriptInstanceCreate
-    {
-        get => _placeholderScriptInstanceCreate;
-    }
+    public GDExtensionInterfacePlaceholderScriptInstanceCreate PlaceholderScriptInstanceCreate { get; }
 
-    public GDExtensionInterfacePlaceholderScriptInstanceUpdate PlaceholderScriptInstanceUpdate
-    {
-        get => _placeholderScriptInstanceUpdate;
-    }
+    public GDExtensionInterfacePlaceholderScriptInstanceUpdate PlaceholderScriptInstanceUpdate { get; }
 
-    public GDExtensionInterfaceObjectGetScriptInstance ObjectGetScriptInstance
-    {
-        get => _objectGetScriptInstance;
-    }
+    public GDExtensionInterfaceObjectGetScriptInstance ObjectGetScriptInstance { get; }
 
-    public GDExtensionInterfaceObjectSetScriptInstance ObjectSetScriptInstance
-    {
-        get => _objectSetScriptInstance;
-    }
+    public GDExtensionInterfaceObjectSetScriptInstance ObjectSetScriptInstance { get; }
 
-    public GDExtensionInterfaceCallableCustomCreate CallableCustomCreate
-    {
-        get => _callableCustomCreate;
-    }
+    public GDExtensionInterfaceCallableCustomCreate CallableCustomCreate { get; }
 
-    public GDExtensionInterfaceCallableCustomCreate2 CallableCustomCreate2
-    {
-        get => _callableCustomCreate2;
-    }
+    public GDExtensionInterfaceCallableCustomCreate2 CallableCustomCreate2 { get; }
 
-    public GDExtensionInterfaceCallableCustomGetUserdata CallableCustomGetUserdata
-    {
-        get => _callableCustomGetUserdata;
-    }
+    public GDExtensionInterfaceCallableCustomGetUserdata CallableCustomGetUserdata { get; }
 
-    public GDExtensionInterfaceClassdbConstructObject ClassdbConstructObject
-    {
-        get => _classdbConstructObject;
-    }
+    public GDExtensionInterfaceClassdbConstructObject ClassdbConstructObject { get; }
 
-    public GDExtensionInterfaceClassdbConstructObject2 ClassdbConstructObject2
-    {
-        get => _classdbConstructObject2;
-    }
+    public GDExtensionInterfaceClassdbConstructObject2 ClassdbConstructObject2 { get; }
 
-    public GDExtensionInterfaceClassdbConstructObject3 ClassdbConstructObject3
-    {
-        get => _classdbConstructObject3;
-    }
+    public GDExtensionInterfaceClassdbConstructObject3 ClassdbConstructObject3 { get; }
 
-    public GDExtensionInterfaceClassdbGetMethodBind ClassdbGetMethodBind
-    {
-        get => _classdbGetMethodBind;
-    }
+    public GDExtensionInterfaceClassdbGetMethodBind ClassdbGetMethodBind { get; }
 
-    public GDExtensionInterfaceClassdbGetClassTag ClassdbGetClassTag
-    {
-        get => _classdbGetClassTag;
-    }
+    public GDExtensionInterfaceClassdbGetClassTag ClassdbGetClassTag { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClass ClassdbRegisterExtensionClass
-    {
-        get => _classdbRegisterExtensionClass;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass ClassdbRegisterExtensionClass { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClass2 ClassdbRegisterExtensionClass2
-    {
-        get => _classdbRegisterExtensionClass2;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass2 ClassdbRegisterExtensionClass2 { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClass3 ClassdbRegisterExtensionClass3
-    {
-        get => _classdbRegisterExtensionClass3;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass3 ClassdbRegisterExtensionClass3 { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClass4 ClassdbRegisterExtensionClass4
-    {
-        get => _classdbRegisterExtensionClass4;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass4 ClassdbRegisterExtensionClass4 { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClass5 ClassdbRegisterExtensionClass5
-    {
-        get => _classdbRegisterExtensionClass5;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass5 ClassdbRegisterExtensionClass5 { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClass6 ClassdbRegisterExtensionClass6
-    {
-        get => _classdbRegisterExtensionClass6;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClass6 ClassdbRegisterExtensionClass6 { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassMethod ClassdbRegisterExtensionClassMethod
-    {
-        get => _classdbRegisterExtensionClassMethod;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassMethod ClassdbRegisterExtensionClassMethod { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassVirtualMethod ClassdbRegisterExtensionClassVirtualMethod
-    {
-        get => _classdbRegisterExtensionClassVirtualMethod;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassVirtualMethod ClassdbRegisterExtensionClassVirtualMethod { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant ClassdbRegisterExtensionClassIntegerConstant
-    {
-        get => _classdbRegisterExtensionClassIntegerConstant;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant ClassdbRegisterExtensionClassIntegerConstant { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassProperty ClassdbRegisterExtensionClassProperty
-    {
-        get => _classdbRegisterExtensionClassProperty;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassProperty ClassdbRegisterExtensionClassProperty { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed ClassdbRegisterExtensionClassPropertyIndexed
-    {
-        get => _classdbRegisterExtensionClassPropertyIndexed;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed ClassdbRegisterExtensionClassPropertyIndexed { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup ClassdbRegisterExtensionClassPropertyGroup
-    {
-        get => _classdbRegisterExtensionClassPropertyGroup;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup ClassdbRegisterExtensionClassPropertyGroup { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup ClassdbRegisterExtensionClassPropertySubgroup
-    {
-        get => _classdbRegisterExtensionClassPropertySubgroup;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup ClassdbRegisterExtensionClassPropertySubgroup { get; }
 
-    public GDExtensionInterfaceClassdbRegisterExtensionClassSignal ClassdbRegisterExtensionClassSignal
-    {
-        get => _classdbRegisterExtensionClassSignal;
-    }
+    public GDExtensionInterfaceClassdbRegisterExtensionClassSignal ClassdbRegisterExtensionClassSignal { get; }
 
-    public GDExtensionInterfaceClassdbUnregisterExtensionClass ClassdbUnregisterExtensionClass
-    {
-        get => _classdbUnregisterExtensionClass;
-    }
+    public GDExtensionInterfaceClassdbUnregisterExtensionClass ClassdbUnregisterExtensionClass { get; }
 
-    public GDExtensionInterfaceGetLibraryPath GetLibraryPath
-    {
-        get => _getLibraryPath;
-    }
+    public GDExtensionInterfaceGetLibraryPath GetLibraryPath { get; }
 
-    public GDExtensionInterfaceEditorAddPlugin EditorAddPlugin
-    {
-        get => _editorAddPlugin;
-    }
+    public GDExtensionInterfaceEditorAddPlugin EditorAddPlugin { get; }
 
-    public GDExtensionInterfaceEditorRemovePlugin EditorRemovePlugin
-    {
-        get => _editorRemovePlugin;
-    }
+    public GDExtensionInterfaceEditorRemovePlugin EditorRemovePlugin { get; }
 
-    public GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars EditorHelpLoadXmlFromUtf8Chars
-    {
-        get => _editorHelpLoadXmlFromUtf8Chars;
-    }
+    public GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars EditorHelpLoadXmlFromUtf8Chars { get; }
 
-    public GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen EditorHelpLoadXmlFromUtf8CharsAndLen
-    {
-        get => _editorHelpLoadXmlFromUtf8CharsAndLen;
-    }
+    public GDExtensionInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen EditorHelpLoadXmlFromUtf8CharsAndLen { get; }
 
-    public GDExtensionInterfaceEditorRegisterGetClassesUsedCallback EditorRegisterGetClassesUsedCallback
-    {
-        get => _editorRegisterGetClassesUsedCallback;
-    }
+    public GDExtensionInterfaceEditorRegisterGetClassesUsedCallback EditorRegisterGetClassesUsedCallback { get; }
 
-    public GDExtensionInterfaceRegisterMainLoopCallbacks RegisterMainLoopCallbacks
-    {
-        get => _registerMainLoopCallbacks;
-    }
+    public GDExtensionInterfaceRegisterMainLoopCallbacks RegisterMainLoopCallbacks { get; }
 
     private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)
     {
