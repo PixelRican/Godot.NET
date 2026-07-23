@@ -19,6 +19,7 @@ class GDExtensionInterface:
             file.write("\n")
             file.write("namespace Godot.InteropServices;\n")
             file.write("\n")
+            file.write("#pragma warning disable CS0618 // Deprecated functions are loaded to maintain backwards compatibility with earlier versions.\n")
             file.write("public sealed unsafe class GDExtensionInterface\n")
             file.write("{\n")
             for member in self.members:
@@ -52,6 +53,7 @@ class GDExtensionInterface:
             file.write("        }\n")
             file.write("    }\n")
             file.write("}\n")
+            file.write("#pragma warning disable CS0618 // Deprecated functions are loaded to maintain backwards compatibility with earlier versions.\n")
 
 class GDExtensionInterfaceMember:
     def __init__(self, function: FunctionInfo) -> None:
