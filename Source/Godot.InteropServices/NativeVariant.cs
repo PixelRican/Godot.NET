@@ -35,25 +35,25 @@ namespace Godot.InteropServices;
 [StructLayout(LayoutKind.Explicit)]
 public struct NativeVariant
 {
-    [FieldOffset(0)] public int Type;
-    [FieldOffset(8)] public DataUnion Data;
+    [FieldOffset(0)] private int type;
+    [FieldOffset(8)] private DataUnion _data;
 
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct DataUnion
+    private unsafe struct DataUnion
     {
-        [FieldOffset(0)] public byte Bool;
-        [FieldOffset(0)] public long Int;
-        [FieldOffset(0)] public double Float;
-        [FieldOffset(0)] public void* Transform2D;
-        [FieldOffset(0)] public void* Aabb;
-        [FieldOffset(0)] public void* Basis;
-        [FieldOffset(0)] public void* Transform3D;
-        [FieldOffset(0)] public void* Projection;
-        [FieldOffset(0)] public void* PackedArray;
-        [FieldOffset(0)] public void* Ptr;
-        [FieldOffset(0)] public MemUnion Mem;
+        [FieldOffset(0)] public byte _bool;
+        [FieldOffset(0)] public long _int;
+        [FieldOffset(0)] public double _float;
+        [FieldOffset(0)] public void* _transform2D;
+        [FieldOffset(0)] public void* _aabb;
+        [FieldOffset(0)] public void* _basis;
+        [FieldOffset(0)] public void* _transform3D;
+        [FieldOffset(0)] public void* _projection;
+        [FieldOffset(0)] public void* packed_array;
+        [FieldOffset(0)] public void* _ptr;
+        [FieldOffset(0)] public MemUnion _mem;
     }
 
     [StructLayout(LayoutKind.Explicit, Size = sizeof(real_t) * 4)]
-    public struct MemUnion;
+    private struct MemUnion;
 }
