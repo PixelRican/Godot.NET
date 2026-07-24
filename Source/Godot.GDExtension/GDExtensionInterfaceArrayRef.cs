@@ -29,6 +29,7 @@
 /**************************************************************************/
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -70,7 +71,7 @@ public readonly unsafe struct GDExtensionInterfaceArrayRef : IEquatable<GDExtens
         return _method == other._method;
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is GDExtensionInterfaceArrayRef other && _method == other._method;
     }

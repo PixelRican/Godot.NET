@@ -29,6 +29,7 @@
 /**************************************************************************/
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Godot.GDExtension;
@@ -53,7 +54,7 @@ public readonly unsafe struct GDExtensionUninitializedVariantPtr : IEquatable<GD
         return _pointer == other._pointer;
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is GDExtensionUninitializedVariantPtr other && _pointer == other._pointer;
     }

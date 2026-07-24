@@ -180,6 +180,7 @@ class HandleInfo(TypeInfo):
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
+        file.write("using System.Diagnostics.CodeAnalysis;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
         file.write("namespace Godot.GDExtension;\n")
@@ -208,7 +209,7 @@ class HandleInfo(TypeInfo):
         file.write("        return _pointer == other._pointer;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    public override bool Equals([NotNullWhen(true)] object? obj)\n")
         file.write("    {\n")
         file.write(f"        return obj is {self.name} other && _pointer == other._pointer;\n")
         file.write("    }\n")
@@ -242,6 +243,7 @@ class AliasInfo(TypeInfo):
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
+        file.write("using System.Diagnostics.CodeAnalysis;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
         file.write("namespace Godot.GDExtension;\n")
@@ -281,7 +283,7 @@ class AliasInfo(TypeInfo):
         file.write("        return _value == other._value;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    public override bool Equals([NotNullWhen(true)] object? obj)\n")
         file.write("    {\n")
         file.write(f"        return obj is {self.name} other && _value == other._value;\n")
         file.write("    }\n")
@@ -378,6 +380,7 @@ class FunctionInfo(TypeInfo):
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
+        file.write("using System.Diagnostics.CodeAnalysis;\n")
         file.write("using System.Runtime.CompilerServices;\n")
         file.write("using System.Runtime.InteropServices;\n")
         file.write("\n")
@@ -424,7 +427,7 @@ class FunctionInfo(TypeInfo):
         file.write("        return _method == other._method;\n")
         file.write("    }\n")
         file.write("\n")
-        file.write("    public override bool Equals(object? obj)\n")
+        file.write("    public override bool Equals([NotNullWhen(true)] object? obj)\n")
         file.write("    {\n")
         file.write(f"        return obj is {self.name} other && _method == other._method;\n")
         file.write("    }\n")
