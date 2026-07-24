@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionScriptInstanceGetOwner : IEquatable<GDE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionObjectPtr> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionObjectPtr Invoke(GDExtensionScriptInstanceDataPtr p_instance)

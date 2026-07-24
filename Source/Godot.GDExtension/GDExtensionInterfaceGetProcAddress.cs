@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionInterfaceGetProcAddress : IEquatable<GD
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<byte*, GDExtensionInterfaceFunctionPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<byte*, GDExtensionInterfaceFunctionPtr> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionInterfaceFunctionPtr Invoke(byte* p_function_name)

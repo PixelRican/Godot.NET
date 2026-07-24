@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionClassGetVirtual2 : IEquatable<GDExtensi
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, uint, GDExtensionClassCallVirtual> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, uint, GDExtensionClassCallVirtual> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionClassCallVirtual Invoke(void* p_class_userdata, GDExtensionConstStringNamePtr p_name, uint p_hash)

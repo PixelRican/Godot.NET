@@ -50,10 +50,7 @@ public readonly unsafe struct GDExtensionInterfaceClassdbConstructObject : IEqua
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> Method => _method;
 
     /// <param name="p_classname">
     /// A pointer to a StringName with the class name.

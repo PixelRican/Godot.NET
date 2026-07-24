@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectSetScriptInstance : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void> Method => _method;
 
     /// <param name="p_object">
     /// A pointer to the Object.

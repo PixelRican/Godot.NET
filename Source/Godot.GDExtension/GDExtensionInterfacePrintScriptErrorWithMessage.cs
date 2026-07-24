@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfacePrintScriptErrorWithMessage : 
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> Method => _method;
 
     /// <param name="p_description">
     /// The code triggering the error.

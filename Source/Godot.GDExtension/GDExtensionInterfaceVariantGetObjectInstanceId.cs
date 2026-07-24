@@ -50,10 +50,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetObjectInstanceId : I
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the Variant.

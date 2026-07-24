@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceArrayRef : IEquatable<GDExtens
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the Array object to update.

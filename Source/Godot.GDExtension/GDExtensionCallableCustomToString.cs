@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionCallableCustomToString : IEquatable<GDE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionStringPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionStringPtr, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(void* callable_userdata, GDExtensionBool* r_is_valid, GDExtensionStringPtr r_out)

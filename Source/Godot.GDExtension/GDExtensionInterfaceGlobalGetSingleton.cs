@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceGlobalGetSingleton : IEquatabl
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> Method => _method;
 
     /// <param name="p_name">
     /// A pointer to a StringName with the singleton name.

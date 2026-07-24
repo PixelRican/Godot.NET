@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionScriptInstanceValidateProperty : IEquat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, GDExtensionBool> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionBool Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionPropertyInfo* p_property)

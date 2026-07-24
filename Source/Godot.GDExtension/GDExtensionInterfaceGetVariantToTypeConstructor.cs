@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceGetVariantToTypeConstructor : 
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

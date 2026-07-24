@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceClassdbGetMethodBind : IEquata
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> Method => _method;
 
     /// <param name="p_classname">
     /// A pointer to a StringName with the class name.

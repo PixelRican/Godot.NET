@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantHasMember : IEquatable<
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

@@ -46,10 +46,7 @@ public readonly unsafe struct GDExtensionClassFreePropertyList : IEquatable<GDEx
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionPropertyInfo*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionPropertyInfo*, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionClassInstancePtr p_instance, GDExtensionPropertyInfo* p_list)

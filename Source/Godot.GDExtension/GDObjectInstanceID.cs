@@ -44,10 +44,7 @@ public readonly struct GDObjectInstanceID : IEquatable<GDObjectInstanceID>
         _value = value;
     }
 
-    public ulong Value
-    {
-        get => _value;
-    }
+    public ulong Value => _value;
 
     public bool Equals(GDObjectInstanceID other)
     {

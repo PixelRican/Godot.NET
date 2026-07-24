@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceScriptInstanceCreate2 : IEquat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> Method => _method;
 
     /// <param name="p_info">
     /// A pointer to a GDExtensionScriptInstanceInfo2 struct.

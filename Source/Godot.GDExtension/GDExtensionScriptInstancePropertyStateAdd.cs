@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionScriptInstancePropertyStateAdd : IEquat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void*, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionConstStringNamePtr p_name, GDExtensionConstVariantPtr p_value, void* p_userdata)

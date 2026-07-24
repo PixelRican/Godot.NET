@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf32Chars : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> Method => _method;
 
     /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.

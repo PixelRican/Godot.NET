@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceClassdbGetClassTag : IEquatabl
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> Method => _method;
 
     /// <param name="p_classname">
     /// A pointer to a StringName with the class name.

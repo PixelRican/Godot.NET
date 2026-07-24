@@ -50,10 +50,7 @@ public readonly unsafe struct GDExtensionInterfacePlaceholderScriptInstanceUpdat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> Method => _method;
 
     /// <param name="p_placeholder">
     /// A pointer to a PlaceHolderScriptInstance.

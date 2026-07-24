@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceRegisterMainLoopCallbacks : IE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> Method => _method;
 
     /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.

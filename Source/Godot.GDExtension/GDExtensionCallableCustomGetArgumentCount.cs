@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionCallableCustomGetArgumentCount : IEquat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionInt> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool*, GDExtensionInt> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionInt Invoke(void* callable_userdata, GDExtensionBool* r_is_valid)

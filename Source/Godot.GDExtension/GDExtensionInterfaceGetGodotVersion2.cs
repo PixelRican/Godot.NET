@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceGetGodotVersion2 : IEquatable<
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionGodotVersion2*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionGodotVersion2*, void> Method => _method;
 
     /// <param name="r_godot_version">
     /// A pointer to the structure to write the version information into.

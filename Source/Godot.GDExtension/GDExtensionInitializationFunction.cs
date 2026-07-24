@@ -79,10 +79,7 @@ public readonly unsafe struct GDExtensionInitializationFunction : IEquatable<GDE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionInterfaceGetProcAddress, GDExtensionClassLibraryPtr, GDExtensionInitialization*, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionInterfaceGetProcAddress, GDExtensionClassLibraryPtr, GDExtensionInitialization*, GDExtensionBool> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionBool Invoke(GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library, GDExtensionInitialization* r_initialization)

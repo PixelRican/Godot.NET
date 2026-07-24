@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionClassToString : IEquatable<GDExtensionC
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, GDExtensionBool*, GDExtensionStringPtr, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionClassInstancePtr p_instance, GDExtensionBool* r_is_valid, GDExtensionStringPtr p_out)

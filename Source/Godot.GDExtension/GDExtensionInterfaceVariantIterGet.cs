@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantIterGet : IEquatable<GD
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the Variant.

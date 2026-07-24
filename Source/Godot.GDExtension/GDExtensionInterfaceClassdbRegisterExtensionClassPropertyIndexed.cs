@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceClassdbRegisterExtensionClassP
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void> Method => _method;
 
     /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.

@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionCallableCustomIsValid : IEquatable<GDEx
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionBool Invoke(void* callable_userdata)

@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionMainLoopStartupCallback : IEquatable<GD
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke()

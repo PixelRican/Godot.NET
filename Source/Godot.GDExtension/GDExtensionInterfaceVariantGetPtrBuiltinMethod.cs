@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrBuiltinMethod : I
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

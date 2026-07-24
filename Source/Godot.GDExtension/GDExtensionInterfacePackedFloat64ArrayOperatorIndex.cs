@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfacePackedFloat64ArrayOperatorInde
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to a PackedFloat64Array object.

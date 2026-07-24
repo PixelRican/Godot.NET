@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectCastTo : IEquatable<GDEx
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr> Method => _method;
 
     /// <param name="p_object">
     /// A pointer to the Object.

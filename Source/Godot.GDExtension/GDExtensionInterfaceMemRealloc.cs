@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceMemRealloc : IEquatable<GDExte
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, nuint, void*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, nuint, void*> Method => _method;
 
     /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.

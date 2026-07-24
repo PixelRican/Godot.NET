@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceArrayOperatorIndexConst : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr> Method => _method;
 
     /// <param name="p_self">
     /// A const pointer to an Array object.

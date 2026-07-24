@@ -46,10 +46,7 @@ public readonly unsafe struct GDExtensionScriptInstanceFreeMethodList : IEquatab
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionMethodInfo*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionMethodInfo*, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionMethodInfo* p_list)

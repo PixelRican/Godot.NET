@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceDictionaryOperatorIndexConst :
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> Method => _method;
 
     /// <param name="p_self">
     /// A const pointer to a Dictionary object.

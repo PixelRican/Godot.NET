@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetConstantValue : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

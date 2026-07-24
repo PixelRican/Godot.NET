@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetTypeByName : IEquata
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType> Method => _method;
 
     /// <param name="p_type_name">
     /// The variant type name.

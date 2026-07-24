@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrKeyedChecker : IE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

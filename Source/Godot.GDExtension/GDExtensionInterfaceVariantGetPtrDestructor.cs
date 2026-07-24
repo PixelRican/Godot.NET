@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrDestructor : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

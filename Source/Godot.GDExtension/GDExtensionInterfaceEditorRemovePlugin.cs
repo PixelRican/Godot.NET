@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceEditorRemovePlugin : IEquatabl
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> Method => _method;
 
     /// <param name="p_class_name">
     /// A pointer to a StringName with the name of a class that was previously added as an editor plugin.

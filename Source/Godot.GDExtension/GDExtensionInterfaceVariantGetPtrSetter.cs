@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrSetter : IEquatab
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

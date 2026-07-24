@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionScriptInstanceFreePropertyList2 : IEqua
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, uint, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo*, uint, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, GDExtensionPropertyInfo* p_list, uint p_count)

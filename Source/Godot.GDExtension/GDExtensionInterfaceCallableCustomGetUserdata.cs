@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceCallableCustomGetUserdata : IE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> Method => _method;
 
     /// <param name="p_callable">
     /// A pointer to a Callable.

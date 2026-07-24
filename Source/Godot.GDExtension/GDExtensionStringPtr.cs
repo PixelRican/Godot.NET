@@ -44,10 +44,7 @@ public readonly unsafe struct GDExtensionStringPtr : IEquatable<GDExtensionStrin
         _pointer = pointer;
     }
 
-    public void* Pointer
-    {
-        get => _pointer;
-    }
+    public void* Pointer => _pointer;
 
     public bool Equals(GDExtensionStringPtr other)
     {

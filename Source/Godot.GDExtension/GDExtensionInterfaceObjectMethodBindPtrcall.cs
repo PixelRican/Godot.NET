@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectMethodBindPtrcall : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> Method => _method;
 
     /// <param name="p_method_bind">
     /// A pointer to the MethodBind representing the method on the Object's class.

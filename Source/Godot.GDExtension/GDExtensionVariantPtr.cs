@@ -61,10 +61,7 @@ public readonly unsafe struct GDExtensionVariantPtr : IEquatable<GDExtensionVari
         _pointer = pointer;
     }
 
-    public void* Pointer
-    {
-        get => _pointer;
-    }
+    public void* Pointer => _pointer;
 
     public bool Equals(GDExtensionVariantPtr other)
     {

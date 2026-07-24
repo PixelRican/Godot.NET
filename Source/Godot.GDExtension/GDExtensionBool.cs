@@ -44,10 +44,7 @@ public readonly struct GDExtensionBool : IEquatable<GDExtensionBool>
         _value = (byte)(value ? 1 : 0);
     }
 
-    public bool Value
-    {
-        get => _value != 0;
-    }
+    public bool Value => _value != 0;
 
     public bool Equals(GDExtensionBool other)
     {

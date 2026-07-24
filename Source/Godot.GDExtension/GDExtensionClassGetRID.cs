@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionClassGetRID : IEquatable<GDExtensionCla
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, ulong> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, ulong> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ulong Invoke(GDExtensionClassInstancePtr p_instance)

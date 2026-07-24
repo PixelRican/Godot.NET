@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceCallableCustomCreate2 : IEquat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void> Method => _method;
 
     /// <param name="r_callable">
     /// A pointer that will receive the new Callable.

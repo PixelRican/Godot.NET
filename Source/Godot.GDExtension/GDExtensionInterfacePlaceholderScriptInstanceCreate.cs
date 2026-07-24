@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfacePlaceholderScriptInstanceCreat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr> Method => _method;
 
     /// <param name="p_language">
     /// A pointer to a ScriptLanguage.

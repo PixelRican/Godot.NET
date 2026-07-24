@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceWorkerThreadPoolAddNativeTask 
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> Method => _method;
 
     /// <param name="p_instance">
     /// A pointer to a WorkerThreadPool object.

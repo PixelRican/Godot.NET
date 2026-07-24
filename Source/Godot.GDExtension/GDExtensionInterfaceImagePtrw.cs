@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceImagePtrw : IEquatable<GDExten
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> Method => _method;
 
     /// <param name="p_instance">
     /// A pointer to a Image object.

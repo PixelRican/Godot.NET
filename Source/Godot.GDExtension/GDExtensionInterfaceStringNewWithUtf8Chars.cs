@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf8Chars : IEqua
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> Method => _method;
 
     /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.

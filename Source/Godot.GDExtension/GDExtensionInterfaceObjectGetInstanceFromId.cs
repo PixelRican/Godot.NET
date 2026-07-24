@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectGetInstanceFromId : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr> Method => _method;
 
     /// <param name="p_instance_id">
     /// The instance ID.

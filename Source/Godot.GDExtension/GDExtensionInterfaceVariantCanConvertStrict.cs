@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantCanConvertStrict : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> Method => _method;
 
     /// <param name="p_from">
     /// The Variant type to convert from.

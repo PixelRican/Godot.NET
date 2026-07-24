@@ -52,10 +52,7 @@ public readonly unsafe struct GDExtensionInterfaceEditorRegisterGetClassesUsedCa
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> Method => _method;
 
     /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.

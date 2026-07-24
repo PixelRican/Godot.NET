@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionClassNotification2 : IEquatable<GDExten
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, int, GDExtensionBool, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassInstancePtr, int, GDExtensionBool, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionClassInstancePtr p_instance, int p_what, GDExtensionBool p_reversed)

@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantNewNil : IEquatable<GDE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void> Method => _method;
 
     /// <param name="r_dest">
     /// A pointer to the destination Variant.

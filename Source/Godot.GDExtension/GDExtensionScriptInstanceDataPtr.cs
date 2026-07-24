@@ -47,10 +47,7 @@ public readonly unsafe struct GDExtensionScriptInstanceDataPtr : IEquatable<GDEx
         _pointer = pointer;
     }
 
-    public void* Pointer
-    {
-        get => _pointer;
-    }
+    public void* Pointer => _pointer;
 
     public bool Equals(GDExtensionScriptInstanceDataPtr other)
     {

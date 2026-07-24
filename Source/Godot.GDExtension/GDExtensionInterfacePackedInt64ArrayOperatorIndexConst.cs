@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfacePackedInt64ArrayOperatorIndexC
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*> Method => _method;
 
     /// <param name="p_self">
     /// A const pointer to a PackedInt64Array object.

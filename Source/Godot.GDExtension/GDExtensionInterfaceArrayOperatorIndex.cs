@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceArrayOperatorIndex : IEquatabl
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to an Array object.

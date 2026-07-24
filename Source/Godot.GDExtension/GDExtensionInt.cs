@@ -44,10 +44,7 @@ public readonly struct GDExtensionInt : IEquatable<GDExtensionInt>
         _value = value;
     }
 
-    public long Value
-    {
-        get => _value;
-    }
+    public long Value => _value;
 
     public bool Equals(GDExtensionInt other)
     {

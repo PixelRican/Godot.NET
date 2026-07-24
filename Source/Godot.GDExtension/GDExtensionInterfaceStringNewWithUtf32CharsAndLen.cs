@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceStringNewWithUtf32CharsAndLen 
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> Method => _method;
 
     /// <param name="r_dest">
     /// A pointer to a Variant to hold the newly created String.

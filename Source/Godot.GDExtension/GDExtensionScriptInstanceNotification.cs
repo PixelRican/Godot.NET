@@ -46,10 +46,7 @@ public readonly unsafe struct GDExtensionScriptInstanceNotification : IEquatable
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, int, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, int, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionScriptInstanceDataPtr p_instance, int p_what)

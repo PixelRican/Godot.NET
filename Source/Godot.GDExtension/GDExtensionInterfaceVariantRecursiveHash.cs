@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantRecursiveHash : IEquata
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the Variant.

@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectDestroy : IEquatable<GDE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void> Method => _method;
 
     /// <param name="p_o">
     /// A pointer to the Object.

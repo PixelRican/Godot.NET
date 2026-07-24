@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantGetPtrIndexedSetter : I
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter> Method => _method;
 
     /// <param name="p_type">
     /// The Variant type.

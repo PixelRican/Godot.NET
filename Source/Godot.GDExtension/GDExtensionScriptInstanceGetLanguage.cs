@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionScriptInstanceGetLanguage : IEquatable<
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionScriptLanguagePtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceDataPtr, GDExtensionScriptLanguagePtr> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionScriptLanguagePtr Invoke(GDExtensionScriptInstanceDataPtr p_instance)

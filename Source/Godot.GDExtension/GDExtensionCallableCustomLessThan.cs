@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionCallableCustomLessThan : IEquatable<GDE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionBool> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionBool Invoke(void* callable_userdata_a, void* callable_userdata_b)

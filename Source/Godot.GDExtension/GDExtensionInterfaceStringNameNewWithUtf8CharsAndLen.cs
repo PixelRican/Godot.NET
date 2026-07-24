@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceStringNameNewWithUtf8CharsAndL
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void> Method => _method;
 
     /// <param name="r_dest">
     /// A pointer to uninitialized storage, into which the newly created StringName is constructed.

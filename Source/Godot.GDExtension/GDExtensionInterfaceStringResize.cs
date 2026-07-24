@@ -53,10 +53,7 @@ public readonly unsafe struct GDExtensionInterfaceStringResize : IEquatable<GDEx
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the String.

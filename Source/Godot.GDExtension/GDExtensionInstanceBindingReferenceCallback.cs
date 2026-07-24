@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionInstanceBindingReferenceCallback : IEqu
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionBool, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionBool, GDExtensionBool> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionBool Invoke(void* p_token, void* p_binding, GDExtensionBool p_reference)

@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantDestroy : IEquatable<GD
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the Variant to destroy.

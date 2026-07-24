@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionInstanceBindingFreeCallback : IEquatabl
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, void*, void*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, void*, void*, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(void* p_token, void* p_instance, void* p_binding)

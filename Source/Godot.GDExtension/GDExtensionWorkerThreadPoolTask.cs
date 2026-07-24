@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionWorkerThreadPoolTask : IEquatable<GDExt
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(void* p_0)

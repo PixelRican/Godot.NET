@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceStringToUtf8Chars : IEquatable
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the String.

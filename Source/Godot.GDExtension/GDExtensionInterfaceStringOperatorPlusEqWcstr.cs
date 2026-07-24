@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceStringOperatorPlusEqWcstr : IE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the String.

@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceMemAlloc : IEquatable<GDExtens
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<nuint, void*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<nuint, void*> Method => _method;
 
     /// <param name="p_bytes">
     /// The amount of memory to allocate in bytes.

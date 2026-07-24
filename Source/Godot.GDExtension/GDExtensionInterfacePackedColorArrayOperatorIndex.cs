@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfacePackedColorArrayOperatorIndex 
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to a PackedColorArray object.

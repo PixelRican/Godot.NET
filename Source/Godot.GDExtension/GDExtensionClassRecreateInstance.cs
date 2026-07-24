@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionClassRecreateInstance : IEquatable<GDEx
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr, GDExtensionClassInstancePtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr, GDExtensionClassInstancePtr> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public GDExtensionClassInstancePtr Invoke(void* p_class_userdata, GDExtensionObjectPtr p_object)

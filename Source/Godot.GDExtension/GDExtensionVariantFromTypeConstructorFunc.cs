@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionVariantFromTypeConstructorFunc : IEquat
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionTypePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionTypePtr, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionUninitializedVariantPtr p_0, GDExtensionTypePtr p_1)

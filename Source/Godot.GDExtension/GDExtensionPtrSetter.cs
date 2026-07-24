@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionPtrSetter : IEquatable<GDExtensionPtrSe
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(GDExtensionTypePtr p_base, GDExtensionConstTypePtr p_value)

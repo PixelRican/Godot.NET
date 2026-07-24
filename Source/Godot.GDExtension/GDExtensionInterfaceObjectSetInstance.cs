@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectSetInstance : IEquatable
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> Method => _method;
 
     /// <param name="p_o">
     /// A pointer to the Object.

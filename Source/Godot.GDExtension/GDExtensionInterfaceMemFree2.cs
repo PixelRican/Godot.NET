@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceMemFree2 : IEquatable<GDExtens
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void> Method => _method;
 
     /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.

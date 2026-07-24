@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceEditorHelpLoadXmlFromUtf8Chars
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void> Method => _method;
 
     /// <param name="p_data">
     /// A pointer to a UTF-8 encoded C string.

@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectFreeInstanceBinding : IE
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void> Method => _method;
 
     /// <param name="p_o">
     /// A pointer to the Object.

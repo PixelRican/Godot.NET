@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceGetNativeStructSize : IEquatab
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong> Method => _method;
 
     /// <param name="p_name">
     /// A pointer to a StringName identifying the struct name.

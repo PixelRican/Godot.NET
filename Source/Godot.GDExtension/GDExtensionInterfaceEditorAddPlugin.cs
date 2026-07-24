@@ -49,10 +49,7 @@ public readonly unsafe struct GDExtensionInterfaceEditorAddPlugin : IEquatable<G
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> Method => _method;
 
     /// <param name="p_class_name">
     /// A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.

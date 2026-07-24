@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfacePackedVector4ArrayOperatorInde
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to a PackedVector4Array object.

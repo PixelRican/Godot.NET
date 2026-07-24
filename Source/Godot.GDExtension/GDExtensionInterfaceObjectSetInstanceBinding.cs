@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceObjectSetInstanceBinding : IEq
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void> Method => _method;
 
     /// <param name="p_o">
     /// A pointer to the Object.

@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantEvaluate : IEquatable<G
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> Method => _method;
 
     /// <param name="p_op">
     /// The operator to evaluate.

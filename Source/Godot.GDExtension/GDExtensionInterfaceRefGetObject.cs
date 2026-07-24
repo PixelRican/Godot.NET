@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceRefGetObject : IEquatable<GDEx
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr> Method => _method;
 
     /// <param name="p_ref">
     /// A pointer to the reference.

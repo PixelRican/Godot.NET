@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionCallableCustomHash : IEquatable<GDExten
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<void*, uint> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<void*, uint> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public uint Invoke(void* callable_userdata)

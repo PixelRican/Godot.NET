@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceVariantHashCompare : IEquatabl
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool> Method => _method;
 
     /// <param name="p_self">
     /// A pointer to the Variant.

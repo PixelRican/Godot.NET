@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionVariantGetInternalPtrFunc : IEquatable<
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void*> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void* Invoke(GDExtensionVariantPtr p_0)

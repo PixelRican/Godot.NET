@@ -45,10 +45,7 @@ public readonly unsafe struct GDExtensionPtrKeyedChecker : IEquatable<GDExtensio
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, uint> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, uint> Method => _method;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public uint Invoke(GDExtensionConstVariantPtr p_base, GDExtensionConstVariantPtr p_key)

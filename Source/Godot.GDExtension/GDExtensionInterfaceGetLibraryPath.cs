@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfaceGetLibraryPath : IEquatable<GD
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void> Method => _method;
 
     /// <param name="p_library">
     /// A pointer the library received by the GDExtension's entry point function.

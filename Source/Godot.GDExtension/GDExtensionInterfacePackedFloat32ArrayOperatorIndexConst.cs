@@ -48,10 +48,7 @@ public readonly unsafe struct GDExtensionInterfacePackedFloat32ArrayOperatorInde
         _method = method;
     }
 
-    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*> Method
-    {
-        get => _method;
-    }
+    public delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*> Method => _method;
 
     /// <param name="p_self">
     /// A const pointer to a PackedFloat32Array object.
