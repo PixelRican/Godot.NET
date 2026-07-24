@@ -3,9 +3,9 @@
 class GDExtensionInterface:
     def __init__(self, bindings: GDExtensionBindings) -> None:
         self.bindings: GDExtensionBindings = bindings
-        self.members: list[GDExtensionInterfaceMember] = [
-            GDExtensionInterfaceMember(function) for function in bindings.interface.values()
-        ]
+        self.properties: dict[str, FunctionInfo] = {
+            function.name.removeprefix("GDExtensionInterface") : function for function in bindings.interface.values()
+        }
 
     def generate(self) -> None:
         with open(f"../Source/Godot.InteropServices/GDExtensionInterface.cs", "w") as file:
@@ -25,12 +25,12 @@ class GDExtensionInterface:
             file.write("    public GDExtensionInterface(GDExtensionInterfaceGetProcAddress getProcAddress)\n")
             file.write("    {\n")
             file.write("        ArgumentNullException.ThrowIfNull(getProcAddress.Method, nameof(getProcAddress));\n")
-            for member in self.members:
-                file.write(f"        {member.property} = ({member.function.name})Load(getProcAddress, \"{member.function.entry_point}\"u8);\n")
+            for name, function in self.properties.items():
+                file.write(f"        {name} = ({function.name})Load(getProcAddress, \"{function.entry_point}\"u8);\n")
             file.write("    }\n")
-            for member in self.members:
+            for name, function in self.properties.items():
                 file.write("\n")
-                file.write(f"    public {member.function.name} {member.property} {{ get; }}\n")
+                file.write(f"    public {function.name} {name} {{ get; }}\n")
             file.write("\n")
             file.write("    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)\n")
             file.write("    {\n")
@@ -48,8 +48,3 @@ class GDExtensionInterface:
             file.write("    }\n")
             file.write("}\n")
             file.write("#pragma warning disable CS0618 // Deprecated functions are loaded to maintain backwards compatibility with earlier versions.\n")
-
-class GDExtensionInterfaceMember:
-    def __init__(self, function: FunctionInfo) -> None:
-        self.function: FunctionInfo = function
-        self.property: str = function.name.removeprefix("GDExtensionInterface")
