@@ -83,11 +83,11 @@ class Type:
             self.name += "*"
 
 class Description:
-    def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "", tab: bool = False) -> None:
+    def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "", indent: bool = False) -> None:
         self.lines: list[str] = lines
         self.tag: str = tag
         self.metadata: str = metadata
-        self.spacing: str = " " * 4 if tab else ""
+        self.spacing: str = " " * 4 if indent else ""
 
     def dump(self, file: IOBase) -> None:
         file.write(f"{self.spacing}/// <{self.tag}")
@@ -171,7 +171,7 @@ class EnumValue:
         self.description: Description | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, tab=True)
+            self.description = Description(description, indent=True)
 
 class HandleInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -343,7 +343,7 @@ class StructMember:
         self.description: Description | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, tab=True)
+            self.description = Description(description, indent=True)
 
 class FunctionInfo(TypeInfo):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -458,7 +458,7 @@ class FunctionArgument:
         self.description: Description | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, tag="param", metadata=f"name=\"{self.name}\"", tab=True)
+            self.description = Description(description, tag="param", metadata=f"name=\"{self.name}\"", indent=True)
 
 class FunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -466,4 +466,4 @@ class FunctionReturnValue:
         self.description: Description | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, tag="returns", tab=True)
+            self.description = Description(description, tag="returns", indent=True)
