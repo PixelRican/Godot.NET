@@ -1,17 +1,29 @@
 ﻿from gdextension import GDExtensionBindings, FunctionInfo
+from godot import GodotBindings
+from typing import Any
+
+class InteropServices:
+    def __init__(self, gdextension: GDExtensionBindings, godot: GodotBindings) -> None:
+        self.copyright: list[str] = gdextension.copyright
+        self.types: dict[str, Any] = {
+            "GDExtensionInterface" : GDExtensionInterface(gdextension)
+        }
+
+    def generate(self) -> None:
+        for instance in self.types.values():
+            instance.generate(self.copyright)
 
 class GDExtensionInterface:
     def __init__(self, bindings: GDExtensionBindings) -> None:
-        self.bindings: GDExtensionBindings = bindings
         self.properties: dict[str, FunctionInfo] = {
             function.name.removeprefix("GDExtensionInterface") : function for function in bindings.interface.values()
         }
 
-    def generate(self) -> None:
+    def generate(self, copyright_text: list[str]) -> None:
         with open(f"../Source/Godot.InteropServices/GDExtensionInterface.cs", "w") as file:
             file.write("/**************************************************************************/\n")
             file.write("/*  GDExtensionInterface.cs                                               */\n")
-            for line in self.bindings.copyright:
+            for line in copyright_text:
                 file.write(f"{line}\n")
             file.write("\n")
             file.write("using System;\n")

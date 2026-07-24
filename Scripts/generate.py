@@ -1,12 +1,13 @@
 from gdextension import GDExtensionBindings
-from interop import GDExtensionInterface
-from typing import Any
+from godot import GodotBindings
+from interop import InteropServices
 import json
 
 if __name__ == "__main__":
     with open("gdextension_interface.json", "r") as file:
-        data: dict[str, Any] = json.load(file)
-    bindings: GDExtensionBindings = GDExtensionBindings(data)
-    interface: GDExtensionInterface = GDExtensionInterface(bindings)
-    bindings.generate()
-    interface.generate()
+        gdextension: GDExtensionBindings = GDExtensionBindings(json.load(file))
+    with open("extension_api.json", "r") as file:
+        godot: GodotBindings = GodotBindings(json.load(file))
+    interop: InteropServices = InteropServices(gdextension, godot)
+    gdextension.generate()
+    interop.generate()
