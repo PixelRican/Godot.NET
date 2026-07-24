@@ -1,6 +1,6 @@
 ﻿from typing import Any
 
-class Extension:
+class GodotBindings:
     def __init__(self, data: dict[str, Any]) -> None:
         self.header: Header = Header(data["header"])
         self.builtin_class_sizes: list[BuiltinClassSize] = [
