@@ -153,10 +153,13 @@ class GDExtensionEnum(GDExtensionType):
             file.write("[Flags]\n")
         file.write(f"public enum {self.name}\n")
         file.write("{\n")
-        for value in self.values:
+        file.write(f"    {self.values[0].name} = {self.values[0].value}")
+        for value in self.values[1:]:
+            file.write(",\n")
             if value.description:
                 value.description.dump(file)
-            file.write(f"    {value.name} = {value.value},\n")
+            file.write(f"    {value.name} = {value.value}")
+        file.write("\n")
         file.write("}\n")
 
 class GDExtensionEnumValue:

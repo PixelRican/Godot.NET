@@ -50,5 +50,5 @@ public enum GDExtensionCallErrorType
     /// <summary>
     /// Used for const call.
     /// </summary>
-    GDEXTENSION_CALL_ERROR_METHOD_NOT_CONST = 6,
+    GDEXTENSION_CALL_ERROR_METHOD_NOT_CONST = 6
 }
