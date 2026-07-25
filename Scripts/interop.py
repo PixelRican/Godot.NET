@@ -1,21 +1,21 @@
-﻿from gdextension import GDExtensionBindings, FunctionInfo
+﻿from gdextension import GDExtensionInterface, GDExtensionFunction
 from godot import GodotBindings
 from typing import Any
 
 class InteropServices:
-    def __init__(self, gdextension: GDExtensionBindings, godot: GodotBindings) -> None:
-        self.copyright: list[str] = gdextension.copyright
+    def __init__(self, gdextension: GDExtensionInterface, godot: GodotBindings) -> None:
+        self.copyright: str = gdextension.copyright
         self.types: dict[str, Any] = {
-            "GDExtensionInterface" : GDExtensionInterface(gdextension)
+            "GDExtensionInterface" : GDExtensionLoader(gdextension)
         }
 
     def generate(self) -> None:
         for instance in self.types.values():
             instance.generate(self.copyright)
 
-class GDExtensionInterface:
-    def __init__(self, bindings: GDExtensionBindings) -> None:
-        self.properties: dict[str, FunctionInfo] = {
+class GDExtensionLoader:
+    def __init__(self, bindings: GDExtensionInterface) -> None:
+        self.properties: dict[str, GDExtensionFunction] = {
             function.name.removeprefix("GDExtensionInterface") : function for function in bindings.interface.values()
         }
 

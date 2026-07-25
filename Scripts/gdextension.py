@@ -3,20 +3,20 @@ from io import IOBase
 from itertools import chain
 from typing import Any, Iterable
 
-class GDExtensionBindings:
+class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: str = "\n".join(data["_copyright"]) + "\n\n"
-        self.types: dict[str, TypeInfo] = {}
-        self.interface: dict[str, FunctionInfo] = {}
+        self.types: dict[str, GDExtensionType] = {}
+        self.interface: dict[str, GDExtensionFunction] = {}
         for type_data in data["types"]:
-            instance: TypeInfo | None = None
+            instance: GDExtensionType | None = None
             match type_data["kind"]:
                 case "enum":
-                    instance = EnumInfo(type_data)
+                    instance = GDExtensionEnum(type_data)
                 case "handle":
-                    instance = HandleInfo(type_data)
+                    instance = GDExtensionHandle(type_data)
                 case "alias":
-                    alias: AliasInfo = AliasInfo(type_data)
+                    alias: GDExtensionAlias = GDExtensionAlias(type_data)
                     if alias.type.is_builtin:
                         instance = alias
                     else:
@@ -25,13 +25,13 @@ class GDExtensionBindings:
                         instance.description = alias.description
                         instance.deprecated = alias.deprecated
                 case "struct":
-                    instance = StructInfo(type_data)
+                    instance = GDExtensionStruct(type_data)
                 case "function":
-                    instance = FunctionInfo(type_data)
+                    instance = GDExtensionFunction(type_data)
             assert instance
             self.types[instance.name] = instance
         for function_data in data["interface"]:
-            function: FunctionInfo = FunctionInfo(function_data)
+            function: GDExtensionFunction = GDExtensionFunction(function_data)
             assert function.entry_point
             self.interface[function.entry_point] = function
 
@@ -43,7 +43,7 @@ class GDExtensionBindings:
                 file.write(self.copyright)
                 instance.dump(file)
 
-class Type:
+class GDExtensionSymbol:
     def __init__(self, name: str) -> None:
         self.name: str
         self.is_readonly: bool = name.startswith("const")
@@ -86,7 +86,7 @@ class Type:
         if self.is_unsafe:
             self.name += "*"
 
-class Description:
+class GDExtensionDescription:
     def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "", indent: bool = False) -> None:
         self.lines: list[str] = lines
         self.tag: str = tag
@@ -102,7 +102,7 @@ class Description:
             file.write(f"{self.spacing}/// {line}\n")
         file.write(f"{self.spacing}/// </{self.tag}>\n")
 
-class Deprecated:
+class GDExtensionDeprecated:
     def __init__(self, data: dict[str, Any]) -> None:
         self.since: str = data["since"]
         self.message: str | None = data.get("message")
@@ -116,27 +116,27 @@ class Deprecated:
             file.write(f" Use {self.replace_with} instead.")
         file.write("\")]\n")
 
-class TypeInfo:
+class GDExtensionType:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.description: Description | None = None
-        self.deprecated: Deprecated | None = None
+        self.description: GDExtensionDescription | None = None
+        self.deprecated: GDExtensionDeprecated | None = None
         description: list[str] | None = data.get("description")
         deprecated: dict[str, Any] | None = data.get("deprecated")
         if description:
-            self.description = Description(description)
+            self.description = GDExtensionDescription(description)
         if deprecated:
-            self.deprecated = Deprecated(deprecated)
+            self.deprecated = GDExtensionDeprecated(deprecated)
 
     def dump(self, file: IOBase) -> None:
         raise NotImplementedError()
 
-class EnumInfo(TypeInfo):
+class GDExtensionEnum(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.is_bitfield: bool = data.get("is_bitfield") or False
-        self.values: list[EnumValue] = [
-            EnumValue(value_data) for value_data in data["values"]
+        self.values: list[GDExtensionEnumValue] = [
+            GDExtensionEnumValue(value_data) for value_data in data["values"]
         ]
 
     def dump(self, file: IOBase) -> None:
@@ -159,16 +159,16 @@ class EnumInfo(TypeInfo):
             file.write(f"    {value.name} = {value.value},\n")
         file.write("}\n")
 
-class EnumValue:
+class GDExtensionEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
-        self.description: Description | None = None
+        self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, indent=True)
+            self.description = GDExtensionDescription(description, indent=True)
 
-class HandleInfo(TypeInfo):
+class GDExtensionHandle(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.parent: str | None = data.get("parent")
@@ -228,10 +228,10 @@ class HandleInfo(TypeInfo):
         file.write("    }\n")
         file.write("}\n")
 
-class AliasInfo(TypeInfo):
+class GDExtensionAlias(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.type: Type = Type(data["type"])
+        self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
@@ -290,11 +290,11 @@ class AliasInfo(TypeInfo):
         file.write("    }\n")
         file.write("}\n")
 
-class StructInfo(TypeInfo):
+class GDExtensionStruct(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.members: list[StructMember] = [
-            StructMember(member_data) for member_data in data["members"]
+        self.members: list[GDExtensionStructMember] = [
+            GDExtensionStructMember(member_data) for member_data in data["members"]
         ]
 
     def dump(self, file: IOBase) -> None:
@@ -322,39 +322,39 @@ class StructInfo(TypeInfo):
             file.write(f"{member.type.name} {member.name};\n")
         file.write("}\n")
 
-class StructMember:
+class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         if self.name == "string":
             self.name = "@string"
-        self.type: Type = Type(data["type"])
-        self.description: Description | None = None
+        self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
+        self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, indent=True)
+            self.description = GDExtensionDescription(description, indent=True)
 
-class FunctionInfo(TypeInfo):
+class GDExtensionFunction(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.entry_point: str | None = None
         if self.name[0].islower():
             self.entry_point = self.name
             self.name = "GDExtensionInterface" + self.name.title().replace("_", "")
-        self.arguments: list[FunctionArgument] = []
-        self.return_value: FunctionReturnValue | None = None
+        self.arguments: list[GDExtensionFunctionArgument] = []
+        self.return_value: GDExtensionFunctionReturnValue | None = None
         type_parameters: list[str] = []
         for i, argument_data in enumerate(data["arguments"]):
             if not argument_data.get("name"):
                 argument_data = argument_data.copy()
                 argument_data["name"] = f"p_{i}"
-            argument: FunctionArgument = FunctionArgument(argument_data)
+            argument: GDExtensionFunctionArgument = GDExtensionFunctionArgument(argument_data)
             type_parameters.append(argument.type.name)
             self.arguments.append(argument)
         return_value_data: dict[str, Any] | None = data.get("return_value")
         argument_iterable: Iterable[str] = (argument.type.name for argument in self.arguments)
         return_iterable: Iterable[str]
         if return_value_data:
-            return_value: FunctionReturnValue = FunctionReturnValue(return_value_data)
+            return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value_data)
             return_iterable = (return_value.type.name,)
             self.return_value = return_value
         else:
@@ -437,19 +437,19 @@ class FunctionInfo(TypeInfo):
         file.write("    }\n")
         file.write("}\n")
 
-class FunctionArgument:
+class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.type: Type = Type(data["type"])
-        self.description: Description | None = None
+        self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
+        self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, tag="param", metadata=f"name=\"{self.name}\"", indent=True)
+            self.description = GDExtensionDescription(description, tag="param", metadata=f"name=\"{self.name}\"", indent=True)
 
-class FunctionReturnValue:
+class GDExtensionFunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.type: Type = Type(data["type"])
-        self.description: Description | None = None
+        self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
+        self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = Description(description, tag="returns", indent=True)
+            self.description = GDExtensionDescription(description, tag="returns", indent=True)
