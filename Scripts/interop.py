@@ -19,13 +19,11 @@ class GDExtensionInterface:
             function.name.removeprefix("GDExtensionInterface") : function for function in bindings.interface.values()
         }
 
-    def generate(self, copyright_text: list[str]) -> None:
+    def generate(self, copyright_text: str) -> None:
         with open(f"../Source/Godot.InteropServices/GDExtensionInterface.cs", "w") as file:
             file.write("/**************************************************************************/\n")
             file.write("/*  GDExtensionInterface.cs                                               */\n")
-            for line in copyright_text:
-                file.write(f"{line}\n")
-            file.write("\n")
+            file.write(copyright_text)
             file.write("using System;\n")
             file.write("using Godot.GDExtension;\n")
             file.write("\n")

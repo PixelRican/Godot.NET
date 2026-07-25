@@ -5,7 +5,7 @@ from typing import Any, Iterable
 
 class GDExtensionBindings:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.copyright: list[str] = data["_copyright"]
+        self.copyright: str = "\n".join(data["_copyright"]) + "\n\n"
         self.types: dict[str, TypeInfo] = {}
         self.interface: dict[str, FunctionInfo] = {}
         for type_data in data["types"]:
@@ -37,7 +37,11 @@ class GDExtensionBindings:
 
     def generate(self) -> None:
         for instance in chain(self.types.values(), self.interface.values()):
-            instance.generate(self.copyright)
+            with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
+                file.write("/**************************************************************************/\n")
+                file.write(f"/*  {instance.name}.cs  {" " * (65 - len(instance.name))}*/\n")
+                file.write(self.copyright)
+                instance.dump(file)
 
 class Type:
     def __init__(self, name: str) -> None:
@@ -123,15 +127,6 @@ class TypeInfo:
             self.description = Description(description)
         if deprecated:
             self.deprecated = Deprecated(deprecated)
-
-    def generate(self, copyright_text: list[str]) -> None:
-        with open(f"../Source/Godot.GDExtension/{self.name}.cs", "w") as file:
-            file.write("/**************************************************************************/\n")
-            file.write(f"/*  {self.name}.cs  {" " * (65 - len(self.name))}*/\n")
-            for line in copyright_text:
-                file.write(f"{line}\n")
-            file.write("\n")
-            self.dump(file)
 
     def dump(self, file: IOBase) -> None:
         raise NotImplementedError()
