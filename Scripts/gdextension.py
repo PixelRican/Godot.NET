@@ -4,7 +4,7 @@ class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
         self.types: dict[str, GDExtensionType] = {}
-        self.interface: dict[str, GDExtensionFunction] = {}
+        self.interface: dict[str, GDExtensionInterfaceFunction] = {}
         for type_data in data["types"]:
             instance: GDExtensionType | None = None
             match type_data["kind"]:
@@ -21,8 +21,67 @@ class GDExtensionInterface:
             assert instance
             self.types[instance.name] = instance
         for function_data in data["interface"]:
-            function: GDExtensionFunction = GDExtensionFunction(function_data)
+            function: GDExtensionInterfaceFunction = GDExtensionInterfaceFunction(function_data)
             self.interface[function.name] = function
+
+    def definition(self) -> Iterable[str]:
+        yield "using System;\n"
+        yield "using System.Runtime.CompilerServices;\n"
+        yield "using System.Runtime.InteropServices;\n"
+        yield "\n"
+        yield "namespace Godot.GDExtension;\n"
+        yield "\n"
+        yield "public sealed unsafe class GDExtensionInterface\n"
+        yield "{\n"
+        for function in self.interface.values():
+            yield f"    private readonly {function.type} _{function.name};\n"
+        yield "\n"
+        yield "    public GDExtensionInterface(GDExtensionInterfaceGetProcAddress getProcAddress)\n"
+        yield "    {\n"
+        yield "        ArgumentNullException.ThrowIfNull(getProcAddress, nameof(getProcAddress));\n"
+        for function in self.interface.values():
+            yield f"        _{function.name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
+        yield "    }\n"
+        for function in self.interface.values():
+            parameters: str = ", ".join(f"{argument.type} {argument.name}" for argument in function.arguments)
+            arguments: str = ", ".join(argument.name for argument in function.arguments)
+            yield "\n"
+            if function.description:
+                yield from function.description.documentation(indent=True)
+            for argument in function.arguments:
+                if argument.description:
+                    yield from argument.description.documentation(indent=True)
+            if function.return_value and function.return_value.description:
+                yield from function.return_value.description.documentation(indent=True)
+            if function.deprecated:
+                yield function.deprecated.attribute(indent=True)
+            yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
+            if function.return_value:
+                yield f"    public {function.return_value.type} {function.name}({parameters})\n"
+                yield "    {\n"
+                yield f"        return _{function.name}({arguments});\n"
+                yield "    }\n"
+            else:
+                yield f"    public void {function.name}({parameters})\n"
+                yield "    {\n"
+                yield f"        _{function.name}({arguments});\n"
+                yield "    }\n"
+        yield "\n"
+        yield "    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)\n"
+        yield "    {\n"
+        yield "        fixed (byte* p_function_name = functionName)\n"
+        yield "        {\n"
+        yield "            GDExtensionInterfaceFunctionPtr function = getProcAddress(p_function_name);\n"
+        yield "\n"
+        yield "            if (function == null)\n"
+        yield "            {\n"
+        yield "                throw new ArgumentException($\"Failed to load \\\"{new string((sbyte*)p_function_name)}\\\" from the specified address loader.\", nameof(getProcAddress));\n"
+        yield "            }\n"
+        yield "\n"
+        yield "            return function;\n"
+        yield "        }\n"
+        yield "    }\n"
+        yield "}\n"
 
     def generate(self) -> None:
         with open("../Source/Godot.GDExtension/GlobalUsings.cs", "w") as file:
@@ -39,6 +98,10 @@ class GDExtensionInterface:
                 case _:
                     with open("../Source/Godot.GDExtension/GlobalUsings.cs", "a") as file:
                         file.writelines(definition)
+        with open("../Source/Godot.GDExtension/GDExtensionInterface.cs", "w") as file:
+            file.writelines(self.header("GDExtensionInterface"))
+            file.write("\n")
+            file.writelines(self.definition())
 
     def header(self, name: str) -> Iterable[str]:
         yield "/**************************************************************************/\n"
@@ -70,10 +133,11 @@ class GDExtensionDeprecated:
         self.message: str | None = data.get("message")
         self.replace_with: str | None = data.get("replace_with")
 
-    def attribute(self) -> str:
+    def attribute(self, indent: bool = False) -> str:
+        spacing: str = "    " if indent else ""
         message: str = f" {self.message}" if self.message else ""
         replace_with: str = f" Use {self.replace_with} instead." if self.replace_with else ""
-        return f"[Obsolete(\"Deprecated since Godot {self.since}.{message}{replace_with}\")]\n"
+        return f"{spacing}[Obsolete(\"Deprecated since Godot {self.since}.{message}{replace_with}\")]\n"
 
 class GDExtensionType:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -252,6 +316,18 @@ class GDExtensionFunctionReturnValue:
         description: list[str] | None = data.get("description")
         if description:
             self.description = GDExtensionDescription(description, tag="returns")
+
+class GDExtensionInterfaceFunction(GDExtensionFunction):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        type_parameters: list[str] = []
+        for argument in self.arguments:
+            type_parameters.append(argument.type)
+        if self.return_value:
+            type_parameters.append(self.return_value.type)
+        else:
+            type_parameters.append("void")
+        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
 def translate(symbol: str) -> str:
     name: str = symbol.removeprefix("const ").removesuffix("*")
