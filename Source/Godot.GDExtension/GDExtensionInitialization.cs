@@ -36,7 +36,7 @@ namespace Godot.GDExtension;
 public struct GDExtensionInitialization
 {
     /// <summary>
-    /// Minimum initialization level required.
+    /// Minimum initialization level required.<br/>
     /// If Core or Servers, the extension needs editor or game restart to take effect
     /// </summary>
     public GDExtensionInitializationLevel minimum_initialization_level;

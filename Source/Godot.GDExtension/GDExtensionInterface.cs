@@ -1314,8 +1314,8 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Gets the object instance ID from a variant of type GDEXTENSION_VARIANT_TYPE_OBJECT.
-    /// If the variant isn't of type GDEXTENSION_VARIANT_TYPE_OBJECT, then zero will be returned.
+    /// Gets the object instance ID from a variant of type GDEXTENSION_VARIANT_TYPE_OBJECT.<br/>
+    /// If the variant isn't of type GDEXTENSION_VARIANT_TYPE_OBJECT, then zero will be returned.<br/>
     /// The instance ID will be returned even if the object is no longer valid - use `object_get_instance_by_id()` to check if the object is still valid.
     /// </summary>
     /// <param name="p_self">
@@ -1441,11 +1441,11 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Provides a function pointer for retrieving a pointer to a variant's internal value.
-    /// Access to a variant's internal value can be used to modify it in-place, or to retrieve its value without the overhead of variant conversion functions.
-    /// It is recommended to cache the getter for all variant types in a function table to avoid retrieval overhead upon use.
-    /// 
-    /// Each function assumes the variant's type has already been determined and matches the function.
+    /// Provides a function pointer for retrieving a pointer to a variant's internal value.<br/>
+    /// Access to a variant's internal value can be used to modify it in-place, or to retrieve its value without the overhead of variant conversion functions.<br/>
+    /// It is recommended to cache the getter for all variant types in a function table to avoid retrieval overhead upon use.<br/>
+    /// <br/>
+    /// Each function assumes the variant's type has already been determined and matches the function.<br/>
     /// Invoking the function with a variant of a mismatched type has undefined behavior, and may lead to a segmentation fault.
     /// </summary>
     /// <param name="p_type">
@@ -1973,7 +1973,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Converts a String to a Latin-1 encoded C string.
+    /// Converts a String to a Latin-1 encoded C string.<br/>
     /// It doesn't write a null terminator.
     /// </summary>
     /// <param name="p_self">
@@ -1997,7 +1997,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Converts a String to a UTF-8 encoded C string.
+    /// Converts a String to a UTF-8 encoded C string.<br/>
     /// It doesn't write a null terminator.
     /// </summary>
     /// <param name="p_self">
@@ -2021,7 +2021,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Converts a String to a UTF-16 encoded C string.
+    /// Converts a String to a UTF-16 encoded C string.<br/>
     /// It doesn't write a null terminator.
     /// </summary>
     /// <param name="p_self">
@@ -2045,7 +2045,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Converts a String to a UTF-32 encoded C string.
+    /// Converts a String to a UTF-32 encoded C string.<br/>
     /// It doesn't write a null terminator.
     /// </summary>
     /// <param name="p_self">
@@ -2069,7 +2069,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Converts a String to a wide C string.
+    /// Converts a String to a wide C string.<br/>
     /// It doesn't write a null terminator.
     /// </summary>
     /// <param name="p_self">
@@ -2218,11 +2218,11 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Resizes the underlying string data to the given number of characters.
-    /// Space needs to be allocated for the null terminating character ('\0') which
-    /// also must be added manually, in order for all string functions to work correctly.
-    /// 
-    /// Warning: This is an error-prone operation - only use it if there's no other
+    /// Resizes the underlying string data to the given number of characters.<br/>
+    /// Space needs to be allocated for the null terminating character ('\0') which<br/>
+    /// also must be added manually, in order for all string functions to work correctly.<br/>
+    /// <br/>
+    /// Warning: This is an error-prone operation - only use it if there's no other<br/>
     /// efficient way to accomplish your goal.
     /// </summary>
     /// <param name="p_self">
@@ -2243,12 +2243,12 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Creates a StringName from a Latin-1 encoded C string.
-    /// If `p_is_static` is true, then:
-    /// - The StringName will reuse the `p_contents` buffer instead of copying it.
-    /// - You must guarantee that the buffer remains valid for the duration of the application (e.g. string literal).
-    /// - You must not call a destructor for this StringName. Incrementing the initial reference once should achieve this.
-    /// 
+    /// Creates a StringName from a Latin-1 encoded C string.<br/>
+    /// If `p_is_static` is true, then:<br/>
+    /// - The StringName will reuse the `p_contents` buffer instead of copying it.<br/>
+    /// - You must guarantee that the buffer remains valid for the duration of the application (e.g. string literal).<br/>
+    /// - You must not call a destructor for this StringName. Incrementing the initial reference once should achieve this.<br/>
+    /// <br/>
     /// `p_is_static` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to false.
     /// </summary>
     /// <param name="r_dest">
@@ -3169,7 +3169,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Sets an extension class instance on a Object.
+    /// Sets an extension class instance on a Object.<br/>
     /// `p_classname` should be a registered extension class and should extend the `p_o` Object's class.
     /// </summary>
     /// <param name="p_o">
@@ -3190,8 +3190,8 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Gets the class name of an Object.
-    /// If the GDExtension wraps the Godot object in an abstraction specific to its class, this is the
+    /// Gets the class name of an Object.<br/>
+    /// If the GDExtension wraps the Godot object in an abstraction specific to its class, this is the<br/>
     /// function that should be used to determine which wrapper to use.
     /// </summary>
     /// <param name="p_object">
@@ -3415,7 +3415,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Creates a placeholder script instance for a given script and instance.
+    /// Creates a placeholder script instance for a given script and instance.<br/>
     /// This interface is optional as a custom placeholder could also be created with script_instance_create().
     /// </summary>
     /// <param name="p_language">
@@ -3439,8 +3439,8 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Updates a placeholder script instance with the given properties and values.
-    /// The passed in placeholder must be an instance of PlaceHolderScriptInstance
+    /// Updates a placeholder script instance with the given properties and values.<br/>
+    /// The passed in placeholder must be an instance of PlaceHolderScriptInstance<br/>
     /// such as the one returned by placeholder_script_instance_create().
     /// </summary>
     /// <param name="p_placeholder">
@@ -3498,7 +3498,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Creates a custom Callable object from a function pointer.
+    /// Creates a custom Callable object from a function pointer.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="r_callable">
@@ -3517,7 +3517,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Creates a custom Callable object from a function pointer.
+    /// Creates a custom Callable object from a function pointer.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="r_callable">
@@ -3535,7 +3535,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Retrieves the userdata pointer from a custom Callable.
+    /// Retrieves the userdata pointer from a custom Callable.<br/>
     /// If the Callable is not a custom Callable or the token does not match the one provided to callable_custom_create() via GDExtensionCallableCustomInfo then NULL will be returned.
     /// </summary>
     /// <param name="p_callable">
@@ -3556,7 +3556,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Constructs an Object of the requested class.
+    /// Constructs an Object of the requested class.<br/>
     /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
     /// </summary>
     /// <param name="p_classname">
@@ -3575,9 +3575,9 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Constructs an Object of the requested class.
-    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
-    /// 
+    /// Constructs an Object of the requested class.<br/>
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.<br/>
+    /// <br/>
     /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
     /// </summary>
     /// <param name="p_classname">
@@ -3596,10 +3596,10 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Constructs an Object of the requested class.
-    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
-    /// If the type is a subtype of RefCounted, it already has a refcount of 1. The caller must take ownership the refcount and is responsible for decrementing it again when the object is no longer needed.
-    /// 
+    /// Constructs an Object of the requested class.<br/>
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.<br/>
+    /// If the type is a subtype of RefCounted, it already has a refcount of 1. The caller must take ownership the refcount and is responsible for decrementing it again when the object is no longer needed.<br/>
+    /// <br/>
     /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
     /// </summary>
     /// <param name="p_classname">
@@ -3658,7 +3658,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an extension class in the ClassDB.
+    /// Registers an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3683,7 +3683,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an extension class in the ClassDB.
+    /// Registers an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3708,7 +3708,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an extension class in the ClassDB.
+    /// Registers an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3733,7 +3733,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an extension class in the ClassDB.
+    /// Registers an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3758,7 +3758,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an extension class in the ClassDB.
+    /// Registers an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3783,7 +3783,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an extension class in the ClassDB.
+    /// Registers an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3807,7 +3807,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers a method on an extension class in the ClassDB.
+    /// Registers a method on an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3828,7 +3828,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers a virtual method on an extension class in ClassDB, that can be implemented by scripts or other extensions.
+    /// Registers a virtual method on an extension class in ClassDB, that can be implemented by scripts or other extensions.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3849,9 +3849,9 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an integer constant on an extension class in the ClassDB.
-    /// Note about registering bitfield values (if p_is_bitfield is true): even though p_constant_value is signed, language bindings are
-    /// advised to treat bitfields as uint64_t, since this is generally clearer and can prevent mistakes like using -1 for setting all bits.
+    /// Registers an integer constant on an extension class in the ClassDB.<br/>
+    /// Note about registering bitfield values (if p_is_bitfield is true): even though p_constant_value is signed, language bindings are<br/>
+    /// advised to treat bitfields as uint64_t, since this is generally clearer and can prevent mistakes like using -1 for setting all bits.<br/>
     /// Language APIs should thus provide an abstraction that registers bitfields (uint64_t) separately from regular constants (int64_t).
     /// </summary>
     /// <param name="p_library">
@@ -3881,7 +3881,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers a property on an extension class in the ClassDB.
+    /// Registers a property on an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3908,7 +3908,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers an indexed property on an extension class in the ClassDB.
+    /// Registers an indexed property on an extension class in the ClassDB.<br/>
     /// Provided struct can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -3984,7 +3984,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers a signal on an extension class in the ClassDB.
+    /// Registers a signal on an extension class in the ClassDB.<br/>
     /// Provided structs can be safely freed once the function returns.
     /// </summary>
     /// <param name="p_library">
@@ -4011,7 +4011,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Unregisters an extension class in the ClassDB.
+    /// Unregisters an extension class in the ClassDB.<br/>
     /// Unregistering a parent class before a class that inherits it will result in failure. Inheritors must be unregistered first.
     /// </summary>
     /// <param name="p_library">
@@ -4046,7 +4046,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Adds an editor plugin.
+    /// Adds an editor plugin.<br/>
     /// It's safe to call during initialization.
     /// </summary>
     /// <param name="p_class_name">
@@ -4075,7 +4075,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Loads new XML-formatted documentation data in the editor.
+    /// Loads new XML-formatted documentation data in the editor.<br/>
     /// The provided pointer can be immediately freed once the function returns.
     /// </summary>
     /// <param name="p_data">
@@ -4090,7 +4090,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Loads new XML-formatted documentation data in the editor.
+    /// Loads new XML-formatted documentation data in the editor.<br/>
     /// The provided pointer can be immediately freed once the function returns.
     /// </summary>
     /// <param name="p_data">
@@ -4108,10 +4108,10 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Registers a callback that Godot can call to get the list of all classes (from ClassDB) that may be used by the calling GDExtension.
-    /// This is used by the editor to generate a build profile (in "Tools" > "Engine Compilation Configuration Editor..." > "Detect from project"),
-    /// in order to recompile Godot with only the classes used.
-    /// In the provided callback, the GDExtension should provide the list of classes that _may_ be used statically, thus the time of invocation shouldn't matter.
+    /// Registers a callback that Godot can call to get the list of all classes (from ClassDB) that may be used by the calling GDExtension.<br/>
+    /// This is used by the editor to generate a build profile (in "Tools" > "Engine Compilation Configuration Editor..." > "Detect from project"),<br/>
+    /// in order to recompile Godot with only the classes used.<br/>
+    /// In the provided callback, the GDExtension should provide the list of classes that _may_ be used statically, thus the time of invocation shouldn't matter.<br/>
     /// If a GDExtension doesn't register a callback, Godot will assume that it could be using any classes.
     /// </summary>
     /// <param name="p_library">

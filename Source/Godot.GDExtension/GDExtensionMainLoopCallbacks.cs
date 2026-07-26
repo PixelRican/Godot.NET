@@ -44,7 +44,7 @@ public struct GDExtensionMainLoopCallbacks
     /// </summary>
     public unsafe GDExtensionMainLoopShutdownCallback shutdown_func;
     /// <summary>
-    /// Will be called for each process frame. This will run after all `_process()` methods on Node, and before `ScriptServer::frame()`.
+    /// Will be called for each process frame. This will run after all `_process()` methods on Node, and before `ScriptServer::frame()`.<br/>
     /// This is intended to be the equivalent of `ScriptLanguage::frame()` for GDExtension language bindings that don't use the script API.
     /// </summary>
     public unsafe GDExtensionMainLoopFrameCallback frame_func;

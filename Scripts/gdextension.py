@@ -143,8 +143,9 @@ class GDExtensionDescription:
         spacing: str = "    " if indent else ""
         metadata: str = f" {self.metadata}" if self.metadata else ""
         yield f"{spacing}/// <{self.tag}{metadata}>\n"
-        for line in self.lines:
-            yield f"{spacing}/// {line}\n"
+        for line in self.lines[:-1]:
+            yield f"{spacing}/// {line}<br/>\n"
+        yield f"{spacing}/// {self.lines[-1]}\n"
         yield f"{spacing}/// </{self.tag}>\n"
 
 class GDExtensionDeprecated:

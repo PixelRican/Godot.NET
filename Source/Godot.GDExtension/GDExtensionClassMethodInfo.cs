@@ -44,17 +44,17 @@ public struct GDExtensionClassMethodInfo
     /// </summary>
     public uint method_flags;
     /// <summary>
-    /// If `has_return_value` is false, `return_value_info` and `return_value_metadata` are ignored.
-    /// 
+    /// If `has_return_value` is false, `return_value_info` and `return_value_metadata` are ignored.<br/>
+    /// <br/>
     /// @todo Consider dropping `has_return_value` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
     /// </summary>
     public GDExtensionBool has_return_value;
     public unsafe GDExtensionPropertyInfo* return_value_info;
     public GDExtensionClassMethodArgumentMetadata return_value_metadata;
     /// <summary>
-    /// Arguments: `arguments_info` and `arguments_metadata` are array of size `argument_count`.
-    /// Name and hint information for the argument can be omitted in release builds. Class name should always be present if it applies.
-    /// 
+    /// Arguments: `arguments_info` and `arguments_metadata` are array of size `argument_count`.<br/>
+    /// Name and hint information for the argument can be omitted in release builds. Class name should always be present if it applies.<br/>
+    /// <br/>
     /// @todo Consider renaming `arguments_info` to `arguments` for consistency in future version of this struct.
     /// </summary>
     public uint argument_count;

@@ -65,11 +65,11 @@ public struct GDExtensionClassCreationInfo6
     /// </summary>
     public unsafe GDExtensionClassGetVirtual2 get_virtual_func;
     /// <summary>
-    /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that
-    /// need or benefit from extra data when calling virtual functions.
-    /// Returns user data that will be passed to `call_virtual_with_data_func`.
-    /// Returning `NULL` from this function signals to Godot that the virtual function is not overridden.
-    /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.
+    /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that<br/>
+    /// need or benefit from extra data when calling virtual functions.<br/>
+    /// Returns user data that will be passed to `call_virtual_with_data_func`.<br/>
+    /// Returning `NULL` from this function signals to Godot that the virtual function is not overridden.<br/>
+    /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.<br/>
     /// You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`.
     /// </summary>
     public unsafe GDExtensionClassGetVirtualCallData2 get_virtual_call_data_func;
