@@ -29,6 +29,7 @@
 /**************************************************************************/
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Godot.GDExtension;
@@ -418,7 +419,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void get_godot_version(GDExtensionGodotVersion* r_godot_version)
     {
-        s_get_godot_version(r_godot_version);
+        var function = s_get_godot_version;
+        ThrowIfInvalid(function);
+        function(r_godot_version);
     }
 
     /// <summary>
@@ -430,7 +433,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void get_godot_version2(GDExtensionGodotVersion2* r_godot_version)
     {
-        s_get_godot_version2(r_godot_version);
+        var function = s_get_godot_version2;
+        ThrowIfInvalid(function);
+        function(r_godot_version);
     }
 
     /// <summary>
@@ -446,7 +451,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* mem_alloc(nuint p_bytes)
     {
-        return s_mem_alloc(p_bytes);
+        var function = s_mem_alloc;
+        ThrowIfInvalid(function);
+        return function(p_bytes);
     }
 
     /// <summary>
@@ -465,7 +472,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* mem_realloc(void* p_ptr, nuint p_bytes)
     {
-        return s_mem_realloc(p_ptr, p_bytes);
+        var function = s_mem_realloc;
+        ThrowIfInvalid(function);
+        return function(p_ptr, p_bytes);
     }
 
     /// <summary>
@@ -478,7 +487,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void mem_free(void* p_ptr)
     {
-        s_mem_free(p_ptr);
+        var function = s_mem_free;
+        ThrowIfInvalid(function);
+        function(p_ptr);
     }
 
     /// <summary>
@@ -496,7 +507,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* mem_alloc2(nuint p_bytes, GDExtensionBool p_pad_align)
     {
-        return s_mem_alloc2(p_bytes, p_pad_align);
+        var function = s_mem_alloc2;
+        ThrowIfInvalid(function);
+        return function(p_bytes, p_pad_align);
     }
 
     /// <summary>
@@ -517,7 +530,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* mem_realloc2(void* p_ptr, nuint p_bytes, GDExtensionBool p_pad_align)
     {
-        return s_mem_realloc2(p_ptr, p_bytes, p_pad_align);
+        var function = s_mem_realloc2;
+        ThrowIfInvalid(function);
+        return function(p_ptr, p_bytes, p_pad_align);
     }
 
     /// <summary>
@@ -532,7 +547,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void mem_free2(void* p_ptr, GDExtensionBool p_pad_align)
     {
-        s_mem_free2(p_ptr, p_pad_align);
+        var function = s_mem_free2;
+        ThrowIfInvalid(function);
+        function(p_ptr, p_pad_align);
     }
 
     /// <summary>
@@ -556,7 +573,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void print_error(byte* p_description, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        s_print_error(p_description, p_function, p_file, p_line, p_editor_notify);
+        var function = s_print_error;
+        ThrowIfInvalid(function);
+        function(p_description, p_function, p_file, p_line, p_editor_notify);
     }
 
     /// <summary>
@@ -583,7 +602,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void print_error_with_message(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        s_print_error_with_message(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
+        var function = s_print_error_with_message;
+        ThrowIfInvalid(function);
+        function(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
     }
 
     /// <summary>
@@ -607,7 +628,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void print_warning(byte* p_description, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        s_print_warning(p_description, p_function, p_file, p_line, p_editor_notify);
+        var function = s_print_warning;
+        ThrowIfInvalid(function);
+        function(p_description, p_function, p_file, p_line, p_editor_notify);
     }
 
     /// <summary>
@@ -634,7 +657,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void print_warning_with_message(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        s_print_warning_with_message(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
+        var function = s_print_warning_with_message;
+        ThrowIfInvalid(function);
+        function(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
     }
 
     /// <summary>
@@ -658,7 +683,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void print_script_error(byte* p_description, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        s_print_script_error(p_description, p_function, p_file, p_line, p_editor_notify);
+        var function = s_print_script_error;
+        ThrowIfInvalid(function);
+        function(p_description, p_function, p_file, p_line, p_editor_notify);
     }
 
     /// <summary>
@@ -685,7 +712,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void print_script_error_with_message(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
     {
-        s_print_script_error_with_message(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
+        var function = s_print_script_error_with_message;
+        ThrowIfInvalid(function);
+        function(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
     }
 
     /// <summary>
@@ -700,7 +729,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ulong get_native_struct_size(GDExtensionConstStringNamePtr p_name)
     {
-        return s_get_native_struct_size(p_name);
+        var function = s_get_native_struct_size;
+        ThrowIfInvalid(function);
+        return function(p_name);
     }
 
     /// <summary>
@@ -715,7 +746,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_new_copy(GDExtensionUninitializedVariantPtr r_dest, GDExtensionConstVariantPtr p_src)
     {
-        s_variant_new_copy(r_dest, p_src);
+        var function = s_variant_new_copy;
+        ThrowIfInvalid(function);
+        function(r_dest, p_src);
     }
 
     /// <summary>
@@ -727,7 +760,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_new_nil(GDExtensionUninitializedVariantPtr r_dest)
     {
-        s_variant_new_nil(r_dest);
+        var function = s_variant_new_nil;
+        ThrowIfInvalid(function);
+        function(r_dest);
     }
 
     /// <summary>
@@ -739,7 +774,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_destroy(GDExtensionVariantPtr p_self)
     {
-        s_variant_destroy(p_self);
+        var function = s_variant_destroy;
+        ThrowIfInvalid(function);
+        function(p_self);
     }
 
     /// <summary>
@@ -766,7 +803,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_call(GDExtensionVariantPtr p_self, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
     {
-        s_variant_call(p_self, p_method, p_args, p_argument_count, r_return, r_error);
+        var function = s_variant_call;
+        ThrowIfInvalid(function);
+        function(p_self, p_method, p_args, p_argument_count, r_return, r_error);
     }
 
     /// <summary>
@@ -793,7 +832,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_call_static(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
     {
-        s_variant_call_static(p_type, p_method, p_args, p_argument_count, r_return, r_error);
+        var function = s_variant_call_static;
+        ThrowIfInvalid(function);
+        function(p_type, p_method, p_args, p_argument_count, r_return, r_error);
     }
 
     /// <summary>
@@ -817,7 +858,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_evaluate(GDExtensionVariantOperator p_op, GDExtensionConstVariantPtr p_a, GDExtensionConstVariantPtr p_b, GDExtensionUninitializedVariantPtr r_return, GDExtensionBool* r_valid)
     {
-        s_variant_evaluate(p_op, p_a, p_b, r_return, r_valid);
+        var function = s_variant_evaluate;
+        ThrowIfInvalid(function);
+        function(p_op, p_a, p_b, r_return, r_valid);
     }
 
     /// <summary>
@@ -838,7 +881,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_set(GDExtensionVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
     {
-        s_variant_set(p_self, p_key, p_value, r_valid);
+        var function = s_variant_set;
+        ThrowIfInvalid(function);
+        function(p_self, p_key, p_value, r_valid);
     }
 
     /// <summary>
@@ -859,7 +904,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_set_named(GDExtensionVariantPtr p_self, GDExtensionConstStringNamePtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
     {
-        s_variant_set_named(p_self, p_key, p_value, r_valid);
+        var function = s_variant_set_named;
+        ThrowIfInvalid(function);
+        function(p_self, p_key, p_value, r_valid);
     }
 
     /// <summary>
@@ -880,7 +927,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_set_keyed(GDExtensionVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
     {
-        s_variant_set_keyed(p_self, p_key, p_value, r_valid);
+        var function = s_variant_set_keyed;
+        ThrowIfInvalid(function);
+        function(p_self, p_key, p_value, r_valid);
     }
 
     /// <summary>
@@ -904,7 +953,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_set_indexed(GDExtensionVariantPtr p_self, GDExtensionInt p_index, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid, GDExtensionBool* r_oob)
     {
-        s_variant_set_indexed(p_self, p_index, p_value, r_valid, r_oob);
+        var function = s_variant_set_indexed;
+        ThrowIfInvalid(function);
+        function(p_self, p_index, p_value, r_valid, r_oob);
     }
 
     /// <summary>
@@ -925,7 +976,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_get(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
     {
-        s_variant_get(p_self, p_key, r_ret, r_valid);
+        var function = s_variant_get;
+        ThrowIfInvalid(function);
+        function(p_self, p_key, r_ret, r_valid);
     }
 
     /// <summary>
@@ -946,7 +999,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_get_named(GDExtensionConstVariantPtr p_self, GDExtensionConstStringNamePtr p_key, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
     {
-        s_variant_get_named(p_self, p_key, r_ret, r_valid);
+        var function = s_variant_get_named;
+        ThrowIfInvalid(function);
+        function(p_self, p_key, r_ret, r_valid);
     }
 
     /// <summary>
@@ -967,7 +1022,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_get_keyed(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
     {
-        s_variant_get_keyed(p_self, p_key, r_ret, r_valid);
+        var function = s_variant_get_keyed;
+        ThrowIfInvalid(function);
+        function(p_self, p_key, r_ret, r_valid);
     }
 
     /// <summary>
@@ -991,7 +1048,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_get_indexed(GDExtensionConstVariantPtr p_self, GDExtensionInt p_index, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid, GDExtensionBool* r_oob)
     {
-        s_variant_get_indexed(p_self, p_index, r_ret, r_valid, r_oob);
+        var function = s_variant_get_indexed;
+        ThrowIfInvalid(function);
+        function(p_self, p_index, r_ret, r_valid, r_oob);
     }
 
     /// <summary>
@@ -1012,7 +1071,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_iter_init(GDExtensionConstVariantPtr p_self, GDExtensionUninitializedVariantPtr r_iter, GDExtensionBool* r_valid)
     {
-        return s_variant_iter_init(p_self, r_iter, r_valid);
+        var function = s_variant_iter_init;
+        ThrowIfInvalid(function);
+        return function(p_self, r_iter, r_valid);
     }
 
     /// <summary>
@@ -1033,7 +1094,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_iter_next(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_iter, GDExtensionBool* r_valid)
     {
-        return s_variant_iter_next(p_self, r_iter, r_valid);
+        var function = s_variant_iter_next;
+        ThrowIfInvalid(function);
+        return function(p_self, r_iter, r_valid);
     }
 
     /// <summary>
@@ -1054,7 +1117,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_iter_get(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_iter, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
     {
-        s_variant_iter_get(p_self, r_iter, r_ret, r_valid);
+        var function = s_variant_iter_get;
+        ThrowIfInvalid(function);
+        function(p_self, r_iter, r_ret, r_valid);
     }
 
     /// <summary>
@@ -1069,7 +1134,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt variant_hash(GDExtensionConstVariantPtr p_self)
     {
-        return s_variant_hash(p_self);
+        var function = s_variant_hash;
+        ThrowIfInvalid(function);
+        return function(p_self);
     }
 
     /// <summary>
@@ -1087,7 +1154,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt variant_recursive_hash(GDExtensionConstVariantPtr p_self, GDExtensionInt p_recursion_count)
     {
-        return s_variant_recursive_hash(p_self, p_recursion_count);
+        var function = s_variant_recursive_hash;
+        ThrowIfInvalid(function);
+        return function(p_self, p_recursion_count);
     }
 
     /// <summary>
@@ -1105,7 +1174,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_hash_compare(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_other)
     {
-        return s_variant_hash_compare(p_self, p_other);
+        var function = s_variant_hash_compare;
+        ThrowIfInvalid(function);
+        return function(p_self, p_other);
     }
 
     /// <summary>
@@ -1120,7 +1191,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_booleanize(GDExtensionConstVariantPtr p_self)
     {
-        return s_variant_booleanize(p_self);
+        var function = s_variant_booleanize;
+        ThrowIfInvalid(function);
+        return function(p_self);
     }
 
     /// <summary>
@@ -1138,7 +1211,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_duplicate(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_ret, GDExtensionBool p_deep)
     {
-        s_variant_duplicate(p_self, r_ret, p_deep);
+        var function = s_variant_duplicate;
+        ThrowIfInvalid(function);
+        function(p_self, r_ret, p_deep);
     }
 
     /// <summary>
@@ -1153,7 +1228,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_stringify(GDExtensionConstVariantPtr p_self, GDExtensionStringPtr r_ret)
     {
-        s_variant_stringify(p_self, r_ret);
+        var function = s_variant_stringify;
+        ThrowIfInvalid(function);
+        function(p_self, r_ret);
     }
 
     /// <summary>
@@ -1168,7 +1245,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantType variant_get_type(GDExtensionConstVariantPtr p_self)
     {
-        return s_variant_get_type(p_self);
+        var function = s_variant_get_type;
+        ThrowIfInvalid(function);
+        return function(p_self);
     }
 
     /// <summary>
@@ -1186,7 +1265,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_has_method(GDExtensionConstVariantPtr p_self, GDExtensionConstStringNamePtr p_method)
     {
-        return s_variant_has_method(p_self, p_method);
+        var function = s_variant_has_method;
+        ThrowIfInvalid(function);
+        return function(p_self, p_method);
     }
 
     /// <summary>
@@ -1204,7 +1285,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_has_member(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
     {
-        return s_variant_has_member(p_type, p_member);
+        var function = s_variant_has_member;
+        ThrowIfInvalid(function);
+        return function(p_type, p_member);
     }
 
     /// <summary>
@@ -1225,7 +1308,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_has_key(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionBool* r_valid)
     {
-        return s_variant_has_key(p_self, p_key, r_valid);
+        var function = s_variant_has_key;
+        ThrowIfInvalid(function);
+        return function(p_self, p_key, r_valid);
     }
 
     /// <summary>
@@ -1242,7 +1327,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDObjectInstanceID variant_get_object_instance_id(GDExtensionConstVariantPtr p_self)
     {
-        return s_variant_get_object_instance_id(p_self);
+        var function = s_variant_get_object_instance_id;
+        ThrowIfInvalid(function);
+        return function(p_self);
     }
 
     /// <summary>
@@ -1257,7 +1344,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_get_type_name(GDExtensionVariantType p_type, GDExtensionUninitializedStringPtr r_name)
     {
-        s_variant_get_type_name(p_type, r_name);
+        var function = s_variant_get_type_name;
+        ThrowIfInvalid(function);
+        function(p_type, r_name);
     }
 
     /// <summary>
@@ -1272,7 +1361,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantType variant_get_type_by_name(GDExtensionConstStringPtr p_type_name)
     {
-        return s_variant_get_type_by_name(p_type_name);
+        var function = s_variant_get_type_by_name;
+        ThrowIfInvalid(function);
+        return function(p_type_name);
     }
 
     /// <summary>
@@ -1290,7 +1381,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_can_convert(GDExtensionVariantType p_from, GDExtensionVariantType p_to)
     {
-        return s_variant_can_convert(p_from, p_to);
+        var function = s_variant_can_convert;
+        ThrowIfInvalid(function);
+        return function(p_from, p_to);
     }
 
     /// <summary>
@@ -1308,7 +1401,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool variant_can_convert_strict(GDExtensionVariantType p_from, GDExtensionVariantType p_to)
     {
-        return s_variant_can_convert_strict(p_from, p_to);
+        var function = s_variant_can_convert_strict;
+        ThrowIfInvalid(function);
+        return function(p_from, p_to);
     }
 
     /// <summary>
@@ -1323,7 +1418,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantFromTypeConstructorFunc get_variant_from_type_constructor(GDExtensionVariantType p_type)
     {
-        return s_get_variant_from_type_constructor(p_type);
+        var function = s_get_variant_from_type_constructor;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1338,7 +1435,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypeFromVariantConstructorFunc get_variant_to_type_constructor(GDExtensionVariantType p_type)
     {
-        return s_get_variant_to_type_constructor(p_type);
+        var function = s_get_variant_to_type_constructor;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1358,7 +1457,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantGetInternalPtrFunc variant_get_ptr_internal_getter(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_internal_getter(p_type);
+        var function = s_variant_get_ptr_internal_getter;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1379,7 +1480,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrOperatorEvaluator variant_get_ptr_operator_evaluator(GDExtensionVariantOperator p_operator, GDExtensionVariantType p_type_a, GDExtensionVariantType p_type_b)
     {
-        return s_variant_get_ptr_operator_evaluator(p_operator, p_type_a, p_type_b);
+        var function = s_variant_get_ptr_operator_evaluator;
+        ThrowIfInvalid(function);
+        return function(p_operator, p_type_a, p_type_b);
     }
 
     /// <summary>
@@ -1400,7 +1503,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrBuiltInMethod variant_get_ptr_builtin_method(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_method, GDExtensionInt p_hash)
     {
-        return s_variant_get_ptr_builtin_method(p_type, p_method, p_hash);
+        var function = s_variant_get_ptr_builtin_method;
+        ThrowIfInvalid(function);
+        return function(p_type, p_method, p_hash);
     }
 
     /// <summary>
@@ -1418,7 +1523,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrConstructor variant_get_ptr_constructor(GDExtensionVariantType p_type, int p_constructor)
     {
-        return s_variant_get_ptr_constructor(p_type, p_constructor);
+        var function = s_variant_get_ptr_constructor;
+        ThrowIfInvalid(function);
+        return function(p_type, p_constructor);
     }
 
     /// <summary>
@@ -1433,7 +1540,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrDestructor variant_get_ptr_destructor(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_destructor(p_type);
+        var function = s_variant_get_ptr_destructor;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1457,7 +1566,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_construct(GDExtensionVariantType p_type, GDExtensionUninitializedVariantPtr r_base, GDExtensionConstVariantPtr* p_args, int p_argument_count, GDExtensionCallError* r_error)
     {
-        s_variant_construct(p_type, r_base, p_args, p_argument_count, r_error);
+        var function = s_variant_construct;
+        ThrowIfInvalid(function);
+        function(p_type, r_base, p_args, p_argument_count, r_error);
     }
 
     /// <summary>
@@ -1475,7 +1586,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrSetter variant_get_ptr_setter(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
     {
-        return s_variant_get_ptr_setter(p_type, p_member);
+        var function = s_variant_get_ptr_setter;
+        ThrowIfInvalid(function);
+        return function(p_type, p_member);
     }
 
     /// <summary>
@@ -1493,7 +1606,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrGetter variant_get_ptr_getter(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
     {
-        return s_variant_get_ptr_getter(p_type, p_member);
+        var function = s_variant_get_ptr_getter;
+        ThrowIfInvalid(function);
+        return function(p_type, p_member);
     }
 
     /// <summary>
@@ -1508,7 +1623,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrIndexedSetter variant_get_ptr_indexed_setter(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_indexed_setter(p_type);
+        var function = s_variant_get_ptr_indexed_setter;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1523,7 +1640,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrIndexedGetter variant_get_ptr_indexed_getter(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_indexed_getter(p_type);
+        var function = s_variant_get_ptr_indexed_getter;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1538,7 +1657,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrKeyedSetter variant_get_ptr_keyed_setter(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_keyed_setter(p_type);
+        var function = s_variant_get_ptr_keyed_setter;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1553,7 +1674,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrKeyedGetter variant_get_ptr_keyed_getter(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_keyed_getter(p_type);
+        var function = s_variant_get_ptr_keyed_getter;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1568,7 +1691,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrKeyedChecker variant_get_ptr_keyed_checker(GDExtensionVariantType p_type)
     {
-        return s_variant_get_ptr_keyed_checker(p_type);
+        var function = s_variant_get_ptr_keyed_checker;
+        ThrowIfInvalid(function);
+        return function(p_type);
     }
 
     /// <summary>
@@ -1586,7 +1711,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void variant_get_constant_value(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_constant, GDExtensionUninitializedVariantPtr r_ret)
     {
-        s_variant_get_constant_value(p_type, p_constant, r_ret);
+        var function = s_variant_get_constant_value;
+        ThrowIfInvalid(function);
+        function(p_type, p_constant, r_ret);
     }
 
     /// <summary>
@@ -1604,7 +1731,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionPtrUtilityFunction variant_get_ptr_utility_function(GDExtensionConstStringNamePtr p_function, GDExtensionInt p_hash)
     {
-        return s_variant_get_ptr_utility_function(p_function, p_hash);
+        var function = s_variant_get_ptr_utility_function;
+        ThrowIfInvalid(function);
+        return function(p_function, p_hash);
     }
 
     /// <summary>
@@ -1619,7 +1748,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_latin1_chars(GDExtensionUninitializedStringPtr r_dest, byte* p_contents)
     {
-        s_string_new_with_latin1_chars(r_dest, p_contents);
+        var function = s_string_new_with_latin1_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents);
     }
 
     /// <summary>
@@ -1634,7 +1765,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_utf8_chars(GDExtensionUninitializedStringPtr r_dest, byte* p_contents)
     {
-        s_string_new_with_utf8_chars(r_dest, p_contents);
+        var function = s_string_new_with_utf8_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents);
     }
 
     /// <summary>
@@ -1649,7 +1782,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_utf16_chars(GDExtensionUninitializedStringPtr r_dest, char* p_contents)
     {
-        s_string_new_with_utf16_chars(r_dest, p_contents);
+        var function = s_string_new_with_utf16_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents);
     }
 
     /// <summary>
@@ -1664,7 +1799,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_utf32_chars(GDExtensionUninitializedStringPtr r_dest, uint* p_contents)
     {
-        s_string_new_with_utf32_chars(r_dest, p_contents);
+        var function = s_string_new_with_utf32_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents);
     }
 
     /// <summary>
@@ -1679,7 +1816,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_wide_chars(GDExtensionUninitializedStringPtr r_dest, void* p_contents)
     {
-        s_string_new_with_wide_chars(r_dest, p_contents);
+        var function = s_string_new_with_wide_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents);
     }
 
     /// <summary>
@@ -1697,7 +1836,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_latin1_chars_and_len(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
     {
-        s_string_new_with_latin1_chars_and_len(r_dest, p_contents, p_size);
+        var function = s_string_new_with_latin1_chars_and_len;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_size);
     }
 
     /// <summary>
@@ -1716,7 +1857,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_utf8_chars_and_len(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
     {
-        s_string_new_with_utf8_chars_and_len(r_dest, p_contents, p_size);
+        var function = s_string_new_with_utf8_chars_and_len;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_size);
     }
 
     /// <summary>
@@ -1737,7 +1880,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_new_with_utf8_chars_and_len2(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
     {
-        return s_string_new_with_utf8_chars_and_len2(r_dest, p_contents, p_size);
+        var function = s_string_new_with_utf8_chars_and_len2;
+        ThrowIfInvalid(function);
+        return function(r_dest, p_contents, p_size);
     }
 
     /// <summary>
@@ -1756,7 +1901,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_utf16_chars_and_len(GDExtensionUninitializedStringPtr r_dest, char* p_contents, GDExtensionInt p_char_count)
     {
-        s_string_new_with_utf16_chars_and_len(r_dest, p_contents, p_char_count);
+        var function = s_string_new_with_utf16_chars_and_len;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_char_count);
     }
 
     /// <summary>
@@ -1780,7 +1927,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_new_with_utf16_chars_and_len2(GDExtensionUninitializedStringPtr r_dest, char* p_contents, GDExtensionInt p_char_count, GDExtensionBool p_default_little_endian)
     {
-        return s_string_new_with_utf16_chars_and_len2(r_dest, p_contents, p_char_count, p_default_little_endian);
+        var function = s_string_new_with_utf16_chars_and_len2;
+        ThrowIfInvalid(function);
+        return function(r_dest, p_contents, p_char_count, p_default_little_endian);
     }
 
     /// <summary>
@@ -1798,7 +1947,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_utf32_chars_and_len(GDExtensionUninitializedStringPtr r_dest, uint* p_contents, GDExtensionInt p_char_count)
     {
-        s_string_new_with_utf32_chars_and_len(r_dest, p_contents, p_char_count);
+        var function = s_string_new_with_utf32_chars_and_len;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_char_count);
     }
 
     /// <summary>
@@ -1816,7 +1967,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_new_with_wide_chars_and_len(GDExtensionUninitializedStringPtr r_dest, void* p_contents, GDExtensionInt p_char_count)
     {
-        s_string_new_with_wide_chars_and_len(r_dest, p_contents, p_char_count);
+        var function = s_string_new_with_wide_chars_and_len;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_char_count);
     }
 
     /// <summary>
@@ -1838,7 +1991,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_to_latin1_chars(GDExtensionConstStringPtr p_self, byte* r_text, GDExtensionInt p_max_write_length)
     {
-        return s_string_to_latin1_chars(p_self, r_text, p_max_write_length);
+        var function = s_string_to_latin1_chars;
+        ThrowIfInvalid(function);
+        return function(p_self, r_text, p_max_write_length);
     }
 
     /// <summary>
@@ -1860,7 +2015,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_to_utf8_chars(GDExtensionConstStringPtr p_self, byte* r_text, GDExtensionInt p_max_write_length)
     {
-        return s_string_to_utf8_chars(p_self, r_text, p_max_write_length);
+        var function = s_string_to_utf8_chars;
+        ThrowIfInvalid(function);
+        return function(p_self, r_text, p_max_write_length);
     }
 
     /// <summary>
@@ -1882,7 +2039,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_to_utf16_chars(GDExtensionConstStringPtr p_self, char* r_text, GDExtensionInt p_max_write_length)
     {
-        return s_string_to_utf16_chars(p_self, r_text, p_max_write_length);
+        var function = s_string_to_utf16_chars;
+        ThrowIfInvalid(function);
+        return function(p_self, r_text, p_max_write_length);
     }
 
     /// <summary>
@@ -1904,7 +2063,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_to_utf32_chars(GDExtensionConstStringPtr p_self, uint* r_text, GDExtensionInt p_max_write_length)
     {
-        return s_string_to_utf32_chars(p_self, r_text, p_max_write_length);
+        var function = s_string_to_utf32_chars;
+        ThrowIfInvalid(function);
+        return function(p_self, r_text, p_max_write_length);
     }
 
     /// <summary>
@@ -1926,7 +2087,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_to_wide_chars(GDExtensionConstStringPtr p_self, void* r_text, GDExtensionInt p_max_write_length)
     {
-        return s_string_to_wide_chars(p_self, r_text, p_max_write_length);
+        var function = s_string_to_wide_chars;
+        ThrowIfInvalid(function);
+        return function(p_self, r_text, p_max_write_length);
     }
 
     /// <summary>
@@ -1944,7 +2107,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static uint* string_operator_index(GDExtensionStringPtr p_self, GDExtensionInt p_index)
     {
-        return s_string_operator_index(p_self, p_index);
+        var function = s_string_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -1962,7 +2127,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static uint* string_operator_index_const(GDExtensionConstStringPtr p_self, GDExtensionInt p_index)
     {
-        return s_string_operator_index_const(p_self, p_index);
+        var function = s_string_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -1977,7 +2144,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_operator_plus_eq_string(GDExtensionStringPtr p_self, GDExtensionConstStringPtr p_b)
     {
-        s_string_operator_plus_eq_string(p_self, p_b);
+        var function = s_string_operator_plus_eq_string;
+        ThrowIfInvalid(function);
+        function(p_self, p_b);
     }
 
     /// <summary>
@@ -1992,7 +2161,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_operator_plus_eq_char(GDExtensionStringPtr p_self, uint p_b)
     {
-        s_string_operator_plus_eq_char(p_self, p_b);
+        var function = s_string_operator_plus_eq_char;
+        ThrowIfInvalid(function);
+        function(p_self, p_b);
     }
 
     /// <summary>
@@ -2007,7 +2178,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_operator_plus_eq_cstr(GDExtensionStringPtr p_self, byte* p_b)
     {
-        s_string_operator_plus_eq_cstr(p_self, p_b);
+        var function = s_string_operator_plus_eq_cstr;
+        ThrowIfInvalid(function);
+        function(p_self, p_b);
     }
 
     /// <summary>
@@ -2022,7 +2195,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_operator_plus_eq_wcstr(GDExtensionStringPtr p_self, void* p_b)
     {
-        s_string_operator_plus_eq_wcstr(p_self, p_b);
+        var function = s_string_operator_plus_eq_wcstr;
+        ThrowIfInvalid(function);
+        function(p_self, p_b);
     }
 
     /// <summary>
@@ -2037,7 +2212,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_operator_plus_eq_c32str(GDExtensionStringPtr p_self, uint* p_b)
     {
-        s_string_operator_plus_eq_c32str(p_self, p_b);
+        var function = s_string_operator_plus_eq_c32str;
+        ThrowIfInvalid(function);
+        function(p_self, p_b);
     }
 
     /// <summary>
@@ -2060,7 +2237,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt string_resize(GDExtensionStringPtr p_self, GDExtensionInt p_resize)
     {
-        return s_string_resize(p_self, p_resize);
+        var function = s_string_resize;
+        ThrowIfInvalid(function);
+        return function(p_self, p_resize);
     }
 
     /// <summary>
@@ -2084,7 +2263,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_name_new_with_latin1_chars(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents, GDExtensionBool p_is_static)
     {
-        s_string_name_new_with_latin1_chars(r_dest, p_contents, p_is_static);
+        var function = s_string_name_new_with_latin1_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_is_static);
     }
 
     /// <summary>
@@ -2099,7 +2280,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_name_new_with_utf8_chars(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents)
     {
-        s_string_name_new_with_utf8_chars(r_dest, p_contents);
+        var function = s_string_name_new_with_utf8_chars;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents);
     }
 
     /// <summary>
@@ -2117,7 +2300,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void string_name_new_with_utf8_chars_and_len(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents, GDExtensionInt p_size)
     {
-        s_string_name_new_with_utf8_chars_and_len(r_dest, p_contents, p_size);
+        var function = s_string_name_new_with_utf8_chars_and_len;
+        ThrowIfInvalid(function);
+        function(r_dest, p_contents, p_size);
     }
 
     /// <summary>
@@ -2138,7 +2323,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionInt xml_parser_open_buffer(GDExtensionObjectPtr p_instance, byte* p_buffer, nuint p_size)
     {
-        return s_xml_parser_open_buffer(p_instance, p_buffer, p_size);
+        var function = s_xml_parser_open_buffer;
+        ThrowIfInvalid(function);
+        return function(p_instance, p_buffer, p_size);
     }
 
     /// <summary>
@@ -2156,7 +2343,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void file_access_store_buffer(GDExtensionObjectPtr p_instance, byte* p_src, ulong p_length)
     {
-        s_file_access_store_buffer(p_instance, p_src, p_length);
+        var function = s_file_access_store_buffer;
+        ThrowIfInvalid(function);
+        function(p_instance, p_src, p_length);
     }
 
     /// <summary>
@@ -2177,7 +2366,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ulong file_access_get_buffer(GDExtensionConstObjectPtr p_instance, byte* p_dst, ulong p_length)
     {
-        return s_file_access_get_buffer(p_instance, p_dst, p_length);
+        var function = s_file_access_get_buffer;
+        ThrowIfInvalid(function);
+        return function(p_instance, p_dst, p_length);
     }
 
     /// <summary>
@@ -2192,7 +2383,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* image_ptrw(GDExtensionObjectPtr p_instance)
     {
-        return s_image_ptrw(p_instance);
+        var function = s_image_ptrw;
+        ThrowIfInvalid(function);
+        return function(p_instance);
     }
 
     /// <summary>
@@ -2207,7 +2400,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* image_ptr(GDExtensionObjectPtr p_instance)
     {
-        return s_image_ptr(p_instance);
+        var function = s_image_ptr;
+        ThrowIfInvalid(function);
+        return function(p_instance);
     }
 
     /// <summary>
@@ -2240,7 +2435,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long worker_thread_pool_add_native_group_task(GDExtensionObjectPtr p_instance, GDExtensionWorkerThreadPoolGroupTask p_func, void* p_userdata, int p_elements, int p_tasks, GDExtensionBool p_high_priority, GDExtensionConstStringPtr p_description)
     {
-        return s_worker_thread_pool_add_native_group_task(p_instance, p_func, p_userdata, p_elements, p_tasks, p_high_priority, p_description);
+        var function = s_worker_thread_pool_add_native_group_task;
+        ThrowIfInvalid(function);
+        return function(p_instance, p_func, p_userdata, p_elements, p_tasks, p_high_priority, p_description);
     }
 
     /// <summary>
@@ -2267,7 +2464,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long worker_thread_pool_add_native_task(GDExtensionObjectPtr p_instance, GDExtensionWorkerThreadPoolTask p_func, void* p_userdata, GDExtensionBool p_high_priority, GDExtensionConstStringPtr p_description)
     {
-        return s_worker_thread_pool_add_native_task(p_instance, p_func, p_userdata, p_high_priority, p_description);
+        var function = s_worker_thread_pool_add_native_task;
+        ThrowIfInvalid(function);
+        return function(p_instance, p_func, p_userdata, p_high_priority, p_description);
     }
 
     /// <summary>
@@ -2285,7 +2484,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* packed_byte_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_byte_array_operator_index(p_self, p_index);
+        var function = s_packed_byte_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2303,7 +2504,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte* packed_byte_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_byte_array_operator_index_const(p_self, p_index);
+        var function = s_packed_byte_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2321,7 +2524,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float* packed_float32_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_float32_array_operator_index(p_self, p_index);
+        var function = s_packed_float32_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2339,7 +2544,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float* packed_float32_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_float32_array_operator_index_const(p_self, p_index);
+        var function = s_packed_float32_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2357,7 +2564,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double* packed_float64_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_float64_array_operator_index(p_self, p_index);
+        var function = s_packed_float64_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2375,7 +2584,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double* packed_float64_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_float64_array_operator_index_const(p_self, p_index);
+        var function = s_packed_float64_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2393,7 +2604,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int* packed_int32_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_int32_array_operator_index(p_self, p_index);
+        var function = s_packed_int32_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2411,7 +2624,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int* packed_int32_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_int32_array_operator_index_const(p_self, p_index);
+        var function = s_packed_int32_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2429,7 +2644,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long* packed_int64_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_int64_array_operator_index(p_self, p_index);
+        var function = s_packed_int64_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2447,7 +2664,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long* packed_int64_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_int64_array_operator_index_const(p_self, p_index);
+        var function = s_packed_int64_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2465,7 +2684,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionStringPtr packed_string_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_string_array_operator_index(p_self, p_index);
+        var function = s_packed_string_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2483,7 +2704,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionStringPtr packed_string_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_string_array_operator_index_const(p_self, p_index);
+        var function = s_packed_string_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2501,7 +2724,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_vector2_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_vector2_array_operator_index(p_self, p_index);
+        var function = s_packed_vector2_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2519,7 +2744,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_vector2_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_vector2_array_operator_index_const(p_self, p_index);
+        var function = s_packed_vector2_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2537,7 +2764,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_vector3_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_vector3_array_operator_index(p_self, p_index);
+        var function = s_packed_vector3_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2555,7 +2784,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_vector3_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_vector3_array_operator_index_const(p_self, p_index);
+        var function = s_packed_vector3_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2573,7 +2804,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_vector4_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_vector4_array_operator_index(p_self, p_index);
+        var function = s_packed_vector4_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2591,7 +2824,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_vector4_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_vector4_array_operator_index_const(p_self, p_index);
+        var function = s_packed_vector4_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2609,7 +2844,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_color_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_color_array_operator_index(p_self, p_index);
+        var function = s_packed_color_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2627,7 +2864,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionTypePtr packed_color_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_packed_color_array_operator_index_const(p_self, p_index);
+        var function = s_packed_color_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2645,7 +2884,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_array_operator_index(p_self, p_index);
+        var function = s_array_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2663,7 +2904,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
     {
-        return s_array_operator_index_const(p_self, p_index);
+        var function = s_array_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_index);
     }
 
     /// <summary>
@@ -2679,7 +2922,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void array_ref(GDExtensionTypePtr p_self, GDExtensionConstTypePtr p_from)
     {
-        s_array_ref(p_self, p_from);
+        var function = s_array_ref;
+        ThrowIfInvalid(function);
+        function(p_self, p_from);
     }
 
     /// <summary>
@@ -2700,7 +2945,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void array_set_typed(GDExtensionTypePtr p_self, GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstVariantPtr p_script)
     {
-        s_array_set_typed(p_self, p_type, p_class_name, p_script);
+        var function = s_array_set_typed;
+        ThrowIfInvalid(function);
+        function(p_self, p_type, p_class_name, p_script);
     }
 
     /// <summary>
@@ -2718,7 +2965,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr dictionary_operator_index(GDExtensionTypePtr p_self, GDExtensionConstVariantPtr p_key)
     {
-        return s_dictionary_operator_index(p_self, p_key);
+        var function = s_dictionary_operator_index;
+        ThrowIfInvalid(function);
+        return function(p_self, p_key);
     }
 
     /// <summary>
@@ -2736,7 +2985,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionVariantPtr dictionary_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionConstVariantPtr p_key)
     {
-        return s_dictionary_operator_index_const(p_self, p_key);
+        var function = s_dictionary_operator_index_const;
+        ThrowIfInvalid(function);
+        return function(p_self, p_key);
     }
 
     /// <summary>
@@ -2766,7 +3017,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void dictionary_set_typed(GDExtensionTypePtr p_self, GDExtensionVariantType p_key_type, GDExtensionConstStringNamePtr p_key_class_name, GDExtensionConstVariantPtr p_key_script, GDExtensionVariantType p_value_type, GDExtensionConstStringNamePtr p_value_class_name, GDExtensionConstVariantPtr p_value_script)
     {
-        s_dictionary_set_typed(p_self, p_key_type, p_key_class_name, p_key_script, p_value_type, p_value_class_name, p_value_script);
+        var function = s_dictionary_set_typed;
+        ThrowIfInvalid(function);
+        function(p_self, p_key_type, p_key_class_name, p_key_script, p_value_type, p_value_class_name, p_value_script);
     }
 
     /// <summary>
@@ -2793,7 +3046,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_method_bind_call(GDExtensionMethodBindPtr p_method_bind, GDExtensionObjectPtr p_instance, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_arg_count, GDExtensionUninitializedVariantPtr r_ret, GDExtensionCallError* r_error)
     {
-        s_object_method_bind_call(p_method_bind, p_instance, p_args, p_arg_count, r_ret, r_error);
+        var function = s_object_method_bind_call;
+        ThrowIfInvalid(function);
+        function(p_method_bind, p_instance, p_args, p_arg_count, r_ret, r_error);
     }
 
     /// <summary>
@@ -2814,7 +3069,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_method_bind_ptrcall(GDExtensionMethodBindPtr p_method_bind, GDExtensionObjectPtr p_instance, GDExtensionConstTypePtr* p_args, GDExtensionTypePtr r_ret)
     {
-        s_object_method_bind_ptrcall(p_method_bind, p_instance, p_args, r_ret);
+        var function = s_object_method_bind_ptrcall;
+        ThrowIfInvalid(function);
+        function(p_method_bind, p_instance, p_args, r_ret);
     }
 
     /// <summary>
@@ -2826,7 +3083,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_destroy(GDExtensionObjectPtr p_o)
     {
-        s_object_destroy(p_o);
+        var function = s_object_destroy;
+        ThrowIfInvalid(function);
+        function(p_o);
     }
 
     /// <summary>
@@ -2841,7 +3100,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr global_get_singleton(GDExtensionConstStringNamePtr p_name)
     {
-        return s_global_get_singleton(p_name);
+        var function = s_global_get_singleton;
+        ThrowIfInvalid(function);
+        return function(p_name);
     }
 
     /// <summary>
@@ -2862,7 +3123,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* object_get_instance_binding(GDExtensionObjectPtr p_o, void* p_token, GDExtensionInstanceBindingCallbacks* p_callbacks)
     {
-        return s_object_get_instance_binding(p_o, p_token, p_callbacks);
+        var function = s_object_get_instance_binding;
+        ThrowIfInvalid(function);
+        return function(p_o, p_token, p_callbacks);
     }
 
     /// <summary>
@@ -2883,7 +3146,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_set_instance_binding(GDExtensionObjectPtr p_o, void* p_token, void* p_binding, GDExtensionInstanceBindingCallbacks* p_callbacks)
     {
-        s_object_set_instance_binding(p_o, p_token, p_binding, p_callbacks);
+        var function = s_object_set_instance_binding;
+        ThrowIfInvalid(function);
+        function(p_o, p_token, p_binding, p_callbacks);
     }
 
     /// <summary>
@@ -2898,7 +3163,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_free_instance_binding(GDExtensionObjectPtr p_o, void* p_token)
     {
-        s_object_free_instance_binding(p_o, p_token);
+        var function = s_object_free_instance_binding;
+        ThrowIfInvalid(function);
+        function(p_o, p_token);
     }
 
     /// <summary>
@@ -2917,7 +3184,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_set_instance(GDExtensionObjectPtr p_o, GDExtensionConstStringNamePtr p_classname, GDExtensionClassInstancePtr p_instance)
     {
-        s_object_set_instance(p_o, p_classname, p_instance);
+        var function = s_object_set_instance;
+        ThrowIfInvalid(function);
+        function(p_o, p_classname, p_instance);
     }
 
     /// <summary>
@@ -2940,7 +3209,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool object_get_class_name(GDExtensionConstObjectPtr p_object, GDExtensionClassLibraryPtr p_library, GDExtensionUninitializedStringNamePtr r_class_name)
     {
-        return s_object_get_class_name(p_object, p_library, r_class_name);
+        var function = s_object_get_class_name;
+        ThrowIfInvalid(function);
+        return function(p_object, p_library, r_class_name);
     }
 
     /// <summary>
@@ -2959,7 +3230,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr object_cast_to(GDExtensionConstObjectPtr p_object, void* p_class_tag)
     {
-        return s_object_cast_to(p_object, p_class_tag);
+        var function = s_object_cast_to;
+        ThrowIfInvalid(function);
+        return function(p_object, p_class_tag);
     }
 
     /// <summary>
@@ -2974,7 +3247,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr object_get_instance_from_id(GDObjectInstanceID p_instance_id)
     {
-        return s_object_get_instance_from_id(p_instance_id);
+        var function = s_object_get_instance_from_id;
+        ThrowIfInvalid(function);
+        return function(p_instance_id);
     }
 
     /// <summary>
@@ -2989,7 +3264,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDObjectInstanceID object_get_instance_id(GDExtensionConstObjectPtr p_object)
     {
-        return s_object_get_instance_id(p_object);
+        var function = s_object_get_instance_id;
+        ThrowIfInvalid(function);
+        return function(p_object);
     }
 
     /// <summary>
@@ -3007,7 +3284,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionBool object_has_script_method(GDExtensionConstObjectPtr p_object, GDExtensionConstStringNamePtr p_method)
     {
-        return s_object_has_script_method(p_object, p_method);
+        var function = s_object_has_script_method;
+        ThrowIfInvalid(function);
+        return function(p_object, p_method);
     }
 
     /// <summary>
@@ -3034,7 +3313,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_call_script_method(GDExtensionObjectPtr p_object, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
     {
-        s_object_call_script_method(p_object, p_method, p_args, p_argument_count, r_return, r_error);
+        var function = s_object_call_script_method;
+        ThrowIfInvalid(function);
+        function(p_object, p_method, p_args, p_argument_count, r_return, r_error);
     }
 
     /// <summary>
@@ -3049,7 +3330,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ref_get_object(GDExtensionConstRefPtr p_ref)
     {
-        return s_ref_get_object(p_ref);
+        var function = s_ref_get_object;
+        ThrowIfInvalid(function);
+        return function(p_ref);
     }
 
     /// <summary>
@@ -3064,7 +3347,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ref_set_object(GDExtensionRefPtr p_ref, GDExtensionObjectPtr p_object)
     {
-        s_ref_set_object(p_ref, p_object);
+        var function = s_ref_set_object;
+        ThrowIfInvalid(function);
+        function(p_ref, p_object);
     }
 
     /// <summary>
@@ -3083,7 +3368,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr script_instance_create(GDExtensionScriptInstanceInfo* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
     {
-        return s_script_instance_create(p_info, p_instance_data);
+        var function = s_script_instance_create;
+        ThrowIfInvalid(function);
+        return function(p_info, p_instance_data);
     }
 
     /// <summary>
@@ -3102,7 +3389,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr script_instance_create2(GDExtensionScriptInstanceInfo2* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
     {
-        return s_script_instance_create2(p_info, p_instance_data);
+        var function = s_script_instance_create2;
+        ThrowIfInvalid(function);
+        return function(p_info, p_instance_data);
     }
 
     /// <summary>
@@ -3120,7 +3409,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr script_instance_create3(GDExtensionScriptInstanceInfo3* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
     {
-        return s_script_instance_create3(p_info, p_instance_data);
+        var function = s_script_instance_create3;
+        ThrowIfInvalid(function);
+        return function(p_info, p_instance_data);
     }
 
     /// <summary>
@@ -3142,7 +3433,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstancePtr placeholder_script_instance_create(GDExtensionObjectPtr p_language, GDExtensionObjectPtr p_script, GDExtensionObjectPtr p_owner)
     {
-        return s_placeholder_script_instance_create(p_language, p_script, p_owner);
+        var function = s_placeholder_script_instance_create;
+        ThrowIfInvalid(function);
+        return function(p_language, p_script, p_owner);
     }
 
     /// <summary>
@@ -3162,7 +3455,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void placeholder_script_instance_update(GDExtensionScriptInstancePtr p_placeholder, GDExtensionConstTypePtr p_properties, GDExtensionConstTypePtr p_values)
     {
-        s_placeholder_script_instance_update(p_placeholder, p_properties, p_values);
+        var function = s_placeholder_script_instance_update;
+        ThrowIfInvalid(function);
+        function(p_placeholder, p_properties, p_values);
     }
 
     /// <summary>
@@ -3180,7 +3475,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstanceDataPtr object_get_script_instance(GDExtensionConstObjectPtr p_object, GDExtensionObjectPtr p_language)
     {
-        return s_object_get_script_instance(p_object, p_language);
+        var function = s_object_get_script_instance;
+        ThrowIfInvalid(function);
+        return function(p_object, p_language);
     }
 
     /// <summary>
@@ -3195,7 +3492,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void object_set_script_instance(GDExtensionObjectPtr p_object, GDExtensionScriptInstanceDataPtr p_script_instance)
     {
-        s_object_set_script_instance(p_object, p_script_instance);
+        var function = s_object_set_script_instance;
+        ThrowIfInvalid(function);
+        function(p_object, p_script_instance);
     }
 
     /// <summary>
@@ -3212,7 +3511,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void callable_custom_create(GDExtensionUninitializedTypePtr r_callable, GDExtensionCallableCustomInfo* p_callable_custom_info)
     {
-        s_callable_custom_create(r_callable, p_callable_custom_info);
+        var function = s_callable_custom_create;
+        ThrowIfInvalid(function);
+        function(r_callable, p_callable_custom_info);
     }
 
     /// <summary>
@@ -3228,7 +3529,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void callable_custom_create2(GDExtensionUninitializedTypePtr r_callable, GDExtensionCallableCustomInfo2* p_callable_custom_info)
     {
-        s_callable_custom_create2(r_callable, p_callable_custom_info);
+        var function = s_callable_custom_create2;
+        ThrowIfInvalid(function);
+        function(r_callable, p_callable_custom_info);
     }
 
     /// <summary>
@@ -3247,7 +3550,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* callable_custom_get_userdata(GDExtensionConstTypePtr p_callable, void* p_token)
     {
-        return s_callable_custom_get_userdata(p_callable, p_token);
+        var function = s_callable_custom_get_userdata;
+        ThrowIfInvalid(function);
+        return function(p_callable, p_token);
     }
 
     /// <summary>
@@ -3264,7 +3569,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr classdb_construct_object(GDExtensionConstStringNamePtr p_classname)
     {
-        return s_classdb_construct_object(p_classname);
+        var function = s_classdb_construct_object;
+        ThrowIfInvalid(function);
+        return function(p_classname);
     }
 
     /// <summary>
@@ -3283,7 +3590,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr classdb_construct_object2(GDExtensionConstStringNamePtr p_classname)
     {
-        return s_classdb_construct_object2(p_classname);
+        var function = s_classdb_construct_object2;
+        ThrowIfInvalid(function);
+        return function(p_classname);
     }
 
     /// <summary>
@@ -3302,7 +3611,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr classdb_construct_object3(GDExtensionConstStringNamePtr p_classname)
     {
-        return s_classdb_construct_object3(p_classname);
+        var function = s_classdb_construct_object3;
+        ThrowIfInvalid(function);
+        return function(p_classname);
     }
 
     /// <summary>
@@ -3323,7 +3634,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionMethodBindPtr classdb_get_method_bind(GDExtensionConstStringNamePtr p_classname, GDExtensionConstStringNamePtr p_methodname, GDExtensionInt p_hash)
     {
-        return s_classdb_get_method_bind(p_classname, p_methodname, p_hash);
+        var function = s_classdb_get_method_bind;
+        ThrowIfInvalid(function);
+        return function(p_classname, p_methodname, p_hash);
     }
 
     /// <summary>
@@ -3339,7 +3652,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* classdb_get_class_tag(GDExtensionConstStringNamePtr p_classname)
     {
-        return s_classdb_get_class_tag(p_classname);
+        var function = s_classdb_get_class_tag;
+        ThrowIfInvalid(function);
+        return function(p_classname);
     }
 
     /// <summary>
@@ -3362,7 +3677,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo* p_extension_funcs)
     {
-        s_classdb_register_extension_class(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        var function = s_classdb_register_extension_class;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     /// <summary>
@@ -3385,7 +3702,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class2(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo2* p_extension_funcs)
     {
-        s_classdb_register_extension_class2(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        var function = s_classdb_register_extension_class2;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     /// <summary>
@@ -3408,7 +3727,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class3(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo3* p_extension_funcs)
     {
-        s_classdb_register_extension_class3(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        var function = s_classdb_register_extension_class3;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     /// <summary>
@@ -3431,7 +3752,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class4(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo4* p_extension_funcs)
     {
-        s_classdb_register_extension_class4(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        var function = s_classdb_register_extension_class4;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     /// <summary>
@@ -3454,7 +3777,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class5(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo5* p_extension_funcs)
     {
-        s_classdb_register_extension_class5(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        var function = s_classdb_register_extension_class5;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     /// <summary>
@@ -3476,7 +3801,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class6(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo6* p_extension_funcs)
     {
-        s_classdb_register_extension_class6(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        var function = s_classdb_register_extension_class6;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
     }
 
     /// <summary>
@@ -3495,7 +3822,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_method(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionClassMethodInfo* p_method_info)
     {
-        s_classdb_register_extension_class_method(p_library, p_class_name, p_method_info);
+        var function = s_classdb_register_extension_class_method;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_method_info);
     }
 
     /// <summary>
@@ -3514,7 +3843,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_virtual_method(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionClassVirtualMethodInfo* p_method_info)
     {
-        s_classdb_register_extension_class_virtual_method(p_library, p_class_name, p_method_info);
+        var function = s_classdb_register_extension_class_virtual_method;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_method_info);
     }
 
     /// <summary>
@@ -3544,7 +3875,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_integer_constant(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_enum_name, GDExtensionConstStringNamePtr p_constant_name, GDExtensionInt p_constant_value, GDExtensionBool p_is_bitfield)
     {
-        s_classdb_register_extension_class_integer_constant(p_library, p_class_name, p_enum_name, p_constant_name, p_constant_value, p_is_bitfield);
+        var function = s_classdb_register_extension_class_integer_constant;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_enum_name, p_constant_name, p_constant_value, p_is_bitfield);
     }
 
     /// <summary>
@@ -3569,7 +3902,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_property(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionPropertyInfo* p_info, GDExtensionConstStringNamePtr p_setter, GDExtensionConstStringNamePtr p_getter)
     {
-        s_classdb_register_extension_class_property(p_library, p_class_name, p_info, p_setter, p_getter);
+        var function = s_classdb_register_extension_class_property;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_info, p_setter, p_getter);
     }
 
     /// <summary>
@@ -3597,7 +3932,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_property_indexed(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionPropertyInfo* p_info, GDExtensionConstStringNamePtr p_setter, GDExtensionConstStringNamePtr p_getter, GDExtensionInt p_index)
     {
-        s_classdb_register_extension_class_property_indexed(p_library, p_class_name, p_info, p_setter, p_getter, p_index);
+        var function = s_classdb_register_extension_class_property_indexed;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_info, p_setter, p_getter, p_index);
     }
 
     /// <summary>
@@ -3618,7 +3955,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_property_group(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringPtr p_group_name, GDExtensionConstStringPtr p_prefix)
     {
-        s_classdb_register_extension_class_property_group(p_library, p_class_name, p_group_name, p_prefix);
+        var function = s_classdb_register_extension_class_property_group;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_group_name, p_prefix);
     }
 
     /// <summary>
@@ -3639,7 +3978,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_property_subgroup(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringPtr p_subgroup_name, GDExtensionConstStringPtr p_prefix)
     {
-        s_classdb_register_extension_class_property_subgroup(p_library, p_class_name, p_subgroup_name, p_prefix);
+        var function = s_classdb_register_extension_class_property_subgroup;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_subgroup_name, p_prefix);
     }
 
     /// <summary>
@@ -3664,7 +4005,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_register_extension_class_signal(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_signal_name, GDExtensionPropertyInfo* p_argument_info, GDExtensionInt p_argument_count)
     {
-        s_classdb_register_extension_class_signal(p_library, p_class_name, p_signal_name, p_argument_info, p_argument_count);
+        var function = s_classdb_register_extension_class_signal;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name, p_signal_name, p_argument_info, p_argument_count);
     }
 
     /// <summary>
@@ -3680,7 +4023,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void classdb_unregister_extension_class(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name)
     {
-        s_classdb_unregister_extension_class(p_library, p_class_name);
+        var function = s_classdb_unregister_extension_class;
+        ThrowIfInvalid(function);
+        function(p_library, p_class_name);
     }
 
     /// <summary>
@@ -3695,7 +4040,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void get_library_path(GDExtensionClassLibraryPtr p_library, GDExtensionUninitializedStringPtr r_path)
     {
-        s_get_library_path(p_library, r_path);
+        var function = s_get_library_path;
+        ThrowIfInvalid(function);
+        function(p_library, r_path);
     }
 
     /// <summary>
@@ -3708,7 +4055,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void editor_add_plugin(GDExtensionConstStringNamePtr p_class_name)
     {
-        s_editor_add_plugin(p_class_name);
+        var function = s_editor_add_plugin;
+        ThrowIfInvalid(function);
+        function(p_class_name);
     }
 
     /// <summary>
@@ -3720,7 +4069,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void editor_remove_plugin(GDExtensionConstStringNamePtr p_class_name)
     {
-        s_editor_remove_plugin(p_class_name);
+        var function = s_editor_remove_plugin;
+        ThrowIfInvalid(function);
+        function(p_class_name);
     }
 
     /// <summary>
@@ -3733,7 +4084,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void editor_help_load_xml_from_utf8_chars(byte* p_data)
     {
-        s_editor_help_load_xml_from_utf8_chars(p_data);
+        var function = s_editor_help_load_xml_from_utf8_chars;
+        ThrowIfInvalid(function);
+        function(p_data);
     }
 
     /// <summary>
@@ -3749,7 +4102,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void editor_help_load_xml_from_utf8_chars_and_len(byte* p_data, GDExtensionInt p_size)
     {
-        s_editor_help_load_xml_from_utf8_chars_and_len(p_data, p_size);
+        var function = s_editor_help_load_xml_from_utf8_chars_and_len;
+        ThrowIfInvalid(function);
+        function(p_data, p_size);
     }
 
     /// <summary>
@@ -3768,7 +4123,9 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void editor_register_get_classes_used_callback(GDExtensionClassLibraryPtr p_library, GDExtensionEditorGetClassesUsedCallback p_callback)
     {
-        s_editor_register_get_classes_used_callback(p_library, p_callback);
+        var function = s_editor_register_get_classes_used_callback;
+        ThrowIfInvalid(function);
+        function(p_library, p_callback);
     }
 
     /// <summary>
@@ -3783,21 +4140,30 @@ public static unsafe class GDExtensionInterface
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void register_main_loop_callbacks(GDExtensionClassLibraryPtr p_library, GDExtensionMainLoopCallbacks* p_callbacks)
     {
-        s_register_main_loop_callbacks(p_library, p_callbacks);
+        var function = s_register_main_loop_callbacks;
+        ThrowIfInvalid(function);
+        function(p_library, p_callbacks);
     }
 
     private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)
     {
         fixed (byte* p_function_name = functionName)
         {
-            GDExtensionInterfaceFunctionPtr function = getProcAddress(p_function_name);
+            return getProcAddress(p_function_name);
+        }
+    }
 
-            if (function == null)
-            {
-                throw new ArgumentException($"Failed to load \"{new string((sbyte*)p_function_name)}\" from the specified address loader.", nameof(getProcAddress));
-            }
+    private static void ThrowIfInvalid(void* function)
+    {
+        if (function == null)
+        {
+            Throw();
+        }
 
-            return function;
+        [DoesNotReturn]
+        static void Throw()
+        {
+            throw new InvalidOperationException("The specified function could not be loaded.");
         }
     }
 }
