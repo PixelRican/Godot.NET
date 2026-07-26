@@ -38,11 +38,15 @@ class GDExtensionInterface:
     def generate(self) -> None:
         for instance in chain(self.types.values(), self.interface.values()):
             with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
-                file.write("/**************************************************************************/\n")
-                file.write(f"/*  {instance.name}.cs  {" " * (65 - len(instance.name))}*/\n")
-                for line in self.copyright:
-                    file.write(f"{line}\n")
+                file.writelines(self.header(instance.name))
+                file.write("\n")
                 instance.dump(file)
+
+    def header(self, name: str) -> Iterable[str]:
+        yield "/**************************************************************************/\n"
+        yield f"/*  {name}.cs  {" " * (65 - len(name))}*/\n"
+        for line in self.copyright:
+            yield f"{line}\n"
 
 class GDExtensionSymbol:
     def __init__(self, name: str) -> None:
