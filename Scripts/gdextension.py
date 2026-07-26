@@ -133,6 +133,9 @@ class GDExtensionType:
         if deprecated:
             self.deprecated = GDExtensionDeprecated(deprecated)
 
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        raise NotImplementedError()
+
     def dump(self, file: IOBase) -> None:
         raise NotImplementedError()
 
@@ -143,6 +146,9 @@ class GDExtensionEnum(GDExtensionType):
         self.values: list[GDExtensionEnumValue] = [
             GDExtensionEnumValue(value_data) for value_data in data["values"]
         ]
+
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        return f"Godot.GDExtension.{self.name}"
 
     def dump(self, file: IOBase) -> None:
         if self.deprecated or self.is_bitfield:
@@ -180,6 +186,9 @@ class GDExtensionHandle(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.parent: str | None = data.get("parent")
+
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        return "void*"
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
@@ -240,6 +249,12 @@ class GDExtensionAlias(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
+
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        instance: GDExtensionType | None = types.get(self.type.name)
+        if instance:
+            return instance.expand(types)
+        return self.type.name
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
@@ -304,6 +319,9 @@ class GDExtensionStruct(GDExtensionType):
         self.members: list[GDExtensionStructMember] = [
             GDExtensionStructMember(member_data) for member_data in data["members"]
         ]
+
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        return f"Godot.GDExtension.{self.name}"
 
     def dump(self, file: IOBase) -> None:
         if self.deprecated:
@@ -371,6 +389,26 @@ class GDExtensionFunction(GDExtensionType):
         self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
         self.parameter_list: str = ", ".join(f"{argument.type.name} {argument.name}" for argument in self.arguments)
         self.argument_list: str = ", ".join(argument.name for argument in self.arguments)
+
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        type_parameters: list[str] = []
+        for argument in self.arguments:
+            name: str = argument.type.name
+            split: int = len(name) - argument.type.is_unsafe
+            target: GDExtensionType | None = types.get(name[:split])
+            if target:
+                name = target.expand(types) + name[split:]
+            type_parameters.append(name)
+        if self.return_value:
+            name: str = self.return_value.type.name
+            split: int = len(name) - self.return_value.type.is_unsafe
+            target: GDExtensionType | None = types.get(name[:split])
+            if target:
+                name = target.expand(types) + name[split:]
+            type_parameters.append(name)
+        else:
+            type_parameters.append("void")
+        return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
     def dump(self, file: IOBase) -> None:
         file.write("using System;\n")
