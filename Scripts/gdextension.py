@@ -1,7 +1,4 @@
-﻿from copy import copy
-from io import IOBase
-from itertools import chain
-from typing import Any, Iterable
+﻿from typing import Any, Iterable
 
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -16,14 +13,7 @@ class GDExtensionInterface:
                 case "handle":
                     instance = GDExtensionHandle(type_data)
                 case "alias":
-                    alias: GDExtensionAlias = GDExtensionAlias(type_data)
-                    if alias.type.is_builtin:
-                        instance = alias
-                    else:
-                        instance = copy(self.types[alias.type.name])
-                        instance.name = alias.name
-                        instance.description = alias.description
-                        instance.deprecated = alias.deprecated
+                    instance = GDExtensionAlias(type_data)
                 case "struct":
                     instance = GDExtensionStruct(type_data)
                 case "function":
@@ -32,15 +22,23 @@ class GDExtensionInterface:
             self.types[instance.name] = instance
         for function_data in data["interface"]:
             function: GDExtensionFunction = GDExtensionFunction(function_data)
-            assert function.entry_point
-            self.interface[function.entry_point] = function
+            self.interface[function.name] = function
 
     def generate(self) -> None:
-        for instance in chain(self.types.values(), self.interface.values()):
-            with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
-                file.writelines(self.header(instance.name))
-                file.write("\n")
-                instance.dump(file)
+        with open("../Source/Godot.GDExtension/GlobalUsings.cs", "w") as file:
+            file.writelines(self.header("GlobalUsings"))
+            file.write("\n")
+        for instance in self.types.values():
+            definition: Iterable[str] = instance.definition(self.types)
+            match instance:
+                case GDExtensionEnum() | GDExtensionStruct():
+                    with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
+                        file.writelines(self.header(instance.name))
+                        file.write("\n")
+                        file.writelines(definition)
+                case _:
+                    with open("../Source/Godot.GDExtension/GlobalUsings.cs", "a") as file:
+                        file.writelines(definition)
 
     def header(self, name: str) -> Iterable[str]:
         yield "/**************************************************************************/\n"
@@ -50,12 +48,10 @@ class GDExtensionInterface:
 
 class GDExtensionSymbol:
     def __init__(self, name: str) -> None:
-        self.name: str
-        self.is_readonly: bool = name.startswith("const")
-        self.is_unsafe: bool = name.endswith("*")
-        self.is_builtin: bool = True
-        start: int = 6 if self.is_readonly else 0
-        end: int = -1 if self.is_unsafe else len(name)
+        self.is_const: bool = name.startswith("const")
+        self.is_pointer: bool = name.endswith("*")
+        start: int = 6 if self.is_const else 0
+        end: int = -1 if self.is_pointer else len(name)
         self.name = name[start:end]
         match self.name:
             case "int8_t":
@@ -84,28 +80,22 @@ class GDExtensionSymbol:
                 self.name = "uint"
             case "wchar_t":
                 self.name = "void"
-            case "void" | "float" | "double":
-                pass
-            case _:
-                self.is_builtin = False
-        if self.is_unsafe:
+        if self.is_pointer:
             self.name += "*"
 
 class GDExtensionDescription:
-    def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "", indent: bool = False) -> None:
+    def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "") -> None:
         self.lines: list[str] = lines
         self.tag: str = tag
         self.metadata: str = metadata
-        self.spacing: str = " " * 4 if indent else ""
 
-    def dump(self, file: IOBase) -> None:
-        file.write(f"{self.spacing}/// <{self.tag}")
-        if self.metadata:
-            file.write(f" {self.metadata}")
-        file.write(">\n")
+    def documentation(self, indent: bool = False) -> Iterable[str]:
+        spacing: str = "    " if indent else ""
+        metadata: str = f" {self.metadata}" if self.metadata else ""
+        yield f"{spacing}/// <{self.tag}{metadata}>\n"
         for line in self.lines:
-            file.write(f"{self.spacing}/// {line}\n")
-        file.write(f"{self.spacing}/// </{self.tag}>\n")
+            yield f"{spacing}/// {line}\n"
+        yield f"{spacing}/// </{self.tag}>\n"
 
 class GDExtensionDeprecated:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -113,13 +103,10 @@ class GDExtensionDeprecated:
         self.message: str | None = data.get("message")
         self.replace_with: str | None = data.get("replace_with")
 
-    def dump(self, file: IOBase) -> None:
-        file.write(f"[Obsolete(\"Deprecated since Godot {self.since}.")
-        if self.message:
-            file.write(f" {self.message}")
-        if self.replace_with:
-            file.write(f" Use {self.replace_with} instead.")
-        file.write("\")]\n")
+    def attribute(self) -> str:
+        message: str = f" {self.message}" if self.message else ""
+        replace_with: str = f" Use {self.replace_with} instead." if self.replace_with else ""
+        return f"[Obsolete(\"Deprecated since Godot {self.since}.{message}{replace_with}\")]\n"
 
 class GDExtensionType:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -133,10 +120,10 @@ class GDExtensionType:
         if deprecated:
             self.deprecated = GDExtensionDeprecated(deprecated)
 
-    def expand(self, types: dict[str, GDExtensionType]) -> str:
+    def definition(self, types: dict[str, GDExtensionType]) -> Iterable[str]:
         raise NotImplementedError()
 
-    def dump(self, file: IOBase) -> None:
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
         raise NotImplementedError()
 
 class GDExtensionEnum(GDExtensionType):
@@ -147,31 +134,32 @@ class GDExtensionEnum(GDExtensionType):
             GDExtensionEnumValue(value_data) for value_data in data["values"]
         ]
 
+    def definition(self, types: dict[str, GDExtensionType]) -> Iterable[str]:
+        if self.deprecated or self.is_bitfield:
+            yield "using System;\n"
+            yield "\n"
+        yield "namespace Godot.GDExtension;\n"
+        yield "\n"
+        if self.description:
+            yield from self.description.documentation()
+        if self.deprecated:
+            yield self.deprecated.attribute()
+        if self.is_bitfield:
+            yield "[Flags]\n"
+        yield f"public enum {self.name}\n"
+        yield "{\n"
+        for value in self.values[:-1]:
+            if value.description:
+                yield from value.description.documentation(indent=True)
+            yield f"    {value.name} = {value.value},\n"
+        value: GDExtensionEnumValue = self.values[-1]
+        if value.description:
+            yield from value.description.documentation(indent=True)
+        yield f"    {value.name} = {value.value}\n"
+        yield "}\n"
+
     def expand(self, types: dict[str, GDExtensionType]) -> str:
         return f"Godot.GDExtension.{self.name}"
-
-    def dump(self, file: IOBase) -> None:
-        if self.deprecated or self.is_bitfield:
-            file.write("using System;\n")
-            file.write("\n")
-        file.write("namespace Godot.GDExtension;\n")
-        file.write("\n")
-        if self.description:
-            self.description.dump(file)
-        if self.deprecated:
-            self.deprecated.dump(file)
-        if self.is_bitfield:
-            file.write("[Flags]\n")
-        file.write(f"public enum {self.name}\n")
-        file.write("{\n")
-        file.write(f"    {self.values[0].name} = {self.values[0].value}")
-        for value in self.values[1:]:
-            file.write(",\n")
-            if value.description:
-                value.description.dump(file)
-            file.write(f"    {value.name} = {value.value}")
-        file.write("\n")
-        file.write("}\n")
 
 class GDExtensionEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -180,138 +168,30 @@ class GDExtensionEnumValue:
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = GDExtensionDescription(description, indent=True)
+            self.description = GDExtensionDescription(description)
 
 class GDExtensionHandle(GDExtensionType):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        self.parent: str | None = data.get("parent")
+    def definition(self, types: dict[str, GDExtensionType]) -> Iterable[str]:
+        yield f"global using unsafe {self.name} = void*;\n"
 
     def expand(self, types: dict[str, GDExtensionType]) -> str:
         return "void*"
-
-    def dump(self, file: IOBase) -> None:
-        file.write("using System;\n")
-        file.write("using System.Diagnostics.CodeAnalysis;\n")
-        file.write("using System.Runtime.InteropServices;\n")
-        file.write("\n")
-        file.write("namespace Godot.GDExtension;\n")
-        file.write("\n")
-        if self.description:
-            self.description.dump(file)
-        if self.deprecated:
-            self.deprecated.dump(file)
-        file.write("[StructLayout(LayoutKind.Sequential)]\n")
-        file.write(f"public readonly unsafe struct {self.name} : IEquatable<{self.name}>\n")
-        file.write("{\n")
-        file.write("    private readonly void* _pointer;\n")
-        file.write("\n")
-        file.write(f"    public {self.name}(void* pointer)\n")
-        file.write("    {\n")
-        file.write("        _pointer = pointer;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public void* Pointer => _pointer;\n")
-        file.write("\n")
-        file.write(f"    public bool Equals({self.name} other)\n")
-        file.write("    {\n")
-        file.write("        return _pointer == other._pointer;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public override bool Equals([NotNullWhen(true)] object? obj)\n")
-        file.write("    {\n")
-        file.write(f"        return obj is {self.name} other && _pointer == other._pointer;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public override int GetHashCode()\n")
-        file.write("    {\n")
-        file.write("        return new nint(_pointer).GetHashCode();\n")
-        file.write("    }\n")
-        if self.parent:
-            file.write("\n")
-            file.write(f"    public static implicit operator {self.name}({self.parent} parent)\n")
-            file.write("    {\n")
-            file.write(f"        return new {self.name}(parent.Pointer);\n")
-            file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
-        file.write("    {\n")
-        file.write("        return left._pointer == right._pointer;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
-        file.write("    {\n")
-        file.write("        return left._pointer != right._pointer;\n")
-        file.write("    }\n")
-        file.write("}\n")
 
 class GDExtensionAlias(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
+        if self.name.endswith("Bool"):
+            self.type.name = "bool"
+
+    def definition(self, types: dict[str, GDExtensionType]) -> Iterable[str]:
+        yield f"global using {self.name} = {self.expand(types)};\n"
 
     def expand(self, types: dict[str, GDExtensionType]) -> str:
         instance: GDExtensionType | None = types.get(self.type.name)
         if instance:
             return instance.expand(types)
         return self.type.name
-
-    def dump(self, file: IOBase) -> None:
-        file.write("using System;\n")
-        file.write("using System.Diagnostics.CodeAnalysis;\n")
-        file.write("using System.Runtime.InteropServices;\n")
-        file.write("\n")
-        file.write("namespace Godot.GDExtension;\n")
-        file.write("\n")
-        if self.description:
-            self.description.dump(file)
-        if self.deprecated:
-            self.deprecated.dump(file)
-        file.write("[StructLayout(LayoutKind.Sequential)]\n")
-        file.write(f"public readonly struct {self.name} : IEquatable<{self.name}>\n")
-        file.write("{\n")
-        file.write(f"    private readonly {self.type.name} _value;\n")
-        file.write("\n")
-        if self.name.endswith("Bool"):
-            file.write(f"    public {self.name}(bool value)\n")
-            file.write("    {\n")
-            file.write("        _value = (byte)(value ? 1 : 0);\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write("    public bool Value => _value != 0;\n")
-        else:
-            file.write(f"    public {self.name}({self.type.name} value)\n")
-            file.write("    {\n")
-            file.write("        _value = value;\n")
-            file.write("    }\n")
-            file.write("\n")
-            file.write(f"    public {self.type.name} Value => _value;\n")
-        file.write("\n")
-        file.write(f"    public bool Equals({self.name} other)\n")
-        file.write("    {\n")
-        file.write("        return _value == other._value;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public override bool Equals([NotNullWhen(true)] object? obj)\n")
-        file.write("    {\n")
-        file.write(f"        return obj is {self.name} other && _value == other._value;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public override int GetHashCode()\n")
-        file.write("    {\n")
-        file.write("        return _value.GetHashCode();\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
-        file.write("    {\n")
-        file.write("        return left._value == right._value;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
-        file.write("    {\n")
-        file.write("        return left._value != right._value;\n")
-        file.write("    }\n")
-        file.write("}\n")
 
 class GDExtensionStruct(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -320,33 +200,34 @@ class GDExtensionStruct(GDExtensionType):
             GDExtensionStructMember(member_data) for member_data in data["members"]
         ]
 
-    def expand(self, types: dict[str, GDExtensionType]) -> str:
-        return f"Godot.GDExtension.{self.name}"
-
-    def dump(self, file: IOBase) -> None:
+    def definition(self, types: dict[str, GDExtensionType]) -> Iterable[str]:
         if self.deprecated:
-            file.write("using System;\n")
-        file.write("using System.Runtime.InteropServices;\n")
-        file.write("\n")
-        file.write("namespace Godot.GDExtension;\n")
-        file.write("\n")
+            yield "using System;\n"
+        yield "using System.Runtime.InteropServices;\n"
+        yield "\n"
+        yield "namespace Godot.GDExtension;\n"
+        yield "\n"
         if self.description:
-            self.description.dump(file)
+            yield from self.description.documentation()
         if self.deprecated:
-            self.deprecated.dump(file)
-        file.write("[StructLayout(LayoutKind.Sequential)]\n")
-        file.write(f"public struct {self.name}\n")
-        file.write("{\n")
+            yield self.deprecated.attribute()
+        yield "[StructLayout(LayoutKind.Sequential)]\n"
+        yield f"public struct {self.name}\n"
+        yield "{\n"
         for member in self.members:
             if member.description:
-                member.description.dump(file)
-            file.write("    public ")
-            if member.type.is_readonly:
-                file.write("readonly ")
-            if member.type.is_unsafe:
-                file.write("unsafe ")
-            file.write(f"{member.type.name} {member.name};\n")
-        file.write("}\n")
+                yield from member.description.documentation(indent=True)
+            readonly: str = "readonly " if member.type.is_const else ""
+            unsafe: str = ""
+            if not member.type.is_pointer:
+                instance: GDExtensionType | None = types.get(member.type.name)
+                if isinstance(instance, (GDExtensionHandle, GDExtensionFunction)):
+                    unsafe = "unsafe "
+            yield f"    public {readonly}{unsafe}{member.type.name} {member.name};\n"
+        yield "}\n"
+
+    def expand(self, types: dict[str, GDExtensionType]) -> str:
+        return f"Godot.GDExtension.{self.name}"
 
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -357,51 +238,34 @@ class GDExtensionStructMember:
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = GDExtensionDescription(description, indent=True)
+            self.description = GDExtensionDescription(description)
 
 class GDExtensionFunction(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.entry_point: str | None = None
-        if self.name[0].islower():
-            self.entry_point = self.name
-            self.name = "GDExtensionInterface" + self.name.title().replace("_", "")
         self.arguments: list[GDExtensionFunctionArgument] = []
         self.return_value: GDExtensionFunctionReturnValue | None = None
-        type_parameters: list[str] = []
-        for i, argument_data in enumerate(data["arguments"]):
-            if not argument_data.get("name"):
-                argument_data = argument_data.copy()
-                argument_data["name"] = f"p_{i}"
-            argument: GDExtensionFunctionArgument = GDExtensionFunctionArgument(argument_data)
-            type_parameters.append(argument.type.name)
-            self.arguments.append(argument)
-        return_value_data: dict[str, Any] | None = data.get("return_value")
-        argument_iterable: Iterable[str] = (argument.type.name for argument in self.arguments)
-        return_iterable: Iterable[str]
-        if return_value_data:
-            return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value_data)
-            return_iterable = (return_value.type.name,)
-            self.return_value = return_value
-        else:
-            return_iterable = ("void",)
-        type_parameters: chain[str] = chain(argument_iterable, return_iterable)
-        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-        self.parameter_list: str = ", ".join(f"{argument.type.name} {argument.name}" for argument in self.arguments)
-        self.argument_list: str = ", ".join(argument.name for argument in self.arguments)
+        for argument in data["arguments"]:
+            self.arguments.append(GDExtensionFunctionArgument(argument))
+        return_value: dict[str, Any] | None = data.get("return_value")
+        if return_value:
+            self.return_value = GDExtensionFunctionReturnValue(return_value)
+
+    def definition(self, types: dict[str, GDExtensionType]) -> Iterable[str]:
+        yield f"global using unsafe {self.name} = {self.expand(types)};\n"
 
     def expand(self, types: dict[str, GDExtensionType]) -> str:
         type_parameters: list[str] = []
         for argument in self.arguments:
             name: str = argument.type.name
-            split: int = len(name) - argument.type.is_unsafe
+            split: int = len(name) - argument.type.is_pointer
             target: GDExtensionType | None = types.get(name[:split])
             if target:
                 name = target.expand(types) + name[split:]
             type_parameters.append(name)
         if self.return_value:
             name: str = self.return_value.type.name
-            split: int = len(name) - self.return_value.type.is_unsafe
+            split: int = len(name) - self.return_value.type.is_pointer
             target: GDExtensionType | None = types.get(name[:split])
             if target:
                 name = target.expand(types) + name[split:]
@@ -410,87 +274,14 @@ class GDExtensionFunction(GDExtensionType):
             type_parameters.append("void")
         return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
-    def dump(self, file: IOBase) -> None:
-        file.write("using System;\n")
-        file.write("using System.Diagnostics.CodeAnalysis;\n")
-        file.write("using System.Runtime.CompilerServices;\n")
-        file.write("using System.Runtime.InteropServices;\n")
-        file.write("\n")
-        file.write("namespace Godot.GDExtension;\n")
-        file.write("\n")
-        if self.description:
-            self.description.dump(file)
-        if self.deprecated:
-            self.deprecated.dump(file)
-        file.write("[StructLayout(LayoutKind.Sequential)]\n")
-        file.write(f"public readonly unsafe struct {self.name} : IEquatable<{self.name}>\n")
-        file.write("{\n")
-        file.write(f"    private readonly {self.type} _method;\n")
-        file.write("\n")
-        file.write(f"    public {self.name}({self.type} method)\n")
-        file.write("    {\n")
-        file.write("        _method = method;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public {self.type} Method => _method;\n")
-        file.write("\n")
-        for argument in self.arguments:
-            if argument.description:
-                argument.description.dump(file)
-        if self.return_value and self.return_value.description:
-            self.return_value.description.dump(file)
-        file.write("    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n")
-        if self.return_value:
-            file.write(f"    public {self.return_value.type.name} Invoke({self.parameter_list})\n")
-            file.write("    {\n")
-            file.write(f"        return _method({self.argument_list});\n")
-            file.write("    }\n")
-        else:
-            file.write(f"    public void Invoke({self.parameter_list})\n")
-            file.write("    {\n")
-            file.write(f"        _method({self.argument_list});\n")
-            file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public bool Equals({self.name} other)\n")
-        file.write("    {\n")
-        file.write("        return _method == other._method;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public override bool Equals([NotNullWhen(true)] object? obj)\n")
-        file.write("    {\n")
-        file.write(f"        return obj is {self.name} other && _method == other._method;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write("    public override int GetHashCode()\n")
-        file.write("    {\n")
-        file.write("        return new nint(_method).GetHashCode();\n")
-        file.write("    }\n")
-        if self.entry_point:
-            file.write("\n")
-            file.write(f"    public static explicit operator {self.name}(GDExtensionInterfaceFunctionPtr function)\n")
-            file.write("    {\n")
-            file.write(f"        return new {self.name}(({self.type})function.Method);\n")
-            file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public static bool operator ==({self.name} left, {self.name} right)\n")
-        file.write("    {\n")
-        file.write("        return left._method == right._method;\n")
-        file.write("    }\n")
-        file.write("\n")
-        file.write(f"    public static bool operator !=({self.name} left, {self.name} right)\n")
-        file.write("    {\n")
-        file.write("        return left._method != right._method;\n")
-        file.write("    }\n")
-        file.write("}\n")
-
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"]
+        self.name: str = data.get("name") or ""
         self.type: GDExtensionSymbol = GDExtensionSymbol(data["type"])
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = GDExtensionDescription(description, tag="param", metadata=f"name=\"{self.name}\"", indent=True)
+            self.description = GDExtensionDescription(description, tag="param", metadata=f"name=\"{self.name}\"")
 
 class GDExtensionFunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -498,4 +289,4 @@ class GDExtensionFunctionReturnValue:
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = GDExtensionDescription(description, tag="returns", indent=True)
+            self.description = GDExtensionDescription(description, tag="returns")

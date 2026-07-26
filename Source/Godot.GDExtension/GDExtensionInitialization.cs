@@ -43,10 +43,10 @@ public struct GDExtensionInitialization
     /// <summary>
     /// Up to the user to supply when initializing
     /// </summary>
-    public unsafe void* userdata;
+    public void* userdata;
     /// <summary>
     /// This function will be called multiple times for each initialization level.
     /// </summary>
-    public GDExtensionInitializeCallback initialize;
-    public GDExtensionDeinitializeCallback deinitialize;
+    public unsafe GDExtensionInitializeCallback initialize;
+    public unsafe GDExtensionDeinitializeCallback deinitialize;
 }

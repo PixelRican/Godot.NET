@@ -35,7 +35,7 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionMethodInfo
 {
-    public GDExtensionStringNamePtr name;
+    public unsafe GDExtensionStringNamePtr name;
     public GDExtensionPropertyInfo return_value;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
@@ -46,10 +46,10 @@ public struct GDExtensionMethodInfo
     /// Arguments: `default_arguments` is an array of size `argument_count`.
     /// </summary>
     public uint argument_count;
-    public unsafe GDExtensionPropertyInfo* arguments;
+    public GDExtensionPropertyInfo* arguments;
     /// <summary>
     /// Default arguments: `default_arguments` is an array of size `default_argument_count`.
     /// </summary>
     public uint default_argument_count;
-    public unsafe GDExtensionVariantPtr* default_arguments;
+    public GDExtensionVariantPtr* default_arguments;
 }

@@ -45,15 +45,15 @@ public struct GDExtensionGodotVersion2
     /// <summary>
     /// (e.g. "stable", "beta", "rc1", "rc2")
     /// </summary>
-    public readonly unsafe byte* status;
+    public readonly byte* status;
     /// <summary>
     /// (e.g. "custom_build")
     /// </summary>
-    public readonly unsafe byte* build;
+    public readonly byte* build;
     /// <summary>
     /// Full Git commit hash.
     /// </summary>
-    public readonly unsafe byte* hash;
+    public readonly byte* hash;
     /// <summary>
     /// Git commit date UNIX timestamp in seconds, or 0 if unavailable.
     /// </summary>
@@ -61,5 +61,5 @@ public struct GDExtensionGodotVersion2
     /// <summary>
     /// (e.g. "Godot v3.1.4.stable.official.mono")
     /// </summary>
-    public readonly unsafe byte* @string;
+    public readonly byte* @string;
 }

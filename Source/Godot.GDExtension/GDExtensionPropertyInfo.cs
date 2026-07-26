@@ -36,13 +36,13 @@ namespace Godot.GDExtension;
 public struct GDExtensionPropertyInfo
 {
     public GDExtensionVariantType type;
-    public GDExtensionStringNamePtr name;
-    public GDExtensionStringNamePtr class_name;
+    public unsafe GDExtensionStringNamePtr name;
+    public unsafe GDExtensionStringNamePtr class_name;
     /// <summary>
     /// Bitfield of `PropertyHint` (defined in `extension_api.json`).
     /// </summary>
     public uint hint;
-    public GDExtensionStringPtr hint_string;
+    public unsafe GDExtensionStringPtr hint_string;
     /// <summary>
     /// Bitfield of `PropertyUsageFlags` (defined in `extension_api.json`).
     /// </summary>

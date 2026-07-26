@@ -35,7 +35,7 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassVirtualMethodInfo
 {
-    public GDExtensionStringNamePtr name;
+    public unsafe GDExtensionStringNamePtr name;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
@@ -43,6 +43,6 @@ public struct GDExtensionClassVirtualMethodInfo
     public GDExtensionPropertyInfo return_value;
     public GDExtensionClassMethodArgumentMetadata return_value_metadata;
     public uint argument_count;
-    public unsafe GDExtensionPropertyInfo* arguments;
-    public unsafe GDExtensionClassMethodArgumentMetadata* arguments_metadata;
+    public GDExtensionPropertyInfo* arguments;
+    public GDExtensionClassMethodArgumentMetadata* arguments_metadata;
 }

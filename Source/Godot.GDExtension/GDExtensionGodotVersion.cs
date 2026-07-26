@@ -40,5 +40,5 @@ public struct GDExtensionGodotVersion
     public uint major;
     public uint minor;
     public uint patch;
-    public readonly unsafe byte* @string;
+    public readonly byte* @string;
 }

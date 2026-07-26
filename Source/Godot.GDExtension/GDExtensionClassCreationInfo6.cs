@@ -39,31 +39,31 @@ public struct GDExtensionClassCreationInfo6
     public GDExtensionBool is_abstract;
     public GDExtensionBool is_exposed;
     public GDExtensionBool is_runtime;
-    public GDExtensionConstStringPtr icon_path;
-    public GDExtensionClassSet set_func;
-    public GDExtensionClassGet get_func;
-    public GDExtensionClassGetPropertyList get_property_list_func;
-    public GDExtensionClassFreePropertyList2 free_property_list_func;
-    public GDExtensionClassPropertyCanRevert property_can_revert_func;
-    public GDExtensionClassPropertyGetRevert property_get_revert_func;
-    public GDExtensionClassValidateProperty validate_property_func;
-    public GDExtensionClassNotification2 notification_func;
-    public GDExtensionClassToString to_string_func;
-    public GDExtensionClassReference reference_func;
-    public GDExtensionClassUnreference unreference_func;
+    public unsafe GDExtensionConstStringPtr icon_path;
+    public unsafe GDExtensionClassSet set_func;
+    public unsafe GDExtensionClassGet get_func;
+    public unsafe GDExtensionClassGetPropertyList get_property_list_func;
+    public unsafe GDExtensionClassFreePropertyList2 free_property_list_func;
+    public unsafe GDExtensionClassPropertyCanRevert property_can_revert_func;
+    public unsafe GDExtensionClassPropertyGetRevert property_get_revert_func;
+    public unsafe GDExtensionClassValidateProperty validate_property_func;
+    public unsafe GDExtensionClassNotification2 notification_func;
+    public unsafe GDExtensionClassToString to_string_func;
+    public unsafe GDExtensionClassReference reference_func;
+    public unsafe GDExtensionClassUnreference unreference_func;
     /// <summary>
     /// Class constructor. Required unless the class is virtual or abstract.
     /// </summary>
-    public GDExtensionClassCreateInstance3 create_instance_func;
+    public unsafe GDExtensionClassCreateInstance3 create_instance_func;
     /// <summary>
     /// Destructor; mandatory.
     /// </summary>
-    public GDExtensionClassFreeInstance free_instance_func;
-    public GDExtensionClassRecreateInstance recreate_instance_func;
+    public unsafe GDExtensionClassFreeInstance free_instance_func;
+    public unsafe GDExtensionClassRecreateInstance recreate_instance_func;
     /// <summary>
     /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
     /// </summary>
-    public GDExtensionClassGetVirtual2 get_virtual_func;
+    public unsafe GDExtensionClassGetVirtual2 get_virtual_func;
     /// <summary>
     /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that
     /// need or benefit from extra data when calling virtual functions.
@@ -72,13 +72,13 @@ public struct GDExtensionClassCreationInfo6
     /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.
     /// You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`.
     /// </summary>
-    public GDExtensionClassGetVirtualCallData2 get_virtual_call_data_func;
+    public unsafe GDExtensionClassGetVirtualCallData2 get_virtual_call_data_func;
     /// <summary>
     /// Used to call virtual functions when `get_virtual_call_data_func` is not null.
     /// </summary>
-    public GDExtensionClassCallVirtualWithData call_virtual_with_data_func;
+    public unsafe GDExtensionClassCallVirtualWithData call_virtual_with_data_func;
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.
     /// </summary>
-    public unsafe void* class_userdata;
+    public void* class_userdata;
 }
