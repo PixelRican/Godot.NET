@@ -27,20 +27,28 @@ class GDExtensionInterface:
     def definition(self) -> Iterable[str]:
         yield "using System;\n"
         yield "using System.Runtime.CompilerServices;\n"
-        yield "using System.Runtime.InteropServices;\n"
         yield "\n"
         yield "namespace Godot.GDExtension;\n"
         yield "\n"
-        yield "public sealed unsafe class GDExtensionInterface\n"
+        yield "public static unsafe class GDExtensionInterface\n"
         yield "{\n"
         for function in self.interface.values():
-            yield f"    private readonly {function.type} _{function.name};\n"
+            yield f"    private static {function.type} s_{function.name};\n"
         yield "\n"
-        yield "    public GDExtensionInterface(GDExtensionInterfaceGetProcAddress getProcAddress)\n"
+        yield "    /// <summary>\n"
+        yield "    /// Loads the GDExtensionInterface functions from the specified address loader.\n"
+        yield "    /// </summary>\n"
+        yield "    /// <param name=\"getProcAddress\">\n"
+        yield "    /// The address loader provided by the Godot Engine.\n"
+        yield "    /// </param>\n"
+        yield "    /// <exception cref=\"ArgumentNullException\">\n"
+        yield "    /// <paramref name=\"getProcAddress\"/> is <see langword=\"null\"/>.\n"
+        yield "    /// </exception>\n"
+        yield "    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n"
         yield "    {\n"
-        yield "        ArgumentNullException.ThrowIfNull(getProcAddress, nameof(getProcAddress));\n"
+        yield "        ArgumentNullException.ThrowIfNull(getProcAddress);\n"
         for function in self.interface.values():
-            yield f"        _{function.name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
+            yield f"        s_{function.name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
         yield "    }\n"
         for function in self.interface.values():
             parameters: str = ", ".join(f"{argument.type} {argument.name}" for argument in function.arguments)
@@ -57,14 +65,14 @@ class GDExtensionInterface:
                 yield function.deprecated.attribute(indent=True)
             yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
             if function.return_value:
-                yield f"    public {function.return_value.type} {function.name}({parameters})\n"
+                yield f"    public static {function.return_value.type} {function.name}({parameters})\n"
                 yield "    {\n"
-                yield f"        return _{function.name}({arguments});\n"
+                yield f"        return s_{function.name}({arguments});\n"
                 yield "    }\n"
             else:
-                yield f"    public void {function.name}({parameters})\n"
+                yield f"    public static void {function.name}({parameters})\n"
                 yield "    {\n"
-                yield f"        _{function.name}({arguments});\n"
+                yield f"        s_{function.name}({arguments});\n"
                 yield "    }\n"
         yield "\n"
         yield "    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)\n"
