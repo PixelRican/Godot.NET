@@ -46,10 +46,10 @@ public struct GDExtensionMethodInfo
     /// Arguments: `default_arguments` is an array of size `argument_count`.
     /// </summary>
     public uint argument_count;
-    public GDExtensionPropertyInfo* arguments;
+    public unsafe GDExtensionPropertyInfo* arguments;
     /// <summary>
     /// Default arguments: `default_arguments` is an array of size `default_argument_count`.
     /// </summary>
     public uint default_argument_count;
-    public GDExtensionVariantPtr* default_arguments;
+    public unsafe GDExtensionVariantPtr* default_arguments;
 }

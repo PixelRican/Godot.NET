@@ -52,8 +52,8 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionCallableCustomInfo
 {
-    public void* callable_userdata;
-    public void* token;
+    public unsafe void* callable_userdata;
+    public unsafe void* token;
     public GDObjectInstanceID object_id;
     public unsafe GDExtensionCallableCustomCall call_func;
     public unsafe GDExtensionCallableCustomIsValid is_valid_func;

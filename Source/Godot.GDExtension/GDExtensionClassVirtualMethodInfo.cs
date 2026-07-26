@@ -43,6 +43,6 @@ public struct GDExtensionClassVirtualMethodInfo
     public GDExtensionPropertyInfo return_value;
     public GDExtensionClassMethodArgumentMetadata return_value_metadata;
     public uint argument_count;
-    public GDExtensionPropertyInfo* arguments;
-    public GDExtensionClassMethodArgumentMetadata* arguments_metadata;
+    public unsafe GDExtensionPropertyInfo* arguments;
+    public unsafe GDExtensionClassMethodArgumentMetadata* arguments_metadata;
 }

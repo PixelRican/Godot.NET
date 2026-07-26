@@ -36,7 +36,7 @@ namespace Godot.GDExtension;
 public struct GDExtensionClassMethodInfo
 {
     public unsafe GDExtensionStringNamePtr name;
-    public void* method_userdata;
+    public unsafe void* method_userdata;
     public unsafe GDExtensionClassMethodCall call_func;
     public unsafe GDExtensionClassMethodPtrCall ptrcall_func;
     /// <summary>
@@ -49,7 +49,7 @@ public struct GDExtensionClassMethodInfo
     /// @todo Consider dropping `has_return_value` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
     /// </summary>
     public GDExtensionBool has_return_value;
-    public GDExtensionPropertyInfo* return_value_info;
+    public unsafe GDExtensionPropertyInfo* return_value_info;
     public GDExtensionClassMethodArgumentMetadata return_value_metadata;
     /// <summary>
     /// Arguments: `arguments_info` and `arguments_metadata` are array of size `argument_count`.
@@ -58,11 +58,11 @@ public struct GDExtensionClassMethodInfo
     /// @todo Consider renaming `arguments_info` to `arguments` for consistency in future version of this struct.
     /// </summary>
     public uint argument_count;
-    public GDExtensionPropertyInfo* arguments_info;
-    public GDExtensionClassMethodArgumentMetadata* arguments_metadata;
+    public unsafe GDExtensionPropertyInfo* arguments_info;
+    public unsafe GDExtensionClassMethodArgumentMetadata* arguments_metadata;
     /// <summary>
     /// Default arguments: `default_arguments` is an array of size `default_argument_count`.
     /// </summary>
     public uint default_argument_count;
-    public GDExtensionVariantPtr* default_arguments;
+    public unsafe GDExtensionVariantPtr* default_arguments;
 }
