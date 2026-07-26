@@ -4,7 +4,7 @@ from typing import Any
 
 class InteropServices:
     def __init__(self, gdextension: GDExtensionInterface, godot: GodotBindings) -> None:
-        self.copyright: str = gdextension.copyright
+        self.copyright: list[str] = gdextension.copyright
         self.types: dict[str, Any] = {
             "GDExtensionInterface" : GDExtensionLoader(gdextension)
         }
@@ -23,7 +23,9 @@ class GDExtensionLoader:
         with open(f"../Source/Godot.InteropServices/GDExtensionInterface.cs", "w") as file:
             file.write("/**************************************************************************/\n")
             file.write("/*  GDExtensionInterface.cs                                               */\n")
-            file.write(copyright_text)
+            for line in copyright_text:
+                file.write(f"{line}\n")
+            file.write("\n")
             file.write("using System;\n")
             file.write("using Godot.GDExtension;\n")
             file.write("\n")

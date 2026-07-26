@@ -5,7 +5,7 @@ from typing import Any, Iterable
 
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.copyright: str = "\n".join(data["_copyright"]) + "\n\n"
+        self.copyright: list[str] = data["_copyright"]
         self.types: dict[str, GDExtensionType] = {}
         self.interface: dict[str, GDExtensionFunction] = {}
         for type_data in data["types"]:
@@ -40,7 +40,8 @@ class GDExtensionInterface:
             with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
                 file.write("/**************************************************************************/\n")
                 file.write(f"/*  {instance.name}.cs  {" " * (65 - len(instance.name))}*/\n")
-                file.write(self.copyright)
+                for line in self.copyright:
+                    file.write(f"{line}\n")
                 instance.dump(file)
 
 class GDExtensionSymbol:
