@@ -172,14 +172,14 @@ class GDExtensionSymbolTable:
             or isinstance(self.types.get(symbol), (GDExtensionHandle, GDExtensionFunction))
 
 class GDExtensionDescription:
-    def __init__(self, lines: list[str], tag: str = "summary", metadata: str = "") -> None:
+    def __init__(self, lines: list[str], tag: str = "summary", name: str = "") -> None:
         self.lines: list[str] = lines
         self.tag: str = tag
-        self.metadata: str = metadata
+        self.name: str = name
 
     def documentation(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> Iterable[str]:
         spacing: str = "    " if indent else ""
-        metadata: str = symbols.transform(f" {self.metadata}") if self.metadata else ""
+        metadata: str = symbols.transform(f" name=\"{self.name}\"") if self.name else ""
         yield f"{spacing}/// <{self.tag}{metadata}>\n"
         for line in self.lines[:-1]:
             yield f"{spacing}/// {symbols.transform(line)}<br/>\n"
@@ -391,7 +391,7 @@ class GDExtensionFunctionArgument:
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
-            self.description = GDExtensionDescription(description, tag="param", metadata=f"name=\"{self.name}\"")
+            self.description = GDExtensionDescription(description, tag="param", name=self.name)
 
 class GDExtensionFunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
