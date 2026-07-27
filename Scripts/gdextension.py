@@ -154,7 +154,7 @@ class GDExtensionDescription:
 
     def documentation(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> Iterable[str]:
         spacing: str = "    " if indent else ""
-        metadata: str = symbols.transform(f" name=\"{self.name}\"") if self.name else ""
+        metadata: str = f" name=\"{symbols.transform(self.name)}\"" if self.name else ""
         yield f"{spacing}/// <{self.tag}{metadata}>\n"
         for line in self.lines[:-1]:
             yield f"{spacing}/// {symbols.transform(line)}<br/>\n"
