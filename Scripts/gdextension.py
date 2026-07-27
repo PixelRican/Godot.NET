@@ -40,7 +40,7 @@ class GDExtensionInterface:
         yield "public static unsafe class GDExtensionInterface\n"
         yield "{\n"
         for function in self.interface:
-            yield f"    private static {function.type} s_{camel(function.name)};\n"
+            yield f"    private static {function.type} {function.field};\n"
         yield "\n"
         yield "    /// <summary>\n"
         yield "    /// Loads the GDExtensionInterface functions from the specified address loader.\n"
@@ -55,7 +55,7 @@ class GDExtensionInterface:
         yield "    {\n"
         yield "        ArgumentNullException.ThrowIfNull(getProcAddress);\n"
         for function in self.interface:
-            yield f"        s_{camel(function.name)} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
+            yield f"        {function.field} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
         yield "    }\n"
         for function in self.interface:
             yield "\n"
@@ -311,11 +311,8 @@ class GDExtensionStruct(GDExtensionType):
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         for member in self.members:
-            replacement: str = pascal(member.name) \
-                .replace("Ptrcall", "PtrCall") \
-                .replace("Refcount", "RefCount") \
-                .replace("Userdata", "UserData")
-            symbols.substitute(member.name, replacement)
+            replacement: str = preprocess(member.name)
+            symbols.substitute(member.name, pascal(replacement))
 
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -380,6 +377,8 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         else:
             type_parameters.append("void")
         self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+        self.field: str = preprocess(self.name)
+        self.field = f"s_{camel(self.field)}"
 
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         parameters: str = ", ".join(f"{argument.type} {symbols.transform(argument.name)}" for argument in self.arguments)
@@ -397,21 +396,23 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         if self.return_value:
             yield f"    public static {self.return_value.type} {symbols.transform(self.name)}({parameters})\n"
             yield "    {\n"
-            yield f"        {self.type} function = s_{camel(self.name)};\n"
+            yield f"        {self.type} function = {self.field};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        return function({arguments});\n"
             yield "    }\n"
         else:
             yield f"    public static void {symbols.transform(self.name)}({parameters})\n"
             yield "    {\n"
-            yield f"        {self.type} function = s_{camel(self.name)};\n"
+            yield f"        {self.type} function = {self.field};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        function({arguments});\n"
             yield "    }\n"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
-        symbols.substitute(self.name, pascal(self.name).replace("db", "DB"))
+        replacement: str = preprocess(self.name)
+        symbols.substitute(self.name, pascal(replacement))
         for argument in self.arguments:
+            replacement: str = preprocess(argument.name)
             symbols.substitute(argument.name, camel(argument.name))
 
 def camel(symbol: str) -> str:
@@ -419,6 +420,12 @@ def camel(symbol: str) -> str:
 
 def pascal(symbol: str) -> str:
     return symbol.title().replace("_", "")
+
+def preprocess(symbol: str) -> str:
+    return symbol.replace("ptrcall", "ptr_call") \
+        .replace("refcount", "ref_count") \
+        .replace("userdata", "user_data") \
+        .replace("classdb", "class_d_b")
 
 def translate(symbol: str) -> str:
     name: str = symbol.removeprefix("const ").removesuffix("*")
