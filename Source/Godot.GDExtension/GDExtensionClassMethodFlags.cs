@@ -33,7 +33,7 @@ using System;
 namespace Godot.GDExtension;
 
 [Flags]
-public enum GDExtensionClassMethodFlags
+public enum GDExtensionClassMethodFlags : uint
 {
     Normal = 1,
     Editor = 2,

@@ -214,7 +214,9 @@ class GDExtensionEnum(GDExtensionType):
             yield self.deprecated.attribute(symbols)
         if self.is_bitfield:
             yield "[Flags]\n"
-        yield f"public enum {self.name}\n"
+            yield f"public enum {self.name} : uint\n"
+        else:
+            yield f"public enum {self.name}\n"
         yield "{\n"
         for value in self.values[:-1]:
             if value.description:
