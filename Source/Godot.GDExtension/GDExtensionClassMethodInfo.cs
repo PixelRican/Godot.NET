@@ -36,7 +36,7 @@ namespace Godot.GDExtension;
 public struct GDExtensionClassMethodInfo
 {
     public unsafe GDExtensionStringNamePtr Name;
-    public unsafe void* MethodUserdata;
+    public unsafe void* MethodUserData;
     public unsafe GDExtensionClassMethodCall CallFunc;
     public unsafe GDExtensionClassMethodPtrCall PtrCallFunc;
     /// <summary>

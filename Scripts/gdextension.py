@@ -309,7 +309,9 @@ class GDExtensionStruct(GDExtensionType):
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         for member in self.members:
-            symbols.substitute(member.name, pascal(member.name).replace("Ptrcall", "PtrCall"))
+            replacement: str = pascal(member.name).replace("Ptrcall", "PtrCall") \
+                                                  .replace("Userdata", "UserData")
+            symbols.substitute(member.name, replacement)
 
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:

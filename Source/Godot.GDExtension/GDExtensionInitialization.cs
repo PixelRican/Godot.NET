@@ -43,7 +43,7 @@ public struct GDExtensionInitialization
     /// <summary>
     /// Up to the user to supply when initializing
     /// </summary>
-    public unsafe void* Userdata;
+    public unsafe void* UserData;
     /// <summary>
     /// This function will be called multiple times for each initialization level.
     /// </summary>

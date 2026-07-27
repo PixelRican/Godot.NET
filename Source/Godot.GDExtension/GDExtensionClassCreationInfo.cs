@@ -65,5 +65,5 @@ public struct GDExtensionClassCreationInfo
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.
     /// </summary>
-    public unsafe void* ClassUserdata;
+    public unsafe void* ClassUserData;
 }

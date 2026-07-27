@@ -39,18 +39,18 @@ namespace Godot.GDExtension;
 /// `GDExtensionClassLibraryPtr` passed to the entry symbol function.<br/>
 /// <br/>
 /// `HashFunc`, `EqualFunc`, and `LessThanFunc` are optional. If not provided both `CallFunc` and<br/>
-/// `CallableUserdata` together are used as the identity of the callable for hashing and comparison purposes.<br/>
+/// `CallableUserData` together are used as the identity of the callable for hashing and comparison purposes.<br/>
 /// <br/>
 /// The hash returned by `HashFunc` is cached, `HashFunc` will not be called more than once per callable.<br/>
 /// <br/>
 /// `IsValidFunc` is necessary if the validity of the callable can change before destruction.<br/>
 /// <br/>
-/// `FreeFunc` is necessary if `CallableUserdata` needs to be cleaned up when the callable is freed.
+/// `FreeFunc` is necessary if `CallableUserData` needs to be cleaned up when the callable is freed.
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionCallableCustomInfo2
 {
-    public unsafe void* CallableUserdata;
+    public unsafe void* CallableUserData;
     public unsafe void* Token;
     public GDObjectInstanceID ObjectId;
     public unsafe GDExtensionCallableCustomCall CallFunc;
