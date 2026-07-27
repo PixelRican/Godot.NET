@@ -56,8 +56,8 @@ public struct GDExtensionScriptInstanceInfo3
     public unsafe GDExtensionScriptInstanceCall CallFunc;
     public unsafe GDExtensionScriptInstanceNotification2 NotificationFunc;
     public unsafe GDExtensionScriptInstanceToString ToStringFunc;
-    public unsafe GDExtensionScriptInstanceRefCountIncremented RefcountIncrementedFunc;
-    public unsafe GDExtensionScriptInstanceRefCountDecremented RefcountDecrementedFunc;
+    public unsafe GDExtensionScriptInstanceRefCountIncremented RefCountIncrementedFunc;
+    public unsafe GDExtensionScriptInstanceRefCountDecremented RefCountDecrementedFunc;
     public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
     public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
     public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
