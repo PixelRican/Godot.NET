@@ -386,7 +386,7 @@ class GDExtensionFunction(GDExtensionType):
 
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data.get("name") or ""
+        self.name: str = data.get("name", "")
         self.type: str = translate(data["type"])
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
