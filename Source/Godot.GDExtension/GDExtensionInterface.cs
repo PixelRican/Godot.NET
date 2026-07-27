@@ -2414,7 +2414,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pFunc">
     /// A pointer to a function to run in the thread pool.
     /// </param>
-    /// <param name="pUserdata">
+    /// <param name="pUserData">
     /// A pointer to arbitrary data which will be passed to p_func.
     /// </param>
     /// <param name="pElements">
@@ -2433,11 +2433,11 @@ public static unsafe class GDExtensionInterface
     /// The task group ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long WorkerThreadPoolAddNativeGroupTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserdata, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
+    public static long WorkerThreadPoolAddNativeGroupTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserData, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
         delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long> function = s_workerThreadPoolAddNativeGroupTask;
         ThrowIfInvalid(function);
-        return function(pInstance, pFunc, pUserdata, pElements, pTasks, pHighPriority, pDescription);
+        return function(pInstance, pFunc, pUserData, pElements, pTasks, pHighPriority, pDescription);
     }
 
     /// <summary>
@@ -2449,7 +2449,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pFunc">
     /// A pointer to a function to run in the thread pool.
     /// </param>
-    /// <param name="pUserdata">
+    /// <param name="pUserData">
     /// A pointer to arbitrary data which will be passed to p_func.
     /// </param>
     /// <param name="pHighPriority">
@@ -2462,11 +2462,11 @@ public static unsafe class GDExtensionInterface
     /// The task ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long WorkerThreadPoolAddNativeTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserdata, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
+    public static long WorkerThreadPoolAddNativeTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserData, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
         delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> function = s_workerThreadPoolAddNativeTask;
         ThrowIfInvalid(function);
-        return function(pInstance, pFunc, pUserdata, pHighPriority, pDescription);
+        return function(pInstance, pFunc, pUserData, pHighPriority, pDescription);
     }
 
     /// <summary>
@@ -3170,23 +3170,23 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Sets an extension class instance on a Object.<br/>
-    /// `pClassname` should be a registered extension class and should extend the `pO` Object's class.
+    /// `pClassName` should be a registered extension class and should extend the `pO` Object's class.
     /// </summary>
     /// <param name="pO">
     /// A pointer to the Object.
     /// </param>
-    /// <param name="pClassname">
+    /// <param name="pClassName">
     /// A pointer to a StringName with the registered extension class's name.
     /// </param>
     /// <param name="pInstance">
     /// A pointer to the extension class instance.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectSetInstance(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassname, GDExtensionClassInstancePtr pInstance)
+    public static void ObjectSetInstance(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassName, GDExtensionClassInstancePtr pInstance)
     {
         delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> function = s_objectSetInstance;
         ThrowIfInvalid(function);
-        function(pO, pClassname, pInstance);
+        function(pO, pClassName, pInstance);
     }
 
     /// <summary>
@@ -3559,7 +3559,7 @@ public static unsafe class GDExtensionInterface
     /// Constructs an Object of the requested class.<br/>
     /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
     /// </summary>
-    /// <param name="pClassname">
+    /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
     /// <returns>
@@ -3567,11 +3567,11 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.4. Use ClassDBConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ClassDBConstructObject(GDExtensionConstStringNamePtr pClassname)
+    public static GDExtensionObjectPtr ClassDBConstructObject(GDExtensionConstStringNamePtr pClassName)
     {
         delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_classDBConstructObject;
         ThrowIfInvalid(function);
-        return function(pClassname);
+        return function(pClassName);
     }
 
     /// <summary>
@@ -3580,7 +3580,7 @@ public static unsafe class GDExtensionInterface
     /// <br/>
     /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
     /// </summary>
-    /// <param name="pClassname">
+    /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
     /// <returns>
@@ -3588,11 +3588,11 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use ClassDBConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ClassDBConstructObject2(GDExtensionConstStringNamePtr pClassname)
+    public static GDExtensionObjectPtr ClassDBConstructObject2(GDExtensionConstStringNamePtr pClassName)
     {
         delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_classDBConstructObject2;
         ThrowIfInvalid(function);
-        return function(pClassname);
+        return function(pClassName);
     }
 
     /// <summary>
@@ -3602,27 +3602,27 @@ public static unsafe class GDExtensionInterface
     /// <br/>
     /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
     /// </summary>
-    /// <param name="pClassname">
+    /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ClassDBConstructObject3(GDExtensionConstStringNamePtr pClassname)
+    public static GDExtensionObjectPtr ClassDBConstructObject3(GDExtensionConstStringNamePtr pClassName)
     {
         delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_classDBConstructObject3;
         ThrowIfInvalid(function);
-        return function(pClassname);
+        return function(pClassName);
     }
 
     /// <summary>
     /// Gets a pointer to the MethodBind in ClassDB for the given class, method and hash.
     /// </summary>
-    /// <param name="pClassname">
+    /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
-    /// <param name="pMethodname">
+    /// <param name="pMethodName">
     /// A pointer to a StringName with the method name.
     /// </param>
     /// <param name="pHash">
@@ -3632,17 +3632,17 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the MethodBind from ClassDB.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionMethodBindPtr ClassDBGetMethodBind(GDExtensionConstStringNamePtr pClassname, GDExtensionConstStringNamePtr pMethodname, GDExtensionInt pHash)
+    public static GDExtensionMethodBindPtr ClassDBGetMethodBind(GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pMethodName, GDExtensionInt pHash)
     {
         delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> function = s_classDBGetMethodBind;
         ThrowIfInvalid(function);
-        return function(pClassname, pMethodname, pHash);
+        return function(pClassName, pMethodName, pHash);
     }
 
     /// <summary>
     /// Gets a pointer uniquely identifying the given built-in class in the ClassDB.
     /// </summary>
-    /// <param name="pClassname">
+    /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
     /// <returns>
@@ -3650,11 +3650,11 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. No longer needed. Use the `is_class` method on `Object` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* ClassDBGetClassTag(GDExtensionConstStringNamePtr pClassname)
+    public static void* ClassDBGetClassTag(GDExtensionConstStringNamePtr pClassName)
     {
         delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> function = s_classDBGetClassTag;
         ThrowIfInvalid(function);
-        return function(pClassname);
+        return function(pClassName);
     }
 
     /// <summary>

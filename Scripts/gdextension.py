@@ -413,7 +413,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         symbols.substitute(self.name, pascal(replacement))
         for argument in self.arguments:
             replacement: str = preprocess(argument.name)
-            symbols.substitute(argument.name, camel(argument.name))
+            symbols.substitute(argument.name, camel(replacement))
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
@@ -425,7 +425,9 @@ def preprocess(symbol: str) -> str:
     return symbol.replace("ptrcall", "ptr_call") \
         .replace("refcount", "ref_count") \
         .replace("userdata", "user_data") \
-        .replace("classdb", "class_d_b")
+        .replace("classdb", "class_d_b") \
+        .replace("classname", "class_name") \
+        .replace("methodname", "method_name")
 
 def translate(symbol: str) -> str:
     name: str = symbol.removeprefix("const ").removesuffix("*")
