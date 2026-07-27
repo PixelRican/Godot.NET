@@ -322,6 +322,8 @@ class GDExtensionStructMember:
         self.name: str = data["name"]
         self.type: str = translate(data["type"])
         self.description: GDExtensionDescription | None = None
+        if self.name == "method_flags":
+            self.type = "GDExtensionClassMethodFlags"
         description: list[str] | None = data.get("description")
         if description:
             self.description = GDExtensionDescription(description)

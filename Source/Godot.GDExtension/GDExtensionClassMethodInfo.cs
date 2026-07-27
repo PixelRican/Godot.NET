@@ -42,7 +42,7 @@ public struct GDExtensionClassMethodInfo
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
-    public uint MethodFlags;
+    public GDExtensionClassMethodFlags MethodFlags;
     /// <summary>
     /// If `HasReturnValue` is false, `ReturnValueInfo` and `ReturnValueMetadata` are ignored.<br/>
     /// <br/>

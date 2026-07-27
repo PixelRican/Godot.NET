@@ -39,7 +39,7 @@ public struct GDExtensionClassVirtualMethodInfo
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
-    public uint MethodFlags;
+    public GDExtensionClassMethodFlags MethodFlags;
     public GDExtensionPropertyInfo ReturnValue;
     public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
     public uint ArgumentCount;
