@@ -32,9 +32,9 @@ namespace Godot.GDExtension;
 
 public enum GDExtensionInitializationLevel
 {
-    GDEXTENSION_INITIALIZATION_CORE = 0,
-    GDEXTENSION_INITIALIZATION_SERVERS = 1,
-    GDEXTENSION_INITIALIZATION_SCENE = 2,
-    GDEXTENSION_INITIALIZATION_EDITOR = 3,
-    GDEXTENSION_MAX_INITIALIZATION_LEVEL = 4
+    Core = 0,
+    Servers = 1,
+    Scene = 2,
+    Editor = 3,
+    Max = 4
 }

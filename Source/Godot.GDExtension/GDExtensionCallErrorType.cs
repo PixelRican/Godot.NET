@@ -32,23 +32,23 @@ namespace Godot.GDExtension;
 
 public enum GDExtensionCallErrorType
 {
-    GDEXTENSION_CALL_OK = 0,
-    GDEXTENSION_CALL_ERROR_INVALID_METHOD = 1,
+    Ok = 0,
+    InvalidMethod = 1,
     /// <summary>
     /// Expected a different variant type.
     /// </summary>
-    GDEXTENSION_CALL_ERROR_INVALID_ARGUMENT = 2,
+    InvalidArgument = 2,
     /// <summary>
     /// Expected lower number of arguments.
     /// </summary>
-    GDEXTENSION_CALL_ERROR_TOO_MANY_ARGUMENTS = 3,
+    TooManyArguments = 3,
     /// <summary>
     /// Expected higher number of arguments.
     /// </summary>
-    GDEXTENSION_CALL_ERROR_TOO_FEW_ARGUMENTS = 4,
-    GDEXTENSION_CALL_ERROR_INSTANCE_IS_NULL = 5,
+    TooFewArguments = 4,
+    InstanceIsNull = 5,
     /// <summary>
     /// Used for const call.
     /// </summary>
-    GDEXTENSION_CALL_ERROR_METHOD_NOT_CONST = 6
+    MethodNotConst = 6
 }

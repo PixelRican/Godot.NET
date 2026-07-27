@@ -35,12 +35,12 @@ namespace Godot.GDExtension;
 [Flags]
 public enum GDExtensionClassMethodFlags
 {
-    GDEXTENSION_METHOD_FLAG_NORMAL = 1,
-    GDEXTENSION_METHOD_FLAG_EDITOR = 2,
-    GDEXTENSION_METHOD_FLAG_CONST = 4,
-    GDEXTENSION_METHOD_FLAG_VIRTUAL = 8,
-    GDEXTENSION_METHOD_FLAG_VARARG = 16,
-    GDEXTENSION_METHOD_FLAG_STATIC = 32,
-    GDEXTENSION_METHOD_FLAG_VIRTUAL_REQUIRED = 128,
-    GDEXTENSION_METHOD_FLAGS_DEFAULT = 1
+    Normal = 1,
+    Editor = 2,
+    Const = 4,
+    Virtual = 8,
+    Vararg = 16,
+    Static = 32,
+    VirtualRequired = 128,
+    Default = 1
 }

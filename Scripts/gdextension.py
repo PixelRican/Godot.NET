@@ -1,4 +1,6 @@
-﻿from typing import Any, Iterable
+﻿from os.path import commonprefix
+from re import Match, sub
+from typing import Any, Iterable
 
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -22,6 +24,7 @@ class GDExtensionInterface:
             assert instance
             self.types.append(instance)
             self.symbols.register(instance)
+            instance.stylize(self.symbols)
         for function_data in data["interface"]:
             self.interface.append(GDExtensionFunction(function_data))
 
@@ -57,12 +60,12 @@ class GDExtensionInterface:
             arguments: str = ", ".join(argument.name for argument in function.arguments)
             yield "\n"
             if function.description:
-                yield from function.description.documentation(indent=True)
+                yield from function.description.documentation(self.symbols, indent=True)
             for argument in function.arguments:
                 if argument.description:
-                    yield from argument.description.documentation(indent=True)
+                    yield from argument.description.documentation(self.symbols, indent=True)
             if function.return_value and function.return_value.description:
-                yield from function.return_value.description.documentation(indent=True)
+                yield from function.return_value.description.documentation(self.symbols, indent=True)
             if function.deprecated:
                 yield function.deprecated.attribute(indent=True)
             yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
@@ -132,8 +135,9 @@ class GDExtensionInterface:
 
 class GDExtensionSymbolTable:
     def __init__(self) -> None:
-        self.types: dict[str, GDExtensionType] = {}
         self.expansions: dict[str, str] = {}
+        self.substitutions: dict[str, str] = {}
+        self.types: dict[str, GDExtensionType] = {}
 
     def expand(self, symbol: str) -> str:
         expansion: str = self.expansions.get(symbol, "")
@@ -148,6 +152,21 @@ class GDExtensionSymbolTable:
     def register(self, instance: GDExtensionType) -> None:
         self.types[instance.name] = instance
 
+    def substitute(self, symbol: str, replacement: str) -> None:
+        self.substitutions[symbol] = replacement
+
+    def transform(self, text: str) -> str:
+        def closure(match: Match[str]) -> str:
+            group: str = match.group(1)
+            if group == "NULL":
+                return "`null`"
+            return f"`{self.substitutions.get(group, group)}`"
+
+        result: str = self.substitutions.get(text, "")
+        if result:
+            return result
+        return sub("`(.+?)`", closure, text)
+
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
             or isinstance(self.types.get(symbol), (GDExtensionHandle, GDExtensionFunction))
@@ -158,13 +177,13 @@ class GDExtensionDescription:
         self.tag: str = tag
         self.metadata: str = metadata
 
-    def documentation(self, indent: bool = False) -> Iterable[str]:
+    def documentation(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> Iterable[str]:
         spacing: str = "    " if indent else ""
         metadata: str = f" {self.metadata}" if self.metadata else ""
         yield f"{spacing}/// <{self.tag}{metadata}>\n"
         for line in self.lines[:-1]:
-            yield f"{spacing}/// {line}<br/>\n"
-        yield f"{spacing}/// {self.lines[-1]}\n"
+            yield f"{spacing}/// {symbols.transform(line)}<br/>\n"
+        yield f"{spacing}/// {symbols.transform(self.lines[-1])}\n"
         yield f"{spacing}/// </{self.tag}>\n"
 
 class GDExtensionDeprecated:
@@ -197,6 +216,9 @@ class GDExtensionType:
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
         raise NotImplementedError()
 
+    def stylize(self, symbols: GDExtensionSymbolTable) -> None:
+        pass
+
 class GDExtensionEnum(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
@@ -212,7 +234,7 @@ class GDExtensionEnum(GDExtensionType):
         yield "namespace Godot.GDExtension;\n"
         yield "\n"
         if self.description:
-            yield from self.description.documentation()
+            yield from self.description.documentation(symbols)
         if self.deprecated:
             yield self.deprecated.attribute()
         if self.is_bitfield:
@@ -221,16 +243,34 @@ class GDExtensionEnum(GDExtensionType):
         yield "{\n"
         for value in self.values[:-1]:
             if value.description:
-                yield from value.description.documentation(indent=True)
-            yield f"    {value.name} = {value.value},\n"
+                yield from value.description.documentation(symbols, indent=True)
+            yield f"    {symbols.transform(value.name)} = {value.value},\n"
         value: GDExtensionEnumValue = self.values[-1]
         if value.description:
-            yield from value.description.documentation(indent=True)
-        yield f"    {value.name} = {value.value}\n"
+            yield from value.description.documentation(symbols, indent=True)
+        yield f"    {symbols.transform(value.name)} = {value.value}\n"
         yield "}\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
         return f"Godot.GDExtension.{self.name}"
+
+    def stylize(self, symbols: GDExtensionSymbolTable) -> None:
+        prefix: str = commonprefix([value.name for value in self.values])
+        for value in self.values:
+            if "MAX" in value.name:
+                symbols.substitute(value.name, "Max")
+                continue
+            words: list[str] = value.name.removeprefix(prefix).split("_")
+            if words[0] == "ERROR" or len(words[0]) == 1:
+                words.pop(0)
+            if "INITIALIZATION" in words:
+                words.remove("INITIALIZATION")
+            for i, word in enumerate(words):
+                if word.startswith("UINT"):
+                    words[i] = "UInt" + word[4:]
+                else:
+                    words[i] = word.title()
+            symbols.substitute(value.name, "".join(words))
 
 class GDExtensionEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -276,7 +316,7 @@ class GDExtensionStruct(GDExtensionType):
         yield "namespace Godot.GDExtension;\n"
         yield "\n"
         if self.description:
-            yield from self.description.documentation()
+            yield from self.description.documentation(symbols)
         if self.deprecated:
             yield self.deprecated.attribute()
         yield "[StructLayout(LayoutKind.Sequential)]\n"
@@ -284,7 +324,7 @@ class GDExtensionStruct(GDExtensionType):
         yield "{\n"
         for member in self.members:
             if member.description:
-                yield from member.description.documentation(indent=True)
+                yield from member.description.documentation(symbols, indent=True)
             unsafe: str = "unsafe " * symbols.unsafe(member.type)
             yield f"    public {unsafe}{member.type} {member.name};\n"
         yield "}\n"
