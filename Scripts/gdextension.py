@@ -252,10 +252,7 @@ class GDExtensionEnum(GDExtensionType):
                 if word.startswith("UINT"):
                     words[i] = "UInt" + word[4:]
                 else:
-                    words[i] = word.title() \
-                        .replace("2I", "2i") \
-                        .replace("3I", "3i") \
-                        .replace("4I", "4i")
+                    words[i] = word.title()
             symbols.substitute(value.name, "".join(words))
 
 class GDExtensionEnumValue:
