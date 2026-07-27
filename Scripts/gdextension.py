@@ -88,6 +88,12 @@ class GDExtensionInterface:
         with open("../Source/Godot.Interop/GlobalUsings.cs", "w") as file:
             file.writelines(self.header("GlobalUsings"))
             file.write("\n")
+            file.write("#if REAL_T_IS_DOUBLE\n")
+            file.write("global using real_t = double;\n")
+            file.write("#else\n")
+            file.write("global using real_t = float;\n")
+            file.write("#endif\n")
+            file.write("\n")
         for instance in self.types:
             definition: Iterable[str] = instance.definition(self.symbols)
             match instance:

@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-using Godot.InteropServices;
+using Godot.Interop;
 
 namespace Godot;
 
 public sealed class Variant
 {
-    private NativeVariant _instance;
+    private GDExtensionVariant _instance;
 
-    public ref readonly NativeVariant GetPinnableReference()
+    public ref readonly GDExtensionVariant GetPinnableReference()
     {
         return ref _instance;
     }

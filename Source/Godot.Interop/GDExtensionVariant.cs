@@ -1,5 +1,5 @@
 ﻿/**************************************************************************/
-/*  NativeVariant.cs                                                      */
+/*  GDExtensionVariant.cs                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,10 +30,10 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.InteropServices;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Explicit)]
-public struct NativeVariant
+public struct GDExtensionVariant
 {
     [FieldOffset(0)] private int type;
     [FieldOffset(8)] private DataUnion _data;

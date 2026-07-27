@@ -28,6 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#if REAL_T_IS_DOUBLE
+global using real_t = double;
+#else
+global using real_t = float;
+#endif
+
 global using unsafe GDExtensionVariantPtr = void*;
 global using unsafe GDExtensionConstVariantPtr = void*;
 global using unsafe GDExtensionUninitializedVariantPtr = void*;
