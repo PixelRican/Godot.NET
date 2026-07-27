@@ -4,7 +4,7 @@ class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
         self.types: list[GDExtensionType] = []
-        self.interface: list[GDExtensionInterfaceFunction] = []
+        self.interface: list[GDExtensionFunction] = []
         self.symbols: GDExtensionSymbolTable = GDExtensionSymbolTable()
         for type_data in data["types"]:
             instance: GDExtensionType | None = None
@@ -23,7 +23,7 @@ class GDExtensionInterface:
             self.types.append(instance)
             self.symbols.register(instance)
         for function_data in data["interface"]:
-            self.interface.append(GDExtensionInterfaceFunction(function_data))
+            self.interface.append(GDExtensionFunction(function_data))
 
     def definition(self) -> Iterable[str]:
         yield "using System;\n"
@@ -308,11 +308,19 @@ class GDExtensionFunction(GDExtensionType):
         super().__init__(data)
         self.arguments: list[GDExtensionFunctionArgument] = []
         self.return_value: GDExtensionFunctionReturnValue | None = None
-        for argument in data["arguments"]:
-            self.arguments.append(GDExtensionFunctionArgument(argument))
+        type_parameters: list[str] = []
+        for argument_data in data["arguments"]:
+            argument: GDExtensionFunctionArgument = GDExtensionFunctionArgument(argument_data)
+            type_parameters.append(argument.type)
+            self.arguments.append(argument)
         return_value: dict[str, Any] | None = data.get("return_value")
         if return_value:
-            self.return_value = GDExtensionFunctionReturnValue(return_value)
+            return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value)
+            type_parameters.append(return_value.type)
+            self.return_value = return_value
+        else:
+            type_parameters.append("void")
+        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         yield f"global using unsafe {self.name} = {symbols.expand(self.name)};\n"
@@ -343,18 +351,6 @@ class GDExtensionFunctionReturnValue:
         description: list[str] | None = data.get("description")
         if description:
             self.description = GDExtensionDescription(description, tag="returns")
-
-class GDExtensionInterfaceFunction(GDExtensionFunction):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        type_parameters: list[str] = []
-        for argument in self.arguments:
-            type_parameters.append(argument.type)
-        if self.return_value:
-            type_parameters.append(self.return_value.type)
-        else:
-            type_parameters.append("void")
-        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
 
 def translate(symbol: str) -> str:
     name: str = symbol.removeprefix("const ").removesuffix("*")
