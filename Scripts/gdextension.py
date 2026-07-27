@@ -40,7 +40,7 @@ class GDExtensionInterface:
         yield "public static unsafe class GDExtensionInterface\n"
         yield "{\n"
         for function in self.interface:
-            yield f"    private static {function.type} s_{function.name};\n"
+            yield f"    private static {function.type} s_{camel(function.name)};\n"
         yield "\n"
         yield "    /// <summary>\n"
         yield "    /// Loads the GDExtensionInterface functions from the specified address loader.\n"
