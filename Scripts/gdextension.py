@@ -6,7 +6,7 @@ class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
         self.types: list[GDExtensionType] = []
-        self.interface: list[GDExtensionFunction] = []
+        self.interface: list[GDExtensionInterfaceFunction] = []
         self.symbols: GDExtensionSymbolTable = GDExtensionSymbolTable()
         for type_data in data["types"]:
             instance: GDExtensionType | None = None
@@ -26,7 +26,7 @@ class GDExtensionInterface:
             self.symbols.register(instance)
             instance.stylize(self.symbols)
         for function_data in data["interface"]:
-            function: GDExtensionFunction = GDExtensionFunction(function_data)
+            function: GDExtensionInterfaceFunction = GDExtensionInterfaceFunction(function_data)
             function.stylize(self.symbols)
             self.interface.append(function)
 
@@ -55,36 +55,11 @@ class GDExtensionInterface:
         yield "    {\n"
         yield "        ArgumentNullException.ThrowIfNull(getProcAddress);\n"
         for function in self.interface:
-            yield f"        s_{function.name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
+            yield f"        s_{camel(function.name)} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
         yield "    }\n"
         for function in self.interface:
-            parameters: str = ", ".join(f"{argument.type} {self.symbols.transform(argument.name)}" for argument in function.arguments)
-            arguments: str = ", ".join(self.symbols.transform(argument.name) for argument in function.arguments)
             yield "\n"
-            if function.description:
-                yield from function.description.documentation(self.symbols, indent=True)
-            for argument in function.arguments:
-                if argument.description:
-                    yield from argument.description.documentation(self.symbols, indent=True)
-            if function.return_value and function.return_value.description:
-                yield from function.return_value.description.documentation(self.symbols, indent=True)
-            if function.deprecated:
-                yield function.deprecated.attribute(self.symbols, indent=True)
-            yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
-            if function.return_value:
-                yield f"    public static {function.return_value.type} {self.symbols.transform(function.name)}({parameters})\n"
-                yield "    {\n"
-                yield f"        var function = s_{function.name};\n"
-                yield "        ThrowIfInvalid(function);\n"
-                yield f"        return function({arguments});\n"
-                yield "    }\n"
-            else:
-                yield f"    public static void {self.symbols.transform(function.name)}({parameters})\n"
-                yield "    {\n"
-                yield f"        var function = s_{function.name};\n"
-                yield "        ThrowIfInvalid(function);\n"
-                yield f"        function({arguments});\n"
-                yield "    }\n"
+            yield from function.definition(self.symbols)
         yield "\n"
         yield "    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)\n"
         yield "    {\n"
@@ -350,19 +325,11 @@ class GDExtensionFunction(GDExtensionType):
         super().__init__(data)
         self.arguments: list[GDExtensionFunctionArgument] = []
         self.return_value: GDExtensionFunctionReturnValue | None = None
-        type_parameters: list[str] = []
-        for argument_data in data["arguments"]:
-            argument: GDExtensionFunctionArgument = GDExtensionFunctionArgument(argument_data)
-            type_parameters.append(argument.type)
-            self.arguments.append(argument)
+        for argument in data["arguments"]:
+            self.arguments.append(GDExtensionFunctionArgument(argument))
         return_value: dict[str, Any] | None = data.get("return_value")
         if return_value:
-            return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value)
-            type_parameters.append(return_value.type)
-            self.return_value = return_value
-        else:
-            type_parameters.append("void")
-        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+            self.return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value)
 
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         yield f"global using unsafe {self.name} = {symbols.expand(self.name)};\n"
@@ -376,13 +343,6 @@ class GDExtensionFunction(GDExtensionType):
         else:
             type_parameters.append("void")
         return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
-
-    def stylize(self, symbols: GDExtensionSymbolTable) -> None:
-        if self.name.islower():
-            symbols.substitute(self.name, pascal(self.name).replace("db", "DB"))
-        for argument in self.arguments:
-            if argument.name:
-                symbols.substitute(argument.name, camel(argument.name))
 
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -400,6 +360,51 @@ class GDExtensionFunctionReturnValue:
         description: list[str] | None = data.get("description")
         if description:
             self.description = GDExtensionDescription(description, tag="returns")
+
+class GDExtensionInterfaceFunction(GDExtensionFunction):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        type_parameters: list[str] = []
+        for argument in self.arguments:
+            type_parameters.append(argument.type)
+        if self.return_value:
+            type_parameters.append(self.return_value.type)
+        else:
+            type_parameters.append("void")
+        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
+        parameters: str = ", ".join(f"{argument.type} {symbols.transform(argument.name)}" for argument in self.arguments)
+        arguments: str = ", ".join(symbols.transform(argument.name) for argument in self.arguments)
+        if self.description:
+            yield from self.description.documentation(symbols, indent=True)
+        for argument in self.arguments:
+            if argument.description:
+                yield from argument.description.documentation(symbols, indent=True)
+        if self.return_value and self.return_value.description:
+            yield from self.return_value.description.documentation(symbols, indent=True)
+        if self.deprecated:
+            yield self.deprecated.attribute(symbols, indent=True)
+        yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
+        if self.return_value:
+            yield f"    public static {self.return_value.type} {symbols.transform(self.name)}({parameters})\n"
+            yield "    {\n"
+            yield f"        var function = s_{camel(self.name)};\n"
+            yield "        ThrowIfInvalid(function);\n"
+            yield f"        return function({arguments});\n"
+            yield "    }\n"
+        else:
+            yield f"    public static void {symbols.transform(self.name)}({parameters})\n"
+            yield "    {\n"
+            yield f"        var function = s_{camel(self.name)};\n"
+            yield "        ThrowIfInvalid(function);\n"
+            yield f"        function({arguments});\n"
+            yield "    }\n"
+
+    def stylize(self, symbols: GDExtensionSymbolTable) -> None:
+        symbols.substitute(self.name, pascal(self.name).replace("db", "DB"))
+        for argument in self.arguments:
+            symbols.substitute(argument.name, camel(argument.name))
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
