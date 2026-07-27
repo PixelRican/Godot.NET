@@ -445,7 +445,7 @@ public static unsafe class GDExtensionInterface
     /// The amount of memory to allocate in bytes.
     /// </param>
     /// <returns>
-    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_alloc2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -466,7 +466,7 @@ public static unsafe class GDExtensionInterface
     /// The number of bytes to resize the memory block to.
     /// </param>
     /// <returns>
-    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_realloc2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -502,7 +502,7 @@ public static unsafe class GDExtensionInterface
     /// If true, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
     /// <returns>
-    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* mem_alloc2(nuint p_bytes, GDExtensionBool p_pad_align)
@@ -525,7 +525,7 @@ public static unsafe class GDExtensionInterface
     /// If true, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
     /// <returns>
-    /// A pointer to the allocated memory, or NULL if unsuccessful.
+    /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* mem_realloc2(void* p_ptr, nuint p_bytes, GDExtensionBool p_pad_align)
@@ -1980,7 +1980,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the String.
     /// </param>
     /// <param name="r_text">
-    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="p_max_write_length">
     /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
@@ -2004,7 +2004,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the String.
     /// </param>
     /// <param name="r_text">
-    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="p_max_write_length">
     /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
@@ -2028,7 +2028,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the String.
     /// </param>
     /// <param name="r_text">
-    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="p_max_write_length">
     /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
@@ -2052,7 +2052,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the String.
     /// </param>
     /// <param name="r_text">
-    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="p_max_write_length">
     /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
@@ -2076,7 +2076,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the String.
     /// </param>
     /// <param name="r_text">
-    /// A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
+    /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="p_max_write_length">
     /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
@@ -3224,7 +3224,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer uniquely identifying a built-in class in the ClassDB.
     /// </param>
     /// <returns>
-    /// Returns a pointer to the Object, or NULL if it can't be cast to the requested type.
+    /// Returns a pointer to the Object, or null if it can't be cast to the requested type.
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use the `is_class` method on `Object` to check if an object can be cast instead. If true, the previous pointer can be reinterpreted as a pointer to the target type.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3325,7 +3325,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the reference.
     /// </param>
     /// <returns>
-    /// A pointer to the Object from the reference or NULL.
+    /// A pointer to the Object from the reference or null.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionObjectPtr ref_get_object(GDExtensionConstRefPtr p_ref)
@@ -3536,7 +3536,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Retrieves the userdata pointer from a custom Callable.<br/>
-    /// If the Callable is not a custom Callable or the token does not match the one provided to callable_custom_create() via GDExtensionCallableCustomInfo then NULL will be returned.
+    /// If the Callable is not a custom Callable or the token does not match the one provided to callable_custom_create() via GDExtensionCallableCustomInfo then null will be returned.
     /// </summary>
     /// <param name="p_callable">
     /// A pointer to a Callable.

@@ -40,7 +40,7 @@ public struct GDExtensionScriptInstanceInfo3
     public unsafe GDExtensionScriptInstanceGetPropertyList get_property_list_func;
     public unsafe GDExtensionScriptInstanceFreePropertyList2 free_property_list_func;
     /// <summary>
-    /// Optional. Set to NULL for the default behavior.
+    /// Optional. Set to null for the default behavior.
     /// </summary>
     public unsafe GDExtensionScriptInstanceGetClassCategory get_class_category_func;
     public unsafe GDExtensionScriptInstancePropertyCanRevert property_can_revert_func;

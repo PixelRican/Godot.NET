@@ -158,14 +158,12 @@ class GDExtensionSymbolTable:
     def transform(self, text: str) -> str:
         def closure(match: Match[str]) -> str:
             group: str = match.group(1)
-            if group == "NULL":
-                return "`null`"
             return f"`{self.substitutions.get(group, group)}`"
 
         result: str = self.substitutions.get(text, "")
         if result:
             return result
-        return sub("`(.+?)`", closure, text)
+        return sub("`(.+?)`", closure, text.replace("NULL", "null"))
 
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
