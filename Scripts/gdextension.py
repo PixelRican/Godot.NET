@@ -334,8 +334,7 @@ class GDExtensionStruct(GDExtensionType):
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         for member in self.members:
-            replacement: str = member.name.title().replace("_", "").replace("Ptrcall", "PtrCall")
-            symbols.substitute(member.name, replacement)
+            symbols.substitute(member.name, pascal(member.name).replace("Ptrcall", "PtrCall"))
 
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -380,12 +379,10 @@ class GDExtensionFunction(GDExtensionType):
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         if self.name.islower():
-            replacement: str = self.name.title().replace("_", "").replace("db", "DB")
-            symbols.substitute(self.name, replacement)
+            symbols.substitute(self.name, pascal(self.name).replace("db", "DB"))
         for argument in self.arguments:
             if argument.name:
-                replacement: str = argument.name[0] + argument.name[1:].title().replace("_", "")
-                symbols.substitute(argument.name, replacement)
+                symbols.substitute(argument.name, camel(argument.name))
 
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -403,6 +400,12 @@ class GDExtensionFunctionReturnValue:
         description: list[str] | None = data.get("description")
         if description:
             self.description = GDExtensionDescription(description, tag="returns")
+
+def camel(symbol: str) -> str:
+    return symbol[0].lower() + pascal(symbol[1:])
+
+def pascal(symbol: str) -> str:
+    return symbol.title().replace("_", "")
 
 def translate(symbol: str) -> str:
     name: str = symbol.removeprefix("const ").removesuffix("*")
