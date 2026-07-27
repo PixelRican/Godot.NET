@@ -324,17 +324,20 @@ class GDExtensionStruct(GDExtensionType):
             if member.description:
                 yield from member.description.documentation(symbols, indent=True)
             unsafe: str = "unsafe " * symbols.unsafe(member.type)
-            yield f"    public {unsafe}{member.type} {member.name};\n"
+            yield f"    public {unsafe}{member.type} {symbols.transform(member.name)};\n"
         yield "}\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
         return f"Godot.GDExtension.{self.name}"
 
+    def stylize(self, symbols: GDExtensionSymbolTable) -> None:
+        for member in self.members:
+            replacement: str = member.name.title().replace("_", "").replace("Ptrcall", "PtrCall")
+            symbols.substitute(member.name, replacement)
+
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        if self.name == "string":
-            self.name = "@string"
         self.type: str = translate(data["type"])
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")

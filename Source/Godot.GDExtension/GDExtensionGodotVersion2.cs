@@ -35,31 +35,31 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionGodotVersion2
 {
-    public uint major;
-    public uint minor;
-    public uint patch;
+    public uint Major;
+    public uint Minor;
+    public uint Patch;
     /// <summary>
     /// Full version encoded as hexadecimal with one byte (2 hex digits) per number (e.g. for "3.1.12" it would be 0x03010C)
     /// </summary>
-    public uint hex;
+    public uint Hex;
     /// <summary>
     /// (e.g. "stable", "beta", "rc1", "rc2")
     /// </summary>
-    public unsafe byte* status;
+    public unsafe byte* Status;
     /// <summary>
     /// (e.g. "custom_build")
     /// </summary>
-    public unsafe byte* build;
+    public unsafe byte* Build;
     /// <summary>
     /// Full Git commit hash.
     /// </summary>
-    public unsafe byte* hash;
+    public unsafe byte* Hash;
     /// <summary>
     /// Git commit date UNIX timestamp in seconds, or 0 if unavailable.
     /// </summary>
-    public ulong timestamp;
+    public ulong Timestamp;
     /// <summary>
     /// (e.g. "Godot v3.1.4.stable.official.mono")
     /// </summary>
-    public unsafe byte* @string;
+    public unsafe byte* String;
 }

@@ -37,50 +37,50 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassCreationInfo3
 {
-    public GDExtensionBool is_virtual;
-    public GDExtensionBool is_abstract;
-    public GDExtensionBool is_exposed;
-    public GDExtensionBool is_runtime;
-    public unsafe GDExtensionClassSet set_func;
-    public unsafe GDExtensionClassGet get_func;
-    public unsafe GDExtensionClassGetPropertyList get_property_list_func;
-    public unsafe GDExtensionClassFreePropertyList2 free_property_list_func;
-    public unsafe GDExtensionClassPropertyCanRevert property_can_revert_func;
-    public unsafe GDExtensionClassPropertyGetRevert property_get_revert_func;
-    public unsafe GDExtensionClassValidateProperty validate_property_func;
-    public unsafe GDExtensionClassNotification2 notification_func;
-    public unsafe GDExtensionClassToString to_string_func;
-    public unsafe GDExtensionClassReference reference_func;
-    public unsafe GDExtensionClassUnreference unreference_func;
+    public GDExtensionBool IsVirtual;
+    public GDExtensionBool IsAbstract;
+    public GDExtensionBool IsExposed;
+    public GDExtensionBool IsRuntime;
+    public unsafe GDExtensionClassSet SetFunc;
+    public unsafe GDExtensionClassGet GetFunc;
+    public unsafe GDExtensionClassGetPropertyList GetPropertyListFunc;
+    public unsafe GDExtensionClassFreePropertyList2 FreePropertyListFunc;
+    public unsafe GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
+    public unsafe GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
+    public unsafe GDExtensionClassValidateProperty ValidatePropertyFunc;
+    public unsafe GDExtensionClassNotification2 NotificationFunc;
+    public unsafe GDExtensionClassToString ToStringFunc;
+    public unsafe GDExtensionClassReference ReferenceFunc;
+    public unsafe GDExtensionClassUnreference UnreferenceFunc;
     /// <summary>
     /// Class constructor. Required unless the class is virtual or abstract.
     /// </summary>
-    public unsafe GDExtensionClassCreateInstance create_instance_func;
+    public unsafe GDExtensionClassCreateInstance CreateInstanceFunc;
     /// <summary>
     /// Destructor; mandatory.
     /// </summary>
-    public unsafe GDExtensionClassFreeInstance free_instance_func;
-    public unsafe GDExtensionClassRecreateInstance recreate_instance_func;
+    public unsafe GDExtensionClassFreeInstance FreeInstanceFunc;
+    public unsafe GDExtensionClassRecreateInstance RecreateInstanceFunc;
     /// <summary>
     /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
     /// </summary>
-    public unsafe GDExtensionClassGetVirtual get_virtual_func;
+    public unsafe GDExtensionClassGetVirtual GetVirtualFunc;
     /// <summary>
-    /// Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that<br/>
+    /// Paired with `CallVirtualWithDataFunc`, this is an alternative to `GetVirtualFunc` for extensions that<br/>
     /// need or benefit from extra data when calling virtual functions.<br/>
-    /// Returns user data that will be passed to `call_virtual_with_data_func`.<br/>
+    /// Returns user data that will be passed to `CallVirtualWithDataFunc`.<br/>
     /// Returning `null` from this function signals to Godot that the virtual function is not overridden.<br/>
     /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.<br/>
-    /// You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`.
+    /// You should supply either `GetVirtualFunc`, or `GetVirtualCallDataFunc` with `CallVirtualWithDataFunc`.
     /// </summary>
-    public unsafe GDExtensionClassGetVirtualCallData get_virtual_call_data_func;
+    public unsafe GDExtensionClassGetVirtualCallData GetVirtualCallDataFunc;
     /// <summary>
-    /// Used to call virtual functions when `get_virtual_call_data_func` is not null.
+    /// Used to call virtual functions when `GetVirtualCallDataFunc` is not null.
     /// </summary>
-    public unsafe GDExtensionClassCallVirtualWithData call_virtual_with_data_func;
-    public unsafe GDExtensionClassGetRID get_rid_func;
+    public unsafe GDExtensionClassCallVirtualWithData CallVirtualWithDataFunc;
+    public unsafe GDExtensionClassGetRID GetRidFunc;
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.
     /// </summary>
-    public unsafe void* class_userdata;
+    public unsafe void* ClassUserdata;
 }

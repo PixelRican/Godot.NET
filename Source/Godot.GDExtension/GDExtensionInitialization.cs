@@ -39,14 +39,14 @@ public struct GDExtensionInitialization
     /// Minimum initialization level required.<br/>
     /// If Core or Servers, the extension needs editor or game restart to take effect
     /// </summary>
-    public GDExtensionInitializationLevel minimum_initialization_level;
+    public GDExtensionInitializationLevel MinimumInitializationLevel;
     /// <summary>
     /// Up to the user to supply when initializing
     /// </summary>
-    public unsafe void* userdata;
+    public unsafe void* Userdata;
     /// <summary>
     /// This function will be called multiple times for each initialization level.
     /// </summary>
-    public unsafe GDExtensionInitializeCallback initialize;
-    public unsafe GDExtensionDeinitializeCallback deinitialize;
+    public unsafe GDExtensionInitializeCallback Initialize;
+    public unsafe GDExtensionDeinitializeCallback Deinitialize;
 }

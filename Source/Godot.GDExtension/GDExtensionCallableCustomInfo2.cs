@@ -33,32 +33,32 @@ using System.Runtime.InteropServices;
 namespace Godot.GDExtension;
 
 /// <summary>
-/// Only `call_func` and `token` are strictly required, however, `object_id` should be passed if its not a static method.<br/>
+/// Only `CallFunc` and `Token` are strictly required, however, `ObjectId` should be passed if its not a static method.<br/>
 /// <br/>
-/// `token` should point to an address that uniquely identifies the GDExtension (for example, the<br/>
+/// `Token` should point to an address that uniquely identifies the GDExtension (for example, the<br/>
 /// `GDExtensionClassLibraryPtr` passed to the entry symbol function.<br/>
 /// <br/>
-/// `hash_func`, `equal_func`, and `less_than_func` are optional. If not provided both `call_func` and<br/>
-/// `callable_userdata` together are used as the identity of the callable for hashing and comparison purposes.<br/>
+/// `HashFunc`, `EqualFunc`, and `LessThanFunc` are optional. If not provided both `CallFunc` and<br/>
+/// `CallableUserdata` together are used as the identity of the callable for hashing and comparison purposes.<br/>
 /// <br/>
-/// The hash returned by `hash_func` is cached, `hash_func` will not be called more than once per callable.<br/>
+/// The hash returned by `HashFunc` is cached, `HashFunc` will not be called more than once per callable.<br/>
 /// <br/>
-/// `is_valid_func` is necessary if the validity of the callable can change before destruction.<br/>
+/// `IsValidFunc` is necessary if the validity of the callable can change before destruction.<br/>
 /// <br/>
-/// `free_func` is necessary if `callable_userdata` needs to be cleaned up when the callable is freed.
+/// `FreeFunc` is necessary if `CallableUserdata` needs to be cleaned up when the callable is freed.
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionCallableCustomInfo2
 {
-    public unsafe void* callable_userdata;
-    public unsafe void* token;
-    public GDObjectInstanceID object_id;
-    public unsafe GDExtensionCallableCustomCall call_func;
-    public unsafe GDExtensionCallableCustomIsValid is_valid_func;
-    public unsafe GDExtensionCallableCustomFree free_func;
-    public unsafe GDExtensionCallableCustomHash hash_func;
-    public unsafe GDExtensionCallableCustomEqual equal_func;
-    public unsafe GDExtensionCallableCustomLessThan less_than_func;
-    public unsafe GDExtensionCallableCustomToString to_string_func;
-    public unsafe GDExtensionCallableCustomGetArgumentCount get_argument_count_func;
+    public unsafe void* CallableUserdata;
+    public unsafe void* Token;
+    public GDObjectInstanceID ObjectId;
+    public unsafe GDExtensionCallableCustomCall CallFunc;
+    public unsafe GDExtensionCallableCustomIsValid IsValidFunc;
+    public unsafe GDExtensionCallableCustomFree FreeFunc;
+    public unsafe GDExtensionCallableCustomHash HashFunc;
+    public unsafe GDExtensionCallableCustomEqual EqualFunc;
+    public unsafe GDExtensionCallableCustomLessThan LessThanFunc;
+    public unsafe GDExtensionCallableCustomToString ToStringFunc;
+    public unsafe GDExtensionCallableCustomGetArgumentCount GetArgumentCountFunc;
 }

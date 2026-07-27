@@ -35,33 +35,33 @@ namespace Godot.GDExtension;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionScriptInstanceInfo3
 {
-    public unsafe GDExtensionScriptInstanceSet set_func;
-    public unsafe GDExtensionScriptInstanceGet get_func;
-    public unsafe GDExtensionScriptInstanceGetPropertyList get_property_list_func;
-    public unsafe GDExtensionScriptInstanceFreePropertyList2 free_property_list_func;
+    public unsafe GDExtensionScriptInstanceSet SetFunc;
+    public unsafe GDExtensionScriptInstanceGet GetFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
+    public unsafe GDExtensionScriptInstanceFreePropertyList2 FreePropertyListFunc;
     /// <summary>
     /// Optional. Set to null for the default behavior.
     /// </summary>
-    public unsafe GDExtensionScriptInstanceGetClassCategory get_class_category_func;
-    public unsafe GDExtensionScriptInstancePropertyCanRevert property_can_revert_func;
-    public unsafe GDExtensionScriptInstancePropertyGetRevert property_get_revert_func;
-    public unsafe GDExtensionScriptInstanceGetOwner get_owner_func;
-    public unsafe GDExtensionScriptInstanceGetPropertyState get_property_state_func;
-    public unsafe GDExtensionScriptInstanceGetMethodList get_method_list_func;
-    public unsafe GDExtensionScriptInstanceFreeMethodList2 free_method_list_func;
-    public unsafe GDExtensionScriptInstanceGetPropertyType get_property_type_func;
-    public unsafe GDExtensionScriptInstanceValidateProperty validate_property_func;
-    public unsafe GDExtensionScriptInstanceHasMethod has_method_func;
-    public unsafe GDExtensionScriptInstanceGetMethodArgumentCount get_method_argument_count_func;
-    public unsafe GDExtensionScriptInstanceCall call_func;
-    public unsafe GDExtensionScriptInstanceNotification2 notification_func;
-    public unsafe GDExtensionScriptInstanceToString to_string_func;
-    public unsafe GDExtensionScriptInstanceRefCountIncremented refcount_incremented_func;
-    public unsafe GDExtensionScriptInstanceRefCountDecremented refcount_decremented_func;
-    public unsafe GDExtensionScriptInstanceGetScript get_script_func;
-    public unsafe GDExtensionScriptInstanceIsPlaceholder is_placeholder_func;
-    public unsafe GDExtensionScriptInstanceSet set_fallback_func;
-    public unsafe GDExtensionScriptInstanceGet get_fallback_func;
-    public unsafe GDExtensionScriptInstanceGetLanguage get_language_func;
-    public unsafe GDExtensionScriptInstanceFree free_func;
+    public unsafe GDExtensionScriptInstanceGetClassCategory GetClassCategoryFunc;
+    public unsafe GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
+    public unsafe GDExtensionScriptInstancePropertyGetRevert PropertyGetRevertFunc;
+    public unsafe GDExtensionScriptInstanceGetOwner GetOwnerFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyState GetPropertyStateFunc;
+    public unsafe GDExtensionScriptInstanceGetMethodList GetMethodListFunc;
+    public unsafe GDExtensionScriptInstanceFreeMethodList2 FreeMethodListFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyType GetPropertyTypeFunc;
+    public unsafe GDExtensionScriptInstanceValidateProperty ValidatePropertyFunc;
+    public unsafe GDExtensionScriptInstanceHasMethod HasMethodFunc;
+    public unsafe GDExtensionScriptInstanceGetMethodArgumentCount GetMethodArgumentCountFunc;
+    public unsafe GDExtensionScriptInstanceCall CallFunc;
+    public unsafe GDExtensionScriptInstanceNotification2 NotificationFunc;
+    public unsafe GDExtensionScriptInstanceToString ToStringFunc;
+    public unsafe GDExtensionScriptInstanceRefCountIncremented RefcountIncrementedFunc;
+    public unsafe GDExtensionScriptInstanceRefCountDecremented RefcountDecrementedFunc;
+    public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
+    public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
+    public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
+    public unsafe GDExtensionScriptInstanceGet GetFallbackFunc;
+    public unsafe GDExtensionScriptInstanceGetLanguage GetLanguageFunc;
+    public unsafe GDExtensionScriptInstanceFree FreeFunc;
 }
