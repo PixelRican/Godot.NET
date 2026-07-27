@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionScriptInstanceInfo.cs                                      */
+/*  GDExtensionVariantOperator.cs                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,36 +28,34 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-using System;
-using System.Runtime.InteropServices;
+namespace Godot.Interop;
 
-namespace Godot.GDExtension;
-
-[Obsolete("Deprecated since Godot 4.2. Use GDExtensionScriptInstanceInfo3 instead.")]
-[StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionScriptInstanceInfo
+public enum GDExtensionVariantOperator
 {
-    public unsafe GDExtensionScriptInstanceSet SetFunc;
-    public unsafe GDExtensionScriptInstanceGet GetFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
-    public unsafe GDExtensionScriptInstanceFreePropertyList FreePropertyListFunc;
-    public unsafe GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
-    public unsafe GDExtensionScriptInstancePropertyGetRevert PropertyGetRevertFunc;
-    public unsafe GDExtensionScriptInstanceGetOwner GetOwnerFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyState GetPropertyStateFunc;
-    public unsafe GDExtensionScriptInstanceGetMethodList GetMethodListFunc;
-    public unsafe GDExtensionScriptInstanceFreeMethodList FreeMethodListFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyType GetPropertyTypeFunc;
-    public unsafe GDExtensionScriptInstanceHasMethod HasMethodFunc;
-    public unsafe GDExtensionScriptInstanceCall CallFunc;
-    public unsafe GDExtensionScriptInstanceNotification NotificationFunc;
-    public unsafe GDExtensionScriptInstanceToString ToStringFunc;
-    public unsafe GDExtensionScriptInstanceRefCountIncremented RefCountIncrementedFunc;
-    public unsafe GDExtensionScriptInstanceRefCountDecremented RefCountDecrementedFunc;
-    public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
-    public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
-    public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
-    public unsafe GDExtensionScriptInstanceGet GetFallbackFunc;
-    public unsafe GDExtensionScriptInstanceGetLanguage GetLanguageFunc;
-    public unsafe GDExtensionScriptInstanceFree FreeFunc;
+    Equal = 0,
+    NotEqual = 1,
+    Less = 2,
+    LessEqual = 3,
+    Greater = 4,
+    GreaterEqual = 5,
+    Add = 6,
+    Subtract = 7,
+    Multiply = 8,
+    Divide = 9,
+    Negate = 10,
+    Positive = 11,
+    Module = 12,
+    Power = 13,
+    ShiftLeft = 14,
+    ShiftRight = 15,
+    BitAnd = 16,
+    BitOr = 17,
+    BitXor = 18,
+    BitNegate = 19,
+    And = 20,
+    Or = 21,
+    Xor = 22,
+    Not = 23,
+    In = 24,
+    Max = 25
 }

@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionVariantType.cs                                             */
+/*  GDExtensionClassMethodInfo.cs                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,48 +28,41 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-namespace Godot.GDExtension;
+using System.Runtime.InteropServices;
 
-public enum GDExtensionVariantType
+namespace Godot.Interop;
+
+[StructLayout(LayoutKind.Sequential)]
+public struct GDExtensionClassMethodInfo
 {
-    Nil = 0,
-    Bool = 1,
-    Int = 2,
-    Float = 3,
-    String = 4,
-    Vector2 = 5,
-    Vector2I = 6,
-    Rect2 = 7,
-    Rect2I = 8,
-    Vector3 = 9,
-    Vector3I = 10,
-    Transform2D = 11,
-    Vector4 = 12,
-    Vector4I = 13,
-    Plane = 14,
-    Quaternion = 15,
-    Aabb = 16,
-    Basis = 17,
-    Transform3D = 18,
-    Projection = 19,
-    Color = 20,
-    StringName = 21,
-    NodePath = 22,
-    Rid = 23,
-    Object = 24,
-    Callable = 25,
-    Signal = 26,
-    Dictionary = 27,
-    Array = 28,
-    PackedByteArray = 29,
-    PackedInt32Array = 30,
-    PackedInt64Array = 31,
-    PackedFloat32Array = 32,
-    PackedFloat64Array = 33,
-    PackedStringArray = 34,
-    PackedVector2Array = 35,
-    PackedVector3Array = 36,
-    PackedColorArray = 37,
-    PackedVector4Array = 38,
-    Max = 39
+    public unsafe GDExtensionStringNamePtr Name;
+    public unsafe void* MethodUserData;
+    public unsafe GDExtensionClassMethodCall CallFunc;
+    public unsafe GDExtensionClassMethodPtrCall PtrCallFunc;
+    /// <summary>
+    /// Bitfield of `GDExtensionClassMethodFlags`.
+    /// </summary>
+    public GDExtensionClassMethodFlags MethodFlags;
+    /// <summary>
+    /// If `HasReturnValue` is false, `ReturnValueInfo` and `ReturnValueMetadata` are ignored.<br/>
+    /// <br/>
+    /// @todo Consider dropping `HasReturnValue` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
+    /// </summary>
+    public GDExtensionBool HasReturnValue;
+    public unsafe GDExtensionPropertyInfo* ReturnValueInfo;
+    public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
+    /// <summary>
+    /// Arguments: `ArgumentsInfo` and `ArgumentsMetadata` are array of size `ArgumentCount`.<br/>
+    /// Name and hint information for the argument can be omitted in release builds. Class name should always be present if it applies.<br/>
+    /// <br/>
+    /// @todo Consider renaming `ArgumentsInfo` to `Arguments` for consistency in future version of this struct.
+    /// </summary>
+    public uint ArgumentCount;
+    public unsafe GDExtensionPropertyInfo* ArgumentsInfo;
+    public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
+    /// <summary>
+    /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
+    /// </summary>
+    public uint DefaultArgumentCount;
+    public unsafe GDExtensionVariantPtr* DefaultArguments;
 }

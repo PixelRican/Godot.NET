@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionMainLoopCallbacks.cs                                       */
+/*  GDExtensionMethodInfo.cs                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,22 +30,26 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionMainLoopCallbacks
+public struct GDExtensionMethodInfo
 {
+    public unsafe GDExtensionStringNamePtr Name;
+    public GDExtensionPropertyInfo ReturnValue;
     /// <summary>
-    /// Will be called after Godot is started and is fully initialized.
+    /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
-    public unsafe GDExtensionMainLoopStartupCallback StartupFunc;
+    public uint Flags;
+    public int Id;
     /// <summary>
-    /// Will be called before Godot is shutdown when it is still fully initialized.
+    /// Arguments: `DefaultArguments` is an array of size `ArgumentCount`.
     /// </summary>
-    public unsafe GDExtensionMainLoopShutdownCallback ShutdownFunc;
+    public uint ArgumentCount;
+    public unsafe GDExtensionPropertyInfo* Arguments;
     /// <summary>
-    /// Will be called for each process frame. This will run after all `_process()` methods on Node, and before `ScriptServer::frame()`.<br/>
-    /// This is intended to be the equivalent of `ScriptLanguage::frame()` for GDExtension language bindings that don't use the script API.
+    /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
     /// </summary>
-    public unsafe GDExtensionMainLoopFrameCallback FrameFunc;
+    public uint DefaultArgumentCount;
+    public unsafe GDExtensionVariantPtr* DefaultArguments;
 }

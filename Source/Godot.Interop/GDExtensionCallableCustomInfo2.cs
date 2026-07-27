@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionGodotVersion2.cs                                           */
+/*  GDExtensionCallableCustomInfo2.cs                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,36 +30,35 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
+/// <summary>
+/// Only `CallFunc` and `Token` are strictly required, however, `ObjectId` should be passed if its not a static method.<br/>
+/// <br/>
+/// `Token` should point to an address that uniquely identifies the GDExtension (for example, the<br/>
+/// `GDExtensionClassLibraryPtr` passed to the entry symbol function.<br/>
+/// <br/>
+/// `HashFunc`, `EqualFunc`, and `LessThanFunc` are optional. If not provided both `CallFunc` and<br/>
+/// `CallableUserData` together are used as the identity of the callable for hashing and comparison purposes.<br/>
+/// <br/>
+/// The hash returned by `HashFunc` is cached, `HashFunc` will not be called more than once per callable.<br/>
+/// <br/>
+/// `IsValidFunc` is necessary if the validity of the callable can change before destruction.<br/>
+/// <br/>
+/// `FreeFunc` is necessary if `CallableUserData` needs to be cleaned up when the callable is freed.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionGodotVersion2
+public struct GDExtensionCallableCustomInfo2
 {
-    public uint Major;
-    public uint Minor;
-    public uint Patch;
-    /// <summary>
-    /// Full version encoded as hexadecimal with one byte (2 hex digits) per number (e.g. for "3.1.12" it would be 0x03010C)
-    /// </summary>
-    public uint Hex;
-    /// <summary>
-    /// (e.g. "stable", "beta", "rc1", "rc2")
-    /// </summary>
-    public unsafe byte* Status;
-    /// <summary>
-    /// (e.g. "custom_build")
-    /// </summary>
-    public unsafe byte* Build;
-    /// <summary>
-    /// Full Git commit hash.
-    /// </summary>
-    public unsafe byte* Hash;
-    /// <summary>
-    /// Git commit date UNIX timestamp in seconds, or 0 if unavailable.
-    /// </summary>
-    public ulong Timestamp;
-    /// <summary>
-    /// (e.g. "Godot v3.1.4.stable.official.mono")
-    /// </summary>
-    public unsafe byte* String;
+    public unsafe void* CallableUserData;
+    public unsafe void* Token;
+    public GDObjectInstanceID ObjectId;
+    public unsafe GDExtensionCallableCustomCall CallFunc;
+    public unsafe GDExtensionCallableCustomIsValid IsValidFunc;
+    public unsafe GDExtensionCallableCustomFree FreeFunc;
+    public unsafe GDExtensionCallableCustomHash HashFunc;
+    public unsafe GDExtensionCallableCustomEqual EqualFunc;
+    public unsafe GDExtensionCallableCustomLessThan LessThanFunc;
+    public unsafe GDExtensionCallableCustomToString ToStringFunc;
+    public unsafe GDExtensionCallableCustomGetArgumentCount GetArgumentCountFunc;
 }

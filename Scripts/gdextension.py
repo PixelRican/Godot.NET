@@ -35,7 +35,7 @@ class GDExtensionInterface:
         yield "using System.Diagnostics.CodeAnalysis;\n"
         yield "using System.Runtime.CompilerServices;\n"
         yield "\n"
-        yield "namespace Godot.GDExtension;\n"
+        yield "namespace Godot.Interop;\n"
         yield "\n"
         yield "public static unsafe class GDExtensionInterface\n"
         yield "{\n"
@@ -85,21 +85,21 @@ class GDExtensionInterface:
         yield "}\n"
 
     def generate(self) -> None:
-        with open("../Source/Godot.GDExtension/GlobalUsings.cs", "w") as file:
+        with open("../Source/Godot.Interop/GlobalUsings.cs", "w") as file:
             file.writelines(self.header("GlobalUsings"))
             file.write("\n")
         for instance in self.types:
             definition: Iterable[str] = instance.definition(self.symbols)
             match instance:
                 case GDExtensionEnum() | GDExtensionStruct():
-                    with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
+                    with open(f"../Source/Godot.Interop/{instance.name}.cs", "w") as file:
                         file.writelines(self.header(instance.name))
                         file.write("\n")
                         file.writelines(definition)
                 case _:
-                    with open("../Source/Godot.GDExtension/GlobalUsings.cs", "a") as file:
+                    with open("../Source/Godot.Interop/GlobalUsings.cs", "a") as file:
                         file.writelines(definition)
-        with open("../Source/Godot.GDExtension/GDExtensionInterface.cs", "w") as file:
+        with open("../Source/Godot.Interop/GDExtensionInterface.cs", "w") as file:
             file.writelines(self.header("GDExtensionInterface"))
             file.write("\n")
             file.writelines(self.definition())
@@ -206,7 +206,7 @@ class GDExtensionEnum(GDExtensionType):
         if self.deprecated or self.is_bitfield:
             yield "using System;\n"
             yield "\n"
-        yield "namespace Godot.GDExtension;\n"
+        yield "namespace Godot.Interop;\n"
         yield "\n"
         if self.description:
             yield from self.description.documentation(symbols)
@@ -229,7 +229,7 @@ class GDExtensionEnum(GDExtensionType):
         yield "}\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return f"Godot.GDExtension.{self.name}"
+        return f"Godot.Interop.{self.name}"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         prefix: str = commonprefix([value.name for value in self.values])
@@ -290,7 +290,7 @@ class GDExtensionStruct(GDExtensionType):
             yield "using System;\n"
         yield "using System.Runtime.InteropServices;\n"
         yield "\n"
-        yield "namespace Godot.GDExtension;\n"
+        yield "namespace Godot.Interop;\n"
         yield "\n"
         if self.description:
             yield from self.description.documentation(symbols)
@@ -307,7 +307,7 @@ class GDExtensionStruct(GDExtensionType):
         yield "}\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return f"Godot.GDExtension.{self.name}"
+        return f"Godot.Interop.{self.name}"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         for member in self.members:

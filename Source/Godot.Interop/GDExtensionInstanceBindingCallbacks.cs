@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionCallError.cs                                               */
+/*  GDExtensionInstanceBindingCallbacks.cs                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,12 +30,12 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionCallError
+public struct GDExtensionInstanceBindingCallbacks
 {
-    public GDExtensionCallErrorType Error;
-    public int Argument;
-    public int Expected;
+    public unsafe GDExtensionInstanceBindingCreateCallback CreateCallback;
+    public unsafe GDExtensionInstanceBindingFreeCallback FreeCallback;
+    public unsafe GDExtensionInstanceBindingReferenceCallback ReferenceCallback;
 }

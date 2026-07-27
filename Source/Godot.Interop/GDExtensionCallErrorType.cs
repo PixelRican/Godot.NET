@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 public enum GDExtensionCallErrorType
 {

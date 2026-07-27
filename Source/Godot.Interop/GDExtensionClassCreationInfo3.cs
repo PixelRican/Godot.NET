@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionClassCreationInfo.cs                                       */
+/*  GDExtensionClassCreationInfo3.cs                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -31,21 +31,24 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
-[Obsolete("Deprecated since Godot 4.2. Use GDExtensionClassCreationInfo6 instead.")]
+[Obsolete("Deprecated since Godot 4.4. Use GDExtensionClassCreationInfo6 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionClassCreationInfo
+public struct GDExtensionClassCreationInfo3
 {
     public GDExtensionBool IsVirtual;
     public GDExtensionBool IsAbstract;
+    public GDExtensionBool IsExposed;
+    public GDExtensionBool IsRuntime;
     public unsafe GDExtensionClassSet SetFunc;
     public unsafe GDExtensionClassGet GetFunc;
     public unsafe GDExtensionClassGetPropertyList GetPropertyListFunc;
-    public unsafe GDExtensionClassFreePropertyList FreePropertyListFunc;
+    public unsafe GDExtensionClassFreePropertyList2 FreePropertyListFunc;
     public unsafe GDExtensionClassPropertyCanRevert PropertyCanRevertFunc;
     public unsafe GDExtensionClassPropertyGetRevert PropertyGetRevertFunc;
-    public unsafe GDExtensionClassNotification NotificationFunc;
+    public unsafe GDExtensionClassValidateProperty ValidatePropertyFunc;
+    public unsafe GDExtensionClassNotification2 NotificationFunc;
     public unsafe GDExtensionClassToString ToStringFunc;
     public unsafe GDExtensionClassReference ReferenceFunc;
     public unsafe GDExtensionClassUnreference UnreferenceFunc;
@@ -57,10 +60,24 @@ public struct GDExtensionClassCreationInfo
     /// Destructor; mandatory.
     /// </summary>
     public unsafe GDExtensionClassFreeInstance FreeInstanceFunc;
+    public unsafe GDExtensionClassRecreateInstance RecreateInstanceFunc;
     /// <summary>
     /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
     /// </summary>
     public unsafe GDExtensionClassGetVirtual GetVirtualFunc;
+    /// <summary>
+    /// Paired with `CallVirtualWithDataFunc`, this is an alternative to `GetVirtualFunc` for extensions that<br/>
+    /// need or benefit from extra data when calling virtual functions.<br/>
+    /// Returns user data that will be passed to `CallVirtualWithDataFunc`.<br/>
+    /// Returning `null` from this function signals to Godot that the virtual function is not overridden.<br/>
+    /// Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized.<br/>
+    /// You should supply either `GetVirtualFunc`, or `GetVirtualCallDataFunc` with `CallVirtualWithDataFunc`.
+    /// </summary>
+    public unsafe GDExtensionClassGetVirtualCallData GetVirtualCallDataFunc;
+    /// <summary>
+    /// Used to call virtual functions when `GetVirtualCallDataFunc` is not null.
+    /// </summary>
+    public unsafe GDExtensionClassCallVirtualWithData CallVirtualWithDataFunc;
     public unsafe GDExtensionClassGetRID GetRidFunc;
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.

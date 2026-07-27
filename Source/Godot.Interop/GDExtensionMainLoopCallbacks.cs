@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionScriptInstanceInfo3.cs                                     */
+/*  GDExtensionMainLoopCallbacks.cs                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,38 +30,22 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionScriptInstanceInfo3
+public struct GDExtensionMainLoopCallbacks
 {
-    public unsafe GDExtensionScriptInstanceSet SetFunc;
-    public unsafe GDExtensionScriptInstanceGet GetFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
-    public unsafe GDExtensionScriptInstanceFreePropertyList2 FreePropertyListFunc;
     /// <summary>
-    /// Optional. Set to null for the default behavior.
+    /// Will be called after Godot is started and is fully initialized.
     /// </summary>
-    public unsafe GDExtensionScriptInstanceGetClassCategory GetClassCategoryFunc;
-    public unsafe GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
-    public unsafe GDExtensionScriptInstancePropertyGetRevert PropertyGetRevertFunc;
-    public unsafe GDExtensionScriptInstanceGetOwner GetOwnerFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyState GetPropertyStateFunc;
-    public unsafe GDExtensionScriptInstanceGetMethodList GetMethodListFunc;
-    public unsafe GDExtensionScriptInstanceFreeMethodList2 FreeMethodListFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyType GetPropertyTypeFunc;
-    public unsafe GDExtensionScriptInstanceValidateProperty ValidatePropertyFunc;
-    public unsafe GDExtensionScriptInstanceHasMethod HasMethodFunc;
-    public unsafe GDExtensionScriptInstanceGetMethodArgumentCount GetMethodArgumentCountFunc;
-    public unsafe GDExtensionScriptInstanceCall CallFunc;
-    public unsafe GDExtensionScriptInstanceNotification2 NotificationFunc;
-    public unsafe GDExtensionScriptInstanceToString ToStringFunc;
-    public unsafe GDExtensionScriptInstanceRefCountIncremented RefCountIncrementedFunc;
-    public unsafe GDExtensionScriptInstanceRefCountDecremented RefCountDecrementedFunc;
-    public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
-    public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
-    public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
-    public unsafe GDExtensionScriptInstanceGet GetFallbackFunc;
-    public unsafe GDExtensionScriptInstanceGetLanguage GetLanguageFunc;
-    public unsafe GDExtensionScriptInstanceFree FreeFunc;
+    public unsafe GDExtensionMainLoopStartupCallback StartupFunc;
+    /// <summary>
+    /// Will be called before Godot is shutdown when it is still fully initialized.
+    /// </summary>
+    public unsafe GDExtensionMainLoopShutdownCallback ShutdownFunc;
+    /// <summary>
+    /// Will be called for each process frame. This will run after all `_process()` methods on Node, and before `ScriptServer::frame()`.<br/>
+    /// This is intended to be the equivalent of `ScriptLanguage::frame()` for GDExtension language bindings that don't use the script API.
+    /// </summary>
+    public unsafe GDExtensionMainLoopFrameCallback FrameFunc;
 }

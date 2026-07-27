@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionInitializationLevel.cs                                     */
+/*  GDExtensionClassVirtualMethodInfo.cs                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,13 +28,21 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-namespace Godot.GDExtension;
+using System.Runtime.InteropServices;
 
-public enum GDExtensionInitializationLevel
+namespace Godot.Interop;
+
+[StructLayout(LayoutKind.Sequential)]
+public struct GDExtensionClassVirtualMethodInfo
 {
-    Core = 0,
-    Servers = 1,
-    Scene = 2,
-    Editor = 3,
-    Max = 4
+    public unsafe GDExtensionStringNamePtr Name;
+    /// <summary>
+    /// Bitfield of `GDExtensionClassMethodFlags`.
+    /// </summary>
+    public GDExtensionClassMethodFlags MethodFlags;
+    public GDExtensionPropertyInfo ReturnValue;
+    public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
+    public uint ArgumentCount;
+    public unsafe GDExtensionPropertyInfo* Arguments;
+    public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
 }

@@ -1,4 +1,4 @@
-﻿using Godot.GDExtension;
+﻿using Godot.Interop;
 
 namespace Godot.Tests;
 

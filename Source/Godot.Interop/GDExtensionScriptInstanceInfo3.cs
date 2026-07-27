@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionInstanceBindingCallbacks.cs                                */
+/*  GDExtensionScriptInstanceInfo3.cs                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,12 +30,38 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionInstanceBindingCallbacks
+public struct GDExtensionScriptInstanceInfo3
 {
-    public unsafe GDExtensionInstanceBindingCreateCallback CreateCallback;
-    public unsafe GDExtensionInstanceBindingFreeCallback FreeCallback;
-    public unsafe GDExtensionInstanceBindingReferenceCallback ReferenceCallback;
+    public unsafe GDExtensionScriptInstanceSet SetFunc;
+    public unsafe GDExtensionScriptInstanceGet GetFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
+    public unsafe GDExtensionScriptInstanceFreePropertyList2 FreePropertyListFunc;
+    /// <summary>
+    /// Optional. Set to null for the default behavior.
+    /// </summary>
+    public unsafe GDExtensionScriptInstanceGetClassCategory GetClassCategoryFunc;
+    public unsafe GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
+    public unsafe GDExtensionScriptInstancePropertyGetRevert PropertyGetRevertFunc;
+    public unsafe GDExtensionScriptInstanceGetOwner GetOwnerFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyState GetPropertyStateFunc;
+    public unsafe GDExtensionScriptInstanceGetMethodList GetMethodListFunc;
+    public unsafe GDExtensionScriptInstanceFreeMethodList2 FreeMethodListFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyType GetPropertyTypeFunc;
+    public unsafe GDExtensionScriptInstanceValidateProperty ValidatePropertyFunc;
+    public unsafe GDExtensionScriptInstanceHasMethod HasMethodFunc;
+    public unsafe GDExtensionScriptInstanceGetMethodArgumentCount GetMethodArgumentCountFunc;
+    public unsafe GDExtensionScriptInstanceCall CallFunc;
+    public unsafe GDExtensionScriptInstanceNotification2 NotificationFunc;
+    public unsafe GDExtensionScriptInstanceToString ToStringFunc;
+    public unsafe GDExtensionScriptInstanceRefCountIncremented RefCountIncrementedFunc;
+    public unsafe GDExtensionScriptInstanceRefCountDecremented RefCountDecrementedFunc;
+    public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
+    public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
+    public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
+    public unsafe GDExtensionScriptInstanceGet GetFallbackFunc;
+    public unsafe GDExtensionScriptInstanceGetLanguage GetLanguageFunc;
+    public unsafe GDExtensionScriptInstanceFree FreeFunc;
 }

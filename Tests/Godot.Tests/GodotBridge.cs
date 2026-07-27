@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Godot.GDExtension;
+using Godot.Interop;
 using Godot.InteropServices;
 
 namespace Godot.Tests;

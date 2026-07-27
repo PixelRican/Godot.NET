@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionInitialization.cs                                          */
+/*  GDExtensionClassMethodFlags.cs                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,25 +28,19 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-using System.Runtime.InteropServices;
+using System;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
-[StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionInitialization
+[Flags]
+public enum GDExtensionClassMethodFlags : uint
 {
-    /// <summary>
-    /// Minimum initialization level required.<br/>
-    /// If Core or Servers, the extension needs editor or game restart to take effect
-    /// </summary>
-    public GDExtensionInitializationLevel MinimumInitializationLevel;
-    /// <summary>
-    /// Up to the user to supply when initializing
-    /// </summary>
-    public unsafe void* UserData;
-    /// <summary>
-    /// This function will be called multiple times for each initialization level.
-    /// </summary>
-    public unsafe GDExtensionInitializeCallback Initialize;
-    public unsafe GDExtensionDeinitializeCallback Deinitialize;
+    Normal = 1,
+    Editor = 2,
+    Const = 4,
+    Virtual = 8,
+    Vararg = 16,
+    Static = 32,
+    VirtualRequired = 128,
+    Default = 1
 }

@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionScriptInstanceInfo2.cs                                     */
+/*  GDExtensionInitialization.cs                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,41 +28,25 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-using System;
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
-[Obsolete("Deprecated since Godot 4.3. Use GDExtensionScriptInstanceInfo3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionScriptInstanceInfo2
+public struct GDExtensionInitialization
 {
-    public unsafe GDExtensionScriptInstanceSet SetFunc;
-    public unsafe GDExtensionScriptInstanceGet GetFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
-    public unsafe GDExtensionScriptInstanceFreePropertyList FreePropertyListFunc;
     /// <summary>
-    /// Optional. Set to null for the default behavior.
+    /// Minimum initialization level required.<br/>
+    /// If Core or Servers, the extension needs editor or game restart to take effect
     /// </summary>
-    public unsafe GDExtensionScriptInstanceGetClassCategory GetClassCategoryFunc;
-    public unsafe GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
-    public unsafe GDExtensionScriptInstancePropertyGetRevert PropertyGetRevertFunc;
-    public unsafe GDExtensionScriptInstanceGetOwner GetOwnerFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyState GetPropertyStateFunc;
-    public unsafe GDExtensionScriptInstanceGetMethodList GetMethodListFunc;
-    public unsafe GDExtensionScriptInstanceFreeMethodList FreeMethodListFunc;
-    public unsafe GDExtensionScriptInstanceGetPropertyType GetPropertyTypeFunc;
-    public unsafe GDExtensionScriptInstanceValidateProperty ValidatePropertyFunc;
-    public unsafe GDExtensionScriptInstanceHasMethod HasMethodFunc;
-    public unsafe GDExtensionScriptInstanceCall CallFunc;
-    public unsafe GDExtensionScriptInstanceNotification2 NotificationFunc;
-    public unsafe GDExtensionScriptInstanceToString ToStringFunc;
-    public unsafe GDExtensionScriptInstanceRefCountIncremented RefCountIncrementedFunc;
-    public unsafe GDExtensionScriptInstanceRefCountDecremented RefCountDecrementedFunc;
-    public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
-    public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
-    public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
-    public unsafe GDExtensionScriptInstanceGet GetFallbackFunc;
-    public unsafe GDExtensionScriptInstanceGetLanguage GetLanguageFunc;
-    public unsafe GDExtensionScriptInstanceFree FreeFunc;
+    public GDExtensionInitializationLevel MinimumInitializationLevel;
+    /// <summary>
+    /// Up to the user to supply when initializing
+    /// </summary>
+    public unsafe void* UserData;
+    /// <summary>
+    /// This function will be called multiple times for each initialization level.
+    /// </summary>
+    public unsafe GDExtensionInitializeCallback Initialize;
+    public unsafe GDExtensionDeinitializeCallback Deinitialize;
 }

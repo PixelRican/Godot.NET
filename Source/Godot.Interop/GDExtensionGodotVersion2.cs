@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionClassMethodInfo.cs                                         */
+/*  GDExtensionGodotVersion2.cs                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,39 +30,36 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionClassMethodInfo
+public struct GDExtensionGodotVersion2
 {
-    public unsafe GDExtensionStringNamePtr Name;
-    public unsafe void* MethodUserData;
-    public unsafe GDExtensionClassMethodCall CallFunc;
-    public unsafe GDExtensionClassMethodPtrCall PtrCallFunc;
+    public uint Major;
+    public uint Minor;
+    public uint Patch;
     /// <summary>
-    /// Bitfield of `GDExtensionClassMethodFlags`.
+    /// Full version encoded as hexadecimal with one byte (2 hex digits) per number (e.g. for "3.1.12" it would be 0x03010C)
     /// </summary>
-    public GDExtensionClassMethodFlags MethodFlags;
+    public uint Hex;
     /// <summary>
-    /// If `HasReturnValue` is false, `ReturnValueInfo` and `ReturnValueMetadata` are ignored.<br/>
-    /// <br/>
-    /// @todo Consider dropping `HasReturnValue` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
+    /// (e.g. "stable", "beta", "rc1", "rc2")
     /// </summary>
-    public GDExtensionBool HasReturnValue;
-    public unsafe GDExtensionPropertyInfo* ReturnValueInfo;
-    public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
+    public unsafe byte* Status;
     /// <summary>
-    /// Arguments: `ArgumentsInfo` and `ArgumentsMetadata` are array of size `ArgumentCount`.<br/>
-    /// Name and hint information for the argument can be omitted in release builds. Class name should always be present if it applies.<br/>
-    /// <br/>
-    /// @todo Consider renaming `ArgumentsInfo` to `Arguments` for consistency in future version of this struct.
+    /// (e.g. "custom_build")
     /// </summary>
-    public uint ArgumentCount;
-    public unsafe GDExtensionPropertyInfo* ArgumentsInfo;
-    public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
+    public unsafe byte* Build;
     /// <summary>
-    /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
+    /// Full Git commit hash.
     /// </summary>
-    public uint DefaultArgumentCount;
-    public unsafe GDExtensionVariantPtr* DefaultArguments;
+    public unsafe byte* Hash;
+    /// <summary>
+    /// Git commit date UNIX timestamp in seconds, or 0 if unavailable.
+    /// </summary>
+    public ulong Timestamp;
+    /// <summary>
+    /// (e.g. "Godot v3.1.4.stable.official.mono")
+    /// </summary>
+    public unsafe byte* String;
 }

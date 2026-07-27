@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionClassCreationInfo6.cs                                      */
+/*  GDExtensionClassCreationInfo4.cs                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,12 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+using System;
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
+[Obsolete("Deprecated since Godot 4.5. Use GDExtensionClassCreationInfo6 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionClassCreationInfo6
+public struct GDExtensionClassCreationInfo4
 {
     public GDExtensionBool IsVirtual;
     public GDExtensionBool IsAbstract;
@@ -54,7 +56,7 @@ public struct GDExtensionClassCreationInfo6
     /// <summary>
     /// Class constructor. Required unless the class is virtual or abstract.
     /// </summary>
-    public unsafe GDExtensionClassCreateInstance3 CreateInstanceFunc;
+    public unsafe GDExtensionClassCreateInstance2 CreateInstanceFunc;
     /// <summary>
     /// Destructor; mandatory.
     /// </summary>

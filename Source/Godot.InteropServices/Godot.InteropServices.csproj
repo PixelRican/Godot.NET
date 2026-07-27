@@ -3,6 +3,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Godot.GDExtension\Godot.GDExtension.csproj" />
+        <ProjectReference Include="..\Godot.Interop\Godot.Interop.csproj" />
     </ItemGroup>
 </Project>

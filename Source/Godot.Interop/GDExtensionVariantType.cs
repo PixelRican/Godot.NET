@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionVariantOperator.cs                                         */
+/*  GDExtensionVariantType.cs                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,34 +28,48 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
-public enum GDExtensionVariantOperator
+public enum GDExtensionVariantType
 {
-    Equal = 0,
-    NotEqual = 1,
-    Less = 2,
-    LessEqual = 3,
-    Greater = 4,
-    GreaterEqual = 5,
-    Add = 6,
-    Subtract = 7,
-    Multiply = 8,
-    Divide = 9,
-    Negate = 10,
-    Positive = 11,
-    Module = 12,
-    Power = 13,
-    ShiftLeft = 14,
-    ShiftRight = 15,
-    BitAnd = 16,
-    BitOr = 17,
-    BitXor = 18,
-    BitNegate = 19,
-    And = 20,
-    Or = 21,
-    Xor = 22,
-    Not = 23,
-    In = 24,
-    Max = 25
+    Nil = 0,
+    Bool = 1,
+    Int = 2,
+    Float = 3,
+    String = 4,
+    Vector2 = 5,
+    Vector2I = 6,
+    Rect2 = 7,
+    Rect2I = 8,
+    Vector3 = 9,
+    Vector3I = 10,
+    Transform2D = 11,
+    Vector4 = 12,
+    Vector4I = 13,
+    Plane = 14,
+    Quaternion = 15,
+    Aabb = 16,
+    Basis = 17,
+    Transform3D = 18,
+    Projection = 19,
+    Color = 20,
+    StringName = 21,
+    NodePath = 22,
+    Rid = 23,
+    Object = 24,
+    Callable = 25,
+    Signal = 26,
+    Dictionary = 27,
+    Array = 28,
+    PackedByteArray = 29,
+    PackedInt32Array = 30,
+    PackedInt64Array = 31,
+    PackedFloat32Array = 32,
+    PackedFloat64Array = 33,
+    PackedStringArray = 34,
+    PackedVector2Array = 35,
+    PackedVector3Array = 36,
+    PackedColorArray = 37,
+    PackedVector4Array = 38,
+    Max = 39
 }

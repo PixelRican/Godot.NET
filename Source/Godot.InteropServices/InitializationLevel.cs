@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-using Godot.GDExtension;
+using Godot.Interop;
 
 namespace Godot.InteropServices;
 

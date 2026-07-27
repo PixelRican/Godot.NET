@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionCallableCustomInfo.cs                                      */
+/*  GDExtensionScriptInstanceInfo2.cs                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -31,35 +31,38 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
-/// <summary>
-/// Only `CallFunc` and `Token` are strictly required, however, `ObjectId` should be passed if its not a static method.<br/>
-/// <br/>
-/// `Token` should point to an address that uniquely identifies the GDExtension (for example, the<br/>
-/// `GDExtensionClassLibraryPtr` passed to the entry symbol function.<br/>
-/// <br/>
-/// `HashFunc`, `EqualFunc`, and `LessThanFunc` are optional. If not provided both `CallFunc` and<br/>
-/// `CallableUserData` together are used as the identity of the callable for hashing and comparison purposes.<br/>
-/// <br/>
-/// The hash returned by `HashFunc` is cached, `HashFunc` will not be called more than once per callable.<br/>
-/// <br/>
-/// `IsValidFunc` is necessary if the validity of the callable can change before destruction.<br/>
-/// <br/>
-/// `FreeFunc` is necessary if `CallableUserData` needs to be cleaned up when the callable is freed.
-/// </summary>
-[Obsolete("Deprecated since Godot 4.3. Use GDExtensionCallableCustomInfo2 instead.")]
+[Obsolete("Deprecated since Godot 4.3. Use GDExtensionScriptInstanceInfo3 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionCallableCustomInfo
+public struct GDExtensionScriptInstanceInfo2
 {
-    public unsafe void* CallableUserData;
-    public unsafe void* Token;
-    public GDObjectInstanceID ObjectId;
-    public unsafe GDExtensionCallableCustomCall CallFunc;
-    public unsafe GDExtensionCallableCustomIsValid IsValidFunc;
-    public unsafe GDExtensionCallableCustomFree FreeFunc;
-    public unsafe GDExtensionCallableCustomHash HashFunc;
-    public unsafe GDExtensionCallableCustomEqual EqualFunc;
-    public unsafe GDExtensionCallableCustomLessThan LessThanFunc;
-    public unsafe GDExtensionCallableCustomToString ToStringFunc;
+    public unsafe GDExtensionScriptInstanceSet SetFunc;
+    public unsafe GDExtensionScriptInstanceGet GetFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyList GetPropertyListFunc;
+    public unsafe GDExtensionScriptInstanceFreePropertyList FreePropertyListFunc;
+    /// <summary>
+    /// Optional. Set to null for the default behavior.
+    /// </summary>
+    public unsafe GDExtensionScriptInstanceGetClassCategory GetClassCategoryFunc;
+    public unsafe GDExtensionScriptInstancePropertyCanRevert PropertyCanRevertFunc;
+    public unsafe GDExtensionScriptInstancePropertyGetRevert PropertyGetRevertFunc;
+    public unsafe GDExtensionScriptInstanceGetOwner GetOwnerFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyState GetPropertyStateFunc;
+    public unsafe GDExtensionScriptInstanceGetMethodList GetMethodListFunc;
+    public unsafe GDExtensionScriptInstanceFreeMethodList FreeMethodListFunc;
+    public unsafe GDExtensionScriptInstanceGetPropertyType GetPropertyTypeFunc;
+    public unsafe GDExtensionScriptInstanceValidateProperty ValidatePropertyFunc;
+    public unsafe GDExtensionScriptInstanceHasMethod HasMethodFunc;
+    public unsafe GDExtensionScriptInstanceCall CallFunc;
+    public unsafe GDExtensionScriptInstanceNotification2 NotificationFunc;
+    public unsafe GDExtensionScriptInstanceToString ToStringFunc;
+    public unsafe GDExtensionScriptInstanceRefCountIncremented RefCountIncrementedFunc;
+    public unsafe GDExtensionScriptInstanceRefCountDecremented RefCountDecrementedFunc;
+    public unsafe GDExtensionScriptInstanceGetScript GetScriptFunc;
+    public unsafe GDExtensionScriptInstanceIsPlaceholder IsPlaceholderFunc;
+    public unsafe GDExtensionScriptInstanceSet SetFallbackFunc;
+    public unsafe GDExtensionScriptInstanceGet GetFallbackFunc;
+    public unsafe GDExtensionScriptInstanceGetLanguage GetLanguageFunc;
+    public unsafe GDExtensionScriptInstanceFree FreeFunc;
 }

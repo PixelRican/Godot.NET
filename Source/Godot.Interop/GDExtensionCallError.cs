@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionMethodInfo.cs                                              */
+/*  GDExtensionCallError.cs                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,26 +30,12 @@
 
 using System.Runtime.InteropServices;
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionMethodInfo
+public struct GDExtensionCallError
 {
-    public unsafe GDExtensionStringNamePtr Name;
-    public GDExtensionPropertyInfo ReturnValue;
-    /// <summary>
-    /// Bitfield of `GDExtensionClassMethodFlags`.
-    /// </summary>
-    public uint Flags;
-    public int Id;
-    /// <summary>
-    /// Arguments: `DefaultArguments` is an array of size `ArgumentCount`.
-    /// </summary>
-    public uint ArgumentCount;
-    public unsafe GDExtensionPropertyInfo* Arguments;
-    /// <summary>
-    /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
-    /// </summary>
-    public uint DefaultArgumentCount;
-    public unsafe GDExtensionVariantPtr* DefaultArguments;
+    public GDExtensionCallErrorType Error;
+    public int Argument;
+    public int Expected;
 }

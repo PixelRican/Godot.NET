@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  GDExtensionClassMethodArgumentMetadata.cs                             */
+/*  GDExtensionInitializationLevel.cs                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,22 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-namespace Godot.GDExtension;
+namespace Godot.Interop;
 
-public enum GDExtensionClassMethodArgumentMetadata
+public enum GDExtensionInitializationLevel
 {
-    None = 0,
-    IntIsInt8 = 1,
-    IntIsInt16 = 2,
-    IntIsInt32 = 3,
-    IntIsInt64 = 4,
-    IntIsUInt8 = 5,
-    IntIsUInt16 = 6,
-    IntIsUInt32 = 7,
-    IntIsUInt64 = 8,
-    RealIsFloat = 9,
-    RealIsDouble = 10,
-    IntIsChar16 = 11,
-    IntIsChar32 = 12,
-    ObjectIsRequired = 13
+    Core = 0,
+    Servers = 1,
+    Scene = 2,
+    Editor = 3,
+    Max = 4
 }
