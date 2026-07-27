@@ -3,8 +3,9 @@
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         self.copyright: list[str] = data["_copyright"]
-        self.types: dict[str, GDExtensionType] = {}
-        self.interface: dict[str, GDExtensionInterfaceFunction] = {}
+        self.types: list[GDExtensionType] = []
+        self.interface: list[GDExtensionInterfaceFunction] = []
+        self.symbols: GDExtensionSymbolTable = GDExtensionSymbolTable()
         for type_data in data["types"]:
             instance: GDExtensionType | None = None
             match type_data["kind"]:
@@ -19,10 +20,10 @@ class GDExtensionInterface:
                 case "function":
                     instance = GDExtensionFunction(type_data)
             assert instance
-            self.types[instance.name] = instance
+            self.types.append(instance)
+            self.symbols.register(instance)
         for function_data in data["interface"]:
-            function: GDExtensionInterfaceFunction = GDExtensionInterfaceFunction(function_data)
-            self.interface[function.name] = function
+            self.interface.append(GDExtensionInterfaceFunction(function_data))
 
     def definition(self) -> Iterable[str]:
         yield "using System;\n"
@@ -33,7 +34,7 @@ class GDExtensionInterface:
         yield "\n"
         yield "public static unsafe class GDExtensionInterface\n"
         yield "{\n"
-        for function in self.interface.values():
+        for function in self.interface:
             yield f"    private static {function.type} s_{function.name};\n"
         yield "\n"
         yield "    /// <summary>\n"
@@ -48,10 +49,10 @@ class GDExtensionInterface:
         yield "    public static void Initialize(GDExtensionInterfaceGetProcAddress getProcAddress)\n"
         yield "    {\n"
         yield "        ArgumentNullException.ThrowIfNull(getProcAddress);\n"
-        for function in self.interface.values():
+        for function in self.interface:
             yield f"        s_{function.name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
         yield "    }\n"
-        for function in self.interface.values():
+        for function in self.interface:
             parameters: str = ", ".join(f"{argument.type} {argument.name}" for argument in function.arguments)
             arguments: str = ", ".join(argument.name for argument in function.arguments)
             yield "\n"
@@ -107,8 +108,8 @@ class GDExtensionInterface:
         with open("../Source/Godot.GDExtension/GlobalUsings.cs", "w") as file:
             file.writelines(self.header("GlobalUsings"))
             file.write("\n")
-        for instance in self.types.values():
-            definition: Iterable[str] = instance.definition(self)
+        for instance in self.types:
+            definition: Iterable[str] = instance.definition(self.symbols)
             match instance:
                 case GDExtensionEnum() | GDExtensionStruct():
                     with open(f"../Source/Godot.GDExtension/{instance.name}.cs", "w") as file:
@@ -128,6 +129,24 @@ class GDExtensionInterface:
         yield f"/*  {name}.cs  {" " * (65 - len(name))}*/\n"
         for line in self.copyright:
             yield f"{line}\n"
+
+class GDExtensionSymbolTable:
+    def __init__(self) -> None:
+        self.types: dict[str, GDExtensionType] = {}
+        self.expansions: dict[str, str] = {}
+
+    def expand(self, symbol: str) -> str:
+        expansion: str = self.expansions.get(symbol, "")
+        if expansion:
+            return expansion
+        split: int = len(symbol) - symbol.endswith("*")
+        instance: GDExtensionType | None = self.types.get(symbol[:split])
+        expansion = instance.expand(self) + symbol[split:] if instance else symbol
+        self.expansions[symbol] = expansion
+        return expansion
+
+    def register(self, instance: GDExtensionType) -> None:
+        self.types[instance.name] = instance
 
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
@@ -172,10 +191,10 @@ class GDExtensionType:
         if deprecated:
             self.deprecated = GDExtensionDeprecated(deprecated)
 
-    def definition(self, interface: GDExtensionInterface) -> Iterable[str]:
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         raise NotImplementedError()
 
-    def expand(self, interface: GDExtensionInterface) -> str:
+    def expand(self, symbols: GDExtensionSymbolTable) -> str:
         raise NotImplementedError()
 
 class GDExtensionEnum(GDExtensionType):
@@ -186,7 +205,7 @@ class GDExtensionEnum(GDExtensionType):
             GDExtensionEnumValue(value_data) for value_data in data["values"]
         ]
 
-    def definition(self, interface: GDExtensionInterface) -> Iterable[str]:
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         if self.deprecated or self.is_bitfield:
             yield "using System;\n"
             yield "\n"
@@ -210,7 +229,7 @@ class GDExtensionEnum(GDExtensionType):
         yield f"    {value.name} = {value.value}\n"
         yield "}\n"
 
-    def expand(self, interface: GDExtensionInterface) -> str:
+    def expand(self, symbols: GDExtensionSymbolTable) -> str:
         return f"Godot.GDExtension.{self.name}"
 
 class GDExtensionEnumValue:
@@ -223,10 +242,10 @@ class GDExtensionEnumValue:
             self.description = GDExtensionDescription(description)
 
 class GDExtensionHandle(GDExtensionType):
-    def definition(self, interface: GDExtensionInterface) -> Iterable[str]:
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         yield f"global using unsafe {self.name} = void*;\n"
 
-    def expand(self, interface: GDExtensionInterface) -> str:
+    def expand(self, symbols: GDExtensionSymbolTable) -> str:
         return "void*"
 
 class GDExtensionAlias(GDExtensionType):
@@ -236,14 +255,11 @@ class GDExtensionAlias(GDExtensionType):
         if self.name.endswith("Bool"):
             self.type = "bool"
 
-    def definition(self, interface: GDExtensionInterface) -> Iterable[str]:
-        yield f"global using {self.name} = {self.expand(interface)};\n"
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
+        yield f"global using {self.name} = {symbols.expand(self.name)};\n"
 
-    def expand(self, interface: GDExtensionInterface) -> str:
-        instance: GDExtensionType | None = interface.types.get(self.type)
-        if instance:
-            return instance.expand(interface)
-        return self.type
+    def expand(self, symbols: GDExtensionSymbolTable) -> str:
+        return symbols.expand(self.type)
 
 class GDExtensionStruct(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -252,7 +268,7 @@ class GDExtensionStruct(GDExtensionType):
             GDExtensionStructMember(member_data) for member_data in data["members"]
         ]
 
-    def definition(self, interface: GDExtensionInterface) -> Iterable[str]:
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
         if self.deprecated:
             yield "using System;\n"
         yield "using System.Runtime.InteropServices;\n"
@@ -269,11 +285,11 @@ class GDExtensionStruct(GDExtensionType):
         for member in self.members:
             if member.description:
                 yield from member.description.documentation(indent=True)
-            unsafe: str = "unsafe " * interface.unsafe(member.type)
+            unsafe: str = "unsafe " * symbols.unsafe(member.type)
             yield f"    public {unsafe}{member.type} {member.name};\n"
         yield "}\n"
 
-    def expand(self, interface: GDExtensionInterface) -> str:
+    def expand(self, symbols: GDExtensionSymbolTable) -> str:
         return f"Godot.GDExtension.{self.name}"
 
 class GDExtensionStructMember:
@@ -298,25 +314,15 @@ class GDExtensionFunction(GDExtensionType):
         if return_value:
             self.return_value = GDExtensionFunctionReturnValue(return_value)
 
-    def definition(self, interface: GDExtensionInterface) -> Iterable[str]:
-        yield f"global using unsafe {self.name} = {self.expand(interface)};\n"
+    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
+        yield f"global using unsafe {self.name} = {symbols.expand(self.name)};\n"
 
-    def expand(self, interface: GDExtensionInterface) -> str:
+    def expand(self, symbols: GDExtensionSymbolTable) -> str:
         type_parameters: list[str] = []
         for argument in self.arguments:
-            name: str = argument.type
-            split: int = len(name) - argument.type.endswith("*")
-            target: GDExtensionType | None = interface.types.get(name[:split])
-            if target:
-                name = target.expand(interface) + name[split:]
-            type_parameters.append(name)
+            type_parameters.append(symbols.expand(argument.type))
         if self.return_value:
-            name: str = self.return_value.type
-            split: int = len(name) - self.return_value.type.endswith("*")
-            target: GDExtensionType | None = interface.types.get(name[:split])
-            if target:
-                name = target.expand(interface) + name[split:]
-            type_parameters.append(name)
+            type_parameters.append(symbols.expand(self.return_value.type))
         else:
             type_parameters.append("void")
         return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
