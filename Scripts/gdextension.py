@@ -389,14 +389,14 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         if self.return_value:
             yield f"    public static {self.return_value.type} {symbols.transform(self.name)}({parameters})\n"
             yield "    {\n"
-            yield f"        var function = s_{camel(self.name)};\n"
+            yield f"        {self.type} function = s_{camel(self.name)};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        return function({arguments});\n"
             yield "    }\n"
         else:
             yield f"    public static void {symbols.transform(self.name)}({parameters})\n"
             yield "    {\n"
-            yield f"        var function = s_{camel(self.name)};\n"
+            yield f"        {self.type} function = s_{camel(self.name)};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        function({arguments});\n"
             yield "    }\n"
