@@ -26,7 +26,9 @@ class GDExtensionInterface:
             self.symbols.register(instance)
             instance.stylize(self.symbols)
         for function_data in data["interface"]:
-            self.interface.append(GDExtensionFunction(function_data))
+            function: GDExtensionFunction = GDExtensionFunction(function_data)
+            function.stylize(self.symbols)
+            self.interface.append(function)
 
     def definition(self) -> Iterable[str]:
         yield "using System;\n"
@@ -56,8 +58,8 @@ class GDExtensionInterface:
             yield f"        s_{function.name} = ({function.type})Load(getProcAddress, \"{function.name}\"u8);\n"
         yield "    }\n"
         for function in self.interface:
-            parameters: str = ", ".join(f"{argument.type} {argument.name}" for argument in function.arguments)
-            arguments: str = ", ".join(argument.name for argument in function.arguments)
+            parameters: str = ", ".join(f"{argument.type} {self.symbols.transform(argument.name)}" for argument in function.arguments)
+            arguments: str = ", ".join(self.symbols.transform(argument.name) for argument in function.arguments)
             yield "\n"
             if function.description:
                 yield from function.description.documentation(self.symbols, indent=True)
@@ -67,17 +69,17 @@ class GDExtensionInterface:
             if function.return_value and function.return_value.description:
                 yield from function.return_value.description.documentation(self.symbols, indent=True)
             if function.deprecated:
-                yield function.deprecated.attribute(indent=True)
+                yield function.deprecated.attribute(self.symbols, indent=True)
             yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
             if function.return_value:
-                yield f"    public static {function.return_value.type} {function.name}({parameters})\n"
+                yield f"    public static {function.return_value.type} {self.symbols.transform(function.name)}({parameters})\n"
                 yield "    {\n"
                 yield f"        var function = s_{function.name};\n"
                 yield "        ThrowIfInvalid(function);\n"
                 yield f"        return function({arguments});\n"
                 yield "    }\n"
             else:
-                yield f"    public static void {function.name}({parameters})\n"
+                yield f"    public static void {self.symbols.transform(function.name)}({parameters})\n"
                 yield "    {\n"
                 yield f"        var function = s_{function.name};\n"
                 yield "        ThrowIfInvalid(function);\n"
@@ -177,7 +179,7 @@ class GDExtensionDescription:
 
     def documentation(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> Iterable[str]:
         spacing: str = "    " if indent else ""
-        metadata: str = f" {self.metadata}" if self.metadata else ""
+        metadata: str = symbols.transform(f" {self.metadata}") if self.metadata else ""
         yield f"{spacing}/// <{self.tag}{metadata}>\n"
         for line in self.lines[:-1]:
             yield f"{spacing}/// {symbols.transform(line)}<br/>\n"
@@ -190,10 +192,10 @@ class GDExtensionDeprecated:
         self.message: str | None = data.get("message")
         self.replace_with: str | None = data.get("replace_with")
 
-    def attribute(self, indent: bool = False) -> str:
+    def attribute(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> str:
         spacing: str = "    " if indent else ""
         message: str = f" {self.message}" if self.message else ""
-        replace_with: str = f" Use {self.replace_with} instead." if self.replace_with else ""
+        replace_with: str = f" Use {symbols.transform(self.replace_with)} instead." if self.replace_with else ""
         return f"{spacing}[Obsolete(\"Deprecated since Godot {self.since}.{message}{replace_with}\")]\n"
 
 class GDExtensionType:
@@ -234,7 +236,7 @@ class GDExtensionEnum(GDExtensionType):
         if self.description:
             yield from self.description.documentation(symbols)
         if self.deprecated:
-            yield self.deprecated.attribute()
+            yield self.deprecated.attribute(symbols)
         if self.is_bitfield:
             yield "[Flags]\n"
         yield f"public enum {self.name}\n"
@@ -316,7 +318,7 @@ class GDExtensionStruct(GDExtensionType):
         if self.description:
             yield from self.description.documentation(symbols)
         if self.deprecated:
-            yield self.deprecated.attribute()
+            yield self.deprecated.attribute(symbols)
         yield "[StructLayout(LayoutKind.Sequential)]\n"
         yield f"public struct {self.name}\n"
         yield "{\n"
@@ -375,6 +377,15 @@ class GDExtensionFunction(GDExtensionType):
         else:
             type_parameters.append("void")
         return f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
+
+    def stylize(self, symbols: GDExtensionSymbolTable) -> None:
+        if self.name.islower():
+            replacement: str = self.name.title().replace("_", "").replace("db", "DB")
+            symbols.substitute(self.name, replacement)
+        for argument in self.arguments:
+            if argument.name:
+                replacement: str = argument.name[0] + argument.name[1:].title().replace("_", "")
+                symbols.substitute(argument.name, replacement)
 
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:

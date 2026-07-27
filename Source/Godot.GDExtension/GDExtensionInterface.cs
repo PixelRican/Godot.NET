@@ -415,13 +415,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="r_godot_version">
     /// A pointer to the structure to write the version information into.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.5. Use get_godot_version2 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use GetGodotVersion2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void get_godot_version(GDExtensionGodotVersion* r_godot_version)
+    public static void GetGodotVersion(GDExtensionGodotVersion* rGodotVersion)
     {
         var function = s_get_godot_version;
         ThrowIfInvalid(function);
-        function(r_godot_version);
+        function(rGodotVersion);
     }
 
     /// <summary>
@@ -431,11 +431,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the structure to write the version information into.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void get_godot_version2(GDExtensionGodotVersion2* r_godot_version)
+    public static void GetGodotVersion2(GDExtensionGodotVersion2* rGodotVersion)
     {
         var function = s_get_godot_version2;
         ThrowIfInvalid(function);
-        function(r_godot_version);
+        function(rGodotVersion);
     }
 
     /// <summary>
@@ -447,13 +447,13 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_alloc2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use MemAlloc2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* mem_alloc(nuint p_bytes)
+    public static void* MemAlloc(nuint pBytes)
     {
         var function = s_mem_alloc;
         ThrowIfInvalid(function);
-        return function(p_bytes);
+        return function(pBytes);
     }
 
     /// <summary>
@@ -468,13 +468,13 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_realloc2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use MemRealloc2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* mem_realloc(void* p_ptr, nuint p_bytes)
+    public static void* MemRealloc(void* pPtr, nuint pBytes)
     {
         var function = s_mem_realloc;
         ThrowIfInvalid(function);
-        return function(p_ptr, p_bytes);
+        return function(pPtr, pBytes);
     }
 
     /// <summary>
@@ -483,13 +483,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_ptr">
     /// A pointer to the previously allocated memory.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use mem_free2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use MemFree2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void mem_free(void* p_ptr)
+    public static void MemFree(void* pPtr)
     {
         var function = s_mem_free;
         ThrowIfInvalid(function);
-        function(p_ptr);
+        function(pPtr);
     }
 
     /// <summary>
@@ -505,11 +505,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* mem_alloc2(nuint p_bytes, GDExtensionBool p_pad_align)
+    public static void* MemAlloc2(nuint pBytes, GDExtensionBool pPadAlign)
     {
         var function = s_mem_alloc2;
         ThrowIfInvalid(function);
-        return function(p_bytes, p_pad_align);
+        return function(pBytes, pPadAlign);
     }
 
     /// <summary>
@@ -528,11 +528,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* mem_realloc2(void* p_ptr, nuint p_bytes, GDExtensionBool p_pad_align)
+    public static void* MemRealloc2(void* pPtr, nuint pBytes, GDExtensionBool pPadAlign)
     {
         var function = s_mem_realloc2;
         ThrowIfInvalid(function);
-        return function(p_ptr, p_bytes, p_pad_align);
+        return function(pPtr, pBytes, pPadAlign);
     }
 
     /// <summary>
@@ -545,11 +545,11 @@ public static unsafe class GDExtensionInterface
     /// If true, the given memory was allocated with prepadding.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void mem_free2(void* p_ptr, GDExtensionBool p_pad_align)
+    public static void MemFree2(void* pPtr, GDExtensionBool pPadAlign)
     {
         var function = s_mem_free2;
         ThrowIfInvalid(function);
-        function(p_ptr, p_pad_align);
+        function(pPtr, pPadAlign);
     }
 
     /// <summary>
@@ -571,11 +571,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void print_error(byte* p_description, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
+    public static void PrintError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         var function = s_print_error;
         ThrowIfInvalid(function);
-        function(p_description, p_function, p_file, p_line, p_editor_notify);
+        function(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
     /// <summary>
@@ -600,11 +600,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void print_error_with_message(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
+    public static void PrintErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         var function = s_print_error_with_message;
         ThrowIfInvalid(function);
-        function(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
+        function(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
     /// <summary>
@@ -626,11 +626,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void print_warning(byte* p_description, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
+    public static void PrintWarning(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         var function = s_print_warning;
         ThrowIfInvalid(function);
-        function(p_description, p_function, p_file, p_line, p_editor_notify);
+        function(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
     /// <summary>
@@ -655,11 +655,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void print_warning_with_message(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
+    public static void PrintWarningWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         var function = s_print_warning_with_message;
         ThrowIfInvalid(function);
-        function(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
+        function(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
     /// <summary>
@@ -681,11 +681,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void print_script_error(byte* p_description, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
+    public static void PrintScriptError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         var function = s_print_script_error;
         ThrowIfInvalid(function);
-        function(p_description, p_function, p_file, p_line, p_editor_notify);
+        function(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
 
     /// <summary>
@@ -710,11 +710,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void print_script_error_with_message(byte* p_description, byte* p_message, byte* p_function, byte* p_file, int p_line, GDExtensionBool p_editor_notify)
+    public static void PrintScriptErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
     {
         var function = s_print_script_error_with_message;
         ThrowIfInvalid(function);
-        function(p_description, p_message, p_function, p_file, p_line, p_editor_notify);
+        function(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
 
     /// <summary>
@@ -727,11 +727,11 @@ public static unsafe class GDExtensionInterface
     /// The size in bytes.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong get_native_struct_size(GDExtensionConstStringNamePtr p_name)
+    public static ulong GetNativeStructSize(GDExtensionConstStringNamePtr pName)
     {
         var function = s_get_native_struct_size;
         ThrowIfInvalid(function);
-        return function(p_name);
+        return function(pName);
     }
 
     /// <summary>
@@ -744,11 +744,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the source Variant.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_new_copy(GDExtensionUninitializedVariantPtr r_dest, GDExtensionConstVariantPtr p_src)
+    public static void VariantNewCopy(GDExtensionUninitializedVariantPtr rDest, GDExtensionConstVariantPtr pSrc)
     {
         var function = s_variant_new_copy;
         ThrowIfInvalid(function);
-        function(r_dest, p_src);
+        function(rDest, pSrc);
     }
 
     /// <summary>
@@ -758,11 +758,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the destination Variant.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_new_nil(GDExtensionUninitializedVariantPtr r_dest)
+    public static void VariantNewNil(GDExtensionUninitializedVariantPtr rDest)
     {
         var function = s_variant_new_nil;
         ThrowIfInvalid(function);
-        function(r_dest);
+        function(rDest);
     }
 
     /// <summary>
@@ -772,11 +772,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Variant to destroy.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_destroy(GDExtensionVariantPtr p_self)
+    public static void VariantDestroy(GDExtensionVariantPtr pSelf)
     {
         var function = s_variant_destroy;
         ThrowIfInvalid(function);
-        function(p_self);
+        function(pSelf);
     }
 
     /// <summary>
@@ -801,11 +801,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will hold error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_call(GDExtensionVariantPtr p_self, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
+    public static void VariantCall(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
         var function = s_variant_call;
         ThrowIfInvalid(function);
-        function(p_self, p_method, p_args, p_argument_count, r_return, r_error);
+        function(pSelf, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
     /// <summary>
@@ -830,11 +830,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will be updated with error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_call_static(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
+    public static void VariantCallStatic(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
         var function = s_variant_call_static;
         ThrowIfInvalid(function);
-        function(p_type, p_method, p_args, p_argument_count, r_return, r_error);
+        function(pType, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
     /// <summary>
@@ -856,11 +856,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_evaluate(GDExtensionVariantOperator p_op, GDExtensionConstVariantPtr p_a, GDExtensionConstVariantPtr p_b, GDExtensionUninitializedVariantPtr r_return, GDExtensionBool* r_valid)
+    public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionConstVariantPtr pA, GDExtensionConstVariantPtr pB, GDExtensionUninitializedVariantPtr rReturn, GDExtensionBool* rValid)
     {
         var function = s_variant_evaluate;
         ThrowIfInvalid(function);
-        function(p_op, p_a, p_b, r_return, r_valid);
+        function(pOp, pA, pB, rReturn, rValid);
     }
 
     /// <summary>
@@ -879,11 +879,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_set(GDExtensionVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
+    public static void VariantSet(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
         var function = s_variant_set;
         ThrowIfInvalid(function);
-        function(p_self, p_key, p_value, r_valid);
+        function(pSelf, pKey, pValue, rValid);
     }
 
     /// <summary>
@@ -902,11 +902,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_set_named(GDExtensionVariantPtr p_self, GDExtensionConstStringNamePtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
+    public static void VariantSetNamed(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
         var function = s_variant_set_named;
         ThrowIfInvalid(function);
-        function(p_self, p_key, p_value, r_valid);
+        function(pSelf, pKey, pValue, rValid);
     }
 
     /// <summary>
@@ -925,11 +925,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_set_keyed(GDExtensionVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid)
+    public static void VariantSetKeyed(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
     {
         var function = s_variant_set_keyed;
         ThrowIfInvalid(function);
-        function(p_self, p_key, p_value, r_valid);
+        function(pSelf, pKey, pValue, rValid);
     }
 
     /// <summary>
@@ -951,11 +951,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_set_indexed(GDExtensionVariantPtr p_self, GDExtensionInt p_index, GDExtensionConstVariantPtr p_value, GDExtensionBool* r_valid, GDExtensionBool* r_oob)
+    public static void VariantSetIndexed(GDExtensionVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid, GDExtensionBool* rOob)
     {
         var function = s_variant_set_indexed;
         ThrowIfInvalid(function);
-        function(p_self, p_index, p_value, r_valid, r_oob);
+        function(pSelf, pIndex, pValue, rValid, rOob);
     }
 
     /// <summary>
@@ -974,11 +974,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_get(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
+    public static void VariantGet(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         var function = s_variant_get;
         ThrowIfInvalid(function);
-        function(p_self, p_key, r_ret, r_valid);
+        function(pSelf, pKey, rRet, rValid);
     }
 
     /// <summary>
@@ -997,11 +997,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_get_named(GDExtensionConstVariantPtr p_self, GDExtensionConstStringNamePtr p_key, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
+    public static void VariantGetNamed(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         var function = s_variant_get_named;
         ThrowIfInvalid(function);
-        function(p_self, p_key, r_ret, r_valid);
+        function(pSelf, pKey, rRet, rValid);
     }
 
     /// <summary>
@@ -1020,11 +1020,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_get_keyed(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
+    public static void VariantGetKeyed(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         var function = s_variant_get_keyed;
         ThrowIfInvalid(function);
-        function(p_self, p_key, r_ret, r_valid);
+        function(pSelf, pKey, rRet, rValid);
     }
 
     /// <summary>
@@ -1046,11 +1046,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_get_indexed(GDExtensionConstVariantPtr p_self, GDExtensionInt p_index, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid, GDExtensionBool* r_oob)
+    public static void VariantGetIndexed(GDExtensionConstVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid, GDExtensionBool* rOob)
     {
         var function = s_variant_get_indexed;
         ThrowIfInvalid(function);
-        function(p_self, p_index, r_ret, r_valid, r_oob);
+        function(pSelf, pIndex, rRet, rValid, rOob);
     }
 
     /// <summary>
@@ -1069,11 +1069,11 @@ public static unsafe class GDExtensionInterface
     /// true if the operation is valid; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_iter_init(GDExtensionConstVariantPtr p_self, GDExtensionUninitializedVariantPtr r_iter, GDExtensionBool* r_valid)
+    public static GDExtensionBool VariantIterInit(GDExtensionConstVariantPtr pSelf, GDExtensionUninitializedVariantPtr rIter, GDExtensionBool* rValid)
     {
         var function = s_variant_iter_init;
         ThrowIfInvalid(function);
-        return function(p_self, r_iter, r_valid);
+        return function(pSelf, rIter, rValid);
     }
 
     /// <summary>
@@ -1092,11 +1092,11 @@ public static unsafe class GDExtensionInterface
     /// true if the operation is valid; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_iter_next(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_iter, GDExtensionBool* r_valid)
+    public static GDExtensionBool VariantIterNext(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionBool* rValid)
     {
         var function = s_variant_iter_next;
         ThrowIfInvalid(function);
-        return function(p_self, r_iter, r_valid);
+        return function(pSelf, rIter, rValid);
     }
 
     /// <summary>
@@ -1115,11 +1115,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_iter_get(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_iter, GDExtensionUninitializedVariantPtr r_ret, GDExtensionBool* r_valid)
+    public static void VariantIterGet(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
     {
         var function = s_variant_iter_get;
         ThrowIfInvalid(function);
-        function(p_self, r_iter, r_ret, r_valid);
+        function(pSelf, rIter, rRet, rValid);
     }
 
     /// <summary>
@@ -1132,11 +1132,11 @@ public static unsafe class GDExtensionInterface
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt variant_hash(GDExtensionConstVariantPtr p_self)
+    public static GDExtensionInt VariantHash(GDExtensionConstVariantPtr pSelf)
     {
         var function = s_variant_hash;
         ThrowIfInvalid(function);
-        return function(p_self);
+        return function(pSelf);
     }
 
     /// <summary>
@@ -1152,11 +1152,11 @@ public static unsafe class GDExtensionInterface
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt variant_recursive_hash(GDExtensionConstVariantPtr p_self, GDExtensionInt p_recursion_count)
+    public static GDExtensionInt VariantRecursiveHash(GDExtensionConstVariantPtr pSelf, GDExtensionInt pRecursionCount)
     {
         var function = s_variant_recursive_hash;
         ThrowIfInvalid(function);
-        return function(p_self, p_recursion_count);
+        return function(pSelf, pRecursionCount);
     }
 
     /// <summary>
@@ -1172,11 +1172,11 @@ public static unsafe class GDExtensionInterface
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_hash_compare(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_other)
+    public static GDExtensionBool VariantHashCompare(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pOther)
     {
         var function = s_variant_hash_compare;
         ThrowIfInvalid(function);
-        return function(p_self, p_other);
+        return function(pSelf, pOther);
     }
 
     /// <summary>
@@ -1189,11 +1189,11 @@ public static unsafe class GDExtensionInterface
     /// The boolean value of the Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_booleanize(GDExtensionConstVariantPtr p_self)
+    public static GDExtensionBool VariantBooleanize(GDExtensionConstVariantPtr pSelf)
     {
         var function = s_variant_booleanize;
         ThrowIfInvalid(function);
-        return function(p_self);
+        return function(pSelf);
     }
 
     /// <summary>
@@ -1209,11 +1209,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to duplicate deeply (when supported by the Variant type).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_duplicate(GDExtensionConstVariantPtr p_self, GDExtensionVariantPtr r_ret, GDExtensionBool p_deep)
+    public static void VariantDuplicate(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rRet, GDExtensionBool pDeep)
     {
         var function = s_variant_duplicate;
         ThrowIfInvalid(function);
-        function(p_self, r_ret, p_deep);
+        function(pSelf, rRet, pDeep);
     }
 
     /// <summary>
@@ -1226,11 +1226,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String to store the resulting value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_stringify(GDExtensionConstVariantPtr p_self, GDExtensionStringPtr r_ret)
+    public static void VariantStringify(GDExtensionConstVariantPtr pSelf, GDExtensionStringPtr rRet)
     {
         var function = s_variant_stringify;
         ThrowIfInvalid(function);
-        function(p_self, r_ret);
+        function(pSelf, rRet);
     }
 
     /// <summary>
@@ -1243,11 +1243,11 @@ public static unsafe class GDExtensionInterface
     /// The variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantType variant_get_type(GDExtensionConstVariantPtr p_self)
+    public static GDExtensionVariantType VariantGetType(GDExtensionConstVariantPtr pSelf)
     {
         var function = s_variant_get_type;
         ThrowIfInvalid(function);
-        return function(p_self);
+        return function(pSelf);
     }
 
     /// <summary>
@@ -1263,11 +1263,11 @@ public static unsafe class GDExtensionInterface
     /// true if the variant has the given method; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_has_method(GDExtensionConstVariantPtr p_self, GDExtensionConstStringNamePtr p_method)
+    public static GDExtensionBool VariantHasMethod(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod)
     {
         var function = s_variant_has_method;
         ThrowIfInvalid(function);
-        return function(p_self, p_method);
+        return function(pSelf, pMethod);
     }
 
     /// <summary>
@@ -1283,11 +1283,11 @@ public static unsafe class GDExtensionInterface
     /// true if the variant has the given method; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_has_member(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
+    public static GDExtensionBool VariantHasMember(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
         var function = s_variant_has_member;
         ThrowIfInvalid(function);
-        return function(p_type, p_member);
+        return function(pType, pMember);
     }
 
     /// <summary>
@@ -1306,11 +1306,11 @@ public static unsafe class GDExtensionInterface
     /// true if the key exists; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_has_key(GDExtensionConstVariantPtr p_self, GDExtensionConstVariantPtr p_key, GDExtensionBool* r_valid)
+    public static GDExtensionBool VariantHasKey(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionBool* rValid)
     {
         var function = s_variant_has_key;
         ThrowIfInvalid(function);
-        return function(p_self, p_key, r_valid);
+        return function(pSelf, pKey, rValid);
     }
 
     /// <summary>
@@ -1325,11 +1325,11 @@ public static unsafe class GDExtensionInterface
     /// The instance ID for the contained object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDObjectInstanceID variant_get_object_instance_id(GDExtensionConstVariantPtr p_self)
+    public static GDObjectInstanceID VariantGetObjectInstanceId(GDExtensionConstVariantPtr pSelf)
     {
         var function = s_variant_get_object_instance_id;
         ThrowIfInvalid(function);
-        return function(p_self);
+        return function(pSelf);
     }
 
     /// <summary>
@@ -1342,11 +1342,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String to store the Variant type name.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_get_type_name(GDExtensionVariantType p_type, GDExtensionUninitializedStringPtr r_name)
+    public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionUninitializedStringPtr rName)
     {
         var function = s_variant_get_type_name;
         ThrowIfInvalid(function);
-        function(p_type, r_name);
+        function(pType, rName);
     }
 
     /// <summary>
@@ -1359,11 +1359,11 @@ public static unsafe class GDExtensionInterface
     /// The variant type for the given name; otherwise VARIANT_MAX if name is invalid.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantType variant_get_type_by_name(GDExtensionConstStringPtr p_type_name)
+    public static GDExtensionVariantType VariantGetTypeByName(GDExtensionConstStringPtr pTypeName)
     {
         var function = s_variant_get_type_by_name;
         ThrowIfInvalid(function);
-        return function(p_type_name);
+        return function(pTypeName);
     }
 
     /// <summary>
@@ -1379,11 +1379,11 @@ public static unsafe class GDExtensionInterface
     /// true if the conversion is possible; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_can_convert(GDExtensionVariantType p_from, GDExtensionVariantType p_to)
+    public static GDExtensionBool VariantCanConvert(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
         var function = s_variant_can_convert;
         ThrowIfInvalid(function);
-        return function(p_from, p_to);
+        return function(pFrom, pTo);
     }
 
     /// <summary>
@@ -1399,11 +1399,11 @@ public static unsafe class GDExtensionInterface
     /// true if the conversion is possible; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool variant_can_convert_strict(GDExtensionVariantType p_from, GDExtensionVariantType p_to)
+    public static GDExtensionBool VariantCanConvertStrict(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
         var function = s_variant_can_convert_strict;
         ThrowIfInvalid(function);
-        return function(p_from, p_to);
+        return function(pFrom, pTo);
     }
 
     /// <summary>
@@ -1416,11 +1416,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can create a Variant of the given type from a raw value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantFromTypeConstructorFunc get_variant_from_type_constructor(GDExtensionVariantType p_type)
+    public static GDExtensionVariantFromTypeConstructorFunc GetVariantFromTypeConstructor(GDExtensionVariantType pType)
     {
         var function = s_get_variant_from_type_constructor;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1433,11 +1433,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can get the raw value from a Variant of the given type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypeFromVariantConstructorFunc get_variant_to_type_constructor(GDExtensionVariantType p_type)
+    public static GDExtensionTypeFromVariantConstructorFunc GetVariantToTypeConstructor(GDExtensionVariantType pType)
     {
         var function = s_get_variant_to_type_constructor;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1455,11 +1455,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a type-specific function that returns a pointer to the internal value of a variant. Check the implementation of this function (gdextension_variant_get_ptr_internal_getter) for pointee type info of each variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantGetInternalPtrFunc variant_get_ptr_internal_getter(GDExtensionVariantType p_type)
+    public static GDExtensionVariantGetInternalPtrFunc VariantGetPtrInternalGetter(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_internal_getter;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1478,11 +1478,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can evaluate the given Variant operator on the given Variant types.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrOperatorEvaluator variant_get_ptr_operator_evaluator(GDExtensionVariantOperator p_operator, GDExtensionVariantType p_type_a, GDExtensionVariantType p_type_b)
+    public static GDExtensionPtrOperatorEvaluator VariantGetPtrOperatorEvaluator(GDExtensionVariantOperator pOperator, GDExtensionVariantType pTypeA, GDExtensionVariantType pTypeB)
     {
         var function = s_variant_get_ptr_operator_evaluator;
         ThrowIfInvalid(function);
-        return function(p_operator, p_type_a, p_type_b);
+        return function(pOperator, pTypeA, pTypeB);
     }
 
     /// <summary>
@@ -1501,11 +1501,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a builtin method on a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrBuiltInMethod variant_get_ptr_builtin_method(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_method, GDExtensionInt p_hash)
+    public static GDExtensionPtrBuiltInMethod VariantGetPtrBuiltinMethod(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionInt pHash)
     {
         var function = s_variant_get_ptr_builtin_method;
         ThrowIfInvalid(function);
-        return function(p_type, p_method, p_hash);
+        return function(pType, pMethod, pHash);
     }
 
     /// <summary>
@@ -1521,11 +1521,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call one of the constructors for a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrConstructor variant_get_ptr_constructor(GDExtensionVariantType p_type, int p_constructor)
+    public static GDExtensionPtrConstructor VariantGetPtrConstructor(GDExtensionVariantType pType, int pConstructor)
     {
         var function = s_variant_get_ptr_constructor;
         ThrowIfInvalid(function);
-        return function(p_type, p_constructor);
+        return function(pType, pConstructor);
     }
 
     /// <summary>
@@ -1538,11 +1538,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function than can call the destructor for a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrDestructor variant_get_ptr_destructor(GDExtensionVariantType p_type)
+    public static GDExtensionPtrDestructor VariantGetPtrDestructor(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_destructor;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1564,11 +1564,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will be updated with error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_construct(GDExtensionVariantType p_type, GDExtensionUninitializedVariantPtr r_base, GDExtensionConstVariantPtr* p_args, int p_argument_count, GDExtensionCallError* r_error)
+    public static void VariantConstruct(GDExtensionVariantType pType, GDExtensionUninitializedVariantPtr rBase, GDExtensionConstVariantPtr* pArgs, int pArgumentCount, GDExtensionCallError* rError)
     {
         var function = s_variant_construct;
         ThrowIfInvalid(function);
-        function(p_type, r_base, p_args, p_argument_count, r_error);
+        function(pType, rBase, pArgs, pArgumentCount, rError);
     }
 
     /// <summary>
@@ -1584,11 +1584,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a member's setter on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrSetter variant_get_ptr_setter(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
+    public static GDExtensionPtrSetter VariantGetPtrSetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
         var function = s_variant_get_ptr_setter;
         ThrowIfInvalid(function);
-        return function(p_type, p_member);
+        return function(pType, pMember);
     }
 
     /// <summary>
@@ -1604,11 +1604,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a member's getter on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrGetter variant_get_ptr_getter(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_member)
+    public static GDExtensionPtrGetter VariantGetPtrGetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
     {
         var function = s_variant_get_ptr_getter;
         ThrowIfInvalid(function);
-        return function(p_type, p_member);
+        return function(pType, pMember);
     }
 
     /// <summary>
@@ -1621,11 +1621,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can set an index on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrIndexedSetter variant_get_ptr_indexed_setter(GDExtensionVariantType p_type)
+    public static GDExtensionPtrIndexedSetter VariantGetPtrIndexedSetter(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_indexed_setter;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1638,11 +1638,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can get an index on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrIndexedGetter variant_get_ptr_indexed_getter(GDExtensionVariantType p_type)
+    public static GDExtensionPtrIndexedGetter VariantGetPtrIndexedGetter(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_indexed_getter;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1655,11 +1655,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can set a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrKeyedSetter variant_get_ptr_keyed_setter(GDExtensionVariantType p_type)
+    public static GDExtensionPtrKeyedSetter VariantGetPtrKeyedSetter(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_keyed_setter;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1672,11 +1672,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can get a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrKeyedGetter variant_get_ptr_keyed_getter(GDExtensionVariantType p_type)
+    public static GDExtensionPtrKeyedGetter VariantGetPtrKeyedGetter(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_keyed_getter;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1689,11 +1689,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can check a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrKeyedChecker variant_get_ptr_keyed_checker(GDExtensionVariantType p_type)
+    public static GDExtensionPtrKeyedChecker VariantGetPtrKeyedChecker(GDExtensionVariantType pType)
     {
         var function = s_variant_get_ptr_keyed_checker;
         ThrowIfInvalid(function);
-        return function(p_type);
+        return function(pType);
     }
 
     /// <summary>
@@ -1709,11 +1709,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant to store the value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void variant_get_constant_value(GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_constant, GDExtensionUninitializedVariantPtr r_ret)
+    public static void VariantGetConstantValue(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pConstant, GDExtensionUninitializedVariantPtr rRet)
     {
         var function = s_variant_get_constant_value;
         ThrowIfInvalid(function);
-        function(p_type, p_constant, r_ret);
+        function(pType, pConstant, rRet);
     }
 
     /// <summary>
@@ -1729,11 +1729,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a Variant utility function.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrUtilityFunction variant_get_ptr_utility_function(GDExtensionConstStringNamePtr p_function, GDExtensionInt p_hash)
+    public static GDExtensionPtrUtilityFunction VariantGetPtrUtilityFunction(GDExtensionConstStringNamePtr pFunction, GDExtensionInt pHash)
     {
         var function = s_variant_get_ptr_utility_function;
         ThrowIfInvalid(function);
-        return function(p_function, p_hash);
+        return function(pFunction, pHash);
     }
 
     /// <summary>
@@ -1746,11 +1746,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_latin1_chars(GDExtensionUninitializedStringPtr r_dest, byte* p_contents)
+    public static void StringNewWithLatin1Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
     {
         var function = s_string_new_with_latin1_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents);
+        function(rDest, pContents);
     }
 
     /// <summary>
@@ -1763,11 +1763,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_utf8_chars(GDExtensionUninitializedStringPtr r_dest, byte* p_contents)
+    public static void StringNewWithUtf8Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
     {
         var function = s_string_new_with_utf8_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents);
+        function(rDest, pContents);
     }
 
     /// <summary>
@@ -1780,11 +1780,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-16 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_utf16_chars(GDExtensionUninitializedStringPtr r_dest, char* p_contents)
+    public static void StringNewWithUtf16Chars(GDExtensionUninitializedStringPtr rDest, char* pContents)
     {
         var function = s_string_new_with_utf16_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents);
+        function(rDest, pContents);
     }
 
     /// <summary>
@@ -1797,11 +1797,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-32 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_utf32_chars(GDExtensionUninitializedStringPtr r_dest, uint* p_contents)
+    public static void StringNewWithUtf32Chars(GDExtensionUninitializedStringPtr rDest, uint* pContents)
     {
         var function = s_string_new_with_utf32_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents);
+        function(rDest, pContents);
     }
 
     /// <summary>
@@ -1814,11 +1814,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_wide_chars(GDExtensionUninitializedStringPtr r_dest, void* p_contents)
+    public static void StringNewWithWideChars(GDExtensionUninitializedStringPtr rDest, void* pContents)
     {
         var function = s_string_new_with_wide_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents);
+        function(rDest, pContents);
     }
 
     /// <summary>
@@ -1834,11 +1834,11 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (= number of bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_latin1_chars_and_len(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
+    public static void StringNewWithLatin1CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         var function = s_string_new_with_latin1_chars_and_len;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_size);
+        function(rDest, pContents, pSize);
     }
 
     /// <summary>
@@ -1853,13 +1853,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_size">
     /// The number of bytes (not code units).
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use string_new_with_utf8_chars_and_len2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use StringNewWithUtf8CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_utf8_chars_and_len(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
+    public static void StringNewWithUtf8CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         var function = s_string_new_with_utf8_chars_and_len;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_size);
+        function(rDest, pContents, pSize);
     }
 
     /// <summary>
@@ -1878,11 +1878,11 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_new_with_utf8_chars_and_len2(GDExtensionUninitializedStringPtr r_dest, byte* p_contents, GDExtensionInt p_size)
+    public static GDExtensionInt StringNewWithUtf8CharsAndLen2(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         var function = s_string_new_with_utf8_chars_and_len2;
         ThrowIfInvalid(function);
-        return function(r_dest, p_contents, p_size);
+        return function(rDest, pContents, pSize);
     }
 
     /// <summary>
@@ -1897,13 +1897,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_char_count">
     /// The number of characters (not bytes).
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use string_new_with_utf16_chars_and_len2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use StringNewWithUtf16CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_utf16_chars_and_len(GDExtensionUninitializedStringPtr r_dest, char* p_contents, GDExtensionInt p_char_count)
+    public static void StringNewWithUtf16CharsAndLen(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount)
     {
         var function = s_string_new_with_utf16_chars_and_len;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_char_count);
+        function(rDest, pContents, pCharCount);
     }
 
     /// <summary>
@@ -1925,11 +1925,11 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_new_with_utf16_chars_and_len2(GDExtensionUninitializedStringPtr r_dest, char* p_contents, GDExtensionInt p_char_count, GDExtensionBool p_default_little_endian)
+    public static GDExtensionInt StringNewWithUtf16CharsAndLen2(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
     {
         var function = s_string_new_with_utf16_chars_and_len2;
         ThrowIfInvalid(function);
-        return function(r_dest, p_contents, p_char_count, p_default_little_endian);
+        return function(rDest, pContents, pCharCount, pDefaultLittleEndian);
     }
 
     /// <summary>
@@ -1945,11 +1945,11 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (not bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_utf32_chars_and_len(GDExtensionUninitializedStringPtr r_dest, uint* p_contents, GDExtensionInt p_char_count)
+    public static void StringNewWithUtf32CharsAndLen(GDExtensionUninitializedStringPtr rDest, uint* pContents, GDExtensionInt pCharCount)
     {
         var function = s_string_new_with_utf32_chars_and_len;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_char_count);
+        function(rDest, pContents, pCharCount);
     }
 
     /// <summary>
@@ -1965,11 +1965,11 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (not bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_new_with_wide_chars_and_len(GDExtensionUninitializedStringPtr r_dest, void* p_contents, GDExtensionInt p_char_count)
+    public static void StringNewWithWideCharsAndLen(GDExtensionUninitializedStringPtr rDest, void* pContents, GDExtensionInt pCharCount)
     {
         var function = s_string_new_with_wide_chars_and_len;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_char_count);
+        function(rDest, pContents, pCharCount);
     }
 
     /// <summary>
@@ -1989,11 +1989,11 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters, not including a null terminator. Characters that cannot be converted to Latin-1 are replaced with a space.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_to_latin1_chars(GDExtensionConstStringPtr p_self, byte* r_text, GDExtensionInt p_max_write_length)
+    public static GDExtensionInt StringToLatin1Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
     {
         var function = s_string_to_latin1_chars;
         ThrowIfInvalid(function);
-        return function(p_self, r_text, p_max_write_length);
+        return function(pSelf, rText, pMaxWriteLength);
     }
 
     /// <summary>
@@ -2013,11 +2013,11 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in bytes (not characters), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_to_utf8_chars(GDExtensionConstStringPtr p_self, byte* r_text, GDExtensionInt p_max_write_length)
+    public static GDExtensionInt StringToUtf8Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
     {
         var function = s_string_to_utf8_chars;
         ThrowIfInvalid(function);
-        return function(p_self, r_text, p_max_write_length);
+        return function(pSelf, rText, pMaxWriteLength);
     }
 
     /// <summary>
@@ -2037,11 +2037,11 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_to_utf16_chars(GDExtensionConstStringPtr p_self, char* r_text, GDExtensionInt p_max_write_length)
+    public static GDExtensionInt StringToUtf16Chars(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
     {
         var function = s_string_to_utf16_chars;
         ThrowIfInvalid(function);
-        return function(p_self, r_text, p_max_write_length);
+        return function(pSelf, rText, pMaxWriteLength);
     }
 
     /// <summary>
@@ -2061,11 +2061,11 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters (not bytes), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_to_utf32_chars(GDExtensionConstStringPtr p_self, uint* r_text, GDExtensionInt p_max_write_length)
+    public static GDExtensionInt StringToUtf32Chars(GDExtensionConstStringPtr pSelf, uint* rText, GDExtensionInt pMaxWriteLength)
     {
         var function = s_string_to_utf32_chars;
         ThrowIfInvalid(function);
-        return function(p_self, r_text, p_max_write_length);
+        return function(pSelf, rText, pMaxWriteLength);
     }
 
     /// <summary>
@@ -2085,11 +2085,11 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_to_wide_chars(GDExtensionConstStringPtr p_self, void* r_text, GDExtensionInt p_max_write_length)
+    public static GDExtensionInt StringToWideChars(GDExtensionConstStringPtr pSelf, void* rText, GDExtensionInt pMaxWriteLength)
     {
         var function = s_string_to_wide_chars;
         ThrowIfInvalid(function);
-        return function(p_self, r_text, p_max_write_length);
+        return function(pSelf, rText, pMaxWriteLength);
     }
 
     /// <summary>
@@ -2105,11 +2105,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested character.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint* string_operator_index(GDExtensionStringPtr p_self, GDExtensionInt p_index)
+    public static uint* StringOperatorIndex(GDExtensionStringPtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_string_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2125,11 +2125,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested character.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint* string_operator_index_const(GDExtensionConstStringPtr p_self, GDExtensionInt p_index)
+    public static uint* StringOperatorIndexConst(GDExtensionConstStringPtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_string_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2142,11 +2142,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the other String to append.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_operator_plus_eq_string(GDExtensionStringPtr p_self, GDExtensionConstStringPtr p_b)
+    public static void StringOperatorPlusEqString(GDExtensionStringPtr pSelf, GDExtensionConstStringPtr pB)
     {
         var function = s_string_operator_plus_eq_string;
         ThrowIfInvalid(function);
-        function(p_self, p_b);
+        function(pSelf, pB);
     }
 
     /// <summary>
@@ -2159,11 +2159,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the character to append.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_operator_plus_eq_char(GDExtensionStringPtr p_self, uint p_b)
+    public static void StringOperatorPlusEqChar(GDExtensionStringPtr pSelf, uint pB)
     {
         var function = s_string_operator_plus_eq_char;
         ThrowIfInvalid(function);
-        function(p_self, p_b);
+        function(pSelf, pB);
     }
 
     /// <summary>
@@ -2176,11 +2176,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_operator_plus_eq_cstr(GDExtensionStringPtr p_self, byte* p_b)
+    public static void StringOperatorPlusEqCstr(GDExtensionStringPtr pSelf, byte* pB)
     {
         var function = s_string_operator_plus_eq_cstr;
         ThrowIfInvalid(function);
-        function(p_self, p_b);
+        function(pSelf, pB);
     }
 
     /// <summary>
@@ -2193,11 +2193,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_operator_plus_eq_wcstr(GDExtensionStringPtr p_self, void* p_b)
+    public static void StringOperatorPlusEqWcstr(GDExtensionStringPtr pSelf, void* pB)
     {
         var function = s_string_operator_plus_eq_wcstr;
         ThrowIfInvalid(function);
-        function(p_self, p_b);
+        function(pSelf, pB);
     }
 
     /// <summary>
@@ -2210,11 +2210,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-32 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_operator_plus_eq_c32str(GDExtensionStringPtr p_self, uint* p_b)
+    public static void StringOperatorPlusEqC32Str(GDExtensionStringPtr pSelf, uint* pB)
     {
         var function = s_string_operator_plus_eq_c32str;
         ThrowIfInvalid(function);
-        function(p_self, p_b);
+        function(pSelf, pB);
     }
 
     /// <summary>
@@ -2235,21 +2235,21 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt string_resize(GDExtensionStringPtr p_self, GDExtensionInt p_resize)
+    public static GDExtensionInt StringResize(GDExtensionStringPtr pSelf, GDExtensionInt pResize)
     {
         var function = s_string_resize;
         ThrowIfInvalid(function);
-        return function(p_self, p_resize);
+        return function(pSelf, pResize);
     }
 
     /// <summary>
     /// Creates a StringName from a Latin-1 encoded C string.<br/>
-    /// If `p_is_static` is true, then:<br/>
-    /// - The StringName will reuse the `p_contents` buffer instead of copying it.<br/>
+    /// If `pIsStatic` is true, then:<br/>
+    /// - The StringName will reuse the `pContents` buffer instead of copying it.<br/>
     /// - You must guarantee that the buffer remains valid for the duration of the application (e.g. string literal).<br/>
     /// - You must not call a destructor for this StringName. Incrementing the initial reference once should achieve this.<br/>
     /// <br/>
-    /// `p_is_static` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to false.
+    /// `pIsStatic` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to false.
     /// </summary>
     /// <param name="r_dest">
     /// A pointer to uninitialized storage, into which the newly created StringName is constructed.
@@ -2261,11 +2261,11 @@ public static unsafe class GDExtensionInterface
     /// Whether the StringName reuses the buffer directly (see above).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_name_new_with_latin1_chars(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents, GDExtensionBool p_is_static)
+    public static void StringNameNewWithLatin1Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionBool pIsStatic)
     {
         var function = s_string_name_new_with_latin1_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_is_static);
+        function(rDest, pContents, pIsStatic);
     }
 
     /// <summary>
@@ -2278,11 +2278,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a C string (null terminated and UTF-8 encoded).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_name_new_with_utf8_chars(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents)
+    public static void StringNameNewWithUtf8Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents)
     {
         var function = s_string_name_new_with_utf8_chars;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents);
+        function(rDest, pContents);
     }
 
     /// <summary>
@@ -2298,11 +2298,11 @@ public static unsafe class GDExtensionInterface
     /// The number of bytes (not UTF-8 code points).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void string_name_new_with_utf8_chars_and_len(GDExtensionUninitializedStringNamePtr r_dest, byte* p_contents, GDExtensionInt p_size)
+    public static void StringNameNewWithUtf8CharsAndLen(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionInt pSize)
     {
         var function = s_string_name_new_with_utf8_chars_and_len;
         ThrowIfInvalid(function);
-        function(r_dest, p_contents, p_size);
+        function(rDest, pContents, pSize);
     }
 
     /// <summary>
@@ -2321,11 +2321,11 @@ public static unsafe class GDExtensionInterface
     /// A Godot error code (ex. OK, ERR_INVALID_DATA, etc).
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt xml_parser_open_buffer(GDExtensionObjectPtr p_instance, byte* p_buffer, nuint p_size)
+    public static GDExtensionInt XmlParserOpenBuffer(GDExtensionObjectPtr pInstance, byte* pBuffer, nuint pSize)
     {
         var function = s_xml_parser_open_buffer;
         ThrowIfInvalid(function);
-        return function(p_instance, p_buffer, p_size);
+        return function(pInstance, pBuffer, pSize);
     }
 
     /// <summary>
@@ -2341,11 +2341,11 @@ public static unsafe class GDExtensionInterface
     /// The size of the buffer.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void file_access_store_buffer(GDExtensionObjectPtr p_instance, byte* p_src, ulong p_length)
+    public static void FileAccessStoreBuffer(GDExtensionObjectPtr pInstance, byte* pSrc, ulong pLength)
     {
         var function = s_file_access_store_buffer;
         ThrowIfInvalid(function);
-        function(p_instance, p_src, p_length);
+        function(pInstance, pSrc, pLength);
     }
 
     /// <summary>
@@ -2364,11 +2364,11 @@ public static unsafe class GDExtensionInterface
     /// The actual number of bytes read (may be less than requested).
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong file_access_get_buffer(GDExtensionConstObjectPtr p_instance, byte* p_dst, ulong p_length)
+    public static ulong FileAccessGetBuffer(GDExtensionConstObjectPtr pInstance, byte* pDst, ulong pLength)
     {
         var function = s_file_access_get_buffer;
         ThrowIfInvalid(function);
-        return function(p_instance, p_dst, p_length);
+        return function(pInstance, pDst, pLength);
     }
 
     /// <summary>
@@ -2381,11 +2381,11 @@ public static unsafe class GDExtensionInterface
     /// Pointer to internal Image buffer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* image_ptrw(GDExtensionObjectPtr p_instance)
+    public static byte* ImagePtrw(GDExtensionObjectPtr pInstance)
     {
         var function = s_image_ptrw;
         ThrowIfInvalid(function);
-        return function(p_instance);
+        return function(pInstance);
     }
 
     /// <summary>
@@ -2398,11 +2398,11 @@ public static unsafe class GDExtensionInterface
     /// Pointer to internal Image buffer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* image_ptr(GDExtensionObjectPtr p_instance)
+    public static byte* ImagePtr(GDExtensionObjectPtr pInstance)
     {
         var function = s_image_ptr;
         ThrowIfInvalid(function);
-        return function(p_instance);
+        return function(pInstance);
     }
 
     /// <summary>
@@ -2433,11 +2433,11 @@ public static unsafe class GDExtensionInterface
     /// The task group ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long worker_thread_pool_add_native_group_task(GDExtensionObjectPtr p_instance, GDExtensionWorkerThreadPoolGroupTask p_func, void* p_userdata, int p_elements, int p_tasks, GDExtensionBool p_high_priority, GDExtensionConstStringPtr p_description)
+    public static long WorkerThreadPoolAddNativeGroupTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserdata, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
         var function = s_worker_thread_pool_add_native_group_task;
         ThrowIfInvalid(function);
-        return function(p_instance, p_func, p_userdata, p_elements, p_tasks, p_high_priority, p_description);
+        return function(pInstance, pFunc, pUserdata, pElements, pTasks, pHighPriority, pDescription);
     }
 
     /// <summary>
@@ -2462,11 +2462,11 @@ public static unsafe class GDExtensionInterface
     /// The task ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long worker_thread_pool_add_native_task(GDExtensionObjectPtr p_instance, GDExtensionWorkerThreadPoolTask p_func, void* p_userdata, GDExtensionBool p_high_priority, GDExtensionConstStringPtr p_description)
+    public static long WorkerThreadPoolAddNativeTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserdata, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
     {
         var function = s_worker_thread_pool_add_native_task;
         ThrowIfInvalid(function);
-        return function(p_instance, p_func, p_userdata, p_high_priority, p_description);
+        return function(pInstance, pFunc, pUserdata, pHighPriority, pDescription);
     }
 
     /// <summary>
@@ -2482,11 +2482,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested byte.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* packed_byte_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static byte* PackedByteArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_byte_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2502,11 +2502,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested byte.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* packed_byte_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static byte* PackedByteArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_byte_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2522,11 +2522,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 32-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float* packed_float32_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static float* PackedFloat32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_float32_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2542,11 +2542,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 32-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float* packed_float32_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static float* PackedFloat32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_float32_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2562,11 +2562,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 64-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double* packed_float64_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static double* PackedFloat64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_float64_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2582,11 +2582,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 64-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double* packed_float64_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static double* PackedFloat64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_float64_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2602,11 +2602,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 32-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int* packed_int32_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static int* PackedInt32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_int32_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2622,11 +2622,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 32-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int* packed_int32_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static int* PackedInt32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_int32_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2642,11 +2642,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 64-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long* packed_int64_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static long* PackedInt64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_int64_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2662,11 +2662,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 64-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long* packed_int64_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static long* PackedInt64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_int64_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2682,11 +2682,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested String.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionStringPtr packed_string_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionStringPtr PackedStringArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_string_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2702,11 +2702,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested String.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionStringPtr packed_string_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionStringPtr PackedStringArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_string_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2722,11 +2722,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Vector2.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_vector2_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedVector2ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_vector2_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2742,11 +2742,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Vector2.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_vector2_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedVector2ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_vector2_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2762,11 +2762,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Vector3.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_vector3_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedVector3ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_vector3_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2782,11 +2782,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Vector3.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_vector3_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedVector3ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_vector3_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2802,11 +2802,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Vector4.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_vector4_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedVector4ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_vector4_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2822,11 +2822,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Vector4.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_vector4_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedVector4ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_vector4_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2842,11 +2842,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Color.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_color_array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedColorArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_color_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2862,11 +2862,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Color.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr packed_color_array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionTypePtr PackedColorArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_packed_color_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2882,11 +2882,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr array_operator_index(GDExtensionTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionVariantPtr ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_array_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2902,11 +2902,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr array_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionInt p_index)
+    public static GDExtensionVariantPtr ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
     {
         var function = s_array_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_index);
+        return function(pSelf, pIndex);
     }
 
     /// <summary>
@@ -2920,11 +2920,11 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void array_ref(GDExtensionTypePtr p_self, GDExtensionConstTypePtr p_from)
+    public static void ArrayRef(GDExtensionTypePtr pSelf, GDExtensionConstTypePtr pFrom)
     {
         var function = s_array_ref;
         ThrowIfInvalid(function);
-        function(p_self, p_from);
+        function(pSelf, pFrom);
     }
 
     /// <summary>
@@ -2943,11 +2943,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Script object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void array_set_typed(GDExtensionTypePtr p_self, GDExtensionVariantType p_type, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstVariantPtr p_script)
+    public static void ArraySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pType, GDExtensionConstStringNamePtr pClassName, GDExtensionConstVariantPtr pScript)
     {
         var function = s_array_set_typed;
         ThrowIfInvalid(function);
-        function(p_self, p_type, p_class_name, p_script);
+        function(pSelf, pType, pClassName, pScript);
     }
 
     /// <summary>
@@ -2963,11 +2963,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the value at the given key.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr dictionary_operator_index(GDExtensionTypePtr p_self, GDExtensionConstVariantPtr p_key)
+    public static GDExtensionVariantPtr DictionaryOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionConstVariantPtr pKey)
     {
         var function = s_dictionary_operator_index;
         ThrowIfInvalid(function);
-        return function(p_self, p_key);
+        return function(pSelf, pKey);
     }
 
     /// <summary>
@@ -2983,11 +2983,11 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to a Variant representing the value at the given key.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr dictionary_operator_index_const(GDExtensionConstTypePtr p_self, GDExtensionConstVariantPtr p_key)
+    public static GDExtensionVariantPtr DictionaryOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionConstVariantPtr pKey)
     {
         var function = s_dictionary_operator_index_const;
         ThrowIfInvalid(function);
-        return function(p_self, p_key);
+        return function(pSelf, pKey);
     }
 
     /// <summary>
@@ -3015,11 +3015,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Script object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void dictionary_set_typed(GDExtensionTypePtr p_self, GDExtensionVariantType p_key_type, GDExtensionConstStringNamePtr p_key_class_name, GDExtensionConstVariantPtr p_key_script, GDExtensionVariantType p_value_type, GDExtensionConstStringNamePtr p_value_class_name, GDExtensionConstVariantPtr p_value_script)
+    public static void DictionarySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pKeyType, GDExtensionConstStringNamePtr pKeyClassName, GDExtensionConstVariantPtr pKeyScript, GDExtensionVariantType pValueType, GDExtensionConstStringNamePtr pValueClassName, GDExtensionConstVariantPtr pValueScript)
     {
         var function = s_dictionary_set_typed;
         ThrowIfInvalid(function);
-        function(p_self, p_key_type, p_key_class_name, p_key_script, p_value_type, p_value_class_name, p_value_script);
+        function(pSelf, pKeyType, pKeyClassName, pKeyScript, pValueType, pValueClassName, pValueScript);
     }
 
     /// <summary>
@@ -3044,11 +3044,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionCallError struct that will receive error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_method_bind_call(GDExtensionMethodBindPtr p_method_bind, GDExtensionObjectPtr p_instance, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_arg_count, GDExtensionUninitializedVariantPtr r_ret, GDExtensionCallError* r_error)
+    public static void ObjectMethodBindCall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgCount, GDExtensionUninitializedVariantPtr rRet, GDExtensionCallError* rError)
     {
         var function = s_object_method_bind_call;
         ThrowIfInvalid(function);
-        function(p_method_bind, p_instance, p_args, p_arg_count, r_ret, r_error);
+        function(pMethodBind, pInstance, pArgs, pArgCount, rRet, rError);
     }
 
     /// <summary>
@@ -3067,11 +3067,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object that will receive the return value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_method_bind_ptrcall(GDExtensionMethodBindPtr p_method_bind, GDExtensionObjectPtr p_instance, GDExtensionConstTypePtr* p_args, GDExtensionTypePtr r_ret)
+    public static void ObjectMethodBindPtrcall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstTypePtr* pArgs, GDExtensionTypePtr rRet)
     {
         var function = s_object_method_bind_ptrcall;
         ThrowIfInvalid(function);
-        function(p_method_bind, p_instance, p_args, r_ret);
+        function(pMethodBind, pInstance, pArgs, rRet);
     }
 
     /// <summary>
@@ -3081,11 +3081,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_destroy(GDExtensionObjectPtr p_o)
+    public static void ObjectDestroy(GDExtensionObjectPtr pO)
     {
         var function = s_object_destroy;
         ThrowIfInvalid(function);
-        function(p_o);
+        function(pO);
     }
 
     /// <summary>
@@ -3098,11 +3098,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the singleton Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr global_get_singleton(GDExtensionConstStringNamePtr p_name)
+    public static GDExtensionObjectPtr GlobalGetSingleton(GDExtensionConstStringNamePtr pName)
     {
         var function = s_global_get_singleton;
         ThrowIfInvalid(function);
-        return function(p_name);
+        return function(pName);
     }
 
     /// <summary>
@@ -3121,11 +3121,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the instance binding.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* object_get_instance_binding(GDExtensionObjectPtr p_o, void* p_token, GDExtensionInstanceBindingCallbacks* p_callbacks)
+    public static void* ObjectGetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
         var function = s_object_get_instance_binding;
         ThrowIfInvalid(function);
-        return function(p_o, p_token, p_callbacks);
+        return function(pO, pToken, pCallbacks);
     }
 
     /// <summary>
@@ -3144,11 +3144,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_set_instance_binding(GDExtensionObjectPtr p_o, void* p_token, void* p_binding, GDExtensionInstanceBindingCallbacks* p_callbacks)
+    public static void ObjectSetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, void* pBinding, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
         var function = s_object_set_instance_binding;
         ThrowIfInvalid(function);
-        function(p_o, p_token, p_binding, p_callbacks);
+        function(pO, pToken, pBinding, pCallbacks);
     }
 
     /// <summary>
@@ -3161,16 +3161,16 @@ public static unsafe class GDExtensionInterface
     /// A token the library received by the GDExtension's entry point function.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_free_instance_binding(GDExtensionObjectPtr p_o, void* p_token)
+    public static void ObjectFreeInstanceBinding(GDExtensionObjectPtr pO, void* pToken)
     {
         var function = s_object_free_instance_binding;
         ThrowIfInvalid(function);
-        function(p_o, p_token);
+        function(pO, pToken);
     }
 
     /// <summary>
     /// Sets an extension class instance on a Object.<br/>
-    /// `p_classname` should be a registered extension class and should extend the `p_o` Object's class.
+    /// `pClassname` should be a registered extension class and should extend the `pO` Object's class.
     /// </summary>
     /// <param name="p_o">
     /// A pointer to the Object.
@@ -3182,11 +3182,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the extension class instance.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_set_instance(GDExtensionObjectPtr p_o, GDExtensionConstStringNamePtr p_classname, GDExtensionClassInstancePtr p_instance)
+    public static void ObjectSetInstance(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassname, GDExtensionClassInstancePtr pInstance)
     {
         var function = s_object_set_instance;
         ThrowIfInvalid(function);
-        function(p_o, p_classname, p_instance);
+        function(pO, pClassname, pInstance);
     }
 
     /// <summary>
@@ -3207,11 +3207,11 @@ public static unsafe class GDExtensionInterface
     /// true if successful in getting the class name; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool object_get_class_name(GDExtensionConstObjectPtr p_object, GDExtensionClassLibraryPtr p_library, GDExtensionUninitializedStringNamePtr r_class_name)
+    public static GDExtensionBool ObjectGetClassName(GDExtensionConstObjectPtr pObject, GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringNamePtr rClassName)
     {
         var function = s_object_get_class_name;
         ThrowIfInvalid(function);
-        return function(p_object, p_library, r_class_name);
+        return function(pObject, pLibrary, rClassName);
     }
 
     /// <summary>
@@ -3228,11 +3228,11 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use the `is_class` method on `Object` to check if an object can be cast instead. If true, the previous pointer can be reinterpreted as a pointer to the target type.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr object_cast_to(GDExtensionConstObjectPtr p_object, void* p_class_tag)
+    public static GDExtensionObjectPtr ObjectCastTo(GDExtensionConstObjectPtr pObject, void* pClassTag)
     {
         var function = s_object_cast_to;
         ThrowIfInvalid(function);
-        return function(p_object, p_class_tag);
+        return function(pObject, pClassTag);
     }
 
     /// <summary>
@@ -3245,11 +3245,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr object_get_instance_from_id(GDObjectInstanceID p_instance_id)
+    public static GDExtensionObjectPtr ObjectGetInstanceFromId(GDObjectInstanceID pInstanceId)
     {
         var function = s_object_get_instance_from_id;
         ThrowIfInvalid(function);
-        return function(p_instance_id);
+        return function(pInstanceId);
     }
 
     /// <summary>
@@ -3262,11 +3262,11 @@ public static unsafe class GDExtensionInterface
     /// The instance ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDObjectInstanceID object_get_instance_id(GDExtensionConstObjectPtr p_object)
+    public static GDObjectInstanceID ObjectGetInstanceId(GDExtensionConstObjectPtr pObject)
     {
         var function = s_object_get_instance_id;
         ThrowIfInvalid(function);
-        return function(p_object);
+        return function(pObject);
     }
 
     /// <summary>
@@ -3282,11 +3282,11 @@ public static unsafe class GDExtensionInterface
     /// true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool object_has_script_method(GDExtensionConstObjectPtr p_object, GDExtensionConstStringNamePtr p_method)
+    public static GDExtensionBool ObjectHasScriptMethod(GDExtensionConstObjectPtr pObject, GDExtensionConstStringNamePtr pMethod)
     {
         var function = s_object_has_script_method;
         ThrowIfInvalid(function);
-        return function(p_object, p_method);
+        return function(pObject, pMethod);
     }
 
     /// <summary>
@@ -3311,11 +3311,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will hold error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_call_script_method(GDExtensionObjectPtr p_object, GDExtensionConstStringNamePtr p_method, GDExtensionConstVariantPtr* p_args, GDExtensionInt p_argument_count, GDExtensionUninitializedVariantPtr r_return, GDExtensionCallError* r_error)
+    public static void ObjectCallScriptMethod(GDExtensionObjectPtr pObject, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
     {
         var function = s_object_call_script_method;
         ThrowIfInvalid(function);
-        function(p_object, p_method, p_args, p_argument_count, r_return, r_error);
+        function(pObject, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
 
     /// <summary>
@@ -3328,11 +3328,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object from the reference or null.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ref_get_object(GDExtensionConstRefPtr p_ref)
+    public static GDExtensionObjectPtr RefGetObject(GDExtensionConstRefPtr pRef)
     {
         var function = s_ref_get_object;
         ThrowIfInvalid(function);
-        return function(p_ref);
+        return function(pRef);
     }
 
     /// <summary>
@@ -3345,11 +3345,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object to refer to.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ref_set_object(GDExtensionRefPtr p_ref, GDExtensionObjectPtr p_object)
+    public static void RefSetObject(GDExtensionRefPtr pRef, GDExtensionObjectPtr pObject)
     {
         var function = s_ref_set_object;
         ThrowIfInvalid(function);
-        function(p_ref, p_object);
+        function(pRef, pObject);
     }
 
     /// <summary>
@@ -3364,13 +3364,13 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.2. Use script_instance_create3 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use ScriptInstanceCreate3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr script_instance_create(GDExtensionScriptInstanceInfo* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
+    public static GDExtensionScriptInstancePtr ScriptInstanceCreate(GDExtensionScriptInstanceInfo* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
         var function = s_script_instance_create;
         ThrowIfInvalid(function);
-        return function(p_info, p_instance_data);
+        return function(pInfo, pInstanceData);
     }
 
     /// <summary>
@@ -3385,13 +3385,13 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.3. Use script_instance_create3 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use ScriptInstanceCreate3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr script_instance_create2(GDExtensionScriptInstanceInfo2* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
+    public static GDExtensionScriptInstancePtr ScriptInstanceCreate2(GDExtensionScriptInstanceInfo2* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
         var function = s_script_instance_create2;
         ThrowIfInvalid(function);
-        return function(p_info, p_instance_data);
+        return function(pInfo, pInstanceData);
     }
 
     /// <summary>
@@ -3407,11 +3407,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr script_instance_create3(GDExtensionScriptInstanceInfo3* p_info, GDExtensionScriptInstanceDataPtr p_instance_data)
+    public static GDExtensionScriptInstancePtr ScriptInstanceCreate3(GDExtensionScriptInstanceInfo3* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
     {
         var function = s_script_instance_create3;
         ThrowIfInvalid(function);
-        return function(p_info, p_instance_data);
+        return function(pInfo, pInstanceData);
     }
 
     /// <summary>
@@ -3431,11 +3431,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a PlaceHolderScriptInstance object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr placeholder_script_instance_create(GDExtensionObjectPtr p_language, GDExtensionObjectPtr p_script, GDExtensionObjectPtr p_owner)
+    public static GDExtensionScriptInstancePtr PlaceholderScriptInstanceCreate(GDExtensionObjectPtr pLanguage, GDExtensionObjectPtr pScript, GDExtensionObjectPtr pOwner)
     {
         var function = s_placeholder_script_instance_create;
         ThrowIfInvalid(function);
-        return function(p_language, p_script, p_owner);
+        return function(pLanguage, pScript, pOwner);
     }
 
     /// <summary>
@@ -3453,11 +3453,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Dictionary mapping StringName to Variant values.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void placeholder_script_instance_update(GDExtensionScriptInstancePtr p_placeholder, GDExtensionConstTypePtr p_properties, GDExtensionConstTypePtr p_values)
+    public static void PlaceholderScriptInstanceUpdate(GDExtensionScriptInstancePtr pPlaceholder, GDExtensionConstTypePtr pProperties, GDExtensionConstTypePtr pValues)
     {
         var function = s_placeholder_script_instance_update;
         ThrowIfInvalid(function);
-        function(p_placeholder, p_properties, p_values);
+        function(pPlaceholder, pProperties, pValues);
     }
 
     /// <summary>
@@ -3473,11 +3473,11 @@ public static unsafe class GDExtensionInterface
     /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of script_instance_create.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstanceDataPtr object_get_script_instance(GDExtensionConstObjectPtr p_object, GDExtensionObjectPtr p_language)
+    public static GDExtensionScriptInstanceDataPtr ObjectGetScriptInstance(GDExtensionConstObjectPtr pObject, GDExtensionObjectPtr pLanguage)
     {
         var function = s_object_get_script_instance;
         ThrowIfInvalid(function);
-        return function(p_object, p_language);
+        return function(pObject, pLanguage);
     }
 
     /// <summary>
@@ -3490,11 +3490,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the script instance data to attach to this object.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void object_set_script_instance(GDExtensionObjectPtr p_object, GDExtensionScriptInstanceDataPtr p_script_instance)
+    public static void ObjectSetScriptInstance(GDExtensionObjectPtr pObject, GDExtensionScriptInstanceDataPtr pScriptInstance)
     {
         var function = s_object_set_script_instance;
         ThrowIfInvalid(function);
-        function(p_object, p_script_instance);
+        function(pObject, pScriptInstance);
     }
 
     /// <summary>
@@ -3507,13 +3507,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_callable_custom_info">
     /// The info required to construct a Callable.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use callable_custom_create2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use CallableCustomCreate2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void callable_custom_create(GDExtensionUninitializedTypePtr r_callable, GDExtensionCallableCustomInfo* p_callable_custom_info)
+    public static void CallableCustomCreate(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
     {
         var function = s_callable_custom_create;
         ThrowIfInvalid(function);
-        function(r_callable, p_callable_custom_info);
+        function(rCallable, pCallableCustomInfo);
     }
 
     /// <summary>
@@ -3527,11 +3527,11 @@ public static unsafe class GDExtensionInterface
     /// The info required to construct a Callable.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void callable_custom_create2(GDExtensionUninitializedTypePtr r_callable, GDExtensionCallableCustomInfo2* p_callable_custom_info)
+    public static void CallableCustomCreate2(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo2* pCallableCustomInfo)
     {
         var function = s_callable_custom_create2;
         ThrowIfInvalid(function);
-        function(r_callable, p_callable_custom_info);
+        function(rCallable, pCallableCustomInfo);
     }
 
     /// <summary>
@@ -3548,11 +3548,11 @@ public static unsafe class GDExtensionInterface
     /// The userdata pointer given when creating this custom Callable.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* callable_custom_get_userdata(GDExtensionConstTypePtr p_callable, void* p_token)
+    public static void* CallableCustomGetUserdata(GDExtensionConstTypePtr pCallable, void* pToken)
     {
         var function = s_callable_custom_get_userdata;
         ThrowIfInvalid(function);
-        return function(p_callable, p_token);
+        return function(pCallable, pToken);
     }
 
     /// <summary>
@@ -3565,13 +3565,13 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.4. Use classdb_construct_object3 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use ClassDBConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr classdb_construct_object(GDExtensionConstStringNamePtr p_classname)
+    public static GDExtensionObjectPtr ClassDBConstructObject(GDExtensionConstStringNamePtr pClassname)
     {
         var function = s_classdb_construct_object;
         ThrowIfInvalid(function);
-        return function(p_classname);
+        return function(pClassname);
     }
 
     /// <summary>
@@ -3586,13 +3586,13 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.7. Use classdb_construct_object3 instead.")]
+    [Obsolete("Deprecated since Godot 4.7. Use ClassDBConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr classdb_construct_object2(GDExtensionConstStringNamePtr p_classname)
+    public static GDExtensionObjectPtr ClassDBConstructObject2(GDExtensionConstStringNamePtr pClassname)
     {
         var function = s_classdb_construct_object2;
         ThrowIfInvalid(function);
-        return function(p_classname);
+        return function(pClassname);
     }
 
     /// <summary>
@@ -3609,11 +3609,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the newly created Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr classdb_construct_object3(GDExtensionConstStringNamePtr p_classname)
+    public static GDExtensionObjectPtr ClassDBConstructObject3(GDExtensionConstStringNamePtr pClassname)
     {
         var function = s_classdb_construct_object3;
         ThrowIfInvalid(function);
-        return function(p_classname);
+        return function(pClassname);
     }
 
     /// <summary>
@@ -3632,11 +3632,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the MethodBind from ClassDB.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionMethodBindPtr classdb_get_method_bind(GDExtensionConstStringNamePtr p_classname, GDExtensionConstStringNamePtr p_methodname, GDExtensionInt p_hash)
+    public static GDExtensionMethodBindPtr ClassDBGetMethodBind(GDExtensionConstStringNamePtr pClassname, GDExtensionConstStringNamePtr pMethodname, GDExtensionInt pHash)
     {
         var function = s_classdb_get_method_bind;
         ThrowIfInvalid(function);
-        return function(p_classname, p_methodname, p_hash);
+        return function(pClassname, pMethodname, pHash);
     }
 
     /// <summary>
@@ -3650,11 +3650,11 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. No longer needed. Use the `is_class` method on `Object` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* classdb_get_class_tag(GDExtensionConstStringNamePtr p_classname)
+    public static void* ClassDBGetClassTag(GDExtensionConstStringNamePtr pClassname)
     {
         var function = s_classdb_get_class_tag;
         ThrowIfInvalid(function);
-        return function(p_classname);
+        return function(pClassname);
     }
 
     /// <summary>
@@ -3673,13 +3673,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_extension_funcs">
     /// A pointer to a GDExtensionClassCreationInfo struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.2. Use classdb_register_extension_class6 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo* p_extension_funcs)
+    public static void ClassDBRegisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
     {
         var function = s_classdb_register_extension_class;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     /// <summary>
@@ -3698,13 +3698,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_extension_funcs">
     /// A pointer to a GDExtensionClassCreationInfo2 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use classdb_register_extension_class6 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class2(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo2* p_extension_funcs)
+    public static void ClassDBRegisterExtensionClass2(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
     {
         var function = s_classdb_register_extension_class2;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     /// <summary>
@@ -3723,13 +3723,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_extension_funcs">
     /// A pointer to a GDExtensionClassCreationInfo3 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.4. Use classdb_register_extension_class6 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class3(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo3* p_extension_funcs)
+    public static void ClassDBRegisterExtensionClass3(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
     {
         var function = s_classdb_register_extension_class3;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     /// <summary>
@@ -3748,13 +3748,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_extension_funcs">
     /// A pointer to a GDExtensionClassCreationInfo4 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.5. Use classdb_register_extension_class6 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class4(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo4* p_extension_funcs)
+    public static void ClassDBRegisterExtensionClass4(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
         var function = s_classdb_register_extension_class4;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     /// <summary>
@@ -3773,13 +3773,13 @@ public static unsafe class GDExtensionInterface
     /// <param name="p_extension_funcs">
     /// A pointer to a GDExtensionClassCreationInfo5 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.7. Use classdb_register_extension_class6 instead.")]
+    [Obsolete("Deprecated since Godot 4.7. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class5(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo5* p_extension_funcs)
+    public static void ClassDBRegisterExtensionClass5(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo5* pExtensionFuncs)
     {
         var function = s_classdb_register_extension_class5;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     /// <summary>
@@ -3799,11 +3799,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionClassCreationInfo6 struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class6(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, GDExtensionClassCreationInfo6* p_extension_funcs)
+    public static void ClassDBRegisterExtensionClass6(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
     {
         var function = s_classdb_register_extension_class6;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
+        function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
 
     /// <summary>
@@ -3820,11 +3820,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionClassMethodInfo struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_method(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionClassMethodInfo* p_method_info)
+    public static void ClassDBRegisterExtensionClassMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassMethodInfo* pMethodInfo)
     {
         var function = s_classdb_register_extension_class_method;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_method_info);
+        function(pLibrary, pClassName, pMethodInfo);
     }
 
     /// <summary>
@@ -3841,11 +3841,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionClassMethodInfo struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_virtual_method(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionClassVirtualMethodInfo* p_method_info)
+    public static void ClassDBRegisterExtensionClassVirtualMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassVirtualMethodInfo* pMethodInfo)
     {
         var function = s_classdb_register_extension_class_virtual_method;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_method_info);
+        function(pLibrary, pClassName, pMethodInfo);
     }
 
     /// <summary>
@@ -3873,11 +3873,11 @@ public static unsafe class GDExtensionInterface
     /// Whether or not this constant is part of a bitfield.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_integer_constant(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_enum_name, GDExtensionConstStringNamePtr p_constant_name, GDExtensionInt p_constant_value, GDExtensionBool p_is_bitfield)
+    public static void ClassDBRegisterExtensionClassIntegerConstant(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pEnumName, GDExtensionConstStringNamePtr pConstantName, GDExtensionInt pConstantValue, GDExtensionBool pIsBitfield)
     {
         var function = s_classdb_register_extension_class_integer_constant;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_enum_name, p_constant_name, p_constant_value, p_is_bitfield);
+        function(pLibrary, pClassName, pEnumName, pConstantName, pConstantValue, pIsBitfield);
     }
 
     /// <summary>
@@ -3900,11 +3900,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the name of the getter method.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_property(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionPropertyInfo* p_info, GDExtensionConstStringNamePtr p_setter, GDExtensionConstStringNamePtr p_getter)
+    public static void ClassDBRegisterExtensionClassProperty(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter)
     {
         var function = s_classdb_register_extension_class_property;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_info, p_setter, p_getter);
+        function(pLibrary, pClassName, pInfo, pSetter, pGetter);
     }
 
     /// <summary>
@@ -3930,11 +3930,11 @@ public static unsafe class GDExtensionInterface
     /// The index to pass as the first argument to the getter and setter methods.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_property_indexed(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionPropertyInfo* p_info, GDExtensionConstStringNamePtr p_setter, GDExtensionConstStringNamePtr p_getter, GDExtensionInt p_index)
+    public static void ClassDBRegisterExtensionClassPropertyIndexed(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter, GDExtensionInt pIndex)
     {
         var function = s_classdb_register_extension_class_property_indexed;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_info, p_setter, p_getter, p_index);
+        function(pLibrary, pClassName, pInfo, pSetter, pGetter, pIndex);
     }
 
     /// <summary>
@@ -3953,11 +3953,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String with the prefix used by properties in this group.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_property_group(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringPtr p_group_name, GDExtensionConstStringPtr p_prefix)
+    public static void ClassDBRegisterExtensionClassPropertyGroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pGroupName, GDExtensionConstStringPtr pPrefix)
     {
         var function = s_classdb_register_extension_class_property_group;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_group_name, p_prefix);
+        function(pLibrary, pClassName, pGroupName, pPrefix);
     }
 
     /// <summary>
@@ -3976,11 +3976,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String with the prefix used by properties in this subgroup.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_property_subgroup(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringPtr p_subgroup_name, GDExtensionConstStringPtr p_prefix)
+    public static void ClassDBRegisterExtensionClassPropertySubgroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pSubgroupName, GDExtensionConstStringPtr pPrefix)
     {
         var function = s_classdb_register_extension_class_property_subgroup;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_subgroup_name, p_prefix);
+        function(pLibrary, pClassName, pSubgroupName, pPrefix);
     }
 
     /// <summary>
@@ -4003,11 +4003,11 @@ public static unsafe class GDExtensionInterface
     /// The number of arguments the signal receives.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_register_extension_class_signal(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_signal_name, GDExtensionPropertyInfo* p_argument_info, GDExtensionInt p_argument_count)
+    public static void ClassDBRegisterExtensionClassSignal(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pSignalName, GDExtensionPropertyInfo* pArgumentInfo, GDExtensionInt pArgumentCount)
     {
         var function = s_classdb_register_extension_class_signal;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name, p_signal_name, p_argument_info, p_argument_count);
+        function(pLibrary, pClassName, pSignalName, pArgumentInfo, pArgumentCount);
     }
 
     /// <summary>
@@ -4021,11 +4021,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the class name.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void classdb_unregister_extension_class(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name)
+    public static void ClassDBUnregisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName)
     {
         var function = s_classdb_unregister_extension_class;
         ThrowIfInvalid(function);
-        function(p_library, p_class_name);
+        function(pLibrary, pClassName);
     }
 
     /// <summary>
@@ -4038,11 +4038,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String which will receive the path.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void get_library_path(GDExtensionClassLibraryPtr p_library, GDExtensionUninitializedStringPtr r_path)
+    public static void GetLibraryPath(GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringPtr rPath)
     {
         var function = s_get_library_path;
         ThrowIfInvalid(function);
-        function(p_library, r_path);
+        function(pLibrary, rPath);
     }
 
     /// <summary>
@@ -4053,11 +4053,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void editor_add_plugin(GDExtensionConstStringNamePtr p_class_name)
+    public static void EditorAddPlugin(GDExtensionConstStringNamePtr pClassName)
     {
         var function = s_editor_add_plugin;
         ThrowIfInvalid(function);
-        function(p_class_name);
+        function(pClassName);
     }
 
     /// <summary>
@@ -4067,11 +4067,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the name of a class that was previously added as an editor plugin.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void editor_remove_plugin(GDExtensionConstStringNamePtr p_class_name)
+    public static void EditorRemovePlugin(GDExtensionConstStringNamePtr pClassName)
     {
         var function = s_editor_remove_plugin;
         ThrowIfInvalid(function);
-        function(p_class_name);
+        function(pClassName);
     }
 
     /// <summary>
@@ -4082,11 +4082,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void editor_help_load_xml_from_utf8_chars(byte* p_data)
+    public static void EditorHelpLoadXmlFromUtf8Chars(byte* pData)
     {
         var function = s_editor_help_load_xml_from_utf8_chars;
         ThrowIfInvalid(function);
-        function(p_data);
+        function(pData);
     }
 
     /// <summary>
@@ -4100,11 +4100,11 @@ public static unsafe class GDExtensionInterface
     /// The number of bytes (not code units).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void editor_help_load_xml_from_utf8_chars_and_len(byte* p_data, GDExtensionInt p_size)
+    public static void EditorHelpLoadXmlFromUtf8CharsAndLen(byte* pData, GDExtensionInt pSize)
     {
         var function = s_editor_help_load_xml_from_utf8_chars_and_len;
         ThrowIfInvalid(function);
-        function(p_data, p_size);
+        function(pData, pSize);
     }
 
     /// <summary>
@@ -4121,11 +4121,11 @@ public static unsafe class GDExtensionInterface
     /// The callback to retrieve the list of classes used.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void editor_register_get_classes_used_callback(GDExtensionClassLibraryPtr p_library, GDExtensionEditorGetClassesUsedCallback p_callback)
+    public static void EditorRegisterGetClassesUsedCallback(GDExtensionClassLibraryPtr pLibrary, GDExtensionEditorGetClassesUsedCallback pCallback)
     {
         var function = s_editor_register_get_classes_used_callback;
         ThrowIfInvalid(function);
-        function(p_library, p_callback);
+        function(pLibrary, pCallback);
     }
 
     /// <summary>
@@ -4138,11 +4138,11 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the structure that contains the callbacks.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void register_main_loop_callbacks(GDExtensionClassLibraryPtr p_library, GDExtensionMainLoopCallbacks* p_callbacks)
+    public static void RegisterMainLoopCallbacks(GDExtensionClassLibraryPtr pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
     {
         var function = s_register_main_loop_callbacks;
         ThrowIfInvalid(function);
-        function(p_library, p_callbacks);
+        function(pLibrary, pCallbacks);
     }
 
     private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)
