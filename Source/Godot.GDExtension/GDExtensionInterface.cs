@@ -4147,9 +4147,9 @@ public static unsafe class GDExtensionInterface
 
     private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress getProcAddress, ReadOnlySpan<byte> functionName)
     {
-        fixed (byte* p_function_name = functionName)
+        fixed (byte* pFunctionName = functionName)
         {
-            return getProcAddress(p_function_name);
+            return getProcAddress(pFunctionName);
         }
     }
 
