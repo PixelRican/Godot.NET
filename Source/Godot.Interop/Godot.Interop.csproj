@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <NoWarn>CS0618;CS8909</NoWarn>
+        <NoWarn>CS0618</NoWarn>
     </PropertyGroup>
 </Project>
