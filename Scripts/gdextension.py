@@ -268,11 +268,19 @@ class GDExtensionEnumValue:
             self.description = GDExtensionDescription(description)
 
 class GDExtensionHandle(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        match self.name:
+            case name if name.endswith("VariantPtr"):
+                self.expansion: str = "Godot.Interop.GDExtensionVariant*"
+            case _:
+                self.expansion: str = "void*"
+
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        yield f"global using unsafe {self.name} = void*;\n"
+        yield f"global using unsafe {self.name} = {self.expansion};\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return "void*"
+        return self.expansion
 
 class GDExtensionAlias(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
