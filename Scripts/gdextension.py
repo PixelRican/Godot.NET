@@ -140,7 +140,6 @@ class GDExtensionSymbolTable:
 
     def substitute(self, match: Match[str]) -> str:
         text: str = match.group()
-        print(text)
         if text.startswith("`") and text.endswith("`"):
             group: str = match.group(1)
             return f"`{self.substitutions.get(group, group)}`"
