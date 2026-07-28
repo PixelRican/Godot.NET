@@ -147,7 +147,7 @@ class GDExtensionSymbolTable:
         return self.substitutions.get(text, text)
 
     def transform(self, text: str) -> str:
-        result: str = self.substitutions.get(text, "")
+        result: str | None = self.substitutions.get(text)
         if result:
             return result
         return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", self.substitute, text)
