@@ -5,7 +5,7 @@ namespace Godot.Tests;
 
 public abstract unsafe class ExtensionObject : IDisposable
 {
-    private GDExtensionObjectPtr _base;
+    private nint _base;
 
     protected ExtensionObject() : this("Object"u8)
     {
@@ -14,7 +14,7 @@ public abstract unsafe class ExtensionObject : IDisposable
     protected ExtensionObject(ReadOnlySpan<byte> baseClassName)
     {
         using StringName nameOfBase = new StringName(baseClassName);
-        _base = GodotBridge.GDExtensionInterface.ClassdbConstructObject.Invoke(new GDExtensionConstStringNamePtr(&nameOfBase));
+        _base = (nint)GDExtensionInterface.ClassDBConstructObject((GDExtensionStringName*)&nameOfBase);
     }
 
     ~ExtensionObject()
@@ -22,35 +22,32 @@ public abstract unsafe class ExtensionObject : IDisposable
         Dispose(disposing: false);
     }
 
-    public GDExtensionObjectPtr Base
-    {
-        get => _base;
-    }
+    public nint Base => _base;
 
     public void EmitSignal(StringName signal, params ReadOnlySpan<Variant> arguments)
     {
         using Variant signalVariant = new Variant(signal);
-        Span<GDExtensionConstVariantPtr> pointerArguments = arguments.Length < 128
-            ? stackalloc GDExtensionConstVariantPtr[arguments.Length + 1]
-            : new GDExtensionConstVariantPtr[arguments.Length + 1];
+        Span<nint> pointerArguments = arguments.Length < 128
+            ? stackalloc nint[arguments.Length + 1]
+            : new nint[arguments.Length + 1];
 
         fixed (Variant* source = arguments)
-        fixed (GDExtensionConstVariantPtr* destination = pointerArguments)
+        fixed (nint* destination = pointerArguments)
         {
-            destination[0] = new GDExtensionConstVariantPtr(&signalVariant);
+            destination[0] = (nint)(&signalVariant);
 
             for (int i = 0; i < arguments.Length; i++)
             {
-                destination[i + 1] = new GDExtensionConstVariantPtr(&source[i]);
+                destination[i + 1] = (nint)(&source[i]);
             }
 
             Variant result;
-            GodotBridge.GDExtensionInterface.ObjectMethodBindCall.Invoke(
-                ObjectBridge.EmitSignal,
-                _base,
-                destination,
-                new GDExtensionInt(pointerArguments.Length),
-                new GDExtensionUninitializedVariantPtr(&result),
+            GDExtensionInterface.ObjectMethodBindCall(
+                NativeMethods.ObjectEmitSignalMethodBind,
+                (void*)_base,
+                (GDExtensionVariant**)destination,
+                pointerArguments.Length,
+                (GDExtensionVariant*)&result,
                 null);
             result.Dispose();
         }
@@ -66,7 +63,7 @@ public abstract unsafe class ExtensionObject : IDisposable
     {
         if (disposing)
         {
-            _base = default;
+            _base = 0;
         }
     }
 }

@@ -6,85 +6,91 @@ namespace Godot.Tests;
 
 public static unsafe class GDExtensionMarshal
 {
-    public static GDExtensionObjectPtr CreateInstance(
+    public static void* CreateInstance(
         void* token,
         ExtensionObject target,
         ReadOnlySpan<byte> className,
         GDExtensionInstanceBindingCallbacks callbacks = default)
     {
         ArgumentNullException.ThrowIfNull(target);
-        GDExtensionObjectPtr parent = target.Base;
         GCHandle<ExtensionObject> handle = new GCHandle<ExtensionObject>(target);
-        GDExtensionClassInstancePtr instance = new GDExtensionClassInstancePtr((void*)GCHandle<ExtensionObject>.ToIntPtr(handle));
+        void* instance = (void*)GCHandle<ExtensionObject>.ToIntPtr(handle);
+        void* parent = (void*)target.Base;
 
         using (StringName classStringName = new StringName(className))
         {
-            GodotBridge.GDExtensionInterface.ObjectSetInstance.Invoke(parent, new GDExtensionConstStringNamePtr(&classStringName), instance);
+            GDExtensionInterface.ObjectSetInstance(parent, (GDExtensionStringName*)&classStringName, instance);
         }
 
-        GodotBridge.GDExtensionInterface.ObjectSetInstanceBinding.Invoke(parent, token, instance.Pointer, &callbacks);
+        GDExtensionInterface.ObjectSetInstanceBinding(parent, token, instance, &callbacks);
         return parent;
     }
 
-    public static void FreeInstance(GDExtensionClassInstancePtr instance)
+    public static void FreeInstance(void* instance)
     {
-        GCHandle<ExtensionObject> handle = GCHandle<ExtensionObject>.FromIntPtr((nint)instance.Pointer);
+        GCHandle<ExtensionObject> handle = GCHandle<ExtensionObject>.FromIntPtr((nint)instance);
         ExtensionObject target = handle.Target;
         handle.Dispose();
         target.Dispose();
     }
 
-    public static T GetTarget<T>(GDExtensionClassInstancePtr instance) where T : ExtensionObject
+    public static T GetTarget<T>(void* instance) where T : ExtensionObject
     {
-        GCHandle<T> handle = GCHandle<T>.FromIntPtr((nint)instance.Pointer);
+        GCHandle<T> handle = GCHandle<T>.FromIntPtr((nint)instance);
         return handle.Target;
     }
 
-    public static double ReadFloat(GDExtensionConstTypePtr pointer)
+    public static double ReadFloat(void* pointer)
     {
-        return *(double*)pointer.Pointer;
+        return *(double*)pointer;
     }
 
-    public static double ReadFloat(GDExtensionConstVariantPtr pointer)
+    public static double ReadFloat(GDExtensionVariant* pointer)
     {
-        return ((Variant*)pointer.Pointer)->ToFloat();
+        return ((Variant*)pointer)->ToFloat();
     }
 
-    public static void WriteFloat(GDExtensionTypePtr destination, double value)
+    public static void WriteFloat(void* destination, double value)
     {
-        *(double*)destination.Pointer = value;
+        *(double*)destination = value;
     }
 
-    public static void WriteFloat(GDExtensionVariantPtr destination, double value)
+    public static void WriteFloat(GDExtensionVariant* destination, double value)
     {
-        *(Variant*)destination.Pointer = new Variant(value);
+        *(Variant*)destination = new Variant(value);
     }
 
     public static bool ValidateArguments(
-        GDExtensionConstVariantPtr* arguments,
-        GDExtensionInt argumentCount,
-        GDExtensionCallError* error,
-        ReadOnlySpan<GDExtensionVariantType> expectedTypes)
+        GDExtensionVariant** pArguments,
+        long pArgumentCount,
+        GDExtensionCallError* rError,
+        ReadOnlySpan<GDExtensionVariantType> pExpectedTypes)
     {
-        if (argumentCount.Value != expectedTypes.Length)
+        if (pArgumentCount != pExpectedTypes.Length)
         {
-            error->error = argumentCount.Value < expectedTypes.Length
-                ? GDEXTENSION_CALL_ERROR_TOO_FEW_ARGUMENTS
-                : GDEXTENSION_CALL_ERROR_TOO_MANY_ARGUMENTS;
-            error->expected = expectedTypes.Length;
+            *rError = new GDExtensionCallError
+            {
+                Error = pArgumentCount < pExpectedTypes.Length
+                    ? GDExtensionCallErrorType.TooFewArguments
+                    : GDExtensionCallErrorType.TooManyArguments,
+                Expected = pExpectedTypes.Length
+            };
             return false;
         }
 
-        for (int i = 0; i < expectedTypes.Length; i++)
+        for (int i = 0; i < pExpectedTypes.Length; i++)
         {
-            GDExtensionConstVariantPtr argument = arguments[i];
-            GDExtensionVariantType expectedType = expectedTypes[i];
+            GDExtensionVariant* argument = pArguments[i];
+            GDExtensionVariantType expectedType = pExpectedTypes[i];
 
-            if (GodotBridge.GDExtensionInterface.VariantGetType.Invoke(argument) != expectedType)
+            if (GDExtensionInterface.VariantGetType(argument) != expectedType)
             {
-                error->error = GDEXTENSION_CALL_ERROR_INVALID_ARGUMENT;
-                error->expected = (int)expectedType;
-                error->argument = i;
+                *rError = new GDExtensionCallError
+                {
+                    Error = GDExtensionCallErrorType.InvalidArgument,
+                    Expected = (int)expectedType,
+                    Argument = i
+                };
                 return false;
             }
         }

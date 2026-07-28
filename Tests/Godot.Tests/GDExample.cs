@@ -33,9 +33,11 @@ public sealed class GDExample : ExtensionSprite2D
     {
         _timePassed += _speed * delta;
         _timeEmit += delta;
-        Vector2 newPosition = new Vector2(
-            x: (Real)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
-            y: (Real)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5))));
+        Vector2 newPosition = new Vector2
+        {
+            X = (float)(_amplitude * (1.0 + Math.Sin(_timePassed * 2.0))),
+            Y = (float)(_amplitude * (1.0 + Math.Cos(_timePassed * 1.5)))
+        };
         SetPosition(newPosition);
 
         if (_timeEmit >= 1.0)

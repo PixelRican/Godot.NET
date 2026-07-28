@@ -5,30 +5,25 @@ using Godot.Interop;
 
 namespace Godot.Tests;
 
-#if BUILD_32
-[StructLayout(LayoutKind.Explicit, Size = 4)]
-#else
-[StructLayout(LayoutKind.Explicit, Size = 8)]
-#endif
+[StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct StringName : IDisposable, IEquatable<StringName>
 {
+    private readonly GDExtensionStringName _value;
+
     public StringName(ReadOnlySpan<byte> contents)
     {
-        fixed (StringName* self = &this)
         fixed (byte* reference = contents)
+        fixed (GDExtensionStringName* self = &_value)
         {
-            GodotBridge.GDExtensionInterface.StringNameNewWithUtf8CharsAndLen.Invoke(
-                new GDExtensionUninitializedStringNamePtr(self),
-                reference,
-                new GDExtensionInt(contents.Length));
+            GDExtensionInterface.StringNameNewWithUtf8CharsAndLen(self, reference, contents.Length);
         }
     }
 
     public void Dispose()
     {
-        fixed (StringName* self = &this)
+        fixed (GDExtensionStringName* self = &_value)
         {
-            StringNameBridge.Destructor.Invoke(new GDExtensionTypePtr(self));
+            NativeMethods.StringNameDestructor(self);
         }
     }
 
@@ -49,21 +44,15 @@ public readonly unsafe struct StringName : IDisposable, IEquatable<StringName>
 
     public static bool operator ==(StringName left, StringName right)
     {
-        GDExtensionBool result;
-        StringNameBridge.OperatorEqual.Invoke(
-            new GDExtensionConstTypePtr(&left),
-            new GDExtensionConstTypePtr(&right),
-            new GDExtensionTypePtr(&result));
-        return result.Value;
+        bool result;
+        NativeMethods.StringNameEqualOperatorEvaluator(&left._value, &right._value, &result);
+        return result;
     }
 
     public static bool operator !=(StringName left, StringName right)
     {
-        GDExtensionBool result;
-        StringNameBridge.OperatorNotEqual.Invoke(
-            new GDExtensionConstTypePtr(&left),
-            new GDExtensionConstTypePtr(&right),
-            new GDExtensionTypePtr(&result));
-        return result.Value;
+        bool result;
+        NativeMethods.StringNameNotEqualOperatorEvaluator(&left._value, &right._value, &result);
+        return result;
     }
 }

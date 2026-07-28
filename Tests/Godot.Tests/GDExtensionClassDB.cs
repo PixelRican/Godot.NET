@@ -10,111 +10,111 @@ public static unsafe class GDExtensionClassDB
     private const uint PropertyUsageDefault = PropertyUsageStorage | PropertyUsageEditor;
 
     public static void RegisterClass(
-        GDExtensionClassLibraryPtr library,
-        ReadOnlySpan<byte> className,
-        ReadOnlySpan<byte> parentClassName,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionObjectPtr> createInstanceFunc,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, void> freeInstanceFunc,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionConstStringNamePtr, GDExtensionClassCallVirtual> getVirtualFunc)
+        void* pLibrary,
+        ReadOnlySpan<byte> pClassName,
+        ReadOnlySpan<byte> pParentClassName,
+        delegate* unmanaged[Cdecl]<void*, void*> pCreateInstanceFunc,
+        delegate* unmanaged[Cdecl]<void*, void*, void> pFreeInstanceFunc,
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void**, void*, void>> pGetVirtualFunc)
     {
-        using StringName classStringName = new StringName(className);
-        using StringName parentClassStringName = new StringName(parentClassName);
+        using StringName classStringName = new StringName(pClassName);
+        using StringName parentClassStringName = new StringName(pParentClassName);
         GDExtensionClassCreationInfo classInfo = new GDExtensionClassCreationInfo
         {
-            class_userdata = library.Pointer,
-            create_instance_func = new GDExtensionClassCreateInstance(createInstanceFunc),
-            free_instance_func = new GDExtensionClassFreeInstance(freeInstanceFunc),
-            get_virtual_func = new GDExtensionClassGetVirtual(getVirtualFunc)
+            ClassUserData = pLibrary,
+            CreateInstanceFunc = pCreateInstanceFunc,
+            FreeInstanceFunc = pFreeInstanceFunc,
+            GetVirtualFunc = pGetVirtualFunc
         };
-        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClass.Invoke(
-            library,
-            new GDExtensionConstStringNamePtr(&classStringName),
-            new GDExtensionConstStringNamePtr(&parentClassStringName),
+        GDExtensionInterface.ClassDBRegisterExtensionClass(
+            pLibrary,
+            (GDExtensionStringName*)&classStringName,
+            (GDExtensionStringName*)&parentClassStringName,
             &classInfo);
     }
 
     public static void RegisterPropertyGetter(
-        GDExtensionClassLibraryPtr library,
-        ReadOnlySpan<byte> className,
-        ReadOnlySpan<byte> methodName,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
+        void* pLibrary,
+        ReadOnlySpan<byte> pClassName,
+        ReadOnlySpan<byte> pMethodName,
+        delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> pCallFunc,
+        delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> pPtrCallFunc,
         GDExtensionVariantType type)
     {
-        using StringName classStringName = new StringName(className);
-        using StringName methodStringName = new StringName(methodName);
+        using StringName classStringName = new StringName(pClassName);
+        using StringName methodStringName = new StringName(pMethodName);
         using StringName emptyStringName = new StringName(default);
         using String emptyString = new String(default);
         GDExtensionPropertyInfo returnInfo = new GDExtensionPropertyInfo
         {
-            name = new GDExtensionStringNamePtr(&emptyStringName),
-            type = type,
-            hint_string = new GDExtensionStringPtr(&emptyString),
-            class_name = new GDExtensionStringNamePtr(&emptyStringName),
-            usage = PropertyUsageDefault
+            Name = (GDExtensionStringName*)&emptyStringName,
+            Type = type,
+            HintString = (GDExtensionString*)&emptyString,
+            ClassName = (GDExtensionStringName*)&emptyStringName,
+            Usage = PropertyUsageDefault
         };
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
-            name = new GDExtensionStringNamePtr(&methodStringName),
-            call_func = new GDExtensionClassMethodCall(callFunc),
-            ptrcall_func = new GDExtensionClassMethodPtrCall(ptrcallFunc),
-            method_flags = (uint)GDEXTENSION_METHOD_FLAGS_DEFAULT,
-            has_return_value = new GDExtensionBool(true),
-            return_value_info = &returnInfo
+            Name = (GDExtensionStringName*)&methodStringName,
+            CallFunc = pCallFunc,
+            PtrCallFunc = pPtrCallFunc,
+            MethodFlags = GDExtensionClassMethodFlags.Default,
+            HasReturnValue = true,
+            ReturnValueInfo = &returnInfo
         };
-        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
-            library,
-            new GDExtensionConstStringNamePtr(&classStringName),
+        GDExtensionInterface.ClassDBRegisterExtensionClassMethod(
+            pLibrary,
+            (GDExtensionStringName*)&classStringName,
             &methodInfo);
     }
 
     public static void RegisterPropertySetter(
-        GDExtensionClassLibraryPtr library,
-        ReadOnlySpan<byte> className,
-        ReadOnlySpan<byte> methodName,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError*, void> callFunc,
-        delegate* unmanaged[Cdecl]<void*, GDExtensionClassInstancePtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> ptrcallFunc,
+        void* pLibrary,
+        ReadOnlySpan<byte> pClassName,
+        ReadOnlySpan<byte> pMethodName,
+        delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> pCallFunc,
+        delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> pPtrCallFunc,
         GDExtensionVariantType type)
     {
-        using StringName classStringName = new StringName(className);
-        using StringName methodStringName = new StringName(methodName);
+        using StringName classStringName = new StringName(pClassName);
+        using StringName methodStringName = new StringName(pMethodName);
         using StringName argumentStringName = new StringName("value"u8);
         using StringName emptyStringName = new StringName(default);
         using String emptyString = new String(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
-            name = new GDExtensionStringNamePtr(&argumentStringName),
-            type = type,
-            hint_string = new GDExtensionStringPtr(&emptyString),
-            class_name = new GDExtensionStringNamePtr(&emptyStringName),
-            usage = PropertyUsageDefault
+            Name = (GDExtensionStringName*)(&argumentStringName),
+            Type = type,
+            HintString = (GDExtensionString*)(&emptyString),
+            ClassName = (GDExtensionStringName*)(&emptyStringName),
+            Usage = PropertyUsageDefault
         };
-        GDExtensionClassMethodArgumentMetadata argsMetadata = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE;
+        GDExtensionClassMethodArgumentMetadata argsMetadata = GDExtensionClassMethodArgumentMetadata.None;
         GDExtensionClassMethodInfo methodInfo = new GDExtensionClassMethodInfo
         {
-            name = new GDExtensionStringNamePtr(&methodStringName),
-            call_func = new GDExtensionClassMethodCall(callFunc),
-            ptrcall_func = new GDExtensionClassMethodPtrCall(ptrcallFunc),
-            method_flags = (uint)GDEXTENSION_METHOD_FLAGS_DEFAULT,
-            argument_count = 1,
-            arguments_info = &argumentInfo,
-            arguments_metadata = &argsMetadata,
+            Name = (GDExtensionStringName*)(&methodStringName),
+            CallFunc = pCallFunc,
+            PtrCallFunc = pPtrCallFunc,
+            MethodFlags = GDExtensionClassMethodFlags.Default,
+            ArgumentCount = 1,
+            ArgumentsInfo = &argumentInfo,
+            ArgumentsMetadata = &argsMetadata,
         };
-        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassMethod.Invoke(
-            library,
-            new GDExtensionConstStringNamePtr(&classStringName),
+        GDExtensionInterface.ClassDBRegisterExtensionClassMethod(
+            pLibrary,
+            (GDExtensionStringName*)(&classStringName),
             &methodInfo);
     }
 
     public static void RegisterProperty(
-        GDExtensionClassLibraryPtr library,
-        ReadOnlySpan<byte> className,
+        void* pLibrary,
+        ReadOnlySpan<byte> pClassName,
         ReadOnlySpan<byte> propertyName,
         ReadOnlySpan<byte> propertyGetterName,
         ReadOnlySpan<byte> propertySetterName,
         GDExtensionVariantType type)
     {
-        using StringName classStringName = new StringName(className);
+        using StringName classStringName = new StringName(pClassName);
         using StringName propertyStringName = new StringName(propertyName);
         using StringName propertyGetterStringName = new StringName(propertyGetterName);
         using StringName propertySetterStringName = new StringName(propertySetterName);
@@ -122,45 +122,45 @@ public static unsafe class GDExtensionClassDB
         using String emptyString = new String(default);
         GDExtensionPropertyInfo info = new GDExtensionPropertyInfo
         {
-            name = new GDExtensionStringNamePtr(&propertyStringName),
-            type = type,
-            hint_string = new GDExtensionStringPtr(&emptyString),
-            class_name = new GDExtensionStringNamePtr(&emptyStringName),
-            usage = PropertyUsageDefault
+            Name = (GDExtensionStringName*)&propertyStringName,
+            Type = type,
+            HintString = (GDExtensionString*)&emptyString,
+            ClassName = (GDExtensionStringName*)&emptyStringName,
+            Usage = PropertyUsageDefault
         };
-        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassProperty.Invoke(
-            library,
-            new GDExtensionConstStringNamePtr(&classStringName),
+        GDExtensionInterface.ClassDBRegisterExtensionClassProperty(
+            pLibrary,
+            (GDExtensionStringName*)(&classStringName),
             &info,
-            new GDExtensionConstStringNamePtr(&propertySetterStringName),
-            new GDExtensionConstStringNamePtr(&propertyGetterStringName));
+            (GDExtensionStringName*)&propertySetterStringName,
+            (GDExtensionStringName*)&propertyGetterStringName);
     }
 
     public static void RegisterSignal(
-        GDExtensionClassLibraryPtr library,
-        ReadOnlySpan<byte> className,
-        ReadOnlySpan<byte> signalName,
-        ReadOnlySpan<byte> argumentName,
-        GDExtensionVariantType argumentType)
+        void* pLibrary,
+        ReadOnlySpan<byte> pClassName,
+        ReadOnlySpan<byte> pSignalName,
+        ReadOnlySpan<byte> pArgumentName,
+        GDExtensionVariantType pArgumentType)
     {
-        using StringName classStringName = new StringName(className);
-        using StringName signalStringName = new StringName(signalName);
-        using StringName argumentStringName = new StringName(argumentName);
+        using StringName classStringName = new StringName(pClassName);
+        using StringName signalStringName = new StringName(pSignalName);
+        using StringName argumentStringName = new StringName(pArgumentName);
         using StringName emptyStringName = new StringName(default);
         using String emptyString = new String(default);
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
-            name = new GDExtensionStringNamePtr(&argumentStringName),
-            type = argumentType,
-            hint_string = new GDExtensionStringPtr(&emptyString),
-            class_name = new GDExtensionStringNamePtr(&emptyStringName),
-            usage = PropertyUsageDefault
+            Name = (GDExtensionStringName*)&argumentStringName,
+            Type = pArgumentType,
+            HintString = (GDExtensionString*)&emptyString,
+            ClassName = (GDExtensionStringName*)&emptyStringName,
+            Usage = PropertyUsageDefault
         };
-        GodotBridge.GDExtensionInterface.ClassdbRegisterExtensionClassSignal.Invoke(
-            library,
-            new GDExtensionConstStringNamePtr(&classStringName),
-            new GDExtensionConstStringNamePtr(&signalStringName),
+        GDExtensionInterface.ClassDBRegisterExtensionClassSignal(
+            pLibrary,
+            (GDExtensionStringName*)&classStringName,
+            (GDExtensionStringName*)&signalStringName,
             &argumentInfo,
-            new GDExtensionInt(1));
+            1);
     }
 }

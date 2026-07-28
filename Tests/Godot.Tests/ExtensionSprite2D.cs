@@ -15,11 +15,11 @@ public abstract unsafe class ExtensionSprite2D : ExtensionObject
 
     public void SetPosition(Vector2 value)
     {
-        GDExtensionConstTypePtr argument = new GDExtensionConstTypePtr(&value);
-        GodotBridge.GDExtensionInterface.ObjectMethodBindPtrcall.Invoke(
-            Sprite2DBridge.SetPosition,
-            Base,
+        void* argument = &value;
+        GDExtensionInterface.ObjectMethodBindPtrCall(
+            NativeMethods.Node2DSetPositionMethodBind,
+            (void*)Base,
             &argument,
-            default);
+            null);
     }
 }

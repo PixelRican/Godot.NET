@@ -4,59 +4,50 @@ using Godot.Interop;
 
 namespace Godot.Tests;
 
-#if REAL_IS_DOUBLE
-[StructLayout(LayoutKind.Explicit, Size = 40)]
-#else
-[StructLayout(LayoutKind.Explicit, Size = 24)]
-#endif
+[StructLayout(LayoutKind.Sequential)]
 public readonly unsafe struct Variant : IDisposable
 {
+    private readonly GDExtensionVariant _value;
+
     public Variant(StringName value)
     {
-        fixed (Variant* self = &this)
+        fixed (GDExtensionVariant* self = &_value)
         {
-            GDExtensionVariantFromTypeConstructorFunc constructor = VariantBridge.FromStringNameConstructor;
-            constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
+            NativeMethods.VariantFromStringNameConstructor(self, &value);
         }
     }
 
     public Variant(double value)
     {
-        fixed (Variant* self = &this)
+        fixed (GDExtensionVariant* self = &_value)
         {
-            GDExtensionVariantFromTypeConstructorFunc constructor = VariantBridge.FromFloatConstructor;
-            constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
+            NativeMethods.VariantFromFloatConstructor(self, &value);
         }
     }
 
     public Variant(Vector2 value)
     {
-        fixed (Variant* self = &this)
+        fixed (GDExtensionVariant* self = &_value)
         {
-            GDExtensionVariantFromTypeConstructorFunc constructor = VariantBridge.FromVector2Constructor;
-            constructor.Invoke(new GDExtensionUninitializedVariantPtr(self), new GDExtensionTypePtr(&value));
+            NativeMethods.VariantFromVector2Constructor(self, &value);
         }
     }
 
     public double ToFloat()
     {
-        double result;
-
-        fixed (Variant* self = &this)
+        fixed (GDExtensionVariant* self = &_value)
         {
-            GDExtensionTypeFromVariantConstructorFunc constructor = VariantBridge.ToFloatConstructor;
-            constructor.Invoke(new GDExtensionUninitializedTypePtr(&result), new GDExtensionVariantPtr(self));
+            double result;
+            NativeMethods.VariantToFloatConstructor(&result, self);
+            return result;
         }
-
-        return result;
     }
 
     public void Dispose()
     {
-        fixed (Variant* self = &this)
+        fixed (GDExtensionVariant* self = &_value)
         {
-            GDExtensionInterfaceVariantDestroy destructor = GodotBridge.GDExtensionInterface.VariantDestroy;
-            destructor.Invoke(new GDExtensionVariantPtr(self));
+            GDExtensionInterface.VariantDestroy(self);
         }
     }
 }
