@@ -271,6 +271,10 @@ class GDExtensionHandle(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         match self.name:
+            case name if name.endswith("StringPtr"):
+                self.expansion: str = "Godot.Interop.GDExtensionString*"
+            case name if name.endswith("StringNamePtr"):
+                self.expansion: str = "Godot.Interop.GDExtensionStringName*"
             case name if name.endswith("VariantPtr"):
                 self.expansion: str = "Godot.Interop.GDExtensionVariant*"
             case _:
