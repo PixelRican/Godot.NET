@@ -39,7 +39,7 @@ public static unsafe class GDExtensionClassDB
         ReadOnlySpan<byte> pMethodName,
         delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> pCallFunc,
         delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> pPtrCallFunc,
-        GDExtensionVariantType type)
+        GDExtensionVariantType pType)
     {
         using StringName classStringName = new StringName(pClassName);
         using StringName methodStringName = new StringName(pMethodName);
@@ -48,7 +48,7 @@ public static unsafe class GDExtensionClassDB
         GDExtensionPropertyInfo returnInfo = new GDExtensionPropertyInfo
         {
             Name = (GDExtensionStringName*)&emptyStringName,
-            Type = type,
+            Type = pType,
             HintString = (GDExtensionString*)&emptyString,
             ClassName = (GDExtensionStringName*)&emptyStringName,
             Usage = PropertyUsageDefault
@@ -74,7 +74,7 @@ public static unsafe class GDExtensionClassDB
         ReadOnlySpan<byte> pMethodName,
         delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> pCallFunc,
         delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> pPtrCallFunc,
-        GDExtensionVariantType type)
+        GDExtensionVariantType pType)
     {
         using StringName classStringName = new StringName(pClassName);
         using StringName methodStringName = new StringName(pMethodName);
@@ -84,7 +84,7 @@ public static unsafe class GDExtensionClassDB
         GDExtensionPropertyInfo argumentInfo = new GDExtensionPropertyInfo
         {
             Name = (GDExtensionStringName*)(&argumentStringName),
-            Type = type,
+            Type = pType,
             HintString = (GDExtensionString*)(&emptyString),
             ClassName = (GDExtensionStringName*)(&emptyStringName),
             Usage = PropertyUsageDefault
@@ -109,21 +109,21 @@ public static unsafe class GDExtensionClassDB
     public static void RegisterProperty(
         void* pLibrary,
         ReadOnlySpan<byte> pClassName,
-        ReadOnlySpan<byte> propertyName,
-        ReadOnlySpan<byte> propertyGetterName,
-        ReadOnlySpan<byte> propertySetterName,
-        GDExtensionVariantType type)
+        ReadOnlySpan<byte> pPropertyName,
+        ReadOnlySpan<byte> pPropertyGetterName,
+        ReadOnlySpan<byte> pPropertySetterName,
+        GDExtensionVariantType pType)
     {
         using StringName classStringName = new StringName(pClassName);
-        using StringName propertyStringName = new StringName(propertyName);
-        using StringName propertyGetterStringName = new StringName(propertyGetterName);
-        using StringName propertySetterStringName = new StringName(propertySetterName);
+        using StringName propertyStringName = new StringName(pPropertyName);
+        using StringName propertyGetterStringName = new StringName(pPropertyGetterName);
+        using StringName propertySetterStringName = new StringName(pPropertySetterName);
         using StringName emptyStringName = new StringName(default);
         using String emptyString = new String(default);
         GDExtensionPropertyInfo info = new GDExtensionPropertyInfo
         {
             Name = (GDExtensionStringName*)&propertyStringName,
-            Type = type,
+            Type = pType,
             HintString = (GDExtensionString*)&emptyString,
             ClassName = (GDExtensionStringName*)&emptyStringName,
             Usage = PropertyUsageDefault
