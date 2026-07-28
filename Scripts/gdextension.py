@@ -135,18 +135,19 @@ class GDExtensionSymbolTable:
     def register(self, instance: GDExtensionType) -> None:
         self.types[instance.name] = instance
 
-    def substitute(self, symbol: str, replacement: str) -> None:
+    def replace(self, symbol: str, replacement: str) -> None:
         self.substitutions[symbol] = replacement
 
-    def transform(self, text: str) -> str:
-        def closure(match: Match[str]) -> str:
-            group: str = match.group(1)
-            return f"`{self.substitutions.get(group, group)}`"
+    def substitute(self, match: Match[str]) -> str:
+        group: str = match.group(1)
+        substitution: str = self.substitutions.get(group, group)
+        return match.group().replace(group, substitution, 1)
 
+    def transform(self, text: str) -> str:
         result: str = self.substitutions.get(text, "")
         if result:
             return result
-        return sub("`(.+?)`", closure, text.replace("NULL", "null"))
+        return sub(r"`(\w+)`", self.substitute, text.replace("NULL", "null"))
 
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
@@ -241,7 +242,7 @@ class GDExtensionEnum(GDExtensionType):
         prefix: str = commonprefix([value.name for value in self.values])
         for value in self.values:
             if "MAX" in value.name:
-                symbols.substitute(value.name, "Max")
+                symbols.replace(value.name, "Max")
                 continue
             words: list[str] = value.name.removeprefix(prefix).split("_")
             if words[0] == "ERROR" or len(words[0]) == 1:
@@ -253,7 +254,7 @@ class GDExtensionEnum(GDExtensionType):
                     words[i] = "UInt" + word[4:]
                 else:
                     words[i] = word.title()
-            symbols.substitute(value.name, "".join(words))
+            symbols.replace(value.name, "".join(words))
 
 class GDExtensionEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -318,7 +319,7 @@ class GDExtensionStruct(GDExtensionType):
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         for member in self.members:
             replacement: str = preprocess(member.name)
-            symbols.substitute(member.name, pascal(replacement))
+            symbols.replace(member.name, pascal(replacement))
 
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -416,10 +417,10 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         replacement: str = preprocess(self.name)
-        symbols.substitute(self.name, pascal(replacement))
+        symbols.replace(self.name, pascal(replacement))
         for argument in self.arguments:
             replacement: str = preprocess(argument.name)
-            symbols.substitute(argument.name, camel(replacement))
+            symbols.replace(argument.name, camel(replacement))
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
