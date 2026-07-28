@@ -1314,8 +1314,8 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Gets the object instance ID from a variant of type GDEXTENSION_VARIANT_TYPE_OBJECT.<br/>
-    /// If the variant isn't of type GDEXTENSION_VARIANT_TYPE_OBJECT, then zero will be returned.<br/>
+    /// Gets the object instance ID from a variant of type Object.<br/>
+    /// If the variant isn't of type Object, then zero will be returned.<br/>
     /// The instance ID will be returned even if the object is no longer valid - use `object_get_instance_by_id()` to check if the object is still valid.
     /// </summary>
     /// <param name="pSelf">
@@ -1983,7 +1983,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="pMaxWriteLength">
-    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
     /// <returns>
     /// The resulting encoded string length in characters, not including a null terminator. Characters that cannot be converted to Latin-1 are replaced with a space.
@@ -2007,7 +2007,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="pMaxWriteLength">
-    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
     /// <returns>
     /// The resulting encoded string length in bytes (not characters), not including a null terminator.
@@ -2031,7 +2031,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="pMaxWriteLength">
-    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
     /// <returns>
     /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
@@ -2055,7 +2055,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="pMaxWriteLength">
-    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
     /// <returns>
     /// The resulting encoded string length in characters (not bytes), not including a null terminator.
@@ -2079,7 +2079,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the buffer to hold the resulting data. If null is passed in, only the length will be computed.
     /// </param>
     /// <param name="pMaxWriteLength">
-    /// The maximum number of characters that can be written to r_text. It has no affect on the return value.
+    /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
     /// <returns>
     /// The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
@@ -2349,7 +2349,7 @@ public static unsafe class GDExtensionInterface
     }
 
     /// <summary>
-    /// Reads the next p_length bytes into the given buffer using an instance of FileAccess.
+    /// Reads the next pLength bytes into the given buffer using an instance of FileAccess.
     /// </summary>
     /// <param name="pInstance">
     /// A pointer to a FileAccess object.
@@ -2415,7 +2415,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function to run in the thread pool.
     /// </param>
     /// <param name="pUserData">
-    /// A pointer to arbitrary data which will be passed to p_func.
+    /// A pointer to arbitrary data which will be passed to pFunc.
     /// </param>
     /// <param name="pElements">
     /// The number of element needed in the group.
@@ -2450,7 +2450,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function to run in the thread pool.
     /// </param>
     /// <param name="pUserData">
-    /// A pointer to arbitrary data which will be passed to p_func.
+    /// A pointer to arbitrary data which will be passed to pFunc.
     /// </param>
     /// <param name="pHighPriority">
     /// Whether or not this is a high priority task.
@@ -2937,10 +2937,10 @@ public static unsafe class GDExtensionInterface
     /// The type of Variant the Array will store.
     /// </param>
     /// <param name="pClassName">
-    /// A pointer to a StringName with the name of the object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
+    /// A pointer to a StringName with the name of the object (if pType is Object).
     /// </param>
     /// <param name="pScript">
-    /// A pointer to a Script object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
+    /// A pointer to a Script object (if pType is Object and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ArraySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pType, GDExtensionConstStringNamePtr pClassName, GDExtensionConstVariantPtr pScript)
@@ -3000,19 +3000,19 @@ public static unsafe class GDExtensionInterface
     /// The type of Variant the Dictionary key will store.
     /// </param>
     /// <param name="pKeyClassName">
-    /// A pointer to a StringName with the name of the object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
+    /// A pointer to a StringName with the name of the object (if pKeyType is Object).
     /// </param>
     /// <param name="pKeyScript">
-    /// A pointer to a Script object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
+    /// A pointer to a Script object (if pKeyType is Object and the base class is extended by a script).
     /// </param>
     /// <param name="pValueType">
     /// The type of Variant the Dictionary value will store.
     /// </param>
     /// <param name="pValueClassName">
-    /// A pointer to a StringName with the name of the object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
+    /// A pointer to a StringName with the name of the object (if pValueType is Object).
     /// </param>
     /// <param name="pValueScript">
-    /// A pointer to a Script object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
+    /// A pointer to a Script object (if pValueType is Object and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DictionarySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pKeyType, GDExtensionConstStringNamePtr pKeyClassName, GDExtensionConstVariantPtr pKeyScript, GDExtensionVariantType pValueType, GDExtensionConstStringNamePtr pValueClassName, GDExtensionConstVariantPtr pValueScript)
@@ -3359,7 +3359,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionScriptInstanceInfo struct.
     /// </param>
     /// <param name="pInstanceData">
-    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
+    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on pInfo.
     /// </param>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
@@ -3380,7 +3380,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionScriptInstanceInfo2 struct.
     /// </param>
     /// <param name="pInstanceData">
-    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
+    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on pInfo.
     /// </param>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
@@ -3401,7 +3401,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionScriptInstanceInfo3 struct.
     /// </param>
     /// <param name="pInstanceData">
-    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
+    /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on pInfo.
     /// </param>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
@@ -3416,7 +3416,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Creates a placeholder script instance for a given script and instance.<br/>
-    /// This interface is optional as a custom placeholder could also be created with script_instance_create().
+    /// This interface is optional as a custom placeholder could also be created with ScriptInstanceCreate().
     /// </summary>
     /// <param name="pLanguage">
     /// A pointer to a ScriptLanguage.
@@ -3441,7 +3441,7 @@ public static unsafe class GDExtensionInterface
     /// <summary>
     /// Updates a placeholder script instance with the given properties and values.<br/>
     /// The passed in placeholder must be an instance of PlaceHolderScriptInstance<br/>
-    /// such as the one returned by placeholder_script_instance_create().
+    /// such as the one returned by PlaceholderScriptInstanceCreate().
     /// </summary>
     /// <param name="pPlaceholder">
     /// A pointer to a PlaceHolderScriptInstance.
@@ -3470,7 +3470,7 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the language expected for this script instance.
     /// </param>
     /// <returns>
-    /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of script_instance_create.
+    /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of ScriptInstanceCreate.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GDExtensionScriptInstanceDataPtr ObjectGetScriptInstance(GDExtensionConstObjectPtr pObject, GDExtensionObjectPtr pLanguage)
@@ -3536,7 +3536,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Retrieves the userdata pointer from a custom Callable.<br/>
-    /// If the Callable is not a custom Callable or the token does not match the one provided to callable_custom_create() via GDExtensionCallableCustomInfo then null will be returned.
+    /// If the Callable is not a custom Callable or the token does not match the one provided to CallableCustomCreate() via GDExtensionCallableCustomInfo then null will be returned.
     /// </summary>
     /// <param name="pCallable">
     /// A pointer to a Callable.
@@ -3557,7 +3557,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Constructs an Object of the requested class.<br/>
-    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, ObjectSetInstance() should be called to fully initialize the object.
     /// </summary>
     /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
@@ -3576,7 +3576,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Constructs an Object of the requested class.<br/>
-    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.<br/>
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, ObjectSetInstance() should be called to fully initialize the object.<br/>
     /// <br/>
     /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
     /// </summary>
@@ -3597,7 +3597,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Constructs an Object of the requested class.<br/>
-    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.<br/>
+    /// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, ObjectSetInstance() should be called to fully initialize the object.<br/>
     /// If the type is a subtype of RefCounted, it already has a refcount of 1. The caller must take ownership the refcount and is responsible for decrementing it again when the object is no longer needed.<br/>
     /// <br/>
     /// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
@@ -3850,7 +3850,7 @@ public static unsafe class GDExtensionInterface
 
     /// <summary>
     /// Registers an integer constant on an extension class in the ClassDB.<br/>
-    /// Note about registering bitfield values (if p_is_bitfield is true): even though p_constant_value is signed, language bindings are<br/>
+    /// Note about registering bitfield values (if pIsBitfield is true): even though pConstantValue is signed, language bindings are<br/>
     /// advised to treat bitfields as uint64_t, since this is generally clearer and can prevent mistakes like using -1 for setting all bits.<br/>
     /// Language APIs should thus provide an abstraction that registers bitfields (uint64_t) separately from regular constants (int64_t).
     /// </summary>

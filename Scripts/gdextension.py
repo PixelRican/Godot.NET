@@ -119,7 +119,7 @@ class GDExtensionInterface:
 class GDExtensionSymbolTable:
     def __init__(self) -> None:
         self.expansions: dict[str, str] = {}
-        self.substitutions: dict[str, str] = {}
+        self.substitutions: dict[str, str] = {"NULL" : "null"}
         self.types: dict[str, GDExtensionType] = {}
 
     def expand(self, symbol: str) -> str:
@@ -139,15 +139,18 @@ class GDExtensionSymbolTable:
         self.substitutions[symbol] = replacement
 
     def substitute(self, match: Match[str]) -> str:
-        group: str = match.group(1)
-        substitution: str = self.substitutions.get(group, group)
-        return match.group().replace(group, substitution, 1)
+        text: str = match.group()
+        print(text)
+        if text.startswith("`") and text.endswith("`"):
+            group: str = match.group(1)
+            return f"`{self.substitutions.get(group, group)}`"
+        return self.substitutions.get(text, text)
 
     def transform(self, text: str) -> str:
         result: str = self.substitutions.get(text, "")
         if result:
             return result
-        return sub(r"`(\w+)`", self.substitute, text.replace("NULL", "null"))
+        return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", self.substitute, text)
 
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
