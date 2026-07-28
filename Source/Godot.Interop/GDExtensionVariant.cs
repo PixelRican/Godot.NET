@@ -33,10 +33,10 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Explicit)]
-public unsafe struct GDExtensionVariant
+public readonly unsafe struct GDExtensionVariant
 {
-    [FieldOffset(0)] private GDExtensionVariantType _type;
-    [FieldOffset(8)] private DataUnion _data;
+    [FieldOffset(0)] private readonly GDExtensionVariantType _type;
+    [FieldOffset(8)] private readonly DataUnion _data;
 
     [StructLayout(LayoutKind.Explicit)]
     private struct DataUnion
