@@ -361,6 +361,8 @@ class GDExtensionFunction(GDExtensionType):
         yield f"global using unsafe {self.name} = {symbols.expand(self.name)};\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
+        if self.name.endswith("FunctionPtr"):
+            return "void*"
         type_parameters: list[str] = []
         for argument in self.arguments:
             type_parameters.append(symbols.expand(argument.type))
