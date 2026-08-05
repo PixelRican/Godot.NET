@@ -4157,13 +4157,13 @@ public static unsafe class GDExtensionInterface
     {
         if (pFunction == null)
         {
-            Throw();
+            ThrowForInvalidFunction();
         }
+    }
 
-        [DoesNotReturn]
-        static void Throw()
-        {
-            throw new InvalidOperationException("The specified function could not be loaded.");
-        }
+    [DoesNotReturn]
+    private static void ThrowForInvalidFunction()
+    {
+        throw new InvalidOperationException("Unable to call the specified function.");
     }
 }
