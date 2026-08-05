@@ -47,6 +47,6 @@ public struct GDExtensionInitialization
     /// <summary>
     /// This function will be called multiple times for each initialization level.
     /// </summary>
-    public unsafe GDExtensionInitializeCallback Initialize;
-    public unsafe GDExtensionDeinitializeCallback Deinitialize;
+    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Initialize;
+    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Deinitialize;
 }

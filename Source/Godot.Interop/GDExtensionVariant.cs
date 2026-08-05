@@ -41,16 +41,16 @@ public readonly unsafe struct GDExtensionVariant
     [StructLayout(LayoutKind.Explicit)]
     private struct DataUnion
     {
-        [FieldOffset(0)] public GDExtensionBool Bool;
-        [FieldOffset(0)] public GDExtensionInt Int;
+        [FieldOffset(0)] public bool Bool;
+        [FieldOffset(0)] public long Int;
         [FieldOffset(0)] public double Float;
-        [FieldOffset(0)] public GDExtensionTypePtr Transform2D;
-        [FieldOffset(0)] public GDExtensionTypePtr Aabb;
-        [FieldOffset(0)] public GDExtensionTypePtr Basis;
-        [FieldOffset(0)] public GDExtensionTypePtr Transform3D;
-        [FieldOffset(0)] public GDExtensionTypePtr Projection;
-        [FieldOffset(0)] public GDExtensionTypePtr PackedArray;
-        [FieldOffset(0)] public GDExtensionTypePtr Ptr;
+        [FieldOffset(0)] public void* Transform2D;
+        [FieldOffset(0)] public void* Aabb;
+        [FieldOffset(0)] public void* Basis;
+        [FieldOffset(0)] public void* Transform3D;
+        [FieldOffset(0)] public void* Projection;
+        [FieldOffset(0)] public void* PackedArray;
+        [FieldOffset(0)] public void* Ptr;
         [FieldOffset(0)] public MemUnion Mem;
     }
 

@@ -38,14 +38,14 @@ public struct GDExtensionMainLoopCallbacks
     /// <summary>
     /// Will be called after Godot is started and is fully initialized.
     /// </summary>
-    public unsafe GDExtensionMainLoopStartupCallback StartupFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void> StartupFunc;
     /// <summary>
     /// Will be called before Godot is shutdown when it is still fully initialized.
     /// </summary>
-    public unsafe GDExtensionMainLoopShutdownCallback ShutdownFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void> ShutdownFunc;
     /// <summary>
     /// Will be called for each process frame. This will run after all `_process()` methods on Node, and before `ScriptServer::frame()`.<br/>
     /// This is intended to be the equivalent of `ScriptLanguage::frame()` for GDExtension language bindings that don't use the script API.
     /// </summary>
-    public unsafe GDExtensionMainLoopFrameCallback FrameFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void> FrameFunc;
 }

@@ -35,7 +35,7 @@ namespace Godot.Interop;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassVirtualMethodInfo
 {
-    public unsafe GDExtensionStringNamePtr Name;
+    public unsafe GDExtensionStringName* Name;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>

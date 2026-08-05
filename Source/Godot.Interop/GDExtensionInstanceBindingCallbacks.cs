@@ -35,7 +35,7 @@ namespace Godot.Interop;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionInstanceBindingCallbacks
 {
-    public unsafe GDExtensionInstanceBindingCreateCallback CreateCallback;
-    public unsafe GDExtensionInstanceBindingFreeCallback FreeCallback;
-    public unsafe GDExtensionInstanceBindingReferenceCallback ReferenceCallback;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void*> CreateCallback;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void*, void> FreeCallback;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool, bool> ReferenceCallback;
 }

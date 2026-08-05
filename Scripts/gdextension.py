@@ -27,8 +27,9 @@ class GDExtensionInterface:
             instance.stylize(self.symbols)
         for function_data in data["interface"]:
             function: GDExtensionInterfaceFunction = GDExtensionInterfaceFunction(function_data)
-            function.stylize(self.symbols)
             self.interface.append(function)
+            self.symbols.register(function)
+            function.stylize(self.symbols)
 
     def definition(self) -> Iterable[str]:
         yield "using System;\n"
@@ -40,7 +41,7 @@ class GDExtensionInterface:
         yield "public static unsafe class GDExtensionInterface\n"
         yield "{\n"
         for function in self.interface:
-            yield f"    private static {function.type} {function.field};\n"
+            yield f"    private static {function.expand(self.symbols)} {function.field};\n"
         yield "\n"
         yield "    /// <summary>\n"
         yield "    /// Loads the GDExtensionInterface functions from the specified address loader.\n"
@@ -51,17 +52,17 @@ class GDExtensionInterface:
         yield "    /// <exception cref=\"ArgumentNullException\">\n"
         yield "    /// <paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.\n"
         yield "    /// </exception>\n"
-        yield "    public static void Initialize(GDExtensionInterfaceGetProcAddress pGetProcAddress)\n"
+        yield "    public static void Initialize(delegate* unmanaged[Cdecl]<byte*, void*> pGetProcAddress)\n"
         yield "    {\n"
         yield "        ArgumentNullException.ThrowIfNull(pGetProcAddress);\n"
         for function in self.interface:
-            yield f"        {function.field} = ({function.type})Load(pGetProcAddress, \"{function.name}\"u8);\n"
+            yield f"        {function.field} = ({function.expand(self.symbols)})Load(pGetProcAddress, \"{function.name}\"u8);\n"
         yield "    }\n"
         for function in self.interface:
             yield "\n"
             yield from function.definition(self.symbols)
         yield "\n"
-        yield "    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress pGetProcAddress, ReadOnlySpan<byte> pFunctionName)\n"
+        yield "    private static void* Load(delegate* unmanaged[Cdecl]<byte*, void*> pGetProcAddress, ReadOnlySpan<byte> pFunctionName)\n"
         yield "    {\n"
         yield "        fixed (byte* functionName = pFunctionName)\n"
         yield "        {\n"
@@ -85,26 +86,12 @@ class GDExtensionInterface:
         yield "}\n"
 
     def generate(self) -> None:
-        with open("../Source/Godot.Interop/GlobalUsings.cs", "w") as file:
-            file.writelines(self.header("GlobalUsings"))
-            file.write("\n")
-            file.write("#if REAL_T_IS_DOUBLE\n")
-            file.write("global using real_t = double;\n")
-            file.write("#else\n")
-            file.write("global using real_t = float;\n")
-            file.write("#endif\n")
-            file.write("\n")
         for instance in self.types:
-            definition: Iterable[str] = instance.definition(self.symbols)
-            match instance:
-                case GDExtensionEnum() | GDExtensionStruct():
-                    with open(f"../Source/Godot.Interop/{instance.name}.cs", "w") as file:
-                        file.writelines(self.header(instance.name))
-                        file.write("\n")
-                        file.writelines(definition)
-                case _:
-                    with open("../Source/Godot.Interop/GlobalUsings.cs", "a") as file:
-                        file.writelines(definition)
+            if isinstance(instance, (GDExtensionEnum, GDExtensionStruct)):
+                with open(f"../Source/Godot.Interop/{instance.name}.cs", "w") as file:
+                    file.writelines(self.header(instance.name))
+                    file.write("\n")
+                    file.writelines(instance.definition(self.symbols))
         with open("../Source/Godot.Interop/GDExtensionInterface.cs", "w") as file:
             file.writelines(self.header("GDExtensionInterface"))
             file.write("\n")
@@ -195,10 +182,10 @@ class GDExtensionType:
             self.deprecated = GDExtensionDeprecated(deprecated)
 
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        raise NotImplementedError()
+        pass
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        raise NotImplementedError()
+        return self.name
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         pass
@@ -237,9 +224,6 @@ class GDExtensionEnum(GDExtensionType):
         yield f"    {symbols.transform(value.name)} = {value.value}\n"
         yield "}\n"
 
-    def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return f"Godot.Interop.{self.name}"
-
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         prefix: str = commonprefix([value.name for value in self.values])
         for value in self.values:
@@ -268,36 +252,22 @@ class GDExtensionEnumValue:
             self.description = GDExtensionDescription(description)
 
 class GDExtensionHandle(GDExtensionType):
-    def __init__(self, data: dict[str, Any]) -> None:
-        super().__init__(data)
-        match self.name:
-            case name if name.endswith("StringPtr"):
-                self.expansion: str = "Godot.Interop.GDExtensionString*"
-            case name if name.endswith("StringNamePtr"):
-                self.expansion: str = "Godot.Interop.GDExtensionStringName*"
-            case name if name.endswith("VariantPtr"):
-                self.expansion: str = "Godot.Interop.GDExtensionVariant*"
-            case _:
-                self.expansion: str = "void*"
-
-    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        yield f"global using unsafe {self.name} = {self.expansion};\n"
-
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return self.expansion
+        if self.name.endswith("StringPtr"):
+            return "GDExtensionString*"
+        if self.name.endswith("StringNamePtr"):
+            return "GDExtensionStringName*"
+        if self.name.endswith("VariantPtr"):
+            return "GDExtensionVariant*"
+        return "void*"
 
 class GDExtensionAlias(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.type: str = translate(data["type"])
-        if self.name.endswith("Bool"):
-            self.type = "bool"
-
-    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        yield f"global using {self.name} = {symbols.expand(self.name)};\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return symbols.expand(self.type)
+        return "bool" if self.name.endswith("Bool") else self.type
 
 class GDExtensionStruct(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -324,11 +294,8 @@ class GDExtensionStruct(GDExtensionType):
             if member.description:
                 yield from member.description.documentation(symbols, indent=True)
             unsafe: str = "unsafe " * symbols.unsafe(member.type)
-            yield f"    public {unsafe}{member.type} {symbols.transform(member.name)};\n"
+            yield f"    public {unsafe}{symbols.expand(member.type)} {symbols.transform(member.name)};\n"
         yield "}\n"
-
-    def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return f"Godot.Interop.{self.name}"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         for member in self.members:
@@ -356,9 +323,6 @@ class GDExtensionFunction(GDExtensionType):
         return_value: dict[str, Any] | None = data.get("return_value")
         if return_value:
             self.return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value)
-
-    def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        yield f"global using unsafe {self.name} = {symbols.expand(self.name)};\n"
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
         if self.name.endswith("FunctionPtr"):
@@ -392,19 +356,11 @@ class GDExtensionFunctionReturnValue:
 class GDExtensionInterfaceFunction(GDExtensionFunction):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        type_parameters: list[str] = []
-        for argument in self.arguments:
-            type_parameters.append(argument.type)
-        if self.return_value:
-            type_parameters.append(self.return_value.type)
-        else:
-            type_parameters.append("void")
-        self.type: str = f"delegate* unmanaged[Cdecl]<{", ".join(type_parameters)}>"
         self.field: str = preprocess(self.name)
         self.field = f"s_{camel(self.field)}"
 
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        parameters: str = ", ".join(f"{argument.type} {symbols.transform(argument.name)}" for argument in self.arguments)
+        parameters: str = ", ".join(f"{symbols.expand(argument.type)} {symbols.transform(argument.name)}" for argument in self.arguments)
         arguments: str = ", ".join(symbols.transform(argument.name) for argument in self.arguments)
         if self.description:
             yield from self.description.documentation(symbols, indent=True)
@@ -417,16 +373,16 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
             yield self.deprecated.attribute(symbols, indent=True)
         yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
         if self.return_value:
-            yield f"    public static {self.return_value.type} {symbols.transform(self.name)}({parameters})\n"
+            yield f"    public static {symbols.expand(self.return_value.type)} {symbols.transform(self.name)}({parameters})\n"
             yield "    {\n"
-            yield f"        {self.type} function = {self.field};\n"
+            yield f"        {self.expand(symbols)} function = {self.field};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        return function({arguments});\n"
             yield "    }\n"
         else:
             yield f"    public static void {symbols.transform(self.name)}({parameters})\n"
             yield "    {\n"
-            yield f"        {self.type} function = {self.field};\n"
+            yield f"        {self.expand(symbols)} function = {self.field};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        function({arguments});\n"
             yield "    }\n"

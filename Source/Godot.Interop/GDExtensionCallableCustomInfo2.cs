@@ -52,13 +52,13 @@ public struct GDExtensionCallableCustomInfo2
 {
     public unsafe void* CallableUserData;
     public unsafe void* Token;
-    public GDObjectInstanceID ObjectId;
-    public unsafe GDExtensionCallableCustomCall CallFunc;
-    public unsafe GDExtensionCallableCustomIsValid IsValidFunc;
-    public unsafe GDExtensionCallableCustomFree FreeFunc;
-    public unsafe GDExtensionCallableCustomHash HashFunc;
-    public unsafe GDExtensionCallableCustomEqual EqualFunc;
-    public unsafe GDExtensionCallableCustomLessThan LessThanFunc;
-    public unsafe GDExtensionCallableCustomToString ToStringFunc;
-    public unsafe GDExtensionCallableCustomGetArgumentCount GetArgumentCountFunc;
+    public ulong ObjectId;
+    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, bool> IsValidFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void> FreeFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, uint> HashFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool> EqualFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool> LessThanFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, bool*, long> GetArgumentCountFunc;
 }

@@ -41,180 +41,180 @@ public static unsafe class GDExtensionInterface
     private static delegate* unmanaged[Cdecl]<nuint, void*> s_memAlloc;
     private static delegate* unmanaged[Cdecl]<void*, nuint, void*> s_memRealloc;
     private static delegate* unmanaged[Cdecl]<void*, void> s_memFree;
-    private static delegate* unmanaged[Cdecl]<nuint, GDExtensionBool, void*> s_memAlloc2;
-    private static delegate* unmanaged[Cdecl]<void*, nuint, GDExtensionBool, void*> s_memRealloc2;
-    private static delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void> s_memFree2;
-    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> s_printError;
-    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> s_printErrorWithMessage;
-    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> s_printWarning;
-    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> s_printWarningWithMessage;
-    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> s_printScriptError;
-    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> s_printScriptErrorWithMessage;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong> s_getNativeStructSize;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr, void> s_variantNewCopy;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void> s_variantNewNil;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void> s_variantDestroy;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> s_variantCall;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> s_variantCallStatic;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> s_variantEvaluate;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> s_variantSet;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> s_variantSetNamed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> s_variantSetKeyed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool*, void> s_variantSetIndexed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> s_variantGet;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> s_variantGetNamed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> s_variantGetKeyed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool*, void> s_variantGetIndexed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool> s_variantIterInit;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool*, GDExtensionBool> s_variantIterNext;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> s_variantIterGet;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt> s_variantHash;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt> s_variantRecursiveHash;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool> s_variantHashCompare;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionBool> s_variantBooleanize;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool, void> s_variantDuplicate;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionStringPtr, void> s_variantStringify;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantType> s_variantGetType;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionBool> s_variantHasMethod;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool> s_variantHasMember;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool> s_variantHasKey;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> s_variantGetObjectInstanceId;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void> s_variantGetTypeName;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType> s_variantGetTypeByName;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> s_variantCanConvert;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> s_variantCanConvertStrict;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc> s_getVariantFromTypeConstructor;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc> s_getVariantToTypeConstructor;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantGetInternalPtrFunc> s_variantGetPtrInternalGetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, GDExtensionPtrOperatorEvaluator> s_variantGetPtrOperatorEvaluator;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod> s_variantGetPtrBuiltinMethod;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, GDExtensionPtrConstructor> s_variantGetPtrConstructor;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor> s_variantGetPtrDestructor;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr*, int, GDExtensionCallError*, void> s_variantConstruct;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter> s_variantGetPtrSetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrGetter> s_variantGetPtrGetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter> s_variantGetPtrIndexedSetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedGetter> s_variantGetPtrIndexedGetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedSetter> s_variantGetPtrKeyedSetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedGetter> s_variantGetPtrKeyedGetter;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker> s_variantGetPtrKeyedChecker;
-    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void> s_variantGetConstantValue;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction> s_variantGetPtrUtilityFunction;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> s_stringNewWithLatin1Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> s_stringNewWithUtf8Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void> s_stringNewWithUtf16Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> s_stringNewWithUtf32Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, void> s_stringNewWithWideChars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> s_stringNewWithLatin1CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> s_stringNewWithUtf8CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt> s_stringNewWithUtf8CharsAndLen2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void> s_stringNewWithUtf16CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, GDExtensionBool, GDExtensionInt> s_stringNewWithUtf16CharsAndLen2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> s_stringNewWithUtf32CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, GDExtensionInt, void> s_stringNewWithWideCharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> s_stringToLatin1Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> s_stringToUtf8Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt> s_stringToUtf16Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt> s_stringToUtf32Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, void*, GDExtensionInt, GDExtensionInt> s_stringToWideChars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*> s_stringOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*> s_stringOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void> s_stringOperatorPlusEqString;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void> s_stringOperatorPlusEqChar;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void> s_stringOperatorPlusEqCstr;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void> s_stringOperatorPlusEqWcstr;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void> s_stringOperatorPlusEqC32Str;
-    private static delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> s_stringResize;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void> s_stringNameNewWithLatin1Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, void> s_stringNameNewWithUtf8Chars;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void> s_stringNameNewWithUtf8CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, nuint, GDExtensionInt> s_xmlParserOpenBuffer;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, ulong, void> s_fileAccessStoreBuffer;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, byte*, ulong, ulong> s_fileAccessGetBuffer;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> s_imagePtrw;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> s_imagePtr;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long> s_workerThreadPoolAddNativeGroupTask;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> s_workerThreadPoolAddNativeTask;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, byte*> s_packedByteArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, byte*> s_packedByteArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, float*> s_packedFloat32ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*> s_packedFloat32ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*> s_packedFloat64ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, double*> s_packedFloat64ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, int*> s_packedInt32ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, int*> s_packedInt32ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, long*> s_packedInt64ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*> s_packedInt64ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionStringPtr> s_packedStringArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionStringPtr> s_packedStringArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedVector2ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedVector2ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedVector3ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedVector3ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedVector4ArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedVector4ArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedColorArrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> s_packedColorArrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr> s_arrayOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr> s_arrayOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> s_arrayRef;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> s_arraySetTyped;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> s_dictionaryOperatorIndex;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> s_dictionaryOperatorIndexConst;
-    private static delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> s_dictionarySetTyped;
-    private static delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> s_objectMethodBindCall;
-    private static delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> s_objectMethodBindPtrCall;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void> s_objectDestroy;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_globalGetSingleton;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, GDExtensionInstanceBindingCallbacks*, void*> s_objectGetInstanceBinding;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void> s_objectSetInstanceBinding;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void> s_objectFreeInstanceBinding;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> s_objectSetInstance;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr, GDExtensionBool> s_objectGetClassName;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr> s_objectCastTo;
-    private static delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr> s_objectGetInstanceFromId;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDObjectInstanceID> s_objectGetInstanceId;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr, GDExtensionBool> s_objectHasScriptMethod;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> s_objectCallScriptMethod;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr> s_refGetObject;
-    private static delegate* unmanaged[Cdecl]<GDExtensionRefPtr, GDExtensionObjectPtr, void> s_refSetObject;
-    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> s_scriptInstanceCreate;
-    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> s_scriptInstanceCreate2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> s_scriptInstanceCreate3;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr> s_placeholderScriptInstanceCreate;
-    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> s_placeholderScriptInstanceUpdate;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr> s_objectGetScriptInstance;
-    private static delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void> s_objectSetScriptInstance;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo*, void> s_callableCustomCreate;
-    private static delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void> s_callableCustomCreate2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> s_callableCustomGetUserData;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_classDBConstructObject;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_classDBConstructObject2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> s_classDBConstructObject3;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> s_classDBGetMethodBind;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> s_classDBGetClassTag;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void> s_classDBRegisterExtensionClass;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2*, void> s_classDBRegisterExtensionClass2;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void> s_classDBRegisterExtensionClass3;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void> s_classDBRegisterExtensionClass4;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void> s_classDBRegisterExtensionClass5;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6*, void> s_classDBRegisterExtensionClass6;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void> s_classDBRegisterExtensionClassMethod;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void> s_classDBRegisterExtensionClassVirtualMethod;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void> s_classDBRegisterExtensionClassIntegerConstant;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, void> s_classDBRegisterExtensionClassProperty;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void> s_classDBRegisterExtensionClassPropertyIndexed;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> s_classDBRegisterExtensionClassPropertyGroup;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> s_classDBRegisterExtensionClassPropertySubgroup;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionInt, void> s_classDBRegisterExtensionClassSignal;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, void> s_classDBUnregisterExtensionClass;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void> s_getLibraryPath;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> s_editorAddPlugin;
-    private static delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> s_editorRemovePlugin;
+    private static delegate* unmanaged[Cdecl]<nuint, bool, void*> s_memAlloc2;
+    private static delegate* unmanaged[Cdecl]<void*, nuint, bool, void*> s_memRealloc2;
+    private static delegate* unmanaged[Cdecl]<void*, bool, void> s_memFree2;
+    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void> s_printError;
+    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void> s_printErrorWithMessage;
+    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void> s_printWarning;
+    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void> s_printWarningWithMessage;
+    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void> s_printScriptError;
+    private static delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void> s_printScriptErrorWithMessage;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, ulong> s_getNativeStructSize;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, void> s_variantNewCopy;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, void> s_variantNewNil;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, void> s_variantDestroy;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> s_variantCall;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> s_variantCallStatic;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> s_variantEvaluate;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> s_variantSet;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant*, bool*, void> s_variantSetNamed;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> s_variantSetKeyed;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, GDExtensionVariant*, bool*, bool*, void> s_variantSetIndexed;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> s_variantGet;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant*, bool*, void> s_variantGetNamed;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> s_variantGetKeyed;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, GDExtensionVariant*, bool*, bool*, void> s_variantGetIndexed;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool> s_variantIterInit;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool> s_variantIterNext;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> s_variantIterGet;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, long> s_variantHash;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, long> s_variantRecursiveHash;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool> s_variantHashCompare;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, bool> s_variantBooleanize;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool, void> s_variantDuplicate;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionString*, void> s_variantStringify;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariantType> s_variantGetType;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, bool> s_variantHasMethod;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, bool> s_variantHasMember;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool> s_variantHasKey;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariant*, ulong> s_variantGetObjectInstanceId;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionString*, void> s_variantGetTypeName;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, GDExtensionVariantType> s_variantGetTypeByName;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, bool> s_variantCanConvert;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, bool> s_variantCanConvertStrict;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*, void>> s_getVariantFromTypeConstructor;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, void>> s_getVariantToTypeConstructor;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*>> s_variantGetPtrInternalGetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>> s_variantGetPtrOperatorEvaluator;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, long, delegate* unmanaged[Cdecl]<void*, void**, void*, int, void>> s_variantGetPtrBuiltinMethod;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, delegate* unmanaged[Cdecl]<void*, void**, void>> s_variantGetPtrConstructor;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void>> s_variantGetPtrDestructor;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariant*, GDExtensionVariant**, int, GDExtensionCallError*, void> s_variantConstruct;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void*, void>> s_variantGetPtrSetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void*, void>> s_variantGetPtrGetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, long, void*, void>> s_variantGetPtrIndexedSetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, long, void*, void>> s_variantGetPtrIndexedGetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>> s_variantGetPtrKeyedSetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>> s_variantGetPtrKeyedGetter;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, uint>> s_variantGetPtrKeyedChecker;
+    private static delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void> s_variantGetConstantValue;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, long, delegate* unmanaged[Cdecl]<void*, void**, int, void>> s_variantGetPtrUtilityFunction;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void> s_stringNewWithLatin1Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void> s_stringNewWithUtf8Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, char*, void> s_stringNewWithUtf16Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, void> s_stringNewWithUtf32Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, void*, void> s_stringNewWithWideChars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void> s_stringNewWithLatin1CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void> s_stringNewWithUtf8CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long> s_stringNewWithUtf8CharsAndLen2;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, void> s_stringNewWithUtf16CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, bool, long> s_stringNewWithUtf16CharsAndLen2;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, long, void> s_stringNewWithUtf32CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, void*, long, void> s_stringNewWithWideCharsAndLen;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long> s_stringToLatin1Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long> s_stringToUtf8Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, long> s_stringToUtf16Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, long, long> s_stringToUtf32Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, void*, long, long> s_stringToWideChars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, long, uint*> s_stringOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, long, uint*> s_stringOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, GDExtensionString*, void> s_stringOperatorPlusEqString;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, uint, void> s_stringOperatorPlusEqChar;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void> s_stringOperatorPlusEqCstr;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, void*, void> s_stringOperatorPlusEqWcstr;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, void> s_stringOperatorPlusEqC32Str;
+    private static delegate* unmanaged[Cdecl]<GDExtensionString*, long, long> s_stringResize;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, bool, void> s_stringNameNewWithLatin1Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, void> s_stringNameNewWithUtf8Chars;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, long, void> s_stringNameNewWithUtf8CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<void*, byte*, nuint, long> s_xmlParserOpenBuffer;
+    private static delegate* unmanaged[Cdecl]<void*, byte*, ulong, void> s_fileAccessStoreBuffer;
+    private static delegate* unmanaged[Cdecl]<void*, byte*, ulong, ulong> s_fileAccessGetBuffer;
+    private static delegate* unmanaged[Cdecl]<void*, byte*> s_imagePtrw;
+    private static delegate* unmanaged[Cdecl]<void*, byte*> s_imagePtr;
+    private static delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, uint, void>, void*, int, int, bool, GDExtensionString*, long> s_workerThreadPoolAddNativeGroupTask;
+    private static delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, void>, void*, bool, GDExtensionString*, long> s_workerThreadPoolAddNativeTask;
+    private static delegate* unmanaged[Cdecl]<void*, long, byte*> s_packedByteArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, byte*> s_packedByteArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, float*> s_packedFloat32ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, float*> s_packedFloat32ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, double*> s_packedFloat64ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, double*> s_packedFloat64ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, int*> s_packedInt32ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, int*> s_packedInt32ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, long*> s_packedInt64ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, long*> s_packedInt64ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, GDExtensionString*> s_packedStringArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, GDExtensionString*> s_packedStringArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedVector2ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedVector2ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedVector3ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedVector3ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedVector4ArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedVector4ArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedColorArrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, void*> s_packedColorArrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, long, GDExtensionVariant*> s_arrayOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, long, GDExtensionVariant*> s_arrayOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void> s_arrayRef;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void> s_arraySetTyped;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, GDExtensionVariant*> s_dictionaryOperatorIndex;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, GDExtensionVariant*> s_dictionaryOperatorIndexConst;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void> s_dictionarySetTyped;
+    private static delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> s_objectMethodBindCall;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> s_objectMethodBindPtrCall;
+    private static delegate* unmanaged[Cdecl]<void*, void> s_objectDestroy;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> s_globalGetSingleton;
+    private static delegate* unmanaged[Cdecl]<void*, void*, GDExtensionInstanceBindingCallbacks*, void*> s_objectGetInstanceBinding;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void*, GDExtensionInstanceBindingCallbacks*, void> s_objectSetInstanceBinding;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void> s_objectFreeInstanceBinding;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, void*, void> s_objectSetInstance;
+    private static delegate* unmanaged[Cdecl]<void*, void*, GDExtensionStringName*, bool> s_objectGetClassName;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void*> s_objectCastTo;
+    private static delegate* unmanaged[Cdecl]<ulong, void*> s_objectGetInstanceFromId;
+    private static delegate* unmanaged[Cdecl]<void*, ulong> s_objectGetInstanceId;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, bool> s_objectHasScriptMethod;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> s_objectCallScriptMethod;
+    private static delegate* unmanaged[Cdecl]<void*, void*> s_refGetObject;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void> s_refSetObject;
+    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, void*, void*> s_scriptInstanceCreate;
+    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, void*, void*> s_scriptInstanceCreate2;
+    private static delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, void*, void*> s_scriptInstanceCreate3;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void*, void*> s_placeholderScriptInstanceCreate;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void*, void> s_placeholderScriptInstanceUpdate;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void*> s_objectGetScriptInstance;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void> s_objectSetScriptInstance;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo*, void> s_callableCustomCreate;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo2*, void> s_callableCustomCreate2;
+    private static delegate* unmanaged[Cdecl]<void*, void*, void*> s_callableCustomGetUserData;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> s_classDBConstructObject;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> s_classDBConstructObject2;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> s_classDBConstructObject3;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, GDExtensionStringName*, long, void*> s_classDBGetMethodBind;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> s_classDBGetClassTag;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo*, void> s_classDBRegisterExtensionClass;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo2*, void> s_classDBRegisterExtensionClass2;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo3*, void> s_classDBRegisterExtensionClass3;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void> s_classDBRegisterExtensionClass4;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void> s_classDBRegisterExtensionClass5;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo6*, void> s_classDBRegisterExtensionClass6;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionClassMethodInfo*, void> s_classDBRegisterExtensionClassMethod;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionClassVirtualMethodInfo*, void> s_classDBRegisterExtensionClassVirtualMethod;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionStringName*, long, bool, void> s_classDBRegisterExtensionClassIntegerConstant;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionPropertyInfo*, GDExtensionStringName*, GDExtensionStringName*, void> s_classDBRegisterExtensionClassProperty;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionPropertyInfo*, GDExtensionStringName*, GDExtensionStringName*, long, void> s_classDBRegisterExtensionClassPropertyIndexed;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionString*, GDExtensionString*, void> s_classDBRegisterExtensionClassPropertyGroup;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionString*, GDExtensionString*, void> s_classDBRegisterExtensionClassPropertySubgroup;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionPropertyInfo*, long, void> s_classDBRegisterExtensionClassSignal;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, void> s_classDBUnregisterExtensionClass;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionString*, void> s_getLibraryPath;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void> s_editorAddPlugin;
+    private static delegate* unmanaged[Cdecl]<GDExtensionStringName*, void> s_editorRemovePlugin;
     private static delegate* unmanaged[Cdecl]<byte*, void> s_editorHelpLoadXmlFromUtf8Chars;
-    private static delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void> s_editorHelpLoadXmlFromUtf8CharsAndLen;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> s_editorRegisterGetClassesUsedCallback;
-    private static delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> s_registerMainLoopCallbacks;
+    private static delegate* unmanaged[Cdecl]<byte*, long, void> s_editorHelpLoadXmlFromUtf8CharsAndLen;
+    private static delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, void>, void> s_editorRegisterGetClassesUsedCallback;
+    private static delegate* unmanaged[Cdecl]<void*, GDExtensionMainLoopCallbacks*, void> s_registerMainLoopCallbacks;
 
     /// <summary>
     /// Loads the GDExtensionInterface functions from the specified address loader.
@@ -225,7 +225,7 @@ public static unsafe class GDExtensionInterface
     /// <exception cref="ArgumentNullException">
     /// <paramref name="pGetProcAddress"/> is <see langword="null"/>.
     /// </exception>
-    public static void Initialize(GDExtensionInterfaceGetProcAddress pGetProcAddress)
+    public static void Initialize(delegate* unmanaged[Cdecl]<byte*, void*> pGetProcAddress)
     {
         ArgumentNullException.ThrowIfNull(pGetProcAddress);
         s_getGodotVersion = (delegate* unmanaged[Cdecl]<GDExtensionGodotVersion*, void>)Load(pGetProcAddress, "get_godot_version"u8);
@@ -233,180 +233,180 @@ public static unsafe class GDExtensionInterface
         s_memAlloc = (delegate* unmanaged[Cdecl]<nuint, void*>)Load(pGetProcAddress, "mem_alloc"u8);
         s_memRealloc = (delegate* unmanaged[Cdecl]<void*, nuint, void*>)Load(pGetProcAddress, "mem_realloc"u8);
         s_memFree = (delegate* unmanaged[Cdecl]<void*, void>)Load(pGetProcAddress, "mem_free"u8);
-        s_memAlloc2 = (delegate* unmanaged[Cdecl]<nuint, GDExtensionBool, void*>)Load(pGetProcAddress, "mem_alloc2"u8);
-        s_memRealloc2 = (delegate* unmanaged[Cdecl]<void*, nuint, GDExtensionBool, void*>)Load(pGetProcAddress, "mem_realloc2"u8);
-        s_memFree2 = (delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void>)Load(pGetProcAddress, "mem_free2"u8);
-        s_printError = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void>)Load(pGetProcAddress, "print_error"u8);
-        s_printErrorWithMessage = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void>)Load(pGetProcAddress, "print_error_with_message"u8);
-        s_printWarning = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void>)Load(pGetProcAddress, "print_warning"u8);
-        s_printWarningWithMessage = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void>)Load(pGetProcAddress, "print_warning_with_message"u8);
-        s_printScriptError = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void>)Load(pGetProcAddress, "print_script_error"u8);
-        s_printScriptErrorWithMessage = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void>)Load(pGetProcAddress, "print_script_error_with_message"u8);
-        s_getNativeStructSize = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong>)Load(pGetProcAddress, "get_native_struct_size"u8);
-        s_variantNewCopy = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr, void>)Load(pGetProcAddress, "variant_new_copy"u8);
-        s_variantNewNil = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void>)Load(pGetProcAddress, "variant_new_nil"u8);
-        s_variantDestroy = (delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void>)Load(pGetProcAddress, "variant_destroy"u8);
-        s_variantCall = (delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void>)Load(pGetProcAddress, "variant_call"u8);
-        s_variantCallStatic = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void>)Load(pGetProcAddress, "variant_call_static"u8);
-        s_variantEvaluate = (delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_evaluate"u8);
-        s_variantSet = (delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_set"u8);
-        s_variantSetNamed = (delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_set_named"u8);
-        s_variantSetKeyed = (delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_set_keyed"u8);
-        s_variantSetIndexed = (delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_set_indexed"u8);
-        s_variantGet = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_get"u8);
-        s_variantGetNamed = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_get_named"u8);
-        s_variantGetKeyed = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_get_keyed"u8);
-        s_variantGetIndexed = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_get_indexed"u8);
-        s_variantIterInit = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool>)Load(pGetProcAddress, "variant_iter_init"u8);
-        s_variantIterNext = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool*, GDExtensionBool>)Load(pGetProcAddress, "variant_iter_next"u8);
-        s_variantIterGet = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void>)Load(pGetProcAddress, "variant_iter_get"u8);
-        s_variantHash = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt>)Load(pGetProcAddress, "variant_hash"u8);
-        s_variantRecursiveHash = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "variant_recursive_hash"u8);
-        s_variantHashCompare = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool>)Load(pGetProcAddress, "variant_hash_compare"u8);
-        s_variantBooleanize = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionBool>)Load(pGetProcAddress, "variant_booleanize"u8);
-        s_variantDuplicate = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool, void>)Load(pGetProcAddress, "variant_duplicate"u8);
-        s_variantStringify = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionStringPtr, void>)Load(pGetProcAddress, "variant_stringify"u8);
-        s_variantGetType = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantType>)Load(pGetProcAddress, "variant_get_type"u8);
-        s_variantHasMethod = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionBool>)Load(pGetProcAddress, "variant_has_method"u8);
-        s_variantHasMember = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool>)Load(pGetProcAddress, "variant_has_member"u8);
-        s_variantHasKey = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool>)Load(pGetProcAddress, "variant_has_key"u8);
-        s_variantGetObjectInstanceId = (delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID>)Load(pGetProcAddress, "variant_get_object_instance_id"u8);
-        s_variantGetTypeName = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void>)Load(pGetProcAddress, "variant_get_type_name"u8);
-        s_variantGetTypeByName = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType>)Load(pGetProcAddress, "variant_get_type_by_name"u8);
-        s_variantCanConvert = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool>)Load(pGetProcAddress, "variant_can_convert"u8);
-        s_variantCanConvertStrict = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool>)Load(pGetProcAddress, "variant_can_convert_strict"u8);
-        s_getVariantFromTypeConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc>)Load(pGetProcAddress, "get_variant_from_type_constructor"u8);
-        s_getVariantToTypeConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc>)Load(pGetProcAddress, "get_variant_to_type_constructor"u8);
-        s_variantGetPtrInternalGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantGetInternalPtrFunc>)Load(pGetProcAddress, "variant_get_ptr_internal_getter"u8);
-        s_variantGetPtrOperatorEvaluator = (delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, GDExtensionPtrOperatorEvaluator>)Load(pGetProcAddress, "variant_get_ptr_operator_evaluator"u8);
-        s_variantGetPtrBuiltinMethod = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod>)Load(pGetProcAddress, "variant_get_ptr_builtin_method"u8);
-        s_variantGetPtrConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, GDExtensionPtrConstructor>)Load(pGetProcAddress, "variant_get_ptr_constructor"u8);
-        s_variantGetPtrDestructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor>)Load(pGetProcAddress, "variant_get_ptr_destructor"u8);
-        s_variantConstruct = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr*, int, GDExtensionCallError*, void>)Load(pGetProcAddress, "variant_construct"u8);
-        s_variantGetPtrSetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter>)Load(pGetProcAddress, "variant_get_ptr_setter"u8);
-        s_variantGetPtrGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrGetter>)Load(pGetProcAddress, "variant_get_ptr_getter"u8);
-        s_variantGetPtrIndexedSetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter>)Load(pGetProcAddress, "variant_get_ptr_indexed_setter"u8);
-        s_variantGetPtrIndexedGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedGetter>)Load(pGetProcAddress, "variant_get_ptr_indexed_getter"u8);
-        s_variantGetPtrKeyedSetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedSetter>)Load(pGetProcAddress, "variant_get_ptr_keyed_setter"u8);
-        s_variantGetPtrKeyedGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedGetter>)Load(pGetProcAddress, "variant_get_ptr_keyed_getter"u8);
-        s_variantGetPtrKeyedChecker = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker>)Load(pGetProcAddress, "variant_get_ptr_keyed_checker"u8);
-        s_variantGetConstantValue = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void>)Load(pGetProcAddress, "variant_get_constant_value"u8);
-        s_variantGetPtrUtilityFunction = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction>)Load(pGetProcAddress, "variant_get_ptr_utility_function"u8);
-        s_stringNewWithLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void>)Load(pGetProcAddress, "string_new_with_latin1_chars"u8);
-        s_stringNewWithUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void>)Load(pGetProcAddress, "string_new_with_utf8_chars"u8);
-        s_stringNewWithUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void>)Load(pGetProcAddress, "string_new_with_utf16_chars"u8);
-        s_stringNewWithUtf32Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void>)Load(pGetProcAddress, "string_new_with_utf32_chars"u8);
-        s_stringNewWithWideChars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, void>)Load(pGetProcAddress, "string_new_with_wide_chars"u8);
-        s_stringNewWithLatin1CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void>)Load(pGetProcAddress, "string_new_with_latin1_chars_and_len"u8);
-        s_stringNewWithUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void>)Load(pGetProcAddress, "string_new_with_utf8_chars_and_len"u8);
-        s_stringNewWithUtf8CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_new_with_utf8_chars_and_len2"u8);
-        s_stringNewWithUtf16CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void>)Load(pGetProcAddress, "string_new_with_utf16_chars_and_len"u8);
-        s_stringNewWithUtf16CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, GDExtensionBool, GDExtensionInt>)Load(pGetProcAddress, "string_new_with_utf16_chars_and_len2"u8);
-        s_stringNewWithUtf32CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void>)Load(pGetProcAddress, "string_new_with_utf32_chars_and_len"u8);
-        s_stringNewWithWideCharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, GDExtensionInt, void>)Load(pGetProcAddress, "string_new_with_wide_chars_and_len"u8);
-        s_stringToLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_to_latin1_chars"u8);
-        s_stringToUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_to_utf8_chars"u8);
-        s_stringToUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_to_utf16_chars"u8);
-        s_stringToUtf32Chars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_to_utf32_chars"u8);
-        s_stringToWideChars = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, void*, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_to_wide_chars"u8);
-        s_stringOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*>)Load(pGetProcAddress, "string_operator_index"u8);
-        s_stringOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*>)Load(pGetProcAddress, "string_operator_index_const"u8);
-        s_stringOperatorPlusEqString = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void>)Load(pGetProcAddress, "string_operator_plus_eq_string"u8);
-        s_stringOperatorPlusEqChar = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void>)Load(pGetProcAddress, "string_operator_plus_eq_char"u8);
-        s_stringOperatorPlusEqCstr = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void>)Load(pGetProcAddress, "string_operator_plus_eq_cstr"u8);
-        s_stringOperatorPlusEqWcstr = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void>)Load(pGetProcAddress, "string_operator_plus_eq_wcstr"u8);
-        s_stringOperatorPlusEqC32Str = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void>)Load(pGetProcAddress, "string_operator_plus_eq_c32str"u8);
-        s_stringResize = (delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt>)Load(pGetProcAddress, "string_resize"u8);
-        s_stringNameNewWithLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void>)Load(pGetProcAddress, "string_name_new_with_latin1_chars"u8);
-        s_stringNameNewWithUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, void>)Load(pGetProcAddress, "string_name_new_with_utf8_chars"u8);
-        s_stringNameNewWithUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void>)Load(pGetProcAddress, "string_name_new_with_utf8_chars_and_len"u8);
-        s_xmlParserOpenBuffer = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, nuint, GDExtensionInt>)Load(pGetProcAddress, "xml_parser_open_buffer"u8);
-        s_fileAccessStoreBuffer = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, ulong, void>)Load(pGetProcAddress, "file_access_store_buffer"u8);
-        s_fileAccessGetBuffer = (delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, byte*, ulong, ulong>)Load(pGetProcAddress, "file_access_get_buffer"u8);
-        s_imagePtrw = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*>)Load(pGetProcAddress, "image_ptrw"u8);
-        s_imagePtr = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*>)Load(pGetProcAddress, "image_ptr"u8);
-        s_workerThreadPoolAddNativeGroupTask = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long>)Load(pGetProcAddress, "worker_thread_pool_add_native_group_task"u8);
-        s_workerThreadPoolAddNativeTask = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long>)Load(pGetProcAddress, "worker_thread_pool_add_native_task"u8);
-        s_packedByteArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, byte*>)Load(pGetProcAddress, "packed_byte_array_operator_index"u8);
-        s_packedByteArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, byte*>)Load(pGetProcAddress, "packed_byte_array_operator_index_const"u8);
-        s_packedFloat32ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, float*>)Load(pGetProcAddress, "packed_float32_array_operator_index"u8);
-        s_packedFloat32ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*>)Load(pGetProcAddress, "packed_float32_array_operator_index_const"u8);
-        s_packedFloat64ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*>)Load(pGetProcAddress, "packed_float64_array_operator_index"u8);
-        s_packedFloat64ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, double*>)Load(pGetProcAddress, "packed_float64_array_operator_index_const"u8);
-        s_packedInt32ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, int*>)Load(pGetProcAddress, "packed_int32_array_operator_index"u8);
-        s_packedInt32ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, int*>)Load(pGetProcAddress, "packed_int32_array_operator_index_const"u8);
-        s_packedInt64ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, long*>)Load(pGetProcAddress, "packed_int64_array_operator_index"u8);
-        s_packedInt64ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*>)Load(pGetProcAddress, "packed_int64_array_operator_index_const"u8);
-        s_packedStringArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionStringPtr>)Load(pGetProcAddress, "packed_string_array_operator_index"u8);
-        s_packedStringArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionStringPtr>)Load(pGetProcAddress, "packed_string_array_operator_index_const"u8);
-        s_packedVector2ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_vector2_array_operator_index"u8);
-        s_packedVector2ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_vector2_array_operator_index_const"u8);
-        s_packedVector3ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_vector3_array_operator_index"u8);
-        s_packedVector3ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_vector3_array_operator_index_const"u8);
-        s_packedVector4ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_vector4_array_operator_index"u8);
-        s_packedVector4ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_vector4_array_operator_index_const"u8);
-        s_packedColorArrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_color_array_operator_index"u8);
-        s_packedColorArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr>)Load(pGetProcAddress, "packed_color_array_operator_index_const"u8);
-        s_arrayOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr>)Load(pGetProcAddress, "array_operator_index"u8);
-        s_arrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr>)Load(pGetProcAddress, "array_operator_index_const"u8);
-        s_arrayRef = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void>)Load(pGetProcAddress, "array_ref"u8);
-        s_arraySetTyped = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void>)Load(pGetProcAddress, "array_set_typed"u8);
-        s_dictionaryOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr>)Load(pGetProcAddress, "dictionary_operator_index"u8);
-        s_dictionaryOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr>)Load(pGetProcAddress, "dictionary_operator_index_const"u8);
-        s_dictionarySetTyped = (delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void>)Load(pGetProcAddress, "dictionary_set_typed"u8);
-        s_objectMethodBindCall = (delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void>)Load(pGetProcAddress, "object_method_bind_call"u8);
-        s_objectMethodBindPtrCall = (delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void>)Load(pGetProcAddress, "object_method_bind_ptrcall"u8);
-        s_objectDestroy = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void>)Load(pGetProcAddress, "object_destroy"u8);
-        s_globalGetSingleton = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(pGetProcAddress, "global_get_singleton"u8);
-        s_objectGetInstanceBinding = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, GDExtensionInstanceBindingCallbacks*, void*>)Load(pGetProcAddress, "object_get_instance_binding"u8);
-        s_objectSetInstanceBinding = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void>)Load(pGetProcAddress, "object_set_instance_binding"u8);
-        s_objectFreeInstanceBinding = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void>)Load(pGetProcAddress, "object_free_instance_binding"u8);
-        s_objectSetInstance = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void>)Load(pGetProcAddress, "object_set_instance"u8);
-        s_objectGetClassName = (delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr, GDExtensionBool>)Load(pGetProcAddress, "object_get_class_name"u8);
-        s_objectCastTo = (delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr>)Load(pGetProcAddress, "object_cast_to"u8);
-        s_objectGetInstanceFromId = (delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr>)Load(pGetProcAddress, "object_get_instance_from_id"u8);
-        s_objectGetInstanceId = (delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDObjectInstanceID>)Load(pGetProcAddress, "object_get_instance_id"u8);
-        s_objectHasScriptMethod = (delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr, GDExtensionBool>)Load(pGetProcAddress, "object_has_script_method"u8);
-        s_objectCallScriptMethod = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void>)Load(pGetProcAddress, "object_call_script_method"u8);
-        s_refGetObject = (delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr>)Load(pGetProcAddress, "ref_get_object"u8);
-        s_refSetObject = (delegate* unmanaged[Cdecl]<GDExtensionRefPtr, GDExtensionObjectPtr, void>)Load(pGetProcAddress, "ref_set_object"u8);
-        s_scriptInstanceCreate = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr>)Load(pGetProcAddress, "script_instance_create"u8);
-        s_scriptInstanceCreate2 = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr>)Load(pGetProcAddress, "script_instance_create2"u8);
-        s_scriptInstanceCreate3 = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr>)Load(pGetProcAddress, "script_instance_create3"u8);
-        s_placeholderScriptInstanceCreate = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr>)Load(pGetProcAddress, "placeholder_script_instance_create"u8);
-        s_placeholderScriptInstanceUpdate = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void>)Load(pGetProcAddress, "placeholder_script_instance_update"u8);
-        s_objectGetScriptInstance = (delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr>)Load(pGetProcAddress, "object_get_script_instance"u8);
-        s_objectSetScriptInstance = (delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void>)Load(pGetProcAddress, "object_set_script_instance"u8);
-        s_callableCustomCreate = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo*, void>)Load(pGetProcAddress, "callable_custom_create"u8);
-        s_callableCustomCreate2 = (delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void>)Load(pGetProcAddress, "callable_custom_create2"u8);
-        s_callableCustomGetUserData = (delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*>)Load(pGetProcAddress, "callable_custom_get_userdata"u8);
-        s_classDBConstructObject = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(pGetProcAddress, "classdb_construct_object"u8);
-        s_classDBConstructObject2 = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(pGetProcAddress, "classdb_construct_object2"u8);
-        s_classDBConstructObject3 = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr>)Load(pGetProcAddress, "classdb_construct_object3"u8);
-        s_classDBGetMethodBind = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr>)Load(pGetProcAddress, "classdb_get_method_bind"u8);
-        s_classDBGetClassTag = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*>)Load(pGetProcAddress, "classdb_get_class_tag"u8);
-        s_classDBRegisterExtensionClass = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void>)Load(pGetProcAddress, "classdb_register_extension_class"u8);
-        s_classDBRegisterExtensionClass2 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2*, void>)Load(pGetProcAddress, "classdb_register_extension_class2"u8);
-        s_classDBRegisterExtensionClass3 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void>)Load(pGetProcAddress, "classdb_register_extension_class3"u8);
-        s_classDBRegisterExtensionClass4 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void>)Load(pGetProcAddress, "classdb_register_extension_class4"u8);
-        s_classDBRegisterExtensionClass5 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void>)Load(pGetProcAddress, "classdb_register_extension_class5"u8);
-        s_classDBRegisterExtensionClass6 = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6*, void>)Load(pGetProcAddress, "classdb_register_extension_class6"u8);
-        s_classDBRegisterExtensionClassMethod = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void>)Load(pGetProcAddress, "classdb_register_extension_class_method"u8);
-        s_classDBRegisterExtensionClassVirtualMethod = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void>)Load(pGetProcAddress, "classdb_register_extension_class_virtual_method"u8);
-        s_classDBRegisterExtensionClassIntegerConstant = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void>)Load(pGetProcAddress, "classdb_register_extension_class_integer_constant"u8);
-        s_classDBRegisterExtensionClassProperty = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, void>)Load(pGetProcAddress, "classdb_register_extension_class_property"u8);
-        s_classDBRegisterExtensionClassPropertyIndexed = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void>)Load(pGetProcAddress, "classdb_register_extension_class_property_indexed"u8);
-        s_classDBRegisterExtensionClassPropertyGroup = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void>)Load(pGetProcAddress, "classdb_register_extension_class_property_group"u8);
-        s_classDBRegisterExtensionClassPropertySubgroup = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void>)Load(pGetProcAddress, "classdb_register_extension_class_property_subgroup"u8);
-        s_classDBRegisterExtensionClassSignal = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionInt, void>)Load(pGetProcAddress, "classdb_register_extension_class_signal"u8);
-        s_classDBUnregisterExtensionClass = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, void>)Load(pGetProcAddress, "classdb_unregister_extension_class"u8);
-        s_getLibraryPath = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void>)Load(pGetProcAddress, "get_library_path"u8);
-        s_editorAddPlugin = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void>)Load(pGetProcAddress, "editor_add_plugin"u8);
-        s_editorRemovePlugin = (delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void>)Load(pGetProcAddress, "editor_remove_plugin"u8);
+        s_memAlloc2 = (delegate* unmanaged[Cdecl]<nuint, bool, void*>)Load(pGetProcAddress, "mem_alloc2"u8);
+        s_memRealloc2 = (delegate* unmanaged[Cdecl]<void*, nuint, bool, void*>)Load(pGetProcAddress, "mem_realloc2"u8);
+        s_memFree2 = (delegate* unmanaged[Cdecl]<void*, bool, void>)Load(pGetProcAddress, "mem_free2"u8);
+        s_printError = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void>)Load(pGetProcAddress, "print_error"u8);
+        s_printErrorWithMessage = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void>)Load(pGetProcAddress, "print_error_with_message"u8);
+        s_printWarning = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void>)Load(pGetProcAddress, "print_warning"u8);
+        s_printWarningWithMessage = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void>)Load(pGetProcAddress, "print_warning_with_message"u8);
+        s_printScriptError = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void>)Load(pGetProcAddress, "print_script_error"u8);
+        s_printScriptErrorWithMessage = (delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void>)Load(pGetProcAddress, "print_script_error_with_message"u8);
+        s_getNativeStructSize = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, ulong>)Load(pGetProcAddress, "get_native_struct_size"u8);
+        s_variantNewCopy = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, void>)Load(pGetProcAddress, "variant_new_copy"u8);
+        s_variantNewNil = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, void>)Load(pGetProcAddress, "variant_new_nil"u8);
+        s_variantDestroy = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, void>)Load(pGetProcAddress, "variant_destroy"u8);
+        s_variantCall = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void>)Load(pGetProcAddress, "variant_call"u8);
+        s_variantCallStatic = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void>)Load(pGetProcAddress, "variant_call_static"u8);
+        s_variantEvaluate = (delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_evaluate"u8);
+        s_variantSet = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_set"u8);
+        s_variantSetNamed = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_set_named"u8);
+        s_variantSetKeyed = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_set_keyed"u8);
+        s_variantSetIndexed = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, GDExtensionVariant*, bool*, bool*, void>)Load(pGetProcAddress, "variant_set_indexed"u8);
+        s_variantGet = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_get"u8);
+        s_variantGetNamed = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_get_named"u8);
+        s_variantGetKeyed = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_get_keyed"u8);
+        s_variantGetIndexed = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, GDExtensionVariant*, bool*, bool*, void>)Load(pGetProcAddress, "variant_get_indexed"u8);
+        s_variantIterInit = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool>)Load(pGetProcAddress, "variant_iter_init"u8);
+        s_variantIterNext = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool>)Load(pGetProcAddress, "variant_iter_next"u8);
+        s_variantIterGet = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void>)Load(pGetProcAddress, "variant_iter_get"u8);
+        s_variantHash = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, long>)Load(pGetProcAddress, "variant_hash"u8);
+        s_variantRecursiveHash = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, long>)Load(pGetProcAddress, "variant_recursive_hash"u8);
+        s_variantHashCompare = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool>)Load(pGetProcAddress, "variant_hash_compare"u8);
+        s_variantBooleanize = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, bool>)Load(pGetProcAddress, "variant_booleanize"u8);
+        s_variantDuplicate = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool, void>)Load(pGetProcAddress, "variant_duplicate"u8);
+        s_variantStringify = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionString*, void>)Load(pGetProcAddress, "variant_stringify"u8);
+        s_variantGetType = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariantType>)Load(pGetProcAddress, "variant_get_type"u8);
+        s_variantHasMethod = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, bool>)Load(pGetProcAddress, "variant_has_method"u8);
+        s_variantHasMember = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, bool>)Load(pGetProcAddress, "variant_has_member"u8);
+        s_variantHasKey = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool>)Load(pGetProcAddress, "variant_has_key"u8);
+        s_variantGetObjectInstanceId = (delegate* unmanaged[Cdecl]<GDExtensionVariant*, ulong>)Load(pGetProcAddress, "variant_get_object_instance_id"u8);
+        s_variantGetTypeName = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionString*, void>)Load(pGetProcAddress, "variant_get_type_name"u8);
+        s_variantGetTypeByName = (delegate* unmanaged[Cdecl]<GDExtensionString*, GDExtensionVariantType>)Load(pGetProcAddress, "variant_get_type_by_name"u8);
+        s_variantCanConvert = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, bool>)Load(pGetProcAddress, "variant_can_convert"u8);
+        s_variantCanConvertStrict = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, bool>)Load(pGetProcAddress, "variant_can_convert_strict"u8);
+        s_getVariantFromTypeConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*, void>>)Load(pGetProcAddress, "get_variant_from_type_constructor"u8);
+        s_getVariantToTypeConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, void>>)Load(pGetProcAddress, "get_variant_to_type_constructor"u8);
+        s_variantGetPtrInternalGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*>>)Load(pGetProcAddress, "variant_get_ptr_internal_getter"u8);
+        s_variantGetPtrOperatorEvaluator = (delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_operator_evaluator"u8);
+        s_variantGetPtrBuiltinMethod = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, long, delegate* unmanaged[Cdecl]<void*, void**, void*, int, void>>)Load(pGetProcAddress, "variant_get_ptr_builtin_method"u8);
+        s_variantGetPtrConstructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, delegate* unmanaged[Cdecl]<void*, void**, void>>)Load(pGetProcAddress, "variant_get_ptr_constructor"u8);
+        s_variantGetPtrDestructor = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void>>)Load(pGetProcAddress, "variant_get_ptr_destructor"u8);
+        s_variantConstruct = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariant*, GDExtensionVariant**, int, GDExtensionCallError*, void>)Load(pGetProcAddress, "variant_construct"u8);
+        s_variantGetPtrSetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_setter"u8);
+        s_variantGetPtrGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_getter"u8);
+        s_variantGetPtrIndexedSetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, long, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_indexed_setter"u8);
+        s_variantGetPtrIndexedGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, long, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_indexed_getter"u8);
+        s_variantGetPtrKeyedSetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_keyed_setter"u8);
+        s_variantGetPtrKeyedGetter = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>>)Load(pGetProcAddress, "variant_get_ptr_keyed_getter"u8);
+        s_variantGetPtrKeyedChecker = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, uint>>)Load(pGetProcAddress, "variant_get_ptr_keyed_checker"u8);
+        s_variantGetConstantValue = (delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void>)Load(pGetProcAddress, "variant_get_constant_value"u8);
+        s_variantGetPtrUtilityFunction = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, long, delegate* unmanaged[Cdecl]<void*, void**, int, void>>)Load(pGetProcAddress, "variant_get_ptr_utility_function"u8);
+        s_stringNewWithLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void>)Load(pGetProcAddress, "string_new_with_latin1_chars"u8);
+        s_stringNewWithUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void>)Load(pGetProcAddress, "string_new_with_utf8_chars"u8);
+        s_stringNewWithUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, char*, void>)Load(pGetProcAddress, "string_new_with_utf16_chars"u8);
+        s_stringNewWithUtf32Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, void>)Load(pGetProcAddress, "string_new_with_utf32_chars"u8);
+        s_stringNewWithWideChars = (delegate* unmanaged[Cdecl]<GDExtensionString*, void*, void>)Load(pGetProcAddress, "string_new_with_wide_chars"u8);
+        s_stringNewWithLatin1CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void>)Load(pGetProcAddress, "string_new_with_latin1_chars_and_len"u8);
+        s_stringNewWithUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void>)Load(pGetProcAddress, "string_new_with_utf8_chars_and_len"u8);
+        s_stringNewWithUtf8CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long>)Load(pGetProcAddress, "string_new_with_utf8_chars_and_len2"u8);
+        s_stringNewWithUtf16CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, void>)Load(pGetProcAddress, "string_new_with_utf16_chars_and_len"u8);
+        s_stringNewWithUtf16CharsAndLen2 = (delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, bool, long>)Load(pGetProcAddress, "string_new_with_utf16_chars_and_len2"u8);
+        s_stringNewWithUtf32CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, long, void>)Load(pGetProcAddress, "string_new_with_utf32_chars_and_len"u8);
+        s_stringNewWithWideCharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionString*, void*, long, void>)Load(pGetProcAddress, "string_new_with_wide_chars_and_len"u8);
+        s_stringToLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long>)Load(pGetProcAddress, "string_to_latin1_chars"u8);
+        s_stringToUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long>)Load(pGetProcAddress, "string_to_utf8_chars"u8);
+        s_stringToUtf16Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, long>)Load(pGetProcAddress, "string_to_utf16_chars"u8);
+        s_stringToUtf32Chars = (delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, long, long>)Load(pGetProcAddress, "string_to_utf32_chars"u8);
+        s_stringToWideChars = (delegate* unmanaged[Cdecl]<GDExtensionString*, void*, long, long>)Load(pGetProcAddress, "string_to_wide_chars"u8);
+        s_stringOperatorIndex = (delegate* unmanaged[Cdecl]<GDExtensionString*, long, uint*>)Load(pGetProcAddress, "string_operator_index"u8);
+        s_stringOperatorIndexConst = (delegate* unmanaged[Cdecl]<GDExtensionString*, long, uint*>)Load(pGetProcAddress, "string_operator_index_const"u8);
+        s_stringOperatorPlusEqString = (delegate* unmanaged[Cdecl]<GDExtensionString*, GDExtensionString*, void>)Load(pGetProcAddress, "string_operator_plus_eq_string"u8);
+        s_stringOperatorPlusEqChar = (delegate* unmanaged[Cdecl]<GDExtensionString*, uint, void>)Load(pGetProcAddress, "string_operator_plus_eq_char"u8);
+        s_stringOperatorPlusEqCstr = (delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void>)Load(pGetProcAddress, "string_operator_plus_eq_cstr"u8);
+        s_stringOperatorPlusEqWcstr = (delegate* unmanaged[Cdecl]<GDExtensionString*, void*, void>)Load(pGetProcAddress, "string_operator_plus_eq_wcstr"u8);
+        s_stringOperatorPlusEqC32Str = (delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, void>)Load(pGetProcAddress, "string_operator_plus_eq_c32str"u8);
+        s_stringResize = (delegate* unmanaged[Cdecl]<GDExtensionString*, long, long>)Load(pGetProcAddress, "string_resize"u8);
+        s_stringNameNewWithLatin1Chars = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, bool, void>)Load(pGetProcAddress, "string_name_new_with_latin1_chars"u8);
+        s_stringNameNewWithUtf8Chars = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, void>)Load(pGetProcAddress, "string_name_new_with_utf8_chars"u8);
+        s_stringNameNewWithUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, long, void>)Load(pGetProcAddress, "string_name_new_with_utf8_chars_and_len"u8);
+        s_xmlParserOpenBuffer = (delegate* unmanaged[Cdecl]<void*, byte*, nuint, long>)Load(pGetProcAddress, "xml_parser_open_buffer"u8);
+        s_fileAccessStoreBuffer = (delegate* unmanaged[Cdecl]<void*, byte*, ulong, void>)Load(pGetProcAddress, "file_access_store_buffer"u8);
+        s_fileAccessGetBuffer = (delegate* unmanaged[Cdecl]<void*, byte*, ulong, ulong>)Load(pGetProcAddress, "file_access_get_buffer"u8);
+        s_imagePtrw = (delegate* unmanaged[Cdecl]<void*, byte*>)Load(pGetProcAddress, "image_ptrw"u8);
+        s_imagePtr = (delegate* unmanaged[Cdecl]<void*, byte*>)Load(pGetProcAddress, "image_ptr"u8);
+        s_workerThreadPoolAddNativeGroupTask = (delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, uint, void>, void*, int, int, bool, GDExtensionString*, long>)Load(pGetProcAddress, "worker_thread_pool_add_native_group_task"u8);
+        s_workerThreadPoolAddNativeTask = (delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, void>, void*, bool, GDExtensionString*, long>)Load(pGetProcAddress, "worker_thread_pool_add_native_task"u8);
+        s_packedByteArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, byte*>)Load(pGetProcAddress, "packed_byte_array_operator_index"u8);
+        s_packedByteArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, byte*>)Load(pGetProcAddress, "packed_byte_array_operator_index_const"u8);
+        s_packedFloat32ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, float*>)Load(pGetProcAddress, "packed_float32_array_operator_index"u8);
+        s_packedFloat32ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, float*>)Load(pGetProcAddress, "packed_float32_array_operator_index_const"u8);
+        s_packedFloat64ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, double*>)Load(pGetProcAddress, "packed_float64_array_operator_index"u8);
+        s_packedFloat64ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, double*>)Load(pGetProcAddress, "packed_float64_array_operator_index_const"u8);
+        s_packedInt32ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, int*>)Load(pGetProcAddress, "packed_int32_array_operator_index"u8);
+        s_packedInt32ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, int*>)Load(pGetProcAddress, "packed_int32_array_operator_index_const"u8);
+        s_packedInt64ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, long*>)Load(pGetProcAddress, "packed_int64_array_operator_index"u8);
+        s_packedInt64ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, long*>)Load(pGetProcAddress, "packed_int64_array_operator_index_const"u8);
+        s_packedStringArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, GDExtensionString*>)Load(pGetProcAddress, "packed_string_array_operator_index"u8);
+        s_packedStringArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, GDExtensionString*>)Load(pGetProcAddress, "packed_string_array_operator_index_const"u8);
+        s_packedVector2ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_vector2_array_operator_index"u8);
+        s_packedVector2ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_vector2_array_operator_index_const"u8);
+        s_packedVector3ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_vector3_array_operator_index"u8);
+        s_packedVector3ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_vector3_array_operator_index_const"u8);
+        s_packedVector4ArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_vector4_array_operator_index"u8);
+        s_packedVector4ArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_vector4_array_operator_index_const"u8);
+        s_packedColorArrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_color_array_operator_index"u8);
+        s_packedColorArrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, void*>)Load(pGetProcAddress, "packed_color_array_operator_index_const"u8);
+        s_arrayOperatorIndex = (delegate* unmanaged[Cdecl]<void*, long, GDExtensionVariant*>)Load(pGetProcAddress, "array_operator_index"u8);
+        s_arrayOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, long, GDExtensionVariant*>)Load(pGetProcAddress, "array_operator_index_const"u8);
+        s_arrayRef = (delegate* unmanaged[Cdecl]<void*, void*, void>)Load(pGetProcAddress, "array_ref"u8);
+        s_arraySetTyped = (delegate* unmanaged[Cdecl]<void*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void>)Load(pGetProcAddress, "array_set_typed"u8);
+        s_dictionaryOperatorIndex = (delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, GDExtensionVariant*>)Load(pGetProcAddress, "dictionary_operator_index"u8);
+        s_dictionaryOperatorIndexConst = (delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, GDExtensionVariant*>)Load(pGetProcAddress, "dictionary_operator_index_const"u8);
+        s_dictionarySetTyped = (delegate* unmanaged[Cdecl]<void*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void>)Load(pGetProcAddress, "dictionary_set_typed"u8);
+        s_objectMethodBindCall = (delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void>)Load(pGetProcAddress, "object_method_bind_call"u8);
+        s_objectMethodBindPtrCall = (delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void>)Load(pGetProcAddress, "object_method_bind_ptrcall"u8);
+        s_objectDestroy = (delegate* unmanaged[Cdecl]<void*, void>)Load(pGetProcAddress, "object_destroy"u8);
+        s_globalGetSingleton = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*>)Load(pGetProcAddress, "global_get_singleton"u8);
+        s_objectGetInstanceBinding = (delegate* unmanaged[Cdecl]<void*, void*, GDExtensionInstanceBindingCallbacks*, void*>)Load(pGetProcAddress, "object_get_instance_binding"u8);
+        s_objectSetInstanceBinding = (delegate* unmanaged[Cdecl]<void*, void*, void*, GDExtensionInstanceBindingCallbacks*, void>)Load(pGetProcAddress, "object_set_instance_binding"u8);
+        s_objectFreeInstanceBinding = (delegate* unmanaged[Cdecl]<void*, void*, void>)Load(pGetProcAddress, "object_free_instance_binding"u8);
+        s_objectSetInstance = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, void*, void>)Load(pGetProcAddress, "object_set_instance"u8);
+        s_objectGetClassName = (delegate* unmanaged[Cdecl]<void*, void*, GDExtensionStringName*, bool>)Load(pGetProcAddress, "object_get_class_name"u8);
+        s_objectCastTo = (delegate* unmanaged[Cdecl]<void*, void*, void*>)Load(pGetProcAddress, "object_cast_to"u8);
+        s_objectGetInstanceFromId = (delegate* unmanaged[Cdecl]<ulong, void*>)Load(pGetProcAddress, "object_get_instance_from_id"u8);
+        s_objectGetInstanceId = (delegate* unmanaged[Cdecl]<void*, ulong>)Load(pGetProcAddress, "object_get_instance_id"u8);
+        s_objectHasScriptMethod = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, bool>)Load(pGetProcAddress, "object_has_script_method"u8);
+        s_objectCallScriptMethod = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void>)Load(pGetProcAddress, "object_call_script_method"u8);
+        s_refGetObject = (delegate* unmanaged[Cdecl]<void*, void*>)Load(pGetProcAddress, "ref_get_object"u8);
+        s_refSetObject = (delegate* unmanaged[Cdecl]<void*, void*, void>)Load(pGetProcAddress, "ref_set_object"u8);
+        s_scriptInstanceCreate = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, void*, void*>)Load(pGetProcAddress, "script_instance_create"u8);
+        s_scriptInstanceCreate2 = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, void*, void*>)Load(pGetProcAddress, "script_instance_create2"u8);
+        s_scriptInstanceCreate3 = (delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, void*, void*>)Load(pGetProcAddress, "script_instance_create3"u8);
+        s_placeholderScriptInstanceCreate = (delegate* unmanaged[Cdecl]<void*, void*, void*, void*>)Load(pGetProcAddress, "placeholder_script_instance_create"u8);
+        s_placeholderScriptInstanceUpdate = (delegate* unmanaged[Cdecl]<void*, void*, void*, void>)Load(pGetProcAddress, "placeholder_script_instance_update"u8);
+        s_objectGetScriptInstance = (delegate* unmanaged[Cdecl]<void*, void*, void*>)Load(pGetProcAddress, "object_get_script_instance"u8);
+        s_objectSetScriptInstance = (delegate* unmanaged[Cdecl]<void*, void*, void>)Load(pGetProcAddress, "object_set_script_instance"u8);
+        s_callableCustomCreate = (delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo*, void>)Load(pGetProcAddress, "callable_custom_create"u8);
+        s_callableCustomCreate2 = (delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo2*, void>)Load(pGetProcAddress, "callable_custom_create2"u8);
+        s_callableCustomGetUserData = (delegate* unmanaged[Cdecl]<void*, void*, void*>)Load(pGetProcAddress, "callable_custom_get_userdata"u8);
+        s_classDBConstructObject = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*>)Load(pGetProcAddress, "classdb_construct_object"u8);
+        s_classDBConstructObject2 = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*>)Load(pGetProcAddress, "classdb_construct_object2"u8);
+        s_classDBConstructObject3 = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*>)Load(pGetProcAddress, "classdb_construct_object3"u8);
+        s_classDBGetMethodBind = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, GDExtensionStringName*, long, void*>)Load(pGetProcAddress, "classdb_get_method_bind"u8);
+        s_classDBGetClassTag = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*>)Load(pGetProcAddress, "classdb_get_class_tag"u8);
+        s_classDBRegisterExtensionClass = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo*, void>)Load(pGetProcAddress, "classdb_register_extension_class"u8);
+        s_classDBRegisterExtensionClass2 = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo2*, void>)Load(pGetProcAddress, "classdb_register_extension_class2"u8);
+        s_classDBRegisterExtensionClass3 = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo3*, void>)Load(pGetProcAddress, "classdb_register_extension_class3"u8);
+        s_classDBRegisterExtensionClass4 = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void>)Load(pGetProcAddress, "classdb_register_extension_class4"u8);
+        s_classDBRegisterExtensionClass5 = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void>)Load(pGetProcAddress, "classdb_register_extension_class5"u8);
+        s_classDBRegisterExtensionClass6 = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo6*, void>)Load(pGetProcAddress, "classdb_register_extension_class6"u8);
+        s_classDBRegisterExtensionClassMethod = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionClassMethodInfo*, void>)Load(pGetProcAddress, "classdb_register_extension_class_method"u8);
+        s_classDBRegisterExtensionClassVirtualMethod = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionClassVirtualMethodInfo*, void>)Load(pGetProcAddress, "classdb_register_extension_class_virtual_method"u8);
+        s_classDBRegisterExtensionClassIntegerConstant = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionStringName*, long, bool, void>)Load(pGetProcAddress, "classdb_register_extension_class_integer_constant"u8);
+        s_classDBRegisterExtensionClassProperty = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionPropertyInfo*, GDExtensionStringName*, GDExtensionStringName*, void>)Load(pGetProcAddress, "classdb_register_extension_class_property"u8);
+        s_classDBRegisterExtensionClassPropertyIndexed = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionPropertyInfo*, GDExtensionStringName*, GDExtensionStringName*, long, void>)Load(pGetProcAddress, "classdb_register_extension_class_property_indexed"u8);
+        s_classDBRegisterExtensionClassPropertyGroup = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionString*, GDExtensionString*, void>)Load(pGetProcAddress, "classdb_register_extension_class_property_group"u8);
+        s_classDBRegisterExtensionClassPropertySubgroup = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionString*, GDExtensionString*, void>)Load(pGetProcAddress, "classdb_register_extension_class_property_subgroup"u8);
+        s_classDBRegisterExtensionClassSignal = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionPropertyInfo*, long, void>)Load(pGetProcAddress, "classdb_register_extension_class_signal"u8);
+        s_classDBUnregisterExtensionClass = (delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, void>)Load(pGetProcAddress, "classdb_unregister_extension_class"u8);
+        s_getLibraryPath = (delegate* unmanaged[Cdecl]<void*, GDExtensionString*, void>)Load(pGetProcAddress, "get_library_path"u8);
+        s_editorAddPlugin = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void>)Load(pGetProcAddress, "editor_add_plugin"u8);
+        s_editorRemovePlugin = (delegate* unmanaged[Cdecl]<GDExtensionStringName*, void>)Load(pGetProcAddress, "editor_remove_plugin"u8);
         s_editorHelpLoadXmlFromUtf8Chars = (delegate* unmanaged[Cdecl]<byte*, void>)Load(pGetProcAddress, "editor_help_load_xml_from_utf8_chars"u8);
-        s_editorHelpLoadXmlFromUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void>)Load(pGetProcAddress, "editor_help_load_xml_from_utf8_chars_and_len"u8);
-        s_editorRegisterGetClassesUsedCallback = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void>)Load(pGetProcAddress, "editor_register_get_classes_used_callback"u8);
-        s_registerMainLoopCallbacks = (delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void>)Load(pGetProcAddress, "register_main_loop_callbacks"u8);
+        s_editorHelpLoadXmlFromUtf8CharsAndLen = (delegate* unmanaged[Cdecl]<byte*, long, void>)Load(pGetProcAddress, "editor_help_load_xml_from_utf8_chars_and_len"u8);
+        s_editorRegisterGetClassesUsedCallback = (delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, void>, void>)Load(pGetProcAddress, "editor_register_get_classes_used_callback"u8);
+        s_registerMainLoopCallbacks = (delegate* unmanaged[Cdecl]<void*, GDExtensionMainLoopCallbacks*, void>)Load(pGetProcAddress, "register_main_loop_callbacks"u8);
     }
 
     /// <summary>
@@ -505,9 +505,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* MemAlloc2(nuint pBytes, GDExtensionBool pPadAlign)
+    public static void* MemAlloc2(nuint pBytes, bool pPadAlign)
     {
-        delegate* unmanaged[Cdecl]<nuint, GDExtensionBool, void*> function = s_memAlloc2;
+        delegate* unmanaged[Cdecl]<nuint, bool, void*> function = s_memAlloc2;
         ThrowIfInvalid(function);
         return function(pBytes, pPadAlign);
     }
@@ -528,9 +528,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* MemRealloc2(void* pPtr, nuint pBytes, GDExtensionBool pPadAlign)
+    public static void* MemRealloc2(void* pPtr, nuint pBytes, bool pPadAlign)
     {
-        delegate* unmanaged[Cdecl]<void*, nuint, GDExtensionBool, void*> function = s_memRealloc2;
+        delegate* unmanaged[Cdecl]<void*, nuint, bool, void*> function = s_memRealloc2;
         ThrowIfInvalid(function);
         return function(pPtr, pBytes, pPadAlign);
     }
@@ -545,9 +545,9 @@ public static unsafe class GDExtensionInterface
     /// If true, the given memory was allocated with prepadding.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void MemFree2(void* pPtr, GDExtensionBool pPadAlign)
+    public static void MemFree2(void* pPtr, bool pPadAlign)
     {
-        delegate* unmanaged[Cdecl]<void*, GDExtensionBool, void> function = s_memFree2;
+        delegate* unmanaged[Cdecl]<void*, bool, void> function = s_memFree2;
         ThrowIfInvalid(function);
         function(pPtr, pPadAlign);
     }
@@ -571,9 +571,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PrintError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public static void PrintError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
-        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> function = s_printError;
+        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void> function = s_printError;
         ThrowIfInvalid(function);
         function(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
@@ -600,9 +600,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PrintErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public static void PrintErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
-        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> function = s_printErrorWithMessage;
+        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void> function = s_printErrorWithMessage;
         ThrowIfInvalid(function);
         function(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
@@ -626,9 +626,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PrintWarning(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public static void PrintWarning(byte* pDescription, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
-        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> function = s_printWarning;
+        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void> function = s_printWarning;
         ThrowIfInvalid(function);
         function(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
@@ -655,9 +655,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PrintWarningWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public static void PrintWarningWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
-        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> function = s_printWarningWithMessage;
+        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void> function = s_printWarningWithMessage;
         ThrowIfInvalid(function);
         function(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
@@ -681,9 +681,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PrintScriptError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public static void PrintScriptError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
-        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, GDExtensionBool, void> function = s_printScriptError;
+        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, int, bool, void> function = s_printScriptError;
         ThrowIfInvalid(function);
         function(pDescription, pFunction, pFile, pLine, pEditorNotify);
     }
@@ -710,9 +710,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to notify the editor.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PrintScriptErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, GDExtensionBool pEditorNotify)
+    public static void PrintScriptErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
-        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, GDExtensionBool, void> function = s_printScriptErrorWithMessage;
+        delegate* unmanaged[Cdecl]<byte*, byte*, byte*, byte*, int, bool, void> function = s_printScriptErrorWithMessage;
         ThrowIfInvalid(function);
         function(pDescription, pMessage, pFunction, pFile, pLine, pEditorNotify);
     }
@@ -727,9 +727,9 @@ public static unsafe class GDExtensionInterface
     /// The size in bytes.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetNativeStructSize(GDExtensionConstStringNamePtr pName)
+    public static ulong GetNativeStructSize(GDExtensionStringName* pName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, ulong> function = s_getNativeStructSize;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, ulong> function = s_getNativeStructSize;
         ThrowIfInvalid(function);
         return function(pName);
     }
@@ -744,9 +744,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the source Variant.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantNewCopy(GDExtensionUninitializedVariantPtr rDest, GDExtensionConstVariantPtr pSrc)
+    public static void VariantNewCopy(GDExtensionVariant* rDest, GDExtensionVariant* pSrc)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr, void> function = s_variantNewCopy;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, void> function = s_variantNewCopy;
         ThrowIfInvalid(function);
         function(rDest, pSrc);
     }
@@ -758,9 +758,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the destination Variant.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantNewNil(GDExtensionUninitializedVariantPtr rDest)
+    public static void VariantNewNil(GDExtensionVariant* rDest)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedVariantPtr, void> function = s_variantNewNil;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, void> function = s_variantNewNil;
         ThrowIfInvalid(function);
         function(rDest);
     }
@@ -772,9 +772,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Variant to destroy.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantDestroy(GDExtensionVariantPtr pSelf)
+    public static void VariantDestroy(GDExtensionVariant* pSelf)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, void> function = s_variantDestroy;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, void> function = s_variantDestroy;
         ThrowIfInvalid(function);
         function(pSelf);
     }
@@ -801,9 +801,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will hold error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantCall(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
+    public static void VariantCall(GDExtensionVariant* pSelf, GDExtensionStringName* pMethod, GDExtensionVariant** pArgs, long pArgumentCount, GDExtensionVariant* rReturn, GDExtensionCallError* rError)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> function = s_variantCall;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> function = s_variantCall;
         ThrowIfInvalid(function);
         function(pSelf, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
@@ -830,9 +830,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will be updated with error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantCallStatic(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
+    public static void VariantCallStatic(GDExtensionVariantType pType, GDExtensionStringName* pMethod, GDExtensionVariant** pArgs, long pArgumentCount, GDExtensionVariant* rReturn, GDExtensionCallError* rError)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> function = s_variantCallStatic;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> function = s_variantCallStatic;
         ThrowIfInvalid(function);
         function(pType, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
@@ -856,9 +856,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionConstVariantPtr pA, GDExtensionConstVariantPtr pB, GDExtensionUninitializedVariantPtr rReturn, GDExtensionBool* rValid)
+    public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionVariant* pA, GDExtensionVariant* pB, GDExtensionVariant* rReturn, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> function = s_variantEvaluate;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> function = s_variantEvaluate;
         ThrowIfInvalid(function);
         function(pOp, pA, pB, rReturn, rValid);
     }
@@ -879,9 +879,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantSet(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
+    public static void VariantSet(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* pValue, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> function = s_variantSet;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> function = s_variantSet;
         ThrowIfInvalid(function);
         function(pSelf, pKey, pValue, rValid);
     }
@@ -902,9 +902,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantSetNamed(GDExtensionVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
+    public static void VariantSetNamed(GDExtensionVariant* pSelf, GDExtensionStringName* pKey, GDExtensionVariant* pValue, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> function = s_variantSetNamed;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant*, bool*, void> function = s_variantSetNamed;
         ThrowIfInvalid(function);
         function(pSelf, pKey, pValue, rValid);
     }
@@ -925,9 +925,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantSetKeyed(GDExtensionVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid)
+    public static void VariantSetKeyed(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* pValue, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, void> function = s_variantSetKeyed;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> function = s_variantSetKeyed;
         ThrowIfInvalid(function);
         function(pSelf, pKey, pValue, rValid);
     }
@@ -951,9 +951,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantSetIndexed(GDExtensionVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionConstVariantPtr pValue, GDExtensionBool* rValid, GDExtensionBool* rOob)
+    public static void VariantSetIndexed(GDExtensionVariant* pSelf, long pIndex, GDExtensionVariant* pValue, bool* rValid, bool* rOob)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool*, void> function = s_variantSetIndexed;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, GDExtensionVariant*, bool*, bool*, void> function = s_variantSetIndexed;
         ThrowIfInvalid(function);
         function(pSelf, pIndex, pValue, rValid, rOob);
     }
@@ -974,9 +974,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantGet(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
+    public static void VariantGet(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* rRet, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> function = s_variantGet;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> function = s_variantGet;
         ThrowIfInvalid(function);
         function(pSelf, pKey, rRet, rValid);
     }
@@ -997,9 +997,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantGetNamed(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
+    public static void VariantGetNamed(GDExtensionVariant* pSelf, GDExtensionStringName* pKey, GDExtensionVariant* rRet, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> function = s_variantGetNamed;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, GDExtensionVariant*, bool*, void> function = s_variantGetNamed;
         ThrowIfInvalid(function);
         function(pSelf, pKey, rRet, rValid);
     }
@@ -1020,9 +1020,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantGetKeyed(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
+    public static void VariantGetKeyed(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* rRet, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> function = s_variantGetKeyed;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> function = s_variantGetKeyed;
         ThrowIfInvalid(function);
         function(pSelf, pKey, rRet, rValid);
     }
@@ -1046,9 +1046,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantGetIndexed(GDExtensionConstVariantPtr pSelf, GDExtensionInt pIndex, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid, GDExtensionBool* rOob)
+    public static void VariantGetIndexed(GDExtensionVariant* pSelf, long pIndex, GDExtensionVariant* rRet, bool* rValid, bool* rOob)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool*, void> function = s_variantGetIndexed;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, GDExtensionVariant*, bool*, bool*, void> function = s_variantGetIndexed;
         ThrowIfInvalid(function);
         function(pSelf, pIndex, rRet, rValid, rOob);
     }
@@ -1069,9 +1069,9 @@ public static unsafe class GDExtensionInterface
     /// true if the operation is valid; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantIterInit(GDExtensionConstVariantPtr pSelf, GDExtensionUninitializedVariantPtr rIter, GDExtensionBool* rValid)
+    public static bool VariantIterInit(GDExtensionVariant* pSelf, GDExtensionVariant* rIter, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, GDExtensionBool> function = s_variantIterInit;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool> function = s_variantIterInit;
         ThrowIfInvalid(function);
         return function(pSelf, rIter, rValid);
     }
@@ -1092,9 +1092,9 @@ public static unsafe class GDExtensionInterface
     /// true if the operation is valid; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantIterNext(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionBool* rValid)
+    public static bool VariantIterNext(GDExtensionVariant* pSelf, GDExtensionVariant* rIter, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool*, GDExtensionBool> function = s_variantIterNext;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool> function = s_variantIterNext;
         ThrowIfInvalid(function);
         return function(pSelf, rIter, rValid);
     }
@@ -1115,9 +1115,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantIterGet(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rIter, GDExtensionUninitializedVariantPtr rRet, GDExtensionBool* rValid)
+    public static void VariantIterGet(GDExtensionVariant* pSelf, GDExtensionVariant* rIter, GDExtensionVariant* rRet, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool*, void> function = s_variantIterGet;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, GDExtensionVariant*, bool*, void> function = s_variantIterGet;
         ThrowIfInvalid(function);
         function(pSelf, rIter, rRet, rValid);
     }
@@ -1132,9 +1132,9 @@ public static unsafe class GDExtensionInterface
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt VariantHash(GDExtensionConstVariantPtr pSelf)
+    public static long VariantHash(GDExtensionVariant* pSelf)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt> function = s_variantHash;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, long> function = s_variantHash;
         ThrowIfInvalid(function);
         return function(pSelf);
     }
@@ -1152,9 +1152,9 @@ public static unsafe class GDExtensionInterface
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt VariantRecursiveHash(GDExtensionConstVariantPtr pSelf, GDExtensionInt pRecursionCount)
+    public static long VariantRecursiveHash(GDExtensionVariant* pSelf, long pRecursionCount)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionInt> function = s_variantRecursiveHash;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, long, long> function = s_variantRecursiveHash;
         ThrowIfInvalid(function);
         return function(pSelf, pRecursionCount);
     }
@@ -1172,9 +1172,9 @@ public static unsafe class GDExtensionInterface
     /// The hash value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantHashCompare(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pOther)
+    public static bool VariantHashCompare(GDExtensionVariant* pSelf, GDExtensionVariant* pOther)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool> function = s_variantHashCompare;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool> function = s_variantHashCompare;
         ThrowIfInvalid(function);
         return function(pSelf, pOther);
     }
@@ -1189,9 +1189,9 @@ public static unsafe class GDExtensionInterface
     /// The boolean value of the Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantBooleanize(GDExtensionConstVariantPtr pSelf)
+    public static bool VariantBooleanize(GDExtensionVariant* pSelf)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionBool> function = s_variantBooleanize;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, bool> function = s_variantBooleanize;
         ThrowIfInvalid(function);
         return function(pSelf);
     }
@@ -1209,9 +1209,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not to duplicate deeply (when supported by the Variant type).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantDuplicate(GDExtensionConstVariantPtr pSelf, GDExtensionVariantPtr rRet, GDExtensionBool pDeep)
+    public static void VariantDuplicate(GDExtensionVariant* pSelf, GDExtensionVariant* rRet, bool pDeep)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool, void> function = s_variantDuplicate;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool, void> function = s_variantDuplicate;
         ThrowIfInvalid(function);
         function(pSelf, rRet, pDeep);
     }
@@ -1226,9 +1226,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String to store the resulting value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantStringify(GDExtensionConstVariantPtr pSelf, GDExtensionStringPtr rRet)
+    public static void VariantStringify(GDExtensionVariant* pSelf, GDExtensionString* rRet)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionStringPtr, void> function = s_variantStringify;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionString*, void> function = s_variantStringify;
         ThrowIfInvalid(function);
         function(pSelf, rRet);
     }
@@ -1243,9 +1243,9 @@ public static unsafe class GDExtensionInterface
     /// The variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantType VariantGetType(GDExtensionConstVariantPtr pSelf)
+    public static GDExtensionVariantType VariantGetType(GDExtensionVariant* pSelf)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionVariantType> function = s_variantGetType;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariantType> function = s_variantGetType;
         ThrowIfInvalid(function);
         return function(pSelf);
     }
@@ -1263,9 +1263,9 @@ public static unsafe class GDExtensionInterface
     /// true if the variant has the given method; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantHasMethod(GDExtensionConstVariantPtr pSelf, GDExtensionConstStringNamePtr pMethod)
+    public static bool VariantHasMethod(GDExtensionVariant* pSelf, GDExtensionStringName* pMethod)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionBool> function = s_variantHasMethod;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionStringName*, bool> function = s_variantHasMethod;
         ThrowIfInvalid(function);
         return function(pSelf, pMethod);
     }
@@ -1283,9 +1283,9 @@ public static unsafe class GDExtensionInterface
     /// true if the variant has the given method; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantHasMember(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
+    public static bool VariantHasMember(GDExtensionVariantType pType, GDExtensionStringName* pMember)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionBool> function = s_variantHasMember;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, bool> function = s_variantHasMember;
         ThrowIfInvalid(function);
         return function(pType, pMember);
     }
@@ -1306,9 +1306,9 @@ public static unsafe class GDExtensionInterface
     /// true if the key exists; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantHasKey(GDExtensionConstVariantPtr pSelf, GDExtensionConstVariantPtr pKey, GDExtensionBool* rValid)
+    public static bool VariantHasKey(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, bool* rValid)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool*, GDExtensionBool> function = s_variantHasKey;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, bool*, bool> function = s_variantHasKey;
         ThrowIfInvalid(function);
         return function(pSelf, pKey, rValid);
     }
@@ -1325,9 +1325,9 @@ public static unsafe class GDExtensionInterface
     /// The instance ID for the contained object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDObjectInstanceID VariantGetObjectInstanceId(GDExtensionConstVariantPtr pSelf)
+    public static ulong VariantGetObjectInstanceId(GDExtensionVariant* pSelf)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstVariantPtr, GDObjectInstanceID> function = s_variantGetObjectInstanceId;
+        delegate* unmanaged[Cdecl]<GDExtensionVariant*, ulong> function = s_variantGetObjectInstanceId;
         ThrowIfInvalid(function);
         return function(pSelf);
     }
@@ -1342,9 +1342,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String to store the Variant type name.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionUninitializedStringPtr rName)
+    public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionString* rName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedStringPtr, void> function = s_variantGetTypeName;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionString*, void> function = s_variantGetTypeName;
         ThrowIfInvalid(function);
         function(pType, rName);
     }
@@ -1359,9 +1359,9 @@ public static unsafe class GDExtensionInterface
     /// The variant type for the given name; otherwise VARIANT_MAX if name is invalid.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantType VariantGetTypeByName(GDExtensionConstStringPtr pTypeName)
+    public static GDExtensionVariantType VariantGetTypeByName(GDExtensionString* pTypeName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionVariantType> function = s_variantGetTypeByName;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, GDExtensionVariantType> function = s_variantGetTypeByName;
         ThrowIfInvalid(function);
         return function(pTypeName);
     }
@@ -1379,9 +1379,9 @@ public static unsafe class GDExtensionInterface
     /// true if the conversion is possible; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantCanConvert(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
+    public static bool VariantCanConvert(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> function = s_variantCanConvert;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, bool> function = s_variantCanConvert;
         ThrowIfInvalid(function);
         return function(pFrom, pTo);
     }
@@ -1399,9 +1399,9 @@ public static unsafe class GDExtensionInterface
     /// true if the conversion is possible; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool VariantCanConvertStrict(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
+    public static bool VariantCanConvertStrict(GDExtensionVariantType pFrom, GDExtensionVariantType pTo)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, GDExtensionBool> function = s_variantCanConvertStrict;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantType, bool> function = s_variantCanConvertStrict;
         ThrowIfInvalid(function);
         return function(pFrom, pTo);
     }
@@ -1416,9 +1416,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can create a Variant of the given type from a raw value.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantFromTypeConstructorFunc GetVariantFromTypeConstructor(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*, void> GetVariantFromTypeConstructor(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantFromTypeConstructorFunc> function = s_getVariantFromTypeConstructor;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*, void>> function = s_getVariantFromTypeConstructor;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1433,9 +1433,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can get the raw value from a Variant of the given type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypeFromVariantConstructorFunc GetVariantToTypeConstructor(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, void> GetVariantToTypeConstructor(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionTypeFromVariantConstructorFunc> function = s_getVariantToTypeConstructor;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, void>> function = s_getVariantToTypeConstructor;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1455,9 +1455,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a type-specific function that returns a pointer to the internal value of a variant. Check the implementation of this function (gdextension_variant_get_ptr_internal_getter) for pointee type info of each variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantGetInternalPtrFunc VariantGetPtrInternalGetter(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*> VariantGetPtrInternalGetter(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariantGetInternalPtrFunc> function = s_variantGetPtrInternalGetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, void*>> function = s_variantGetPtrInternalGetter;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1478,9 +1478,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can evaluate the given Variant operator on the given Variant types.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrOperatorEvaluator VariantGetPtrOperatorEvaluator(GDExtensionVariantOperator pOperator, GDExtensionVariantType pTypeA, GDExtensionVariantType pTypeB)
+    public static delegate* unmanaged[Cdecl]<void*, void*, void*, void> VariantGetPtrOperatorEvaluator(GDExtensionVariantOperator pOperator, GDExtensionVariantType pTypeA, GDExtensionVariantType pTypeB)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, GDExtensionPtrOperatorEvaluator> function = s_variantGetPtrOperatorEvaluator;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>> function = s_variantGetPtrOperatorEvaluator;
         ThrowIfInvalid(function);
         return function(pOperator, pTypeA, pTypeB);
     }
@@ -1501,9 +1501,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a builtin method on a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrBuiltInMethod VariantGetPtrBuiltinMethod(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMethod, GDExtensionInt pHash)
+    public static delegate* unmanaged[Cdecl]<void*, void**, void*, int, void> VariantGetPtrBuiltinMethod(GDExtensionVariantType pType, GDExtensionStringName* pMethod, long pHash)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrBuiltInMethod> function = s_variantGetPtrBuiltinMethod;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, long, delegate* unmanaged[Cdecl]<void*, void**, void*, int, void>> function = s_variantGetPtrBuiltinMethod;
         ThrowIfInvalid(function);
         return function(pType, pMethod, pHash);
     }
@@ -1521,9 +1521,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call one of the constructors for a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrConstructor VariantGetPtrConstructor(GDExtensionVariantType pType, int pConstructor)
+    public static delegate* unmanaged[Cdecl]<void*, void**, void> VariantGetPtrConstructor(GDExtensionVariantType pType, int pConstructor)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, GDExtensionPtrConstructor> function = s_variantGetPtrConstructor;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, int, delegate* unmanaged[Cdecl]<void*, void**, void>> function = s_variantGetPtrConstructor;
         ThrowIfInvalid(function);
         return function(pType, pConstructor);
     }
@@ -1538,9 +1538,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function than can call the destructor for a type of Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrDestructor VariantGetPtrDestructor(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<void*, void> VariantGetPtrDestructor(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrDestructor> function = s_variantGetPtrDestructor;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void>> function = s_variantGetPtrDestructor;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1564,9 +1564,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will be updated with error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantConstruct(GDExtensionVariantType pType, GDExtensionUninitializedVariantPtr rBase, GDExtensionConstVariantPtr* pArgs, int pArgumentCount, GDExtensionCallError* rError)
+    public static void VariantConstruct(GDExtensionVariantType pType, GDExtensionVariant* rBase, GDExtensionVariant** pArgs, int pArgumentCount, GDExtensionCallError* rError)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr*, int, GDExtensionCallError*, void> function = s_variantConstruct;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionVariant*, GDExtensionVariant**, int, GDExtensionCallError*, void> function = s_variantConstruct;
         ThrowIfInvalid(function);
         function(pType, rBase, pArgs, pArgumentCount, rError);
     }
@@ -1584,9 +1584,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a member's setter on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrSetter VariantGetPtrSetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
+    public static delegate* unmanaged[Cdecl]<void*, void*, void> VariantGetPtrSetter(GDExtensionVariantType pType, GDExtensionStringName* pMember)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrSetter> function = s_variantGetPtrSetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void*, void>> function = s_variantGetPtrSetter;
         ThrowIfInvalid(function);
         return function(pType, pMember);
     }
@@ -1604,9 +1604,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a member's getter on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrGetter VariantGetPtrGetter(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pMember)
+    public static delegate* unmanaged[Cdecl]<void*, void*, void> VariantGetPtrGetter(GDExtensionVariantType pType, GDExtensionStringName* pMember)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionPtrGetter> function = s_variantGetPtrGetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void*, void>> function = s_variantGetPtrGetter;
         ThrowIfInvalid(function);
         return function(pType, pMember);
     }
@@ -1621,9 +1621,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can set an index on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrIndexedSetter VariantGetPtrIndexedSetter(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<void*, long, void*, void> VariantGetPtrIndexedSetter(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedSetter> function = s_variantGetPtrIndexedSetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, long, void*, void>> function = s_variantGetPtrIndexedSetter;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1638,9 +1638,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can get an index on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrIndexedGetter VariantGetPtrIndexedGetter(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<void*, long, void*, void> VariantGetPtrIndexedGetter(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrIndexedGetter> function = s_variantGetPtrIndexedGetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, long, void*, void>> function = s_variantGetPtrIndexedGetter;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1655,9 +1655,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can set a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrKeyedSetter VariantGetPtrKeyedSetter(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<void*, void*, void*, void> VariantGetPtrKeyedSetter(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedSetter> function = s_variantGetPtrKeyedSetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>> function = s_variantGetPtrKeyedSetter;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1672,9 +1672,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can get a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrKeyedGetter VariantGetPtrKeyedGetter(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<void*, void*, void*, void> VariantGetPtrKeyedGetter(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedGetter> function = s_variantGetPtrKeyedGetter;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<void*, void*, void*, void>> function = s_variantGetPtrKeyedGetter;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1689,9 +1689,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can check a key on the given Variant type.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrKeyedChecker VariantGetPtrKeyedChecker(GDExtensionVariantType pType)
+    public static delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, uint> VariantGetPtrKeyedChecker(GDExtensionVariantType pType)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionPtrKeyedChecker> function = s_variantGetPtrKeyedChecker;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, delegate* unmanaged[Cdecl]<GDExtensionVariant*, GDExtensionVariant*, uint>> function = s_variantGetPtrKeyedChecker;
         ThrowIfInvalid(function);
         return function(pType);
     }
@@ -1709,9 +1709,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant to store the value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void VariantGetConstantValue(GDExtensionVariantType pType, GDExtensionConstStringNamePtr pConstant, GDExtensionUninitializedVariantPtr rRet)
+    public static void VariantGetConstantValue(GDExtensionVariantType pType, GDExtensionStringName* pConstant, GDExtensionVariant* rRet)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, void> function = s_variantGetConstantValue;
+        delegate* unmanaged[Cdecl]<GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void> function = s_variantGetConstantValue;
         ThrowIfInvalid(function);
         function(pType, pConstant, rRet);
     }
@@ -1729,9 +1729,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a function that can call a Variant utility function.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionPtrUtilityFunction VariantGetPtrUtilityFunction(GDExtensionConstStringNamePtr pFunction, GDExtensionInt pHash)
+    public static delegate* unmanaged[Cdecl]<void*, void**, int, void> VariantGetPtrUtilityFunction(GDExtensionStringName* pFunction, long pHash)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionPtrUtilityFunction> function = s_variantGetPtrUtilityFunction;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, long, delegate* unmanaged[Cdecl]<void*, void**, int, void>> function = s_variantGetPtrUtilityFunction;
         ThrowIfInvalid(function);
         return function(pFunction, pHash);
     }
@@ -1746,9 +1746,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithLatin1Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
+    public static void StringNewWithLatin1Chars(GDExtensionString* rDest, byte* pContents)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> function = s_stringNewWithLatin1Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void> function = s_stringNewWithLatin1Chars;
         ThrowIfInvalid(function);
         function(rDest, pContents);
     }
@@ -1763,9 +1763,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf8Chars(GDExtensionUninitializedStringPtr rDest, byte* pContents)
+    public static void StringNewWithUtf8Chars(GDExtensionString* rDest, byte* pContents)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, void> function = s_stringNewWithUtf8Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void> function = s_stringNewWithUtf8Chars;
         ThrowIfInvalid(function);
         function(rDest, pContents);
     }
@@ -1780,9 +1780,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-16 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf16Chars(GDExtensionUninitializedStringPtr rDest, char* pContents)
+    public static void StringNewWithUtf16Chars(GDExtensionString* rDest, char* pContents)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, void> function = s_stringNewWithUtf16Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, char*, void> function = s_stringNewWithUtf16Chars;
         ThrowIfInvalid(function);
         function(rDest, pContents);
     }
@@ -1797,9 +1797,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-32 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf32Chars(GDExtensionUninitializedStringPtr rDest, uint* pContents)
+    public static void StringNewWithUtf32Chars(GDExtensionString* rDest, uint* pContents)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, void> function = s_stringNewWithUtf32Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, void> function = s_stringNewWithUtf32Chars;
         ThrowIfInvalid(function);
         function(rDest, pContents);
     }
@@ -1814,9 +1814,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithWideChars(GDExtensionUninitializedStringPtr rDest, void* pContents)
+    public static void StringNewWithWideChars(GDExtensionString* rDest, void* pContents)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, void> function = s_stringNewWithWideChars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, void*, void> function = s_stringNewWithWideChars;
         ThrowIfInvalid(function);
         function(rDest, pContents);
     }
@@ -1834,9 +1834,9 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (= number of bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithLatin1CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
+    public static void StringNewWithLatin1CharsAndLen(GDExtensionString* rDest, byte* pContents, long pSize)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> function = s_stringNewWithLatin1CharsAndLen;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void> function = s_stringNewWithLatin1CharsAndLen;
         ThrowIfInvalid(function);
         function(rDest, pContents, pSize);
     }
@@ -1855,9 +1855,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use StringNewWithUtf8CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf8CharsAndLen(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
+    public static void StringNewWithUtf8CharsAndLen(GDExtensionString* rDest, byte* pContents, long pSize)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, void> function = s_stringNewWithUtf8CharsAndLen;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void> function = s_stringNewWithUtf8CharsAndLen;
         ThrowIfInvalid(function);
         function(rDest, pContents, pSize);
     }
@@ -1878,9 +1878,9 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringNewWithUtf8CharsAndLen2(GDExtensionUninitializedStringPtr rDest, byte* pContents, GDExtensionInt pSize)
+    public static long StringNewWithUtf8CharsAndLen2(GDExtensionString* rDest, byte* pContents, long pSize)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, byte*, GDExtensionInt, GDExtensionInt> function = s_stringNewWithUtf8CharsAndLen2;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long> function = s_stringNewWithUtf8CharsAndLen2;
         ThrowIfInvalid(function);
         return function(rDest, pContents, pSize);
     }
@@ -1899,9 +1899,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use StringNewWithUtf16CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf16CharsAndLen(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount)
+    public static void StringNewWithUtf16CharsAndLen(GDExtensionString* rDest, char* pContents, long pCharCount)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, void> function = s_stringNewWithUtf16CharsAndLen;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, void> function = s_stringNewWithUtf16CharsAndLen;
         ThrowIfInvalid(function);
         function(rDest, pContents, pCharCount);
     }
@@ -1925,9 +1925,9 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringNewWithUtf16CharsAndLen2(GDExtensionUninitializedStringPtr rDest, char* pContents, GDExtensionInt pCharCount, GDExtensionBool pDefaultLittleEndian)
+    public static long StringNewWithUtf16CharsAndLen2(GDExtensionString* rDest, char* pContents, long pCharCount, bool pDefaultLittleEndian)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, char*, GDExtensionInt, GDExtensionBool, GDExtensionInt> function = s_stringNewWithUtf16CharsAndLen2;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, bool, long> function = s_stringNewWithUtf16CharsAndLen2;
         ThrowIfInvalid(function);
         return function(rDest, pContents, pCharCount, pDefaultLittleEndian);
     }
@@ -1945,9 +1945,9 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (not bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithUtf32CharsAndLen(GDExtensionUninitializedStringPtr rDest, uint* pContents, GDExtensionInt pCharCount)
+    public static void StringNewWithUtf32CharsAndLen(GDExtensionString* rDest, uint* pContents, long pCharCount)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, uint*, GDExtensionInt, void> function = s_stringNewWithUtf32CharsAndLen;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, long, void> function = s_stringNewWithUtf32CharsAndLen;
         ThrowIfInvalid(function);
         function(rDest, pContents, pCharCount);
     }
@@ -1965,9 +1965,9 @@ public static unsafe class GDExtensionInterface
     /// The number of characters (not bytes).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNewWithWideCharsAndLen(GDExtensionUninitializedStringPtr rDest, void* pContents, GDExtensionInt pCharCount)
+    public static void StringNewWithWideCharsAndLen(GDExtensionString* rDest, void* pContents, long pCharCount)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringPtr, void*, GDExtensionInt, void> function = s_stringNewWithWideCharsAndLen;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, void*, long, void> function = s_stringNewWithWideCharsAndLen;
         ThrowIfInvalid(function);
         function(rDest, pContents, pCharCount);
     }
@@ -1989,9 +1989,9 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters, not including a null terminator. Characters that cannot be converted to Latin-1 are replaced with a space.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToLatin1Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
+    public static long StringToLatin1Chars(GDExtensionString* pSelf, byte* rText, long pMaxWriteLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> function = s_stringToLatin1Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long> function = s_stringToLatin1Chars;
         ThrowIfInvalid(function);
         return function(pSelf, rText, pMaxWriteLength);
     }
@@ -2013,9 +2013,9 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in bytes (not characters), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToUtf8Chars(GDExtensionConstStringPtr pSelf, byte* rText, GDExtensionInt pMaxWriteLength)
+    public static long StringToUtf8Chars(GDExtensionString* pSelf, byte* rText, long pMaxWriteLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, byte*, GDExtensionInt, GDExtensionInt> function = s_stringToUtf8Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, long> function = s_stringToUtf8Chars;
         ThrowIfInvalid(function);
         return function(pSelf, rText, pMaxWriteLength);
     }
@@ -2037,9 +2037,9 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToUtf16Chars(GDExtensionConstStringPtr pSelf, char* rText, GDExtensionInt pMaxWriteLength)
+    public static long StringToUtf16Chars(GDExtensionString* pSelf, char* rText, long pMaxWriteLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, char*, GDExtensionInt, GDExtensionInt> function = s_stringToUtf16Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, long> function = s_stringToUtf16Chars;
         ThrowIfInvalid(function);
         return function(pSelf, rText, pMaxWriteLength);
     }
@@ -2061,9 +2061,9 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters (not bytes), not including a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToUtf32Chars(GDExtensionConstStringPtr pSelf, uint* rText, GDExtensionInt pMaxWriteLength)
+    public static long StringToUtf32Chars(GDExtensionString* pSelf, uint* rText, long pMaxWriteLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, uint*, GDExtensionInt, GDExtensionInt> function = s_stringToUtf32Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, long, long> function = s_stringToUtf32Chars;
         ThrowIfInvalid(function);
         return function(pSelf, rText, pMaxWriteLength);
     }
@@ -2085,9 +2085,9 @@ public static unsafe class GDExtensionInterface
     /// The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringToWideChars(GDExtensionConstStringPtr pSelf, void* rText, GDExtensionInt pMaxWriteLength)
+    public static long StringToWideChars(GDExtensionString* pSelf, void* rText, long pMaxWriteLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, void*, GDExtensionInt, GDExtensionInt> function = s_stringToWideChars;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, void*, long, long> function = s_stringToWideChars;
         ThrowIfInvalid(function);
         return function(pSelf, rText, pMaxWriteLength);
     }
@@ -2105,9 +2105,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested character.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint* StringOperatorIndex(GDExtensionStringPtr pSelf, GDExtensionInt pIndex)
+    public static uint* StringOperatorIndex(GDExtensionString* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, uint*> function = s_stringOperatorIndex;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, long, uint*> function = s_stringOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2125,9 +2125,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested character.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint* StringOperatorIndexConst(GDExtensionConstStringPtr pSelf, GDExtensionInt pIndex)
+    public static uint* StringOperatorIndexConst(GDExtensionString* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringPtr, GDExtensionInt, uint*> function = s_stringOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, long, uint*> function = s_stringOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2142,9 +2142,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the other String to append.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringOperatorPlusEqString(GDExtensionStringPtr pSelf, GDExtensionConstStringPtr pB)
+    public static void StringOperatorPlusEqString(GDExtensionString* pSelf, GDExtensionString* pB)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionConstStringPtr, void> function = s_stringOperatorPlusEqString;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, GDExtensionString*, void> function = s_stringOperatorPlusEqString;
         ThrowIfInvalid(function);
         function(pSelf, pB);
     }
@@ -2159,9 +2159,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the character to append.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringOperatorPlusEqChar(GDExtensionStringPtr pSelf, uint pB)
+    public static void StringOperatorPlusEqChar(GDExtensionString* pSelf, uint pB)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint, void> function = s_stringOperatorPlusEqChar;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, uint, void> function = s_stringOperatorPlusEqChar;
         ThrowIfInvalid(function);
         function(pSelf, pB);
     }
@@ -2176,9 +2176,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringOperatorPlusEqCstr(GDExtensionStringPtr pSelf, byte* pB)
+    public static void StringOperatorPlusEqCstr(GDExtensionString* pSelf, byte* pB)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, byte*, void> function = s_stringOperatorPlusEqCstr;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, void> function = s_stringOperatorPlusEqCstr;
         ThrowIfInvalid(function);
         function(pSelf, pB);
     }
@@ -2193,9 +2193,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a wide C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringOperatorPlusEqWcstr(GDExtensionStringPtr pSelf, void* pB)
+    public static void StringOperatorPlusEqWcstr(GDExtensionString* pSelf, void* pB)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, void*, void> function = s_stringOperatorPlusEqWcstr;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, void*, void> function = s_stringOperatorPlusEqWcstr;
         ThrowIfInvalid(function);
         function(pSelf, pB);
     }
@@ -2210,9 +2210,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a UTF-32 encoded C string (null terminated).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringOperatorPlusEqC32Str(GDExtensionStringPtr pSelf, uint* pB)
+    public static void StringOperatorPlusEqC32Str(GDExtensionString* pSelf, uint* pB)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, uint*, void> function = s_stringOperatorPlusEqC32Str;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, uint*, void> function = s_stringOperatorPlusEqC32Str;
         ThrowIfInvalid(function);
         function(pSelf, pB);
     }
@@ -2235,9 +2235,9 @@ public static unsafe class GDExtensionInterface
     /// Error code signifying if the operation successful.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt StringResize(GDExtensionStringPtr pSelf, GDExtensionInt pResize)
+    public static long StringResize(GDExtensionString* pSelf, long pResize)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionStringPtr, GDExtensionInt, GDExtensionInt> function = s_stringResize;
+        delegate* unmanaged[Cdecl]<GDExtensionString*, long, long> function = s_stringResize;
         ThrowIfInvalid(function);
         return function(pSelf, pResize);
     }
@@ -2261,9 +2261,9 @@ public static unsafe class GDExtensionInterface
     /// Whether the StringName reuses the buffer directly (see above).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNameNewWithLatin1Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionBool pIsStatic)
+    public static void StringNameNewWithLatin1Chars(GDExtensionStringName* rDest, byte* pContents, bool pIsStatic)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionBool, void> function = s_stringNameNewWithLatin1Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, bool, void> function = s_stringNameNewWithLatin1Chars;
         ThrowIfInvalid(function);
         function(rDest, pContents, pIsStatic);
     }
@@ -2278,9 +2278,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a C string (null terminated and UTF-8 encoded).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNameNewWithUtf8Chars(GDExtensionUninitializedStringNamePtr rDest, byte* pContents)
+    public static void StringNameNewWithUtf8Chars(GDExtensionStringName* rDest, byte* pContents)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, void> function = s_stringNameNewWithUtf8Chars;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, void> function = s_stringNameNewWithUtf8Chars;
         ThrowIfInvalid(function);
         function(rDest, pContents);
     }
@@ -2298,9 +2298,9 @@ public static unsafe class GDExtensionInterface
     /// The number of bytes (not UTF-8 code points).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void StringNameNewWithUtf8CharsAndLen(GDExtensionUninitializedStringNamePtr rDest, byte* pContents, GDExtensionInt pSize)
+    public static void StringNameNewWithUtf8CharsAndLen(GDExtensionStringName* rDest, byte* pContents, long pSize)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedStringNamePtr, byte*, GDExtensionInt, void> function = s_stringNameNewWithUtf8CharsAndLen;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, byte*, long, void> function = s_stringNameNewWithUtf8CharsAndLen;
         ThrowIfInvalid(function);
         function(rDest, pContents, pSize);
     }
@@ -2321,9 +2321,9 @@ public static unsafe class GDExtensionInterface
     /// A Godot error code (ex. OK, ERR_INVALID_DATA, etc).
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionInt XmlParserOpenBuffer(GDExtensionObjectPtr pInstance, byte* pBuffer, nuint pSize)
+    public static long XmlParserOpenBuffer(void* pInstance, byte* pBuffer, nuint pSize)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, nuint, GDExtensionInt> function = s_xmlParserOpenBuffer;
+        delegate* unmanaged[Cdecl]<void*, byte*, nuint, long> function = s_xmlParserOpenBuffer;
         ThrowIfInvalid(function);
         return function(pInstance, pBuffer, pSize);
     }
@@ -2341,9 +2341,9 @@ public static unsafe class GDExtensionInterface
     /// The size of the buffer.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void FileAccessStoreBuffer(GDExtensionObjectPtr pInstance, byte* pSrc, ulong pLength)
+    public static void FileAccessStoreBuffer(void* pInstance, byte* pSrc, ulong pLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*, ulong, void> function = s_fileAccessStoreBuffer;
+        delegate* unmanaged[Cdecl]<void*, byte*, ulong, void> function = s_fileAccessStoreBuffer;
         ThrowIfInvalid(function);
         function(pInstance, pSrc, pLength);
     }
@@ -2364,9 +2364,9 @@ public static unsafe class GDExtensionInterface
     /// The actual number of bytes read (may be less than requested).
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong FileAccessGetBuffer(GDExtensionConstObjectPtr pInstance, byte* pDst, ulong pLength)
+    public static ulong FileAccessGetBuffer(void* pInstance, byte* pDst, ulong pLength)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, byte*, ulong, ulong> function = s_fileAccessGetBuffer;
+        delegate* unmanaged[Cdecl]<void*, byte*, ulong, ulong> function = s_fileAccessGetBuffer;
         ThrowIfInvalid(function);
         return function(pInstance, pDst, pLength);
     }
@@ -2381,9 +2381,9 @@ public static unsafe class GDExtensionInterface
     /// Pointer to internal Image buffer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* ImagePtrw(GDExtensionObjectPtr pInstance)
+    public static byte* ImagePtrw(void* pInstance)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> function = s_imagePtrw;
+        delegate* unmanaged[Cdecl]<void*, byte*> function = s_imagePtrw;
         ThrowIfInvalid(function);
         return function(pInstance);
     }
@@ -2398,9 +2398,9 @@ public static unsafe class GDExtensionInterface
     /// Pointer to internal Image buffer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* ImagePtr(GDExtensionObjectPtr pInstance)
+    public static byte* ImagePtr(void* pInstance)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, byte*> function = s_imagePtr;
+        delegate* unmanaged[Cdecl]<void*, byte*> function = s_imagePtr;
         ThrowIfInvalid(function);
         return function(pInstance);
     }
@@ -2433,9 +2433,9 @@ public static unsafe class GDExtensionInterface
     /// The task group ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long WorkerThreadPoolAddNativeGroupTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolGroupTask pFunc, void* pUserData, int pElements, int pTasks, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
+    public static long WorkerThreadPoolAddNativeGroupTask(void* pInstance, delegate* unmanaged[Cdecl]<void*, uint, void> pFunc, void* pUserData, int pElements, int pTasks, bool pHighPriority, GDExtensionString* pDescription)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void*, int, int, GDExtensionBool, GDExtensionConstStringPtr, long> function = s_workerThreadPoolAddNativeGroupTask;
+        delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, uint, void>, void*, int, int, bool, GDExtensionString*, long> function = s_workerThreadPoolAddNativeGroupTask;
         ThrowIfInvalid(function);
         return function(pInstance, pFunc, pUserData, pElements, pTasks, pHighPriority, pDescription);
     }
@@ -2462,9 +2462,9 @@ public static unsafe class GDExtensionInterface
     /// The task ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long WorkerThreadPoolAddNativeTask(GDExtensionObjectPtr pInstance, GDExtensionWorkerThreadPoolTask pFunc, void* pUserData, GDExtensionBool pHighPriority, GDExtensionConstStringPtr pDescription)
+    public static long WorkerThreadPoolAddNativeTask(void* pInstance, delegate* unmanaged[Cdecl]<void*, void> pFunc, void* pUserData, bool pHighPriority, GDExtensionString* pDescription)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void*, GDExtensionBool, GDExtensionConstStringPtr, long> function = s_workerThreadPoolAddNativeTask;
+        delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, void>, void*, bool, GDExtensionString*, long> function = s_workerThreadPoolAddNativeTask;
         ThrowIfInvalid(function);
         return function(pInstance, pFunc, pUserData, pHighPriority, pDescription);
     }
@@ -2482,9 +2482,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested byte.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* PackedByteArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static byte* PackedByteArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, byte*> function = s_packedByteArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, byte*> function = s_packedByteArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2502,9 +2502,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested byte.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static byte* PackedByteArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static byte* PackedByteArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, byte*> function = s_packedByteArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, byte*> function = s_packedByteArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2522,9 +2522,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 32-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float* PackedFloat32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static float* PackedFloat32ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, float*> function = s_packedFloat32ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, float*> function = s_packedFloat32ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2542,9 +2542,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 32-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static float* PackedFloat32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static float* PackedFloat32ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, float*> function = s_packedFloat32ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, float*> function = s_packedFloat32ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2562,9 +2562,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 64-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double* PackedFloat64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static double* PackedFloat64ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, double*> function = s_packedFloat64ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, double*> function = s_packedFloat64ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2582,9 +2582,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 64-bit float.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double* PackedFloat64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static double* PackedFloat64ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, double*> function = s_packedFloat64ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, double*> function = s_packedFloat64ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2602,9 +2602,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 32-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int* PackedInt32ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static int* PackedInt32ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, int*> function = s_packedInt32ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, int*> function = s_packedInt32ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2622,9 +2622,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 32-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int* PackedInt32ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static int* PackedInt32ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, int*> function = s_packedInt32ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, int*> function = s_packedInt32ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2642,9 +2642,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested 64-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long* PackedInt64ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static long* PackedInt64ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, long*> function = s_packedInt64ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, long*> function = s_packedInt64ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2662,9 +2662,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested 64-bit integer.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long* PackedInt64ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static long* PackedInt64ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, long*> function = s_packedInt64ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, long*> function = s_packedInt64ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2682,9 +2682,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested String.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionStringPtr PackedStringArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static GDExtensionString* PackedStringArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionStringPtr> function = s_packedStringArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, GDExtensionString*> function = s_packedStringArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2702,9 +2702,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested String.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionStringPtr PackedStringArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static GDExtensionString* PackedStringArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionStringPtr> function = s_packedStringArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, GDExtensionString*> function = s_packedStringArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2722,9 +2722,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Vector2.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedVector2ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedVector2ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedVector2ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedVector2ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2742,9 +2742,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Vector2.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedVector2ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedVector2ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedVector2ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedVector2ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2762,9 +2762,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Vector3.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedVector3ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedVector3ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedVector3ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedVector3ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2782,9 +2782,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Vector3.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedVector3ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedVector3ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedVector3ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedVector3ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2802,9 +2802,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Vector4.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedVector4ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedVector4ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedVector4ArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedVector4ArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2822,9 +2822,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Vector4.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedVector4ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedVector4ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedVector4ArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedVector4ArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2842,9 +2842,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Color.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedColorArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedColorArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedColorArrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedColorArrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2862,9 +2862,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Color.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionTypePtr PackedColorArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static void* PackedColorArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr> function = s_packedColorArrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, void*> function = s_packedColorArrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2882,9 +2882,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the requested Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr ArrayOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionInt pIndex)
+    public static GDExtensionVariant* ArrayOperatorIndex(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionInt, GDExtensionVariantPtr> function = s_arrayOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, long, GDExtensionVariant*> function = s_arrayOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2902,9 +2902,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to the requested Variant.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr ArrayOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionInt pIndex)
+    public static GDExtensionVariant* ArrayOperatorIndexConst(void* pSelf, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionInt, GDExtensionVariantPtr> function = s_arrayOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, long, GDExtensionVariant*> function = s_arrayOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pIndex);
     }
@@ -2920,9 +2920,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ArrayRef(GDExtensionTypePtr pSelf, GDExtensionConstTypePtr pFrom)
+    public static void ArrayRef(void* pSelf, void* pFrom)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstTypePtr, void> function = s_arrayRef;
+        delegate* unmanaged[Cdecl]<void*, void*, void> function = s_arrayRef;
         ThrowIfInvalid(function);
         function(pSelf, pFrom);
     }
@@ -2943,9 +2943,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Script object (if pType is Object and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ArraySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pType, GDExtensionConstStringNamePtr pClassName, GDExtensionConstVariantPtr pScript)
+    public static void ArraySetTyped(void* pSelf, GDExtensionVariantType pType, GDExtensionStringName* pClassName, GDExtensionVariant* pScript)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> function = s_arraySetTyped;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void> function = s_arraySetTyped;
         ThrowIfInvalid(function);
         function(pSelf, pType, pClassName, pScript);
     }
@@ -2963,9 +2963,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Variant representing the value at the given key.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr DictionaryOperatorIndex(GDExtensionTypePtr pSelf, GDExtensionConstVariantPtr pKey)
+    public static GDExtensionVariant* DictionaryOperatorIndex(void* pSelf, GDExtensionVariant* pKey)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> function = s_dictionaryOperatorIndex;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, GDExtensionVariant*> function = s_dictionaryOperatorIndex;
         ThrowIfInvalid(function);
         return function(pSelf, pKey);
     }
@@ -2983,9 +2983,9 @@ public static unsafe class GDExtensionInterface
     /// A const pointer to a Variant representing the value at the given key.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionVariantPtr DictionaryOperatorIndexConst(GDExtensionConstTypePtr pSelf, GDExtensionConstVariantPtr pKey)
+    public static GDExtensionVariant* DictionaryOperatorIndexConst(void* pSelf, GDExtensionVariant* pKey)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, GDExtensionConstVariantPtr, GDExtensionVariantPtr> function = s_dictionaryOperatorIndexConst;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionVariant*, GDExtensionVariant*> function = s_dictionaryOperatorIndexConst;
         ThrowIfInvalid(function);
         return function(pSelf, pKey);
     }
@@ -3015,9 +3015,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Script object (if pValueType is Object and the base class is extended by a script).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DictionarySetTyped(GDExtensionTypePtr pSelf, GDExtensionVariantType pKeyType, GDExtensionConstStringNamePtr pKeyClassName, GDExtensionConstVariantPtr pKeyScript, GDExtensionVariantType pValueType, GDExtensionConstStringNamePtr pValueClassName, GDExtensionConstVariantPtr pValueScript)
+    public static void DictionarySetTyped(void* pSelf, GDExtensionVariantType pKeyType, GDExtensionStringName* pKeyClassName, GDExtensionVariant* pKeyScript, GDExtensionVariantType pValueType, GDExtensionStringName* pValueClassName, GDExtensionVariant* pValueScript)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void> function = s_dictionarySetTyped;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, GDExtensionVariantType, GDExtensionStringName*, GDExtensionVariant*, void> function = s_dictionarySetTyped;
         ThrowIfInvalid(function);
         function(pSelf, pKeyType, pKeyClassName, pKeyScript, pValueType, pValueClassName, pValueScript);
     }
@@ -3044,9 +3044,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionCallError struct that will receive error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectMethodBindCall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgCount, GDExtensionUninitializedVariantPtr rRet, GDExtensionCallError* rError)
+    public static void ObjectMethodBindCall(void* pMethodBind, void* pInstance, GDExtensionVariant** pArgs, long pArgCount, GDExtensionVariant* rRet, GDExtensionCallError* rError)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> function = s_objectMethodBindCall;
+        delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> function = s_objectMethodBindCall;
         ThrowIfInvalid(function);
         function(pMethodBind, pInstance, pArgs, pArgCount, rRet, rError);
     }
@@ -3067,9 +3067,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object that will receive the return value.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectMethodBindPtrCall(GDExtensionMethodBindPtr pMethodBind, GDExtensionObjectPtr pInstance, GDExtensionConstTypePtr* pArgs, GDExtensionTypePtr rRet)
+    public static void ObjectMethodBindPtrCall(void* pMethodBind, void* pInstance, void** pArgs, void* rRet)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr*, GDExtensionTypePtr, void> function = s_objectMethodBindPtrCall;
+        delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> function = s_objectMethodBindPtrCall;
         ThrowIfInvalid(function);
         function(pMethodBind, pInstance, pArgs, rRet);
     }
@@ -3081,9 +3081,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectDestroy(GDExtensionObjectPtr pO)
+    public static void ObjectDestroy(void* pO)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void> function = s_objectDestroy;
+        delegate* unmanaged[Cdecl]<void*, void> function = s_objectDestroy;
         ThrowIfInvalid(function);
         function(pO);
     }
@@ -3098,9 +3098,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the singleton Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr GlobalGetSingleton(GDExtensionConstStringNamePtr pName)
+    public static void* GlobalGetSingleton(GDExtensionStringName* pName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_globalGetSingleton;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> function = s_globalGetSingleton;
         ThrowIfInvalid(function);
         return function(pName);
     }
@@ -3121,9 +3121,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the instance binding.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* ObjectGetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, GDExtensionInstanceBindingCallbacks* pCallbacks)
+    public static void* ObjectGetInstanceBinding(void* pO, void* pToken, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, GDExtensionInstanceBindingCallbacks*, void*> function = s_objectGetInstanceBinding;
+        delegate* unmanaged[Cdecl]<void*, void*, GDExtensionInstanceBindingCallbacks*, void*> function = s_objectGetInstanceBinding;
         ThrowIfInvalid(function);
         return function(pO, pToken, pCallbacks);
     }
@@ -3144,9 +3144,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectSetInstanceBinding(GDExtensionObjectPtr pO, void* pToken, void* pBinding, GDExtensionInstanceBindingCallbacks* pCallbacks)
+    public static void ObjectSetInstanceBinding(void* pO, void* pToken, void* pBinding, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void*, GDExtensionInstanceBindingCallbacks*, void> function = s_objectSetInstanceBinding;
+        delegate* unmanaged[Cdecl]<void*, void*, void*, GDExtensionInstanceBindingCallbacks*, void> function = s_objectSetInstanceBinding;
         ThrowIfInvalid(function);
         function(pO, pToken, pBinding, pCallbacks);
     }
@@ -3161,9 +3161,9 @@ public static unsafe class GDExtensionInterface
     /// A token the library received by the GDExtension's entry point function.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectFreeInstanceBinding(GDExtensionObjectPtr pO, void* pToken)
+    public static void ObjectFreeInstanceBinding(void* pO, void* pToken)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, void*, void> function = s_objectFreeInstanceBinding;
+        delegate* unmanaged[Cdecl]<void*, void*, void> function = s_objectFreeInstanceBinding;
         ThrowIfInvalid(function);
         function(pO, pToken);
     }
@@ -3182,9 +3182,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the extension class instance.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectSetInstance(GDExtensionObjectPtr pO, GDExtensionConstStringNamePtr pClassName, GDExtensionClassInstancePtr pInstance)
+    public static void ObjectSetInstance(void* pO, GDExtensionStringName* pClassName, void* pInstance)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr, void> function = s_objectSetInstance;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, void*, void> function = s_objectSetInstance;
         ThrowIfInvalid(function);
         function(pO, pClassName, pInstance);
     }
@@ -3207,9 +3207,9 @@ public static unsafe class GDExtensionInterface
     /// true if successful in getting the class name; otherwise false.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool ObjectGetClassName(GDExtensionConstObjectPtr pObject, GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringNamePtr rClassName)
+    public static bool ObjectGetClassName(void* pObject, void* pLibrary, GDExtensionStringName* rClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr, GDExtensionBool> function = s_objectGetClassName;
+        delegate* unmanaged[Cdecl]<void*, void*, GDExtensionStringName*, bool> function = s_objectGetClassName;
         ThrowIfInvalid(function);
         return function(pObject, pLibrary, rClassName);
     }
@@ -3228,9 +3228,9 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use the `is_class` method on `Object` to check if an object can be cast instead. If true, the previous pointer can be reinterpreted as a pointer to the target type.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ObjectCastTo(GDExtensionConstObjectPtr pObject, void* pClassTag)
+    public static void* ObjectCastTo(void* pObject, void* pClassTag)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, void*, GDExtensionObjectPtr> function = s_objectCastTo;
+        delegate* unmanaged[Cdecl]<void*, void*, void*> function = s_objectCastTo;
         ThrowIfInvalid(function);
         return function(pObject, pClassTag);
     }
@@ -3245,9 +3245,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ObjectGetInstanceFromId(GDObjectInstanceID pInstanceId)
+    public static void* ObjectGetInstanceFromId(ulong pInstanceId)
     {
-        delegate* unmanaged[Cdecl]<GDObjectInstanceID, GDExtensionObjectPtr> function = s_objectGetInstanceFromId;
+        delegate* unmanaged[Cdecl]<ulong, void*> function = s_objectGetInstanceFromId;
         ThrowIfInvalid(function);
         return function(pInstanceId);
     }
@@ -3262,9 +3262,9 @@ public static unsafe class GDExtensionInterface
     /// The instance ID.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDObjectInstanceID ObjectGetInstanceId(GDExtensionConstObjectPtr pObject)
+    public static ulong ObjectGetInstanceId(void* pObject)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDObjectInstanceID> function = s_objectGetInstanceId;
+        delegate* unmanaged[Cdecl]<void*, ulong> function = s_objectGetInstanceId;
         ThrowIfInvalid(function);
         return function(pObject);
     }
@@ -3282,9 +3282,9 @@ public static unsafe class GDExtensionInterface
     /// true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionBool ObjectHasScriptMethod(GDExtensionConstObjectPtr pObject, GDExtensionConstStringNamePtr pMethod)
+    public static bool ObjectHasScriptMethod(void* pObject, GDExtensionStringName* pMethod)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr, GDExtensionBool> function = s_objectHasScriptMethod;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, bool> function = s_objectHasScriptMethod;
         ThrowIfInvalid(function);
         return function(pObject, pMethod);
     }
@@ -3311,9 +3311,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer the structure which will hold error information.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectCallScriptMethod(GDExtensionObjectPtr pObject, GDExtensionConstStringNamePtr pMethod, GDExtensionConstVariantPtr* pArgs, GDExtensionInt pArgumentCount, GDExtensionUninitializedVariantPtr rReturn, GDExtensionCallError* rError)
+    public static void ObjectCallScriptMethod(void* pObject, GDExtensionStringName* pMethod, GDExtensionVariant** pArgs, long pArgumentCount, GDExtensionVariant* rReturn, GDExtensionCallError* rError)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr*, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError*, void> function = s_objectCallScriptMethod;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> function = s_objectCallScriptMethod;
         ThrowIfInvalid(function);
         function(pObject, pMethod, pArgs, pArgumentCount, rReturn, rError);
     }
@@ -3328,9 +3328,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object from the reference or null.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr RefGetObject(GDExtensionConstRefPtr pRef)
+    public static void* RefGetObject(void* pRef)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstRefPtr, GDExtensionObjectPtr> function = s_refGetObject;
+        delegate* unmanaged[Cdecl]<void*, void*> function = s_refGetObject;
         ThrowIfInvalid(function);
         return function(pRef);
     }
@@ -3345,9 +3345,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the Object to refer to.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void RefSetObject(GDExtensionRefPtr pRef, GDExtensionObjectPtr pObject)
+    public static void RefSetObject(void* pRef, void* pObject)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionRefPtr, GDExtensionObjectPtr, void> function = s_refSetObject;
+        delegate* unmanaged[Cdecl]<void*, void*, void> function = s_refSetObject;
         ThrowIfInvalid(function);
         function(pRef, pObject);
     }
@@ -3366,9 +3366,9 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.2. Use ScriptInstanceCreate3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr ScriptInstanceCreate(GDExtensionScriptInstanceInfo* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
+    public static void* ScriptInstanceCreate(GDExtensionScriptInstanceInfo* pInfo, void* pInstanceData)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> function = s_scriptInstanceCreate;
+        delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo*, void*, void*> function = s_scriptInstanceCreate;
         ThrowIfInvalid(function);
         return function(pInfo, pInstanceData);
     }
@@ -3387,9 +3387,9 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.3. Use ScriptInstanceCreate3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr ScriptInstanceCreate2(GDExtensionScriptInstanceInfo2* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
+    public static void* ScriptInstanceCreate2(GDExtensionScriptInstanceInfo2* pInfo, void* pInstanceData)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> function = s_scriptInstanceCreate2;
+        delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo2*, void*, void*> function = s_scriptInstanceCreate2;
         ThrowIfInvalid(function);
         return function(pInfo, pInstanceData);
     }
@@ -3407,9 +3407,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr ScriptInstanceCreate3(GDExtensionScriptInstanceInfo3* pInfo, GDExtensionScriptInstanceDataPtr pInstanceData)
+    public static void* ScriptInstanceCreate3(GDExtensionScriptInstanceInfo3* pInfo, void* pInstanceData)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePtr> function = s_scriptInstanceCreate3;
+        delegate* unmanaged[Cdecl]<GDExtensionScriptInstanceInfo3*, void*, void*> function = s_scriptInstanceCreate3;
         ThrowIfInvalid(function);
         return function(pInfo, pInstanceData);
     }
@@ -3431,9 +3431,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a PlaceHolderScriptInstance object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstancePtr PlaceholderScriptInstanceCreate(GDExtensionObjectPtr pLanguage, GDExtensionObjectPtr pScript, GDExtensionObjectPtr pOwner)
+    public static void* PlaceholderScriptInstanceCreate(void* pLanguage, void* pScript, void* pOwner)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstancePtr> function = s_placeholderScriptInstanceCreate;
+        delegate* unmanaged[Cdecl]<void*, void*, void*, void*> function = s_placeholderScriptInstanceCreate;
         ThrowIfInvalid(function);
         return function(pLanguage, pScript, pOwner);
     }
@@ -3453,9 +3453,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a Dictionary mapping StringName to Variant values.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void PlaceholderScriptInstanceUpdate(GDExtensionScriptInstancePtr pPlaceholder, GDExtensionConstTypePtr pProperties, GDExtensionConstTypePtr pValues)
+    public static void PlaceholderScriptInstanceUpdate(void* pPlaceholder, void* pProperties, void* pValues)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr, void> function = s_placeholderScriptInstanceUpdate;
+        delegate* unmanaged[Cdecl]<void*, void*, void*, void> function = s_placeholderScriptInstanceUpdate;
         ThrowIfInvalid(function);
         function(pPlaceholder, pProperties, pValues);
     }
@@ -3473,9 +3473,9 @@ public static unsafe class GDExtensionInterface
     /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of ScriptInstanceCreate.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionScriptInstanceDataPtr ObjectGetScriptInstance(GDExtensionConstObjectPtr pObject, GDExtensionObjectPtr pLanguage)
+    public static void* ObjectGetScriptInstance(void* pObject, void* pLanguage)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstObjectPtr, GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr> function = s_objectGetScriptInstance;
+        delegate* unmanaged[Cdecl]<void*, void*, void*> function = s_objectGetScriptInstance;
         ThrowIfInvalid(function);
         return function(pObject, pLanguage);
     }
@@ -3490,9 +3490,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the script instance data to attach to this object.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ObjectSetScriptInstance(GDExtensionObjectPtr pObject, GDExtensionScriptInstanceDataPtr pScriptInstance)
+    public static void ObjectSetScriptInstance(void* pObject, void* pScriptInstance)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr, void> function = s_objectSetScriptInstance;
+        delegate* unmanaged[Cdecl]<void*, void*, void> function = s_objectSetScriptInstance;
         ThrowIfInvalid(function);
         function(pObject, pScriptInstance);
     }
@@ -3509,9 +3509,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use CallableCustomCreate2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void CallableCustomCreate(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
+    public static void CallableCustomCreate(void* rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo*, void> function = s_callableCustomCreate;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo*, void> function = s_callableCustomCreate;
         ThrowIfInvalid(function);
         function(rCallable, pCallableCustomInfo);
     }
@@ -3527,9 +3527,9 @@ public static unsafe class GDExtensionInterface
     /// The info required to construct a Callable.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void CallableCustomCreate2(GDExtensionUninitializedTypePtr rCallable, GDExtensionCallableCustomInfo2* pCallableCustomInfo)
+    public static void CallableCustomCreate2(void* rCallable, GDExtensionCallableCustomInfo2* pCallableCustomInfo)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2*, void> function = s_callableCustomCreate2;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo2*, void> function = s_callableCustomCreate2;
         ThrowIfInvalid(function);
         function(rCallable, pCallableCustomInfo);
     }
@@ -3548,9 +3548,9 @@ public static unsafe class GDExtensionInterface
     /// The userdata pointer given when creating this custom Callable.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* CallableCustomGetUserData(GDExtensionConstTypePtr pCallable, void* pToken)
+    public static void* CallableCustomGetUserData(void* pCallable, void* pToken)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstTypePtr, void*, void*> function = s_callableCustomGetUserData;
+        delegate* unmanaged[Cdecl]<void*, void*, void*> function = s_callableCustomGetUserData;
         ThrowIfInvalid(function);
         return function(pCallable, pToken);
     }
@@ -3567,9 +3567,9 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.4. Use ClassDBConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ClassDBConstructObject(GDExtensionConstStringNamePtr pClassName)
+    public static void* ClassDBConstructObject(GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_classDBConstructObject;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> function = s_classDBConstructObject;
         ThrowIfInvalid(function);
         return function(pClassName);
     }
@@ -3588,9 +3588,9 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. Use ClassDBConstructObject3 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ClassDBConstructObject2(GDExtensionConstStringNamePtr pClassName)
+    public static void* ClassDBConstructObject2(GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_classDBConstructObject2;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> function = s_classDBConstructObject2;
         ThrowIfInvalid(function);
         return function(pClassName);
     }
@@ -3609,9 +3609,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the newly created Object.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionObjectPtr ClassDBConstructObject3(GDExtensionConstStringNamePtr pClassName)
+    public static void* ClassDBConstructObject3(GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionObjectPtr> function = s_classDBConstructObject3;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> function = s_classDBConstructObject3;
         ThrowIfInvalid(function);
         return function(pClassName);
     }
@@ -3632,9 +3632,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the MethodBind from ClassDB.
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GDExtensionMethodBindPtr ClassDBGetMethodBind(GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pMethodName, GDExtensionInt pHash)
+    public static void* ClassDBGetMethodBind(GDExtensionStringName* pClassName, GDExtensionStringName* pMethodName, long pHash)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionMethodBindPtr> function = s_classDBGetMethodBind;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, GDExtensionStringName*, long, void*> function = s_classDBGetMethodBind;
         ThrowIfInvalid(function);
         return function(pClassName, pMethodName, pHash);
     }
@@ -3650,9 +3650,9 @@ public static unsafe class GDExtensionInterface
     /// </returns>
     [Obsolete("Deprecated since Godot 4.7. No longer needed. Use the `is_class` method on `Object` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void* ClassDBGetClassTag(GDExtensionConstStringNamePtr pClassName)
+    public static void* ClassDBGetClassTag(GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void*> function = s_classDBGetClassTag;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> function = s_classDBGetClassTag;
         ThrowIfInvalid(function);
         return function(pClassName);
     }
@@ -3675,9 +3675,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.2. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
+    public static void ClassDBRegisterExtensionClass(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo*, void> function = s_classDBRegisterExtensionClass;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo*, void> function = s_classDBRegisterExtensionClass;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
@@ -3700,9 +3700,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.3. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClass2(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
+    public static void ClassDBRegisterExtensionClass2(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2*, void> function = s_classDBRegisterExtensionClass2;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo2*, void> function = s_classDBRegisterExtensionClass2;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
@@ -3725,9 +3725,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.4. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClass3(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
+    public static void ClassDBRegisterExtensionClass3(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3*, void> function = s_classDBRegisterExtensionClass3;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo3*, void> function = s_classDBRegisterExtensionClass3;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
@@ -3750,9 +3750,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.5. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClass4(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
+    public static void ClassDBRegisterExtensionClass4(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4*, void> function = s_classDBRegisterExtensionClass4;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void> function = s_classDBRegisterExtensionClass4;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
@@ -3775,9 +3775,9 @@ public static unsafe class GDExtensionInterface
     /// </param>
     [Obsolete("Deprecated since Godot 4.7. Use ClassDBRegisterExtensionClass6 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClass5(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo5* pExtensionFuncs)
+    public static void ClassDBRegisterExtensionClass5(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5*, void> function = s_classDBRegisterExtensionClass5;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void> function = s_classDBRegisterExtensionClass5;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
@@ -3799,9 +3799,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionClassCreationInfo6 struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClass6(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
+    public static void ClassDBRegisterExtensionClass6(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6*, void> function = s_classDBRegisterExtensionClass6;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo6*, void> function = s_classDBRegisterExtensionClass6;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pParentClassName, pExtensionFuncs);
     }
@@ -3820,9 +3820,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionClassMethodInfo struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassMethodInfo* pMethodInfo)
+    public static void ClassDBRegisterExtensionClassMethod(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionClassMethodInfo* pMethodInfo)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo*, void> function = s_classDBRegisterExtensionClassMethod;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionClassMethodInfo*, void> function = s_classDBRegisterExtensionClassMethod;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pMethodInfo);
     }
@@ -3841,9 +3841,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a GDExtensionClassMethodInfo struct.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassVirtualMethod(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionClassVirtualMethodInfo* pMethodInfo)
+    public static void ClassDBRegisterExtensionClassVirtualMethod(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionClassVirtualMethodInfo* pMethodInfo)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo*, void> function = s_classDBRegisterExtensionClassVirtualMethod;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionClassVirtualMethodInfo*, void> function = s_classDBRegisterExtensionClassVirtualMethod;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pMethodInfo);
     }
@@ -3873,9 +3873,9 @@ public static unsafe class GDExtensionInterface
     /// Whether or not this constant is part of a bitfield.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassIntegerConstant(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pEnumName, GDExtensionConstStringNamePtr pConstantName, GDExtensionInt pConstantValue, GDExtensionBool pIsBitfield)
+    public static void ClassDBRegisterExtensionClassIntegerConstant(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pEnumName, GDExtensionStringName* pConstantName, long pConstantValue, bool pIsBitfield)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool, void> function = s_classDBRegisterExtensionClassIntegerConstant;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionStringName*, long, bool, void> function = s_classDBRegisterExtensionClassIntegerConstant;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pEnumName, pConstantName, pConstantValue, pIsBitfield);
     }
@@ -3900,9 +3900,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the name of the getter method.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassProperty(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter)
+    public static void ClassDBRegisterExtensionClassProperty(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionStringName* pSetter, GDExtensionStringName* pGetter)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, void> function = s_classDBRegisterExtensionClassProperty;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionPropertyInfo*, GDExtensionStringName*, GDExtensionStringName*, void> function = s_classDBRegisterExtensionClassProperty;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pInfo, pSetter, pGetter);
     }
@@ -3930,9 +3930,9 @@ public static unsafe class GDExtensionInterface
     /// The index to pass as the first argument to the getter and setter methods.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassPropertyIndexed(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionConstStringNamePtr pSetter, GDExtensionConstStringNamePtr pGetter, GDExtensionInt pIndex)
+    public static void ClassDBRegisterExtensionClassPropertyIndexed(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionStringName* pSetter, GDExtensionStringName* pGetter, long pIndex)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, void> function = s_classDBRegisterExtensionClassPropertyIndexed;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionPropertyInfo*, GDExtensionStringName*, GDExtensionStringName*, long, void> function = s_classDBRegisterExtensionClassPropertyIndexed;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pInfo, pSetter, pGetter, pIndex);
     }
@@ -3953,9 +3953,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String with the prefix used by properties in this group.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassPropertyGroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pGroupName, GDExtensionConstStringPtr pPrefix)
+    public static void ClassDBRegisterExtensionClassPropertyGroup(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionString* pGroupName, GDExtensionString* pPrefix)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> function = s_classDBRegisterExtensionClassPropertyGroup;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionString*, GDExtensionString*, void> function = s_classDBRegisterExtensionClassPropertyGroup;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pGroupName, pPrefix);
     }
@@ -3976,9 +3976,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String with the prefix used by properties in this subgroup.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassPropertySubgroup(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringPtr pSubgroupName, GDExtensionConstStringPtr pPrefix)
+    public static void ClassDBRegisterExtensionClassPropertySubgroup(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionString* pSubgroupName, GDExtensionString* pPrefix)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr, void> function = s_classDBRegisterExtensionClassPropertySubgroup;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionString*, GDExtensionString*, void> function = s_classDBRegisterExtensionClassPropertySubgroup;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pSubgroupName, pPrefix);
     }
@@ -4003,9 +4003,9 @@ public static unsafe class GDExtensionInterface
     /// The number of arguments the signal receives.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBRegisterExtensionClassSignal(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName, GDExtensionConstStringNamePtr pSignalName, GDExtensionPropertyInfo* pArgumentInfo, GDExtensionInt pArgumentCount)
+    public static void ClassDBRegisterExtensionClassSignal(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pSignalName, GDExtensionPropertyInfo* pArgumentInfo, long pArgumentCount)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo*, GDExtensionInt, void> function = s_classDBRegisterExtensionClassSignal;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionPropertyInfo*, long, void> function = s_classDBRegisterExtensionClassSignal;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName, pSignalName, pArgumentInfo, pArgumentCount);
     }
@@ -4021,9 +4021,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the class name.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ClassDBUnregisterExtensionClass(GDExtensionClassLibraryPtr pLibrary, GDExtensionConstStringNamePtr pClassName)
+    public static void ClassDBUnregisterExtensionClass(void* pLibrary, GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, void> function = s_classDBUnregisterExtensionClass;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, void> function = s_classDBUnregisterExtensionClass;
         ThrowIfInvalid(function);
         function(pLibrary, pClassName);
     }
@@ -4038,9 +4038,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a String which will receive the path.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void GetLibraryPath(GDExtensionClassLibraryPtr pLibrary, GDExtensionUninitializedStringPtr rPath)
+    public static void GetLibraryPath(void* pLibrary, GDExtensionString* rPath)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr, void> function = s_getLibraryPath;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionString*, void> function = s_getLibraryPath;
         ThrowIfInvalid(function);
         function(pLibrary, rPath);
     }
@@ -4053,9 +4053,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void EditorAddPlugin(GDExtensionConstStringNamePtr pClassName)
+    public static void EditorAddPlugin(GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> function = s_editorAddPlugin;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void> function = s_editorAddPlugin;
         ThrowIfInvalid(function);
         function(pClassName);
     }
@@ -4067,9 +4067,9 @@ public static unsafe class GDExtensionInterface
     /// A pointer to a StringName with the name of a class that was previously added as an editor plugin.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void EditorRemovePlugin(GDExtensionConstStringNamePtr pClassName)
+    public static void EditorRemovePlugin(GDExtensionStringName* pClassName)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionConstStringNamePtr, void> function = s_editorRemovePlugin;
+        delegate* unmanaged[Cdecl]<GDExtensionStringName*, void> function = s_editorRemovePlugin;
         ThrowIfInvalid(function);
         function(pClassName);
     }
@@ -4100,9 +4100,9 @@ public static unsafe class GDExtensionInterface
     /// The number of bytes (not code units).
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void EditorHelpLoadXmlFromUtf8CharsAndLen(byte* pData, GDExtensionInt pSize)
+    public static void EditorHelpLoadXmlFromUtf8CharsAndLen(byte* pData, long pSize)
     {
-        delegate* unmanaged[Cdecl]<byte*, GDExtensionInt, void> function = s_editorHelpLoadXmlFromUtf8CharsAndLen;
+        delegate* unmanaged[Cdecl]<byte*, long, void> function = s_editorHelpLoadXmlFromUtf8CharsAndLen;
         ThrowIfInvalid(function);
         function(pData, pSize);
     }
@@ -4121,9 +4121,9 @@ public static unsafe class GDExtensionInterface
     /// The callback to retrieve the list of classes used.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void EditorRegisterGetClassesUsedCallback(GDExtensionClassLibraryPtr pLibrary, GDExtensionEditorGetClassesUsedCallback pCallback)
+    public static void EditorRegisterGetClassesUsedCallback(void* pLibrary, delegate* unmanaged[Cdecl]<void*, void> pCallback)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback, void> function = s_editorRegisterGetClassesUsedCallback;
+        delegate* unmanaged[Cdecl]<void*, delegate* unmanaged[Cdecl]<void*, void>, void> function = s_editorRegisterGetClassesUsedCallback;
         ThrowIfInvalid(function);
         function(pLibrary, pCallback);
     }
@@ -4138,14 +4138,14 @@ public static unsafe class GDExtensionInterface
     /// A pointer to the structure that contains the callbacks.
     /// </param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void RegisterMainLoopCallbacks(GDExtensionClassLibraryPtr pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
+    public static void RegisterMainLoopCallbacks(void* pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
     {
-        delegate* unmanaged[Cdecl]<GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks*, void> function = s_registerMainLoopCallbacks;
+        delegate* unmanaged[Cdecl]<void*, GDExtensionMainLoopCallbacks*, void> function = s_registerMainLoopCallbacks;
         ThrowIfInvalid(function);
         function(pLibrary, pCallbacks);
     }
 
-    private static GDExtensionInterfaceFunctionPtr Load(GDExtensionInterfaceGetProcAddress pGetProcAddress, ReadOnlySpan<byte> pFunctionName)
+    private static void* Load(delegate* unmanaged[Cdecl]<byte*, void*> pGetProcAddress, ReadOnlySpan<byte> pFunctionName)
     {
         fixed (byte* functionName = pFunctionName)
         {

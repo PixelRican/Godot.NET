@@ -35,10 +35,10 @@ namespace Godot.Interop;
 [StructLayout(LayoutKind.Sequential)]
 public struct GDExtensionClassMethodInfo
 {
-    public unsafe GDExtensionStringNamePtr Name;
+    public unsafe GDExtensionStringName* Name;
     public unsafe void* MethodUserData;
-    public unsafe GDExtensionClassMethodCall CallFunc;
-    public unsafe GDExtensionClassMethodPtrCall PtrCallFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
+    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> PtrCallFunc;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
@@ -48,7 +48,7 @@ public struct GDExtensionClassMethodInfo
     /// <br/>
     /// @todo Consider dropping `HasReturnValue` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
     /// </summary>
-    public GDExtensionBool HasReturnValue;
+    public bool HasReturnValue;
     public unsafe GDExtensionPropertyInfo* ReturnValueInfo;
     public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
     /// <summary>
@@ -64,5 +64,5 @@ public struct GDExtensionClassMethodInfo
     /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
     /// </summary>
     public uint DefaultArgumentCount;
-    public unsafe GDExtensionVariantPtr* DefaultArguments;
+    public unsafe GDExtensionVariant** DefaultArguments;
 }
