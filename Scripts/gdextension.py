@@ -86,7 +86,7 @@ class GDExtensionInterface:
         yield "}\n"
 
     def dump(self, name: str, definition: Iterable[str]) -> None:
-        with open(f"../Source/Godot.Interop/{name}.cs", "w") as file:
+        with open(f"../Source/Interop/{name}.cs", "w") as file:
             file.write("/**************************************************************************/\n")
             file.write(f"/*  {name}.cs  {" " * (65 - len(name))}*/\n")
             for line in self.copyright:

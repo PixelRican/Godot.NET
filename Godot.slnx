@@ -1,9 +1,4 @@
 <Solution>
-    <Folder Name="/Source/">
-        <Project Path="Source/Godot/Godot.csproj" />
-        <Project Path="Source/Godot.Interop/Godot.Interop.csproj" />
-    </Folder>
-    <Folder Name="/Tests/">
-        <Project Path="Tests/Godot.Tests.csproj" />
-    </Folder>
+    <Project Path="Source/Godot.csproj" />
+    <Project Path="Tests/Godot.Tests.csproj" />
 </Solution>
