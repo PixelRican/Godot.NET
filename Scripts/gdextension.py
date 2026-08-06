@@ -85,23 +85,20 @@ class GDExtensionInterface:
         yield "    }\n"
         yield "}\n"
 
+    def dump(self, name: str, definition: Iterable[str]) -> None:
+        with open(f"../Source/Godot.Interop/{name}.cs", "w") as file:
+            file.write("/**************************************************************************/\n")
+            file.write(f"/*  {name}.cs  {" " * (65 - len(name))}*/\n")
+            for line in self.copyright:
+                file.write(f"{line}\n")
+            file.write("\n")
+            file.writelines(definition)
+
     def generate(self) -> None:
         for instance in self.types:
             if isinstance(instance, (GDExtensionEnum, GDExtensionStruct)):
-                with open(f"../Source/Godot.Interop/{instance.name}.cs", "w") as file:
-                    file.writelines(self.header(instance.name))
-                    file.write("\n")
-                    file.writelines(instance.definition(self.symbols))
-        with open("../Source/Godot.Interop/GDExtensionInterface.cs", "w") as file:
-            file.writelines(self.header("GDExtensionInterface"))
-            file.write("\n")
-            file.writelines(self.definition())
-
-    def header(self, name: str) -> Iterable[str]:
-        yield "/**************************************************************************/\n"
-        yield f"/*  {name}.cs  {" " * (65 - len(name))}*/\n"
-        for line in self.copyright:
-            yield f"{line}\n"
+                self.dump(instance.name, instance.definition(self.symbols))
+        self.dump("GDExtensionInterface", self.definition())
 
 class GDExtensionSymbolTable:
     def __init__(self) -> None:
