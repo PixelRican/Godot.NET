@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionGodotVersion2
+public unsafe struct GDExtensionGodotVersion2
 {
     public uint Major;
     public uint Minor;
@@ -45,15 +45,15 @@ public struct GDExtensionGodotVersion2
     /// <summary>
     /// (e.g. "stable", "beta", "rc1", "rc2")
     /// </summary>
-    public unsafe byte* Status;
+    public byte* Status;
     /// <summary>
     /// (e.g. "custom_build")
     /// </summary>
-    public unsafe byte* Build;
+    public byte* Build;
     /// <summary>
     /// Full Git commit hash.
     /// </summary>
-    public unsafe byte* Hash;
+    public byte* Hash;
     /// <summary>
     /// Git commit date UNIX timestamp in seconds, or 0 if unavailable.
     /// </summary>
@@ -61,5 +61,5 @@ public struct GDExtensionGodotVersion2
     /// <summary>
     /// (e.g. "Godot v3.1.4.stable.official.mono")
     /// </summary>
-    public unsafe byte* String;
+    public byte* String;
 }

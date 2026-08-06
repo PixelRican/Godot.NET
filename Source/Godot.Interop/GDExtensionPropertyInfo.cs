@@ -33,16 +33,16 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionPropertyInfo
+public unsafe struct GDExtensionPropertyInfo
 {
     public GDExtensionVariantType Type;
-    public unsafe GDExtensionStringName* Name;
-    public unsafe GDExtensionStringName* ClassName;
+    public GDExtensionStringName* Name;
+    public GDExtensionStringName* ClassName;
     /// <summary>
     /// Bitfield of `PropertyHint` (defined in `extension_api.json`).
     /// </summary>
     public uint Hint;
-    public unsafe GDExtensionString* HintString;
+    public GDExtensionString* HintString;
     /// <summary>
     /// Bitfield of `PropertyUsageFlags` (defined in `extension_api.json`).
     /// </summary>

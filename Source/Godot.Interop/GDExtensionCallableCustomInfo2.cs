@@ -48,17 +48,17 @@ namespace Godot.Interop;
 /// `FreeFunc` is necessary if `CallableUserData` needs to be cleaned up when the callable is freed.
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionCallableCustomInfo2
+public unsafe struct GDExtensionCallableCustomInfo2
 {
-    public unsafe void* CallableUserData;
-    public unsafe void* Token;
+    public void* CallableUserData;
+    public void* Token;
     public ulong ObjectId;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, bool> IsValidFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void> FreeFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, uint> HashFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool> EqualFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool> LessThanFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, bool*, long> GetArgumentCountFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
+    public delegate* unmanaged[Cdecl]<void*, bool> IsValidFunc;
+    public delegate* unmanaged[Cdecl]<void*, void> FreeFunc;
+    public delegate* unmanaged[Cdecl]<void*, uint> HashFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*, bool> EqualFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*, bool> LessThanFunc;
+    public delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
+    public delegate* unmanaged[Cdecl]<void*, bool*, long> GetArgumentCountFunc;
 }

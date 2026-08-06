@@ -50,16 +50,16 @@ namespace Godot.Interop;
 /// </summary>
 [Obsolete("Deprecated since Godot 4.3. Use GDExtensionCallableCustomInfo2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionCallableCustomInfo
+public unsafe struct GDExtensionCallableCustomInfo
 {
-    public unsafe void* CallableUserData;
-    public unsafe void* Token;
+    public void* CallableUserData;
+    public void* Token;
     public ulong ObjectId;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, bool> IsValidFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void> FreeFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, uint> HashFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool> EqualFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool> LessThanFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
+    public delegate* unmanaged[Cdecl]<void*, bool> IsValidFunc;
+    public delegate* unmanaged[Cdecl]<void*, void> FreeFunc;
+    public delegate* unmanaged[Cdecl]<void*, uint> HashFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*, bool> EqualFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*, bool> LessThanFunc;
+    public delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
 }

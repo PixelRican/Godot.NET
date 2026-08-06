@@ -33,12 +33,12 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionClassMethodInfo
+public unsafe struct GDExtensionClassMethodInfo
 {
-    public unsafe GDExtensionStringName* Name;
-    public unsafe void* MethodUserData;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> PtrCallFunc;
+    public GDExtensionStringName* Name;
+    public void* MethodUserData;
+    public delegate* unmanaged[Cdecl]<void*, void*, GDExtensionVariant**, long, GDExtensionVariant*, GDExtensionCallError*, void> CallFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*, void**, void*, void> PtrCallFunc;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
@@ -49,7 +49,7 @@ public struct GDExtensionClassMethodInfo
     /// @todo Consider dropping `HasReturnValue` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct.
     /// </summary>
     public bool HasReturnValue;
-    public unsafe GDExtensionPropertyInfo* ReturnValueInfo;
+    public GDExtensionPropertyInfo* ReturnValueInfo;
     public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
     /// <summary>
     /// Arguments: `ArgumentsInfo` and `ArgumentsMetadata` are array of size `ArgumentCount`.<br/>
@@ -58,11 +58,11 @@ public struct GDExtensionClassMethodInfo
     /// @todo Consider renaming `ArgumentsInfo` to `Arguments` for consistency in future version of this struct.
     /// </summary>
     public uint ArgumentCount;
-    public unsafe GDExtensionPropertyInfo* ArgumentsInfo;
-    public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
+    public GDExtensionPropertyInfo* ArgumentsInfo;
+    public GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
     /// <summary>
     /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
     /// </summary>
     public uint DefaultArgumentCount;
-    public unsafe GDExtensionVariant** DefaultArguments;
+    public GDExtensionVariant** DefaultArguments;
 }

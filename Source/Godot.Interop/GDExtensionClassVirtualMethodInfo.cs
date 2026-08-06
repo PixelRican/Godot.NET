@@ -33,9 +33,9 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionClassVirtualMethodInfo
+public unsafe struct GDExtensionClassVirtualMethodInfo
 {
-    public unsafe GDExtensionStringName* Name;
+    public GDExtensionStringName* Name;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
     /// </summary>
@@ -43,6 +43,6 @@ public struct GDExtensionClassVirtualMethodInfo
     public GDExtensionPropertyInfo ReturnValue;
     public GDExtensionClassMethodArgumentMetadata ReturnValueMetadata;
     public uint ArgumentCount;
-    public unsafe GDExtensionPropertyInfo* Arguments;
-    public unsafe GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
+    public GDExtensionPropertyInfo* Arguments;
+    public GDExtensionClassMethodArgumentMetadata* ArgumentsMetadata;
 }

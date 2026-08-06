@@ -35,35 +35,35 @@ namespace Godot.Interop;
 
 [Obsolete("Deprecated since Godot 4.2. Use GDExtensionClassCreationInfo6 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionClassCreationInfo
+public unsafe struct GDExtensionClassCreationInfo
 {
     public bool IsVirtual;
     public bool IsAbstract;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant*, bool> SetFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant*, bool> GetFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, uint*, GDExtensionPropertyInfo*> GetPropertyListFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionPropertyInfo*, void> FreePropertyListFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, bool> PropertyCanRevertFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant*, bool> PropertyGetRevertFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, int, void> NotificationFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void> ReferenceFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void> UnreferenceFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant*, bool> SetFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant*, bool> GetFunc;
+    public delegate* unmanaged[Cdecl]<void*, uint*, GDExtensionPropertyInfo*> GetPropertyListFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionPropertyInfo*, void> FreePropertyListFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, bool> PropertyCanRevertFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionVariant*, bool> PropertyGetRevertFunc;
+    public delegate* unmanaged[Cdecl]<void*, int, void> NotificationFunc;
+    public delegate* unmanaged[Cdecl]<void*, bool*, GDExtensionString*, void> ToStringFunc;
+    public delegate* unmanaged[Cdecl]<void*, void> ReferenceFunc;
+    public delegate* unmanaged[Cdecl]<void*, void> UnreferenceFunc;
     /// <summary>
     /// Class constructor. Required unless the class is virtual or abstract.
     /// </summary>
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*> CreateInstanceFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*> CreateInstanceFunc;
     /// <summary>
     /// Destructor; mandatory.
     /// </summary>
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void> FreeInstanceFunc;
+    public delegate* unmanaged[Cdecl]<void*, void*, void> FreeInstanceFunc;
     /// <summary>
     /// Queries a virtual function by name and returns a callback to invoke the requested virtual function.
     /// </summary>
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void**, void*, void>> GetVirtualFunc;
-    public unsafe delegate* unmanaged[Cdecl]<void*, ulong> GetRidFunc;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, delegate* unmanaged[Cdecl]<void*, void**, void*, void>> GetVirtualFunc;
+    public delegate* unmanaged[Cdecl]<void*, ulong> GetRidFunc;
     /// <summary>
     /// Per-class user data, later accessible in instance bindings.
     /// </summary>
-    public unsafe void* ClassUserData;
+    public void* ClassUserData;
 }

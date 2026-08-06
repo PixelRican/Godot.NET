@@ -33,9 +33,9 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionInstanceBindingCallbacks
+public unsafe struct GDExtensionInstanceBindingCallbacks
 {
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void*> CreateCallback;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, void*, void> FreeCallback;
-    public unsafe delegate* unmanaged[Cdecl]<void*, void*, bool, bool> ReferenceCallback;
+    public delegate* unmanaged[Cdecl]<void*, void*, void*> CreateCallback;
+    public delegate* unmanaged[Cdecl]<void*, void*, void*, void> FreeCallback;
+    public delegate* unmanaged[Cdecl]<void*, void*, bool, bool> ReferenceCallback;
 }

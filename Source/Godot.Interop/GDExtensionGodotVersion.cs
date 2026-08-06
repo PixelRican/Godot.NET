@@ -35,10 +35,10 @@ namespace Godot.Interop;
 
 [Obsolete("Deprecated since Godot 4.5. Use GDExtensionGodotVersion2 instead.")]
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionGodotVersion
+public unsafe struct GDExtensionGodotVersion
 {
     public uint Major;
     public uint Minor;
     public uint Patch;
-    public unsafe byte* String;
+    public byte* String;
 }

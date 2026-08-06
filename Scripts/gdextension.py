@@ -163,10 +163,6 @@ class GDExtensionSymbolTable:
             return result
         return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, text)
 
-    def unsafe(self, symbol: str) -> bool:
-        return symbol.endswith("*") \
-            or isinstance(self.types.get(symbol), (GDExtensionHandle, GDExtensionFunction))
-
 class GDExtensionDescription:
     def __init__(self, lines: list[str], tag: str = "summary", name: str = "") -> None:
         self.lines: list[str] = lines
@@ -300,13 +296,15 @@ class GDExtensionStruct(GDExtensionType):
         if self.deprecated:
             yield self.deprecated.attribute(symbols)
         yield "[StructLayout(LayoutKind.Sequential)]\n"
-        yield f"public struct {self.name}\n"
+        if self.name == "GDExtensionCallError":
+            yield "public struct GDExtensionCallError\n"
+        else:
+            yield f"public unsafe struct {self.name}\n"
         yield "{\n"
         for member in self.members:
             if member.description:
                 yield from member.description.documentation(symbols, indent=True)
-            unsafe: str = "unsafe " * symbols.unsafe(member.type)
-            yield f"    public {unsafe}{symbols.expand(member.type)} {symbols.stylize(member.name)};\n"
+            yield f"    public {symbols.expand(member.type)} {symbols.stylize(member.name)};\n"
         yield "}\n"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:

@@ -33,9 +33,9 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionMethodInfo
+public unsafe struct GDExtensionMethodInfo
 {
-    public unsafe GDExtensionStringName* Name;
+    public GDExtensionStringName* Name;
     public GDExtensionPropertyInfo ReturnValue;
     /// <summary>
     /// Bitfield of `GDExtensionClassMethodFlags`.
@@ -46,10 +46,10 @@ public struct GDExtensionMethodInfo
     /// Arguments: `DefaultArguments` is an array of size `ArgumentCount`.
     /// </summary>
     public uint ArgumentCount;
-    public unsafe GDExtensionPropertyInfo* Arguments;
+    public GDExtensionPropertyInfo* Arguments;
     /// <summary>
     /// Default arguments: `DefaultArguments` is an array of size `DefaultArgumentCount`.
     /// </summary>
     public uint DefaultArgumentCount;
-    public unsafe GDExtensionVariant** DefaultArguments;
+    public GDExtensionVariant** DefaultArguments;
 }

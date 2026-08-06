@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 namespace Godot.Interop;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GDExtensionInitialization
+public unsafe struct GDExtensionInitialization
 {
     /// <summary>
     /// Minimum initialization level required.<br/>
@@ -43,10 +43,10 @@ public struct GDExtensionInitialization
     /// <summary>
     /// Up to the user to supply when initializing
     /// </summary>
-    public unsafe void* UserData;
+    public void* UserData;
     /// <summary>
     /// This function will be called multiple times for each initialization level.
     /// </summary>
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Initialize;
-    public unsafe delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Deinitialize;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Initialize;
+    public delegate* unmanaged[Cdecl]<void*, GDExtensionInitializationLevel, void> Deinitialize;
 }
