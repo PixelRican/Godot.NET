@@ -54,6 +54,28 @@ public readonly unsafe struct GDExtensionVariant
         [FieldOffset(0)] public MemUnion Mem;
     }
 
-    [StructLayout(LayoutKind.Explicit, Size = sizeof(real_t) * 4)]
-    private struct MemUnion;
+    [StructLayout(LayoutKind.Explicit)]
+    private struct MemUnion
+    {
+        [FieldOffset(0)] public GDExtensionStringName StringName;
+        [FieldOffset(0)] public GDExtensionString String;
+        [FieldOffset(0)] public Vector4 Vector4;
+        [FieldOffset(0)] public Vector4I Vector4I;
+        [FieldOffset(0)] public Vector3 Vector3;
+        [FieldOffset(0)] public Vector3I Vector3I;
+        [FieldOffset(0)] public Vector2 Vector2;
+        [FieldOffset(0)] public Vector2I Vector2I;
+        [FieldOffset(0)] public Rect2 Rect2;
+        [FieldOffset(0)] public Rect2I Rect2I;
+        [FieldOffset(0)] public Plane Plane;
+        [FieldOffset(0)] public Quaternion Quaternion;
+        [FieldOffset(0)] public Color Color;
+        // [FieldOffset(0)] public GDExtensionNodePath NodePath;
+        // [FieldOffset(0)] public Rid Rid;
+        // [FieldOffset(0)] public GDExtensionObjectData ObjData;
+        // [FieldOffset(0)] public GDExtensionCallable Callable;
+        // [FieldOffset(0)] public GDExtensionSignal Signal;
+        // [FieldOffset(0)] public GDExtensionDictionary Dictionary;
+        // [FieldOffset(0)] public GDExtensionArray Array;
+    }
 }
