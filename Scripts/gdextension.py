@@ -252,20 +252,15 @@ class GDExtensionEnum(GDExtensionType):
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
         prefix: str = commonprefix([value.name for value in self.values])
         for value in self.values:
-            if "MAX" in value.name:
-                symbols.replace(value.name, "Max")
-                continue
-            words: list[str] = value.name.removeprefix(prefix).split("_")
-            if words[0] == "ERROR" or len(words[0]) == 1:
-                words.pop(0)
-            if "INITIALIZATION" in words:
-                words.remove("INITIALIZATION")
-            for i, word in enumerate(words):
-                if word.startswith("UINT"):
-                    words[i] = "UInt" + word[4:]
-                else:
-                    words[i] = word.title()
-            symbols.replace(value.name, "".join(words))
+            replacement: str = pascal(value.name.removeprefix(prefix))
+            if "Max" in replacement:
+                replacement = "Max"
+            else:
+                replacement = replacement.removeprefix("Error") \
+                    .removeprefix("Initialization") \
+                    .replace("SDefault", "Default", 1) \
+                    .replace("Uint", "UInt", 1)
+            symbols.replace(value.name, replacement)
 
 class GDExtensionEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
