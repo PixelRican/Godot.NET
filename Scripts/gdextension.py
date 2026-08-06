@@ -161,7 +161,7 @@ class GDExtensionSymbolTable:
             substitution: str = self.substitutions.get(target, target)
             return group.replace(target, substitution)
 
-        result: str | None = self.substitutions.get(text)
+        result: str = self.substitutions.get(text, "")
         if result:
             return result
         return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, text)
