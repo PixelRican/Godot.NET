@@ -153,17 +153,18 @@ class GDExtensionSymbolTable:
         self.substitutions[symbol] = replacement
 
     def stylize(self, text: str) -> str:
+        def substitute(match: Match[str]) -> str:
+            group: str = match.group()
+            target: str = group
+            if target.startswith("`") and target.endswith("`"):
+                target = match.group(1)
+            substitution: str = self.substitutions.get(target, target)
+            return group.replace(target, substitution)
+
         result: str | None = self.substitutions.get(text)
         if result:
             return result
-        return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", self.substitute, text)
-
-    def substitute(self, match: Match[str]) -> str:
-        text: str = match.group()
-        if text.startswith("`") and text.endswith("`"):
-            group: str = match.group(1)
-            return f"`{self.substitutions.get(group, group)}`"
-        return self.substitutions.get(text, text)
+        return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, text)
 
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
