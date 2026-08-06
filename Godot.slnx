@@ -4,6 +4,6 @@
         <Project Path="Source/Godot.Interop/Godot.Interop.csproj" />
     </Folder>
     <Folder Name="/Tests/">
-        <Project Path="Tests/Godot.Tests/Godot.Tests.csproj" />
+        <Project Path="Tests/Godot.Tests.csproj" />
     </Folder>
 </Solution>
