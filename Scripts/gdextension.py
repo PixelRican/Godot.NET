@@ -243,10 +243,10 @@ class GDExtensionEnum(GDExtensionType):
         yield "{\n"
         end: int = len(self.values) - 1
         for i, value in enumerate(self.values):
-            comma: str = "," if i < end else ""
+            separator: str = "," if i < end else ""
             if value.description:
                 yield from value.description.documentation(symbols, indent=True)
-            yield f"    {symbols.transform(value.name)} = {value.value}{comma}\n"
+            yield f"    {symbols.transform(value.name)} = {value.value}{separator}\n"
         yield "}\n"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
