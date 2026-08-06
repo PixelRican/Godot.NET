@@ -152,18 +152,18 @@ class GDExtensionSymbolTable:
     def replace(self, symbol: str, replacement: str) -> None:
         self.substitutions[symbol] = replacement
 
+    def stylize(self, text: str) -> str:
+        result: str | None = self.substitutions.get(text)
+        if result:
+            return result
+        return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", self.substitute, text)
+
     def substitute(self, match: Match[str]) -> str:
         text: str = match.group()
         if text.startswith("`") and text.endswith("`"):
             group: str = match.group(1)
             return f"`{self.substitutions.get(group, group)}`"
         return self.substitutions.get(text, text)
-
-    def transform(self, text: str) -> str:
-        result: str | None = self.substitutions.get(text)
-        if result:
-            return result
-        return sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", self.substitute, text)
 
     def unsafe(self, symbol: str) -> bool:
         return symbol.endswith("*") \
@@ -177,11 +177,11 @@ class GDExtensionDescription:
 
     def documentation(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> Iterable[str]:
         spacing: str = "    " if indent else ""
-        metadata: str = f" name=\"{symbols.transform(self.name)}\"" if self.name else ""
+        metadata: str = f" name=\"{symbols.stylize(self.name)}\"" if self.name else ""
         yield f"{spacing}/// <{self.tag}{metadata}>\n"
         for line in self.lines[:-1]:
-            yield f"{spacing}/// {symbols.transform(line)}<br/>\n"
-        yield f"{spacing}/// {symbols.transform(self.lines[-1])}\n"
+            yield f"{spacing}/// {symbols.stylize(line)}<br/>\n"
+        yield f"{spacing}/// {symbols.stylize(self.lines[-1])}\n"
         yield f"{spacing}/// </{self.tag}>\n"
 
 class GDExtensionDeprecated:
@@ -193,7 +193,7 @@ class GDExtensionDeprecated:
     def attribute(self, symbols: GDExtensionSymbolTable, indent: bool = False) -> str:
         spacing: str = "    " if indent else ""
         message: str = f" {self.message}" if self.message else ""
-        replace_with: str = f" Use {symbols.transform(self.replace_with)} instead." if self.replace_with else ""
+        replace_with: str = f" Use {symbols.stylize(self.replace_with)} instead." if self.replace_with else ""
         return f"{spacing}[Obsolete(\"Deprecated since Godot {self.since}.{message}{replace_with}\")]\n"
 
 class GDExtensionType:
@@ -246,7 +246,7 @@ class GDExtensionEnum(GDExtensionType):
             separator: str = "," if i < end else ""
             if value.description:
                 yield from value.description.documentation(symbols, indent=True)
-            yield f"    {symbols.transform(value.name)} = {value.value}{separator}\n"
+            yield f"    {symbols.stylize(value.name)} = {value.value}{separator}\n"
         yield "}\n"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
@@ -308,7 +308,7 @@ class GDExtensionStruct(GDExtensionType):
             if member.description:
                 yield from member.description.documentation(symbols, indent=True)
             unsafe: str = "unsafe " * symbols.unsafe(member.type)
-            yield f"    public {unsafe}{symbols.expand(member.type)} {symbols.transform(member.name)};\n"
+            yield f"    public {unsafe}{symbols.expand(member.type)} {symbols.stylize(member.name)};\n"
         yield "}\n"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
@@ -372,8 +372,8 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         self.field = f"s_{camel(self.field)}"
 
     def definition(self, symbols: GDExtensionSymbolTable) -> Iterable[str]:
-        parameters: str = ", ".join(f"{symbols.expand(argument.type)} {symbols.transform(argument.name)}" for argument in self.arguments)
-        arguments: str = ", ".join(symbols.transform(argument.name) for argument in self.arguments)
+        parameters: str = ", ".join(f"{symbols.expand(argument.type)} {symbols.stylize(argument.name)}" for argument in self.arguments)
+        arguments: str = ", ".join(symbols.stylize(argument.name) for argument in self.arguments)
         if self.description:
             yield from self.description.documentation(symbols, indent=True)
         for argument in self.arguments:
@@ -385,14 +385,14 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
             yield self.deprecated.attribute(symbols, indent=True)
         yield "    [MethodImpl(MethodImplOptions.AggressiveInlining)]\n"
         if self.return_value:
-            yield f"    public static {symbols.expand(self.return_value.type)} {symbols.transform(self.name)}({parameters})\n"
+            yield f"    public static {symbols.expand(self.return_value.type)} {symbols.stylize(self.name)}({parameters})\n"
             yield "    {\n"
             yield f"        {self.expand(symbols)} function = {self.field};\n"
             yield "        ThrowIfInvalid(function);\n"
             yield f"        return function({arguments});\n"
             yield "    }\n"
         else:
-            yield f"    public static void {symbols.transform(self.name)}({parameters})\n"
+            yield f"    public static void {symbols.stylize(self.name)}({parameters})\n"
             yield "    {\n"
             yield f"        {self.expand(symbols)} function = {self.field};\n"
             yield "        ThrowIfInvalid(function);\n"
