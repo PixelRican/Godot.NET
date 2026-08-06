@@ -241,14 +241,12 @@ class GDExtensionEnum(GDExtensionType):
         else:
             yield f"public enum {self.name}\n"
         yield "{\n"
-        for value in self.values[:-1]:
+        end: int = len(self.values) - 1
+        for i, value in enumerate(self.values):
+            comma: str = "," if i < end else ""
             if value.description:
                 yield from value.description.documentation(symbols, indent=True)
-            yield f"    {symbols.transform(value.name)} = {value.value},\n"
-        value: GDExtensionEnumValue = self.values[-1]
-        if value.description:
-            yield from value.description.documentation(symbols, indent=True)
-        yield f"    {symbols.transform(value.name)} = {value.value}\n"
+            yield f"    {symbols.transform(value.name)} = {value.value}{comma}\n"
         yield "}\n"
 
     def stylize(self, symbols: GDExtensionSymbolTable) -> None:
