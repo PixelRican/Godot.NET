@@ -105,19 +105,46 @@ class GDExtensionInterface:
 
 class GDExtensionSymbolTable:
     def __init__(self) -> None:
-        self.expansions: dict[str, str] = {}
+        self.expansions: dict[str, str] = {
+            "void" : "void",
+            "int8_t" : "sbyte",
+            "uint8_t" : "byte",
+            "int16_t" : "short",
+            "uint16_t" : "ushort",
+            "int32_t" : "int",
+            "uint32_t" : "uint",
+            "int64_t" : "long",
+            "uint64_t" : "ulong",
+            "size_t" : "nuint",
+            "char" : "byte",
+            "char16_t" : "char",
+            "char32_t" : "uint",
+            "wchar_t" : "void",
+            "float" : "float",
+            "double" : "double",
+            "GDExtensionStringPtr" : "GDExtensionString*",
+            "GDExtensionConstStringPtr" : "GDExtensionString*",
+            "GDExtensionUninitializedStringPtr" : "GDExtensionString*",
+            "GDExtensionStringNamePtr" : "GDExtensionStringName*",
+            "GDExtensionConstStringNamePtr" : "GDExtensionStringName*",
+            "GDExtensionUninitializedStringNamePtr" : "GDExtensionStringName*",
+            "GDExtensionVariantPtr" : "GDExtensionVariant*",
+            "GDExtensionConstVariantPtr" : "GDExtensionVariant*",
+            "GDExtensionUninitializedVariantPtr" : "GDExtensionVariant*",
+            "GDExtensionBool" : "bool",
+            "GDExtensionInterfaceFunctionPtr" : "void*"
+        }
         self.substitutions: dict[str, str] = {"NULL" : "null"}
         self.types: dict[str, GDExtensionType] = {}
 
     def expand(self, symbol: str) -> str:
-        expansion: str = self.expansions.get(symbol, "")
-        if expansion:
-            return expansion
-        split: int = len(symbol) - symbol.endswith("*")
-        instance: GDExtensionType | None = self.types.get(symbol[:split])
-        expansion = instance.expand(self) + symbol[split:] if instance else symbol
-        self.expansions[symbol] = expansion
-        return expansion
+        key: str = symbol.removeprefix("const ").removesuffix("*")
+        value: str = self.expansions.get(key, "")
+        if not value:
+            instance: GDExtensionType = self.types[key]
+            value = instance.expand(self)
+            self.expansions[key] = value
+        return f"{value}*" if symbol.endswith("*") else value
 
     def register(self, instance: GDExtensionType) -> None:
         self.types[instance.name] = instance
@@ -253,21 +280,15 @@ class GDExtensionEnumValue:
 
 class GDExtensionHandle(GDExtensionType):
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        if self.name.endswith("StringPtr"):
-            return "GDExtensionString*"
-        if self.name.endswith("StringNamePtr"):
-            return "GDExtensionStringName*"
-        if self.name.endswith("VariantPtr"):
-            return "GDExtensionVariant*"
         return "void*"
 
 class GDExtensionAlias(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.type: str = translate(data["type"])
+        self.type: str = data["type"]
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        return "bool" if self.name.endswith("Bool") else self.type
+        return symbols.expand(self.type)
 
 class GDExtensionStruct(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
@@ -305,7 +326,7 @@ class GDExtensionStruct(GDExtensionType):
 class GDExtensionStructMember:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.type: str = translate(data["type"])
+        self.type: str = data["type"]
         self.description: GDExtensionDescription | None = None
         if self.name == "method_flags":
             self.type = "GDExtensionClassMethodFlags"
@@ -325,8 +346,6 @@ class GDExtensionFunction(GDExtensionType):
             self.return_value: GDExtensionFunctionReturnValue = GDExtensionFunctionReturnValue(return_value)
 
     def expand(self, symbols: GDExtensionSymbolTable) -> str:
-        if self.name.endswith("FunctionPtr"):
-            return "void*"
         type_parameters: list[str] = []
         for argument in self.arguments:
             type_parameters.append(symbols.expand(argument.type))
@@ -339,7 +358,7 @@ class GDExtensionFunction(GDExtensionType):
 class GDExtensionFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data.get("name", "")
-        self.type: str = translate(data["type"])
+        self.type: str = data["type"]
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
@@ -347,7 +366,7 @@ class GDExtensionFunctionArgument:
 
 class GDExtensionFunctionReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.type: str = translate(data["type"])
+        self.type: str = data["type"]
         self.description: GDExtensionDescription | None = None
         description: list[str] | None = data.get("description")
         if description:
@@ -407,34 +426,3 @@ def preprocess(symbol: str) -> str:
         .replace("classdb", "class_d_b") \
         .replace("classname", "class_name") \
         .replace("methodname", "method_name")
-
-def translate(symbol: str) -> str:
-    name: str = symbol.removeprefix("const ").removesuffix("*")
-    match name:
-        case "int8_t":
-            name = "sbyte"
-        case "uint8_t":
-            name = "byte"
-        case "int16_t":
-            name = "short"
-        case "uint16_t":
-            name = "ushort"
-        case "int32_t":
-            name = "int"
-        case "uint32_t":
-            name = "uint"
-        case "int64_t":
-            name = "long"
-        case "uint64_t":
-            name = "ulong"
-        case "size_t":
-            name = "nuint"
-        case "char":
-            name = "byte"
-        case "char16_t":
-            name = "char"
-        case "char32_t":
-            name = "uint"
-        case "wchar_t":
-            name = "void"
-    return f"{name}*" if symbol.endswith("*") else name
