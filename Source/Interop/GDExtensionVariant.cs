@@ -44,11 +44,11 @@ public readonly unsafe struct GDExtensionVariant
         [FieldOffset(0)] public bool Bool;
         [FieldOffset(0)] public long Int;
         [FieldOffset(0)] public double Float;
-        [FieldOffset(0)] public void* Transform2D;
-        [FieldOffset(0)] public void* Aabb;
-        [FieldOffset(0)] public void* Basis;
-        [FieldOffset(0)] public void* Transform3D;
-        [FieldOffset(0)] public void* Projection;
+        [FieldOffset(0)] public Transform2D* Transform2D;
+        [FieldOffset(0)] public Aabb* Aabb;
+        [FieldOffset(0)] public Basis* Basis;
+        [FieldOffset(0)] public Transform3D* Transform3D;
+        [FieldOffset(0)] public Projection* Projection;
         [FieldOffset(0)] public void* PackedArray;
         [FieldOffset(0)] public void* Ptr;
         [FieldOffset(0)] public MemUnion Mem;
