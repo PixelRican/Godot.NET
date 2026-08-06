@@ -411,9 +411,9 @@ def pascal(symbol: str) -> str:
     return symbol.title().replace("_", "")
 
 def preprocess(symbol: str) -> str:
-    return symbol.replace("ptrcall", "ptr_call") \
-        .replace("refcount", "ref_count") \
-        .replace("userdata", "user_data") \
-        .replace("classdb", "class_d_b") \
-        .replace("classname", "class_name") \
-        .replace("methodname", "method_name")
+    return symbol.replace("ptrcall", "ptr_call", 1) \
+        .replace("refcount", "ref_count", 1) \
+        .replace("userdata", "user_data", 1) \
+        .replace("classdb", "class_d_b", 1) \
+        .replace("classname", "class_name", 1) \
+        .replace("methodname", "method_name", 1)
