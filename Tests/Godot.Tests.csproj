@@ -4,6 +4,7 @@
         <PublishAot>true</PublishAot>
     </PropertyGroup>
     <ItemGroup>
+        <ProjectReference Include="..\Source\Godot\Godot.csproj" />
         <ProjectReference Include="..\Source\Godot.Interop\Godot.Interop.csproj" />
     </ItemGroup>
 </Project>
