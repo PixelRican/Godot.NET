@@ -3,12 +3,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PublishAot>true</PublishAot>
     </PropertyGroup>
-    <PropertyGroup Condition="$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture) == X86">
-        <DefineConstants>BUILD_32</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture) == Arm">
-        <DefineConstants>BUILD_32</DefineConstants>
-    </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Source\Godot.Interop\Godot.Interop.csproj" />
     </ItemGroup>
