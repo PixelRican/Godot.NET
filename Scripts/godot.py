@@ -1,4 +1,5 @@
 ﻿from gdextension import GDExtensionInterface
+from style import pascal
 from typing import Any
 
 class GodotExtensionAPI:
@@ -31,7 +32,29 @@ class GodotExtensionAPI:
         ]
 
     def generate(self, interface: GDExtensionInterface) -> None:
-        pass
+        float_offsets: list[GodotBuiltinClassMemberOffsetGrouping] = self.builtin_class_member_offsets[1].classes
+        double_offsets: list[GodotBuiltinClassMemberOffsetGrouping] = self.builtin_class_member_offsets[3].classes
+        for float_class, double_class in zip(float_offsets, double_offsets):
+            class_name: str = pascal(float_class.name)
+            with open(f"../Source/{class_name}.cs", "w") as file:
+                file.writelines(interface.header(class_name))
+                file.write("\n")
+                file.write("using System.Runtime.InteropServices;\n")
+                file.write("\n")
+                file.write("namespace Godot;\n")
+                file.write("\n")
+                file.write("[StructLayout(LayoutKind.Sequential)]\n")
+                file.write(f"public struct {class_name}\n")
+                file.write("{\n")
+                for float_member, double_member in zip(float_class.members, double_class.members):
+                    member_name: str = pascal(float_member.member)
+                    member_type: str
+                    if float_member.meta == "float" and double_member.meta == "double":
+                        member_type = "real_t"
+                    else:
+                        member_type = float_member.meta.removesuffix("32").replace("2i", "2I")
+                    file.write(f"    public {member_type} {member_name};\n")
+                file.write("}\n")
 
 class GodotHeader:
     def __init__(self, data: dict[str, Any]) -> None:
