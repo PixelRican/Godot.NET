@@ -1,5 +1,6 @@
 ﻿from os.path import commonprefix
 from re import Match, sub
+from style import camel, pascal
 from typing import Any, Iterable
 
 class GDExtensionInterface:
@@ -401,12 +402,6 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         for argument in self.arguments:
             replacement: str = preprocess(argument.name)
             symbols.replace(argument.name, camel(replacement))
-
-def camel(symbol: str) -> str:
-    return symbol[0].lower() + pascal(symbol)[1:]
-
-def pascal(symbol: str) -> str:
-    return symbol.title().replace("_", "")
 
 def preprocess(symbol: str) -> str:
     return symbol.replace("ptrcall", "ptr_call", 1) \
