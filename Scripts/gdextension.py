@@ -103,6 +103,8 @@ class GDExtensionInterface:
         yield f"/*  {name}.cs  {" " * (65 - len(name))}*/\n"
         for line in self.copyright:
             yield f"{line}\n"
+        yield "/*              This file is generated. Edits will be lost.               */\n"
+        yield "/**************************************************************************/\n"
 
 class GDExtensionSymbolTable:
     def __init__(self) -> None:
