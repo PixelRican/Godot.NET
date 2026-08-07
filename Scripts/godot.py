@@ -29,6 +29,9 @@ class GodotExtensionAPI:
             GodotNativeStructure(element) for element in data["native_structures"]
         ]
 
+    def generate(self) -> None:
+        pass
+
 class GodotHeader:
     def __init__(self, data: dict[str, Any]) -> None:
         self.version_major: int = data["version_major"]
