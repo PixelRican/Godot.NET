@@ -89,10 +89,7 @@ class GDExtensionInterface:
     def generate(self) -> None:
         def dump(name: str, definition: Iterable[str]) -> None:
             with open(f"../Source/Interop/{name}.cs", "w") as file:
-                file.write("/**************************************************************************/\n")
-                file.write(f"/*  {name}.cs  {" " * (65 - len(name))}*/\n")
-                for line in self.copyright:
-                    file.write(f"{line}\n")
+                file.writelines(self.header(name))
                 file.write("\n")
                 file.writelines(definition)
 
@@ -100,6 +97,12 @@ class GDExtensionInterface:
             if isinstance(instance, (GDExtensionEnum, GDExtensionStruct)):
                 dump(instance.name, instance.definition(self.symbols))
         dump("GDExtensionInterface", self.definition())
+
+    def header(self, name: str) -> Iterable[str]:
+        yield "/**************************************************************************/\n"
+        yield f"/*  {name}.cs  {" " * (65 - len(name))}*/\n"
+        for line in self.copyright:
+            yield f"{line}\n"
 
 class GDExtensionSymbolTable:
     def __init__(self) -> None:
