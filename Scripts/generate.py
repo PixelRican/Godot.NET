@@ -8,4 +8,4 @@ if __name__ == "__main__":
     with open("extension_api.json", "r") as file:
         api: GodotExtensionAPI = GodotExtensionAPI(load(file))
     interface.generate()
-    api.generate()
+    api.generate(interface)

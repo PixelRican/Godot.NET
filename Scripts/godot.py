@@ -1,4 +1,5 @@
-﻿from typing import Any
+﻿from gdextension import GDExtensionInterface
+from typing import Any
 
 class GodotExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -29,7 +30,7 @@ class GodotExtensionAPI:
             GodotNativeStructure(element) for element in data["native_structures"]
         ]
 
-    def generate(self) -> None:
+    def generate(self, interface: GDExtensionInterface) -> None:
         pass
 
 class GodotHeader:
