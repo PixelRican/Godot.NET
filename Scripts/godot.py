@@ -32,6 +32,9 @@ class GodotExtensionAPI:
         ]
 
     def generate(self, interface: GDExtensionInterface) -> None:
+        self._generate_members(interface)
+
+    def _generate_members(self, interface: GDExtensionInterface) -> None:
         float_offsets: list[GodotBuiltinClassMemberOffsetGrouping] = self.builtin_class_member_offsets[1].classes
         double_offsets: list[GodotBuiltinClassMemberOffsetGrouping] = self.builtin_class_member_offsets[3].classes
         for float_class, double_class in zip(float_offsets, double_offsets):
