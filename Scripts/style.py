@@ -1,4 +1,4 @@
-﻿from re import Match, sub
+from re import sub, Match
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
@@ -7,7 +7,7 @@ def pascal(symbol: str) -> str:
     return symbol.title().replace("_", "")
 
 def preprocess(symbol: str) -> str:
-    def substitute(match: Match) -> str:
+    def substitute(match: Match[str]) -> str:
         group: str = match.group()
         match group:
             case "ptrcall":
