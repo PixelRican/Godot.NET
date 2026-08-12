@@ -95,14 +95,10 @@ class MemberInfo:
             yield f"/// {generator.translation(line)}{separator}"
         yield "/// </summary>"
 
-class EncapsulatedMemberInfo(MemberInfo):
+class TypeInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.access_modifier: str = "public"
-
-class TypeInfo(EncapsulatedMemberInfo):
-    def __init__(self) -> None:
-        super().__init__()
         self.dependencies: set[str] = set()
 
     def source(self, generator: SourceGenerator) -> Iterable[str]:
@@ -198,9 +194,10 @@ class ClassInfo(TypeInfo):
                 yield f"{member.access_modifier} {generator.expansion(member.type)} {generator.translation(member.name)};"
         yield "}"
 
-class FieldInfo(EncapsulatedMemberInfo):
+class FieldInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
+        self.access_modifier: str = "public"
         self.type: str = "object"
 
 def camel(symbol: str) -> str:
