@@ -95,7 +95,12 @@ class MemberInfo:
             yield f"/// {generator.translation(line)}{separator}"
         yield "/// </summary>"
 
-class TypeInfo(MemberInfo):
+class EncapsulatedMemberInfo(MemberInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.access_modifier: str = "public"
+
+class TypeInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.dependencies: set[str] = set()
@@ -157,9 +162,9 @@ class EnumerationInfo(TypeInfo):
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if self.underlying_type:
-            yield f"public enum {self.name} : {self.underlying_type}"
+            yield f"{self.access_modifier} enum {self.name} : {self.underlying_type}"
         else:
-            yield f"public enum {self.name}"
+            yield f"{self.access_modifier} enum {self.name}"
         yield "{"
         if self.members:
             last: ConstantInfo = self.members[-1]
@@ -183,17 +188,17 @@ class StructureInfo(TypeInfo):
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if self.is_unsafe:
-            yield f"public unsafe struct {self.name}"
+            yield f"{self.access_modifier} unsafe struct {self.name}"
         else:
-            yield f"public struct {self.name}"
+            yield f"{self.access_modifier} struct {self.name}"
         yield "{"
         with generator.indent():
             for member in self.members:
                 yield from member.documentation(generator)
-                yield f"public {generator.expansion(member.type)} {generator.translation(member.name)};"
+                yield f"{member.access_modifier} {generator.expansion(member.type)} {generator.translation(member.name)};"
         yield "}"
 
-class StructureFieldInfo(MemberInfo):
+class StructureFieldInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
