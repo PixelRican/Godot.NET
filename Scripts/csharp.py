@@ -26,7 +26,7 @@ class SourceGenerator:
     def generate(self) -> None:
         for info in self.types:
             with open(f"{self.output_directory}/{info.name}.cs", "w") as file:
-                for line in info.definition(self):
+                for line in info.source(self):
                     file.write(line)
                     file.write("\n")
 
@@ -95,7 +95,7 @@ class TypeInfo(MemberInfo):
     def kind(self) -> str:
         raise NotImplementedError()
 
-    def definition(self, generator: SourceGenerator) -> Iterable[str]:
+    def source(self, generator: SourceGenerator) -> Iterable[str]:
         yield "/**************************************************************************/"
         yield f"/*  {self.name}.cs  {" " * (65 - len(self.name))}*/"
         yield "/**************************************************************************/"
