@@ -144,11 +144,11 @@ class TypeInfo(MemberInfo):
         else:
             yield f"public {self.kind} {self.name}"
         yield "{"
-        for line in self.body(generator):
+        for line in self.definition(generator):
             yield f"    {line}"
         yield "}"
 
-    def body(self, generator: SourceGenerator) -> Iterable[str]:
+    def definition(self, generator: SourceGenerator) -> Iterable[str]:
         raise NotImplementedError()
 
 class EnumerationInfo(TypeInfo):
@@ -160,7 +160,7 @@ class EnumerationInfo(TypeInfo):
     def kind(self) -> str:
         return "enum"
 
-    def body(self, generator: SourceGenerator) -> Iterable[str]:
+    def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.members:
             return
         last: ConstantInfo = self.members[-1]
@@ -179,7 +179,7 @@ class StructureInfo(TypeInfo):
     def kind(self) -> str:
         return "unsafe struct" if self.is_unsafe else "struct"
 
-    def body(self, generator: SourceGenerator) -> Iterable[str]:
+    def definition(self, generator: SourceGenerator) -> Iterable[str]:
         for member in self.members:
             yield from member.documentation(generator)
             yield f"public {generator.expansion(member.type)} {generator.translation(member.name)};"
