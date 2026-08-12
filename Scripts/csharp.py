@@ -180,7 +180,7 @@ class ConstantInfo(MemberInfo):
         super().__init__()
         self.value: int = 0
 
-class StructureInfo(TypeInfo):
+class ClassInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
         self.is_unsafe: bool = False

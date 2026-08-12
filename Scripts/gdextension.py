@@ -84,7 +84,7 @@ def alias(generator: SourceGenerator, data: dict[str, Any]) -> None:
     generator.expand_default(alias_name, alias_type)
 
 def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
-    structure: StructureInfo = StructureInfo()
+    structure: ClassInfo = ClassInfo()
     initialize(structure, data)
     structure.is_unsafe = structure.name != "GDExtensionCallError"
     structure.dependencies.add("System.Runtime.InteropServices")
