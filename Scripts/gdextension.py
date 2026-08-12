@@ -56,7 +56,7 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
         enumeration.dependencies.add("System")
         enumeration.attributes.add("Flags")
     for member_data in data["values"]:
-        member: ConstantInfo = ConstantInfo()
+        member: EnumerationConstantInfo = EnumerationConstantInfo()
         member.name = member_data["name"]
         member.value = member_data["value"]
         member.description = member_data.get("description", member.description)
@@ -90,7 +90,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure.dependencies.add("System.Runtime.InteropServices")
     structure.attributes.add("StructLayout(LayoutKind.Sequential)")
     for member_data in data["members"]:
-        member: FieldInfo = FieldInfo()
+        member: StructureFieldInfo = StructureFieldInfo()
         member.name = member_data["name"]
         if member.name == "method_flags":
             member.type = "GDExtensionClassMethodFlags"

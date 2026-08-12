@@ -154,7 +154,7 @@ class TypeInfo(MemberInfo):
 class EnumerationInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
-        self.members: list[ConstantInfo] = []
+        self.members: list[EnumerationConstantInfo] = []
 
     @property
     def kind(self) -> str:
@@ -163,17 +163,22 @@ class EnumerationInfo(TypeInfo):
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.members:
             return
-        last: ConstantInfo = self.members[-1]
+        last: EnumerationConstantInfo = self.members[-1]
         for member in self.members:
             separator: str = "," * (member is not last)
             yield from member.documentation(generator)
             yield f"{generator.translation(member.name)} = {member.value}{separator}"
 
+class EnumerationConstantInfo(MemberInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.value: int = 0
+
 class StructureInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
         self.is_unsafe: bool = False
-        self.members: list[FieldInfo] = []
+        self.members: list[StructureFieldInfo] = []
 
     @property
     def kind(self) -> str:
@@ -184,12 +189,7 @@ class StructureInfo(TypeInfo):
             yield from member.documentation(generator)
             yield f"public {generator.expansion(member.type)} {generator.translation(member.name)};"
 
-class ConstantInfo(MemberInfo):
-    def __init__(self) -> None:
-        super().__init__()
-        self.value: int = 0
-
-class FieldInfo(MemberInfo):
+class StructureFieldInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
