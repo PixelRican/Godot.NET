@@ -90,7 +90,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure.dependencies.add("System.Runtime.InteropServices")
     structure.attributes.add("StructLayout(LayoutKind.Sequential)")
     for member_data in data["members"]:
-        member: StructureFieldInfo = StructureFieldInfo()
+        member: FieldInfo = FieldInfo()
         member.name = member_data["name"]
         if member.name == "method_flags":
             member.type = "GDExtensionClassMethodFlags"

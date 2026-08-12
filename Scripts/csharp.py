@@ -184,7 +184,7 @@ class StructureInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
         self.is_unsafe: bool = False
-        self.members: list[StructureFieldInfo] = []
+        self.members: list[FieldInfo] = []
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if self.is_unsafe:
@@ -198,7 +198,7 @@ class StructureInfo(TypeInfo):
                 yield f"{member.access_modifier} {generator.expansion(member.type)} {generator.translation(member.name)};"
         yield "}"
 
-class StructureFieldInfo(EncapsulatedMemberInfo):
+class FieldInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
