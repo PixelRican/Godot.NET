@@ -1,5 +1,6 @@
+from contextlib import contextmanager
 from re import sub, Match
-from typing import Iterable
+from typing import Any, Iterable
 
 class SourceGenerator:
     def __init__(self) -> None:
@@ -22,13 +23,22 @@ class SourceGenerator:
         self.translations: dict[str, str] = {"NULL" : "null"}
         self.namespace: str = "Godot"
         self.output_directory: str = "."
+        self.indent_level: int = 0
 
     def generate(self) -> None:
         for info in self.types:
             with open(f"{self.output_directory}/{info.name}.cs", "w") as file:
                 for line in info.source(self):
-                    file.write(line)
-                    file.write("\n")
+                    indent: str = "    " * self.indent_level
+                    file.write(f"{indent}{line}\n")
+
+    @contextmanager
+    def indent(self) -> Any:
+        self.indent_level += 1
+        try:
+            yield self
+        finally:
+            self.indent_level -= 1
 
     def register(self, info: TypeInfo) -> None:
         self.types.append(info)
@@ -147,8 +157,8 @@ class TypeInfo(MemberInfo):
         else:
             yield f"public {self.kind} {self.name}"
         yield "{"
-        for line in self.definition(generator):
-            yield f"    {line}"
+        with generator.indent():
+            yield from self.definition(generator)
         yield "}"
 
 class EnumerationInfo(TypeInfo):
