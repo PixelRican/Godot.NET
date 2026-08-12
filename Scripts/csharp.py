@@ -189,13 +189,17 @@ class ClassInfo(TypeInfo):
         super().__init__()
         self.fields: list[FieldInfo] = []
         self.is_value_type: bool = False
+        self.is_static: bool = False
         self.is_unsafe: bool = False
 
     @property
     def modifiers(self) -> str:
+        modifiers: list[str] = [self.access_modifier]
+        if not self.is_value_type and self.is_static:
+            modifiers.append("static")
         if self.is_unsafe:
-            return f"{self.access_modifier} unsafe"
-        return self.access_modifier
+            modifiers.append("unsafe")
+        return " ".join(modifiers)
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
