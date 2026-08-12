@@ -89,16 +89,16 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure.is_unsafe = structure.name != "GDExtensionCallError"
     structure.dependencies.add("System.Runtime.InteropServices")
     structure.attributes.add("StructLayout(LayoutKind.Sequential)")
-    for member_data in data["members"]:
-        member: FieldInfo = FieldInfo()
-        member.name = member_data["name"]
-        if member.name == "method_flags":
-            member.type = "GDExtensionClassMethodFlags"
+    for field_data in data["members"]:
+        field: FieldInfo = FieldInfo()
+        field.name = field_data["name"]
+        if field.name == "method_flags":
+            field.type = "GDExtensionClassMethodFlags"
         else:
-            member.type = member_data["type"]
-        member.description = member_data.get("description", member.description)
-        structure.members.append(member)
-        generator.translate(member.name, pascal(preprocess(member.name)))
+            field.type = field_data["type"]
+        field.description = field_data.get("description", field.description)
+        structure.fields.append(field)
+        generator.translate(field.name, pascal(preprocess(field.name)))
     generator.register(structure)
 
 def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
