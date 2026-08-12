@@ -188,6 +188,7 @@ class ClassInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
         self.fields: list[FieldInfo] = []
+        self.is_value_type: bool = False
         self.is_unsafe: bool = False
 
     @property
@@ -197,7 +198,7 @@ class ClassInfo(TypeInfo):
         return self.access_modifier
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
-        yield f"{self.modifiers} struct {self.name}"
+        yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
         yield "{"
         with generator.indent():
             for member in self.fields:
