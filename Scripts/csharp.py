@@ -99,7 +99,6 @@ class TypeInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.dependencies: set[str] = set()
-        self.base_type: str = ""
 
     def source(self, generator: SourceGenerator) -> Iterable[str]:
         yield "/**************************************************************************/"
@@ -153,11 +152,12 @@ class TypeInfo(MemberInfo):
 class EnumerationInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
+        self.underlying_type: str = ""
         self.members: list[EnumerationConstantInfo] = []
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
-        if self.base_type:
-            yield f"public enum {self.name} : {self.base_type}"
+        if self.underlying_type:
+            yield f"public enum {self.name} : {self.underlying_type}"
         else:
             yield f"public enum {self.name}"
         yield "{"

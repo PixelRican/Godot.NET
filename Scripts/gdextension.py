@@ -52,7 +52,7 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
     enumeration: EnumerationInfo = EnumerationInfo()
     initialize(enumeration, data)
     if data.get("is_bitfield"):
-        enumeration.base_type = "uint"
+        enumeration.underlying_type = "uint"
         enumeration.dependencies.add("System")
         enumeration.attributes.add("Flags")
     for member_data in data["values"]:
