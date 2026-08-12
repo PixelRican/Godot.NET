@@ -101,10 +101,6 @@ class TypeInfo(MemberInfo):
         self.dependencies: set[str] = set()
         self.base_type: str = ""
 
-    @property
-    def kind(self) -> str:
-        raise NotImplementedError()
-
     def source(self, generator: SourceGenerator) -> Iterable[str]:
         yield "/**************************************************************************/"
         yield f"/*  {self.name}.cs  {" " * (65 - len(self.name))}*/"
@@ -149,14 +145,7 @@ class TypeInfo(MemberInfo):
         yield from self.documentation(generator)
         for attribute in sorted(self.attributes):
             yield f"[{generator.translation(attribute)}]"
-        if self.base_type:
-            yield f"public {self.kind} {self.name} : {self.base_type}"
-        else:
-            yield f"public {self.kind} {self.name}"
-        yield "{"
-        with generator.indent():
-            yield from self.definition(generator)
-        yield "}"
+        yield from self.definition(generator)
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         raise NotImplementedError()
@@ -166,18 +155,20 @@ class EnumerationInfo(TypeInfo):
         super().__init__()
         self.members: list[EnumerationConstantInfo] = []
 
-    @property
-    def kind(self) -> str:
-        return "enum"
-
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
-        if not self.members:
-            return
-        last: EnumerationConstantInfo = self.members[-1]
-        for member in self.members:
-            separator: str = "," * (member is not last)
-            yield from member.documentation(generator)
-            yield f"{generator.translation(member.name)} = {member.value}{separator}"
+        if self.base_type:
+            yield f"public enum {self.name} : {self.base_type}"
+        else:
+            yield f"public enum {self.name}"
+        yield "{"
+        if self.members:
+            last: EnumerationConstantInfo = self.members[-1]
+            with generator.indent():
+                for member in self.members:
+                    separator: str = "," * (member is not last)
+                    yield from member.documentation(generator)
+                    yield f"{generator.translation(member.name)} = {member.value}{separator}"
+        yield "}"
 
 class EnumerationConstantInfo(MemberInfo):
     def __init__(self) -> None:
@@ -190,14 +181,17 @@ class StructureInfo(TypeInfo):
         self.is_unsafe: bool = False
         self.members: list[StructureFieldInfo] = []
 
-    @property
-    def kind(self) -> str:
-        return "unsafe struct" if self.is_unsafe else "struct"
-
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
-        for member in self.members:
-            yield from member.documentation(generator)
-            yield f"public {generator.expansion(member.type)} {generator.translation(member.name)};"
+        if self.is_unsafe:
+            yield f"public unsafe struct {self.name}"
+        else:
+            yield f"public struct {self.name}"
+        yield "{"
+        with generator.indent():
+            for member in self.members:
+                yield from member.documentation(generator)
+                yield f"public {generator.expansion(member.type)} {generator.translation(member.name)};"
+        yield "}"
 
 class StructureFieldInfo(MemberInfo):
     def __init__(self) -> None:
