@@ -85,6 +85,9 @@ class MemberInfo:
             yield f"/// {generator.translation(line)}{separator}"
         yield "/// </summary>"
 
+    def definition(self, generator: SourceGenerator) -> Iterable[str]:
+        raise NotImplementedError()
+
 class TypeInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
@@ -147,9 +150,6 @@ class TypeInfo(MemberInfo):
         for line in self.definition(generator):
             yield f"    {line}"
         yield "}"
-
-    def definition(self, generator: SourceGenerator) -> Iterable[str]:
-        raise NotImplementedError()
 
 class EnumerationInfo(TypeInfo):
     def __init__(self) -> None:
