@@ -85,6 +85,10 @@ class MemberInfo:
         self.description: list[str] = []
         self.attributes: set[str] = set()
 
+    @property
+    def modifiers(self) -> str:
+        return "public"
+
     def documentation(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.description:
             return
@@ -100,6 +104,10 @@ class TypeInfo(MemberInfo):
         super().__init__()
         self.access_modifier: str = "public"
         self.dependencies: set[str] = set()
+
+    @property
+    def modifiers(self) -> str:
+        return self.access_modifier
 
     def source(self, generator: SourceGenerator) -> Iterable[str]:
         yield "/**************************************************************************/"
@@ -179,26 +187,40 @@ class ConstantInfo(MemberInfo):
 class ClassInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
-        self.is_unsafe: bool = False
         self.fields: list[FieldInfo] = []
+        self.is_unsafe: bool = False
+
+    @property
+    def modifiers(self) -> str:
+        if self.is_unsafe:
+            return f"{self.access_modifier} unsafe"
+        return self.access_modifier
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
-        if self.is_unsafe:
-            yield f"{self.access_modifier} unsafe struct {self.name}"
-        else:
-            yield f"{self.access_modifier} struct {self.name}"
+        yield f"{self.modifiers} struct {self.name}"
         yield "{"
         with generator.indent():
             for member in self.fields:
                 yield from member.documentation(generator)
-                yield f"{member.access_modifier} {generator.expansion(member.type)} {generator.translation(member.name)};"
+                yield f"{member.modifiers} {generator.expansion(member.type)} {generator.translation(member.name)};"
         yield "}"
 
 class FieldInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
-        self.access_modifier: str = "public"
         self.type: str = "object"
+        self.access_modifier: str = "public"
+        self.is_static: bool = False
+        self.is_readonly: bool = False
+
+    @property
+    def modifiers(self) -> str:
+        modifiers: list[str] = [self.access_modifier]
+        if self.is_static:
+            modifiers.append("static")
+        if self.is_readonly:
+            modifiers.append("readonly")
+        return " ".join(modifiers)
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
