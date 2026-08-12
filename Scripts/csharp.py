@@ -153,7 +153,7 @@ class EnumerationInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
         self.underlying_type: str = ""
-        self.members: list[EnumerationConstantInfo] = []
+        self.members: list[ConstantInfo] = []
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if self.underlying_type:
@@ -162,7 +162,7 @@ class EnumerationInfo(TypeInfo):
             yield f"public enum {self.name}"
         yield "{"
         if self.members:
-            last: EnumerationConstantInfo = self.members[-1]
+            last: ConstantInfo = self.members[-1]
             with generator.indent():
                 for member in self.members:
                     separator: str = "," * (member is not last)
@@ -170,7 +170,7 @@ class EnumerationInfo(TypeInfo):
                     yield f"{generator.translation(member.name)} = {member.value}{separator}"
         yield "}"
 
-class EnumerationConstantInfo(MemberInfo):
+class ConstantInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.value: int = 0

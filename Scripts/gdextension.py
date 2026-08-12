@@ -56,7 +56,7 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
         enumeration.dependencies.add("System")
         enumeration.attributes.add("Flags")
     for member_data in data["values"]:
-        member: EnumerationConstantInfo = EnumerationConstantInfo()
+        member: ConstantInfo = ConstantInfo()
         member.name = member_data["name"]
         member.value = member_data["value"]
         member.description = member_data.get("description", member.description)
