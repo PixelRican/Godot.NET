@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 
 namespace Godot.Interop;
 
-[Obsolete("Deprecated since Godot 4.5. Use GDExtensionGodotVersion2 instead.")]
+[Obsolete("Deprecated since Godot 4.5. Use `GDExtensionGodotVersion2` instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct GDExtensionGodotVersion
 {

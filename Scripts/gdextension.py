@@ -43,7 +43,7 @@ def initialize(info: TypeInfo, data: dict[str, Any]) -> None:
         if message:
             sentences.append(message)
         if replace_with:
-            sentences.append(f"Use {replace_with} instead.")
+            sentences.append(f"Use `{replace_with}` instead.")
         argument: str = " ".join(sentences)
         info.attributes.add(f"Obsolete(\"{argument}\")")
         info.dependencies.add("System")

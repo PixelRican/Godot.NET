@@ -50,7 +50,7 @@ namespace Godot.Interop;
 /// <br/>
 /// `FreeFunc` is necessary if `CallableUserData` needs to be cleaned up when the callable is freed.
 /// </summary>
-[Obsolete("Deprecated since Godot 4.3. Use GDExtensionCallableCustomInfo2 instead.")]
+[Obsolete("Deprecated since Godot 4.3. Use `GDExtensionCallableCustomInfo2` instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct GDExtensionCallableCustomInfo
 {

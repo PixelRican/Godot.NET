@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 
 namespace Godot.Interop;
 
-[Obsolete("Deprecated since Godot 4.4. Use GDExtensionClassCreationInfo6 instead.")]
+[Obsolete("Deprecated since Godot 4.4. Use `GDExtensionClassCreationInfo6` instead.")]
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct GDExtensionClassCreationInfo3
 {
