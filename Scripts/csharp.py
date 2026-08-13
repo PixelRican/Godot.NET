@@ -81,7 +81,7 @@ class SourceGenerator:
 
 class MemberInfo:
     def __init__(self) -> None:
-        self.name: str = "A"
+        self.name: str = "_"
         self.description: list[str] = []
         self.attributes: set[str] = set()
 
