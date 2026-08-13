@@ -36,6 +36,9 @@ using System.Runtime.CompilerServices;
 
 namespace Godot.Interop;
 
+/// <summary>
+/// Exposes functions from the GDExtension API.
+/// </summary>
 public static unsafe class GDExtensionInterface
 {
     private static delegate* unmanaged[Cdecl]<GDExtensionGodotVersion*, void> s_getGodotVersion;
@@ -417,7 +420,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="rGodotVersion">
     /// A pointer to the structure to write the version information into.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.5. Use GetGodotVersion2 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use `GetGodotVersion2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GetGodotVersion(GDExtensionGodotVersion* rGodotVersion)
     {
@@ -449,7 +452,7 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use MemAlloc2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use `MemAlloc2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* MemAlloc(nuint pBytes)
     {
@@ -470,7 +473,7 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use MemRealloc2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use `MemRealloc2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* MemRealloc(void* pPtr, nuint pBytes)
     {
@@ -485,7 +488,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPtr">
     /// A pointer to the previously allocated memory.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use MemFree2 instead.")]
+    [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use `MemFree2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemFree(void* pPtr)
     {
@@ -1855,7 +1858,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of bytes (not code units).
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use StringNewWithUtf8CharsAndLen2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf8CharsAndLen2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf8CharsAndLen(GDExtensionString* rDest, byte* pContents, long pSize)
     {
@@ -1899,8 +1902,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCharCount">
     /// The number of characters (not bytes).
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use StringNewWithUtf16CharsAndLen2 instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf16CharsAndLen2` instead.")]
     public static void StringNewWithUtf16CharsAndLen(GDExtensionString* rDest, char* pContents, long pCharCount)
     {
         delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, void> function = s_stringNewWithUtf16CharsAndLen;
@@ -3366,7 +3369,7 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.2. Use ScriptInstanceCreate3 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use `ScriptInstanceCreate3` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ScriptInstanceCreate(GDExtensionScriptInstanceInfo* pInfo, void* pInstanceData)
     {
@@ -3387,7 +3390,7 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.3. Use ScriptInstanceCreate3 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use `ScriptInstanceCreate3` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ScriptInstanceCreate2(GDExtensionScriptInstanceInfo2* pInfo, void* pInstanceData)
     {
@@ -3509,7 +3512,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallableCustomInfo">
     /// The info required to construct a Callable.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use CallableCustomCreate2 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use `CallableCustomCreate2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void CallableCustomCreate(void* rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
     {
@@ -3567,7 +3570,7 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.4. Use ClassDBConstructObject3 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use `ClassDBConstructObject3` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ClassDBConstructObject(GDExtensionStringName* pClassName)
     {
@@ -3588,7 +3591,7 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.7. Use ClassDBConstructObject3 instead.")]
+    [Obsolete("Deprecated since Godot 4.7. Use `ClassDBConstructObject3` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void* ClassDBConstructObject2(GDExtensionStringName* pClassName)
     {
@@ -3675,7 +3678,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.2. Use ClassDBRegisterExtensionClass6 instead.")]
+    [Obsolete("Deprecated since Godot 4.2. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClass(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
     {
@@ -3700,7 +3703,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo2 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use ClassDBRegisterExtensionClass6 instead.")]
+    [Obsolete("Deprecated since Godot 4.3. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClass2(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
     {
@@ -3725,7 +3728,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo3 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.4. Use ClassDBRegisterExtensionClass6 instead.")]
+    [Obsolete("Deprecated since Godot 4.4. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClass3(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
     {
@@ -3750,7 +3753,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo4 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.5. Use ClassDBRegisterExtensionClass6 instead.")]
+    [Obsolete("Deprecated since Godot 4.5. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClass4(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
@@ -3775,7 +3778,7 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo5 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.7. Use ClassDBRegisterExtensionClass6 instead.")]
+    [Obsolete("Deprecated since Godot 4.7. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClass5(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
@@ -4163,7 +4166,6 @@ public static unsafe class GDExtensionInterface
         }
     }
 
-    [DoesNotReturn]
     private static void ThrowForInvalidFunction()
     {
         throw new InvalidOperationException("Unable to call the specified function.");
