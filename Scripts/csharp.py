@@ -188,6 +188,7 @@ class ClassInfo(TypeInfo):
     def __init__(self) -> None:
         super().__init__()
         self.fields: list[FieldInfo] = []
+        self.methods: list[MethodInfo] = []
         self.is_value_type: bool = False
         self.is_static: bool = False
         self.is_unsafe: bool = False
@@ -205,9 +206,22 @@ class ClassInfo(TypeInfo):
         yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
         yield "{"
         with generator.indent():
+            separate: bool = False
             for member in self.fields:
+                separate = True
                 yield from member.documentation(generator)
                 yield f"{member.modifiers} {generator.expansion(member.type)} {generator.translation(member.name)};"
+            for member in self.methods:
+                if separate:
+                    yield ""
+                separate = True
+                parameters: str = ", ".join(f"{parameter.type} {parameter.name}" for parameter in member.parameters)
+                yield from member.documentation(generator)
+                yield f"{member.modifiers} {member.return_value.type} {member.name}({parameters})"
+                yield "{"
+                with generator.indent():
+                    yield from member.body
+                yield "}"
         yield "}"
 
 class FieldInfo(MemberInfo):
@@ -226,6 +240,55 @@ class FieldInfo(MemberInfo):
         if self.is_readonly:
             modifiers.append("readonly")
         return " ".join(modifiers)
+
+class MethodInfo(MemberInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.return_value: ReturnValueInfo = ReturnValueInfo()
+        self.parameters: list[ParameterInfo] = []
+        self.body: Iterable[str] = ()
+        self.access_modifier: str = "public"
+        self.is_static: bool = False
+
+    @property
+    def modifiers(self) -> str:
+        return f"{self.access_modifier} static" if self.is_static else self.access_modifier
+
+    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
+        yield from super().documentation(generator)
+        for parameter in self.parameters:
+            yield from parameter.documentation(generator)
+        yield from self.return_value.documentation(generator)
+
+class ReturnValueInfo(MemberInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.type: str = "void"
+
+    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
+        if not self.description:
+            return
+        yield "/// <return>"
+        last: str = self.description[-1]
+        for line in self.description:
+            separator: str = "<br/>" * (line is not last)
+            yield f"/// {generator.translation(line)}{separator}"
+        yield "/// </return>"
+
+class ParameterInfo(MemberInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.type: str = "object"
+
+    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
+        if not self.description:
+            return
+        yield f"/// <param name=\"{self.name}\">"
+        last: str = self.description[-1]
+        for line in self.description:
+            separator: str = "<br/>" * (line is not last)
+            yield f"/// {generator.translation(line)}{separator}"
+        yield "/// </param>"
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
