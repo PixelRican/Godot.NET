@@ -46,10 +46,7 @@ class SourceGenerator:
         self.types.append(info)
 
     def expand(self, symbol: str, expansion: str) -> None:
-        self.expansions[symbol] = expansion
-
-    def expand_default(self, symbol: str, expansion: str) -> str:
-        return self.expansions.setdefault(symbol, expansion)
+        self.expansions.setdefault(symbol, expansion)
 
     def expansion(self, symbol: str) -> str:
         def substitute(match: Match[str]) -> str:
@@ -67,10 +64,7 @@ class SourceGenerator:
         return (self.expansion(value) if value else key) + pointer
 
     def translate(self, string: str, translation: str) -> None:
-        self.translations[string] = translation
-
-    def translate_default(self, string: str, translation: str) -> str:
-        return self.translations.setdefault(string, translation)
+        self.translations.setdefault(string, translation)
 
     def translation(self, string: str) -> str:
         def substitute(match: Match[str]) -> str:

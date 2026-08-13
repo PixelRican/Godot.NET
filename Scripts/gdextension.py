@@ -68,12 +68,12 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 def handle(generator: SourceGenerator, data: dict[str, Any]) -> None:
     handle_name: str = data["name"]
-    generator.expand_default(handle_name, "void*")
+    generator.expand(handle_name, "void*")
 
 def alias(generator: SourceGenerator, data: dict[str, Any]) -> None:
     alias_name: str = data["name"]
     alias_type: str = data["type"]
-    generator.expand_default(alias_name, alias_type)
+    generator.expand(alias_name, alias_type)
 
 def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure: ClassInfo = ClassInfo()
@@ -103,7 +103,7 @@ def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
     else:
         type_parameters.append("void")
     arguments: str = ", ".join(type_parameters)
-    generator.expand_default(function_name, f"delegate* unmanaged[Cdecl]<{arguments}>")
+    generator.expand(function_name, f"delegate* unmanaged[Cdecl]<{arguments}>")
 
 def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info: ClassInfo = ClassInfo()
