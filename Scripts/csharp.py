@@ -246,7 +246,7 @@ class MethodInfo(MemberInfo):
         super().__init__()
         self.return_type: ReturnTypeInfo = ReturnTypeInfo()
         self.parameters: list[ParameterInfo] = []
-        self.body: Iterable[str] = ()
+        self.body: Iterable[str] = ("throw new System.NotImplementedException();",)
         self.access_modifier: str = "public"
         self.is_static: bool = False
 
