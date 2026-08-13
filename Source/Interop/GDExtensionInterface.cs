@@ -1858,8 +1858,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of bytes (not code units).
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf8CharsAndLen2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf8CharsAndLen2` instead.")]
     public static void StringNewWithUtf8CharsAndLen(GDExtensionString* rDest, byte* pContents, long pSize)
     {
         delegate* unmanaged[Cdecl]<GDExtensionString*, byte*, long, void> function = s_stringNewWithUtf8CharsAndLen;
@@ -1902,8 +1902,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCharCount">
     /// The number of characters (not bytes).
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf16CharsAndLen2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf16CharsAndLen2` instead.")]
     public static void StringNewWithUtf16CharsAndLen(GDExtensionString* rDest, char* pContents, long pCharCount)
     {
         delegate* unmanaged[Cdecl]<GDExtensionString*, char*, long, void> function = s_stringNewWithUtf16CharsAndLen;
@@ -2923,8 +2923,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pFrom">
     /// A pointer to the Array object to reference.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
     public static void ArrayRef(void* pSelf, void* pFrom)
     {
         delegate* unmanaged[Cdecl]<void*, void*, void> function = s_arrayRef;
@@ -3512,8 +3512,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallableCustomInfo">
     /// The info required to construct a Callable.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.3. Use `CallableCustomCreate2` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.3. Use `CallableCustomCreate2` instead.")]
     public static void CallableCustomCreate(void* rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
     {
         delegate* unmanaged[Cdecl]<void*, GDExtensionCallableCustomInfo*, void> function = s_callableCustomCreate;
@@ -3570,8 +3570,8 @@ public static unsafe class GDExtensionInterface
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
-    [Obsolete("Deprecated since Godot 4.4. Use `ClassDBConstructObject3` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.4. Use `ClassDBConstructObject3` instead.")]
     public static void* ClassDBConstructObject(GDExtensionStringName* pClassName)
     {
         delegate* unmanaged[Cdecl]<GDExtensionStringName*, void*> function = s_classDBConstructObject;
@@ -3728,8 +3728,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo3 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.4. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.4. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass3(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
     {
         delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo3*, void> function = s_classDBRegisterExtensionClass3;
@@ -3753,8 +3753,8 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo4 struct.
     /// </param>
-    [Obsolete("Deprecated since Godot 4.5. Use `ClassDBRegisterExtensionClass6` instead.")]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Deprecated since Godot 4.5. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass4(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
     {
         delegate* unmanaged[Cdecl]<void*, GDExtensionStringName*, GDExtensionStringName*, GDExtensionClassCreationInfo4*, void> function = s_classDBRegisterExtensionClass4;

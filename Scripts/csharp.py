@@ -216,7 +216,7 @@ class ClassInfo(TypeInfo):
                 separate = True
                 parameters: str = ", ".join(f"{generator.expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in member.parameters)
                 yield from member.documentation(generator)
-                for attribute in member.attributes:
+                for attribute in sorted(member.attributes):
                     yield f"[{generator.translation(attribute)}]"
                 yield f"{member.modifiers} {generator.expansion(member.return_type.name)} {generator.translation(member.name)}({parameters})"
                 yield "{"
