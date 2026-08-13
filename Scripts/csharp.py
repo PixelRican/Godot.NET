@@ -215,9 +215,11 @@ class ClassInfo(TypeInfo):
                 if separate:
                     yield ""
                 separate = True
-                parameters: str = ", ".join(f"{parameter.type} {parameter.name}" for parameter in member.parameters)
+                parameters: str = ", ".join(f"{generator.expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in member.parameters)
                 yield from member.documentation(generator)
-                yield f"{member.modifiers} {member.return_type.name} {member.name}({parameters})"
+                for attribute in member.attributes:
+                    yield generator.translation(attribute)
+                yield f"{member.modifiers} {generator.expansion(member.return_type.name)} {generator.translation(member.name)}({parameters})"
                 yield "{"
                 with generator.indent():
                     yield from member.body
