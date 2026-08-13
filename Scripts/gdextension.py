@@ -36,16 +36,7 @@ def initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     info.description = data.get("description", info.description)
     deprecated: dict[str, str] | None = data.get("deprecated")
     if deprecated:
-        since: str = deprecated["since"]
-        message: str | None = deprecated.get("message")
-        replace_with: str | None = deprecated.get("replace_with")
-        sentences: list[str] = [f"Deprecated since Godot {since}."]
-        if message:
-            sentences.append(message)
-        if replace_with:
-            sentences.append(f"Use `{replace_with}` instead.")
-        argument: str = " ".join(sentences)
-        info.attributes.add(f"Obsolete(\"{argument}\")")
+        info.attributes.add(obsolete(deprecated))
         info.dependencies.add("System")
 
 def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
@@ -112,6 +103,18 @@ def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
         type_parameters.append("void")
     arguments: str = ", ".join(type_parameters)
     generator.expand_default(function_name, f"delegate* unmanaged[Cdecl]<{arguments}>")
+
+def obsolete(data: dict[str, str]) -> str:
+    since: str = data["since"]
+    message: str | None = data.get("message")
+    replace_with: str | None = data.get("replace_with")
+    sentences: list[str] = [f"Deprecated since Godot {since}."]
+    if message:
+        sentences.append(message)
+    if replace_with:
+        sentences.append(f"Use `{replace_with}` instead.")
+    argument: str = " ".join(sentences)
+    return f"Obsolete(\"{argument}\")"
 
 def preprocess(symbol: str) -> str:
     def substitute(match: Match[str]) -> str:
