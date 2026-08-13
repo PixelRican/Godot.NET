@@ -29,8 +29,10 @@ class SourceGenerator:
         for info in self.types:
             with open(f"{self.output_directory}/{info.name}.cs", "w") as file:
                 for line in info.source(self):
-                    indent: str = "    " * self.indent_level
-                    file.write(f"{indent}{line}\n")
+                    if line:
+                        file.write("    " * self.indent_level)
+                        file.write(line)
+                    file.write("\n")
 
     @contextmanager
     def indent(self) -> Any:
@@ -56,13 +58,13 @@ class SourceGenerator:
             return match.group().replace(group, substitution)
 
         key: str = symbol.removeprefix("const ").removesuffix("*")
-        value: str = self.expansions.get(key, "")
         pointer: str = "*" * symbol.endswith("*")
-        if not value:
-            return key + pointer
-        if value.startswith("delegate*"):
-            return sub(r"(?:<|,\s)((?:const )*\w+\**)", substitute, value)
-        return self.expansion(value) + pointer
+        if key.endswith(">"):
+            return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
+        value: str | None = self.expansions.get(key)
+        if value == "char":
+            return f"char{pointer}"
+        return (self.expansion(value) if value else key) + pointer
 
     def translate(self, string: str, translation: str) -> None:
         self.translations[string] = translation
@@ -72,12 +74,15 @@ class SourceGenerator:
 
     def translation(self, string: str) -> str:
         def substitute(match: Match[str]) -> str:
-            if match.group() == "NULL":
-                return "null"
-            group: str = match.group(1)
-            return f"`{self.translations.get(group, group)}`"
+            group: str = match.group()
+            result: str = "{}"
+            if group.startswith("`"):
+                group = match.group(1)
+                result = "`{}`"
+            return result.format(self.translations.get(group, group))
 
-        return self.translations.get(string) or sub(r"`(\w+)`|NULL", substitute, string)
+        return self.translations.get(string) \
+            or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
 class MemberInfo:
     def __init__(self) -> None:
@@ -218,7 +223,7 @@ class ClassInfo(TypeInfo):
                 parameters: str = ", ".join(f"{generator.expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in member.parameters)
                 yield from member.documentation(generator)
                 for attribute in member.attributes:
-                    yield generator.translation(attribute)
+                    yield f"[{generator.translation(attribute)}]"
                 yield f"{member.modifiers} {generator.expansion(member.return_type.name)} {generator.translation(member.name)}({parameters})"
                 yield "{"
                 with generator.indent():
