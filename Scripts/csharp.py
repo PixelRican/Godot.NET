@@ -270,12 +270,12 @@ class ReturnTypeInfo(MemberInfo):
     def documentation(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.description:
             return
-        yield "/// <return>"
+        yield "/// <returns>"
         last: str = self.description[-1]
         for line in self.description:
             separator: str = "<br/>" * (line is not last)
             yield f"/// {generator.translation(line)}{separator}"
-        yield "/// </return>"
+        yield "/// </returns>"
 
 class ParameterInfo(MemberInfo):
     def __init__(self) -> None:
@@ -285,7 +285,7 @@ class ParameterInfo(MemberInfo):
     def documentation(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.description:
             return
-        yield f"/// <param name=\"{self.name}\">"
+        yield f"/// <param name=\"{generator.translation(self.name)}\">"
         last: str = self.description[-1]
         for line in self.description:
             separator: str = "<br/>" * (line is not last)
