@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from re import sub, Match
-from typing import Any, Iterable
+from typing import Any, Iterable, Optional
 
 class SourceGenerator:
     def __init__(self) -> None:
@@ -61,7 +61,7 @@ class SourceGenerator:
         pointer: str = "*" * symbol.endswith("*")
         if key.endswith(">"):
             return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        value: str | None = self.expansions.get(key)
+        value: Optional[str] = self.expansions.get(key)
         if value == "char":
             return f"char{pointer}"
         return (self.expansion(value) if value else key) + pointer

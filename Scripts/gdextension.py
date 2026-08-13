@@ -1,6 +1,6 @@
 ﻿from csharp import *
 from os.path import commonprefix
-from typing import Any
+from typing import Any, Iterable, Optional
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator()
@@ -35,7 +35,7 @@ def parse(data: dict[str, Any]) -> SourceGenerator:
 def initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     info.name = data["name"]
     info.description = data.get("description", info.description)
-    deprecated: dict[str, str] | None = data.get("deprecated")
+    deprecated: Optional[dict[str, str]] = data.get("deprecated")
     if deprecated:
         info.attributes.add(obsolete(deprecated))
         info.dependencies.add("System")
@@ -96,7 +96,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
     function_name: str = data["name"]
-    function_return_value: dict[str, Any] | None = data.get("return_value")
+    function_return_value: Optional[dict[str, Any]] = data.get("return_value")
     type_parameters: list[str] = [argument["type"] for argument in data["arguments"]]
     if function_return_value:
         type_parameters.append(function_return_value["type"])
@@ -162,8 +162,8 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     method.description = data.get("description", method.description)
     method.body = method_body()
     method.is_static = True
-    deprecated: dict[str, str] | None = data.get("deprecated")
-    return_type_data: dict[str, Any] | None = data.get("return_value")
+    deprecated: Optional[dict[str, str]] = data.get("deprecated")
+    return_type_data: Optional[dict[str, Any]] = data.get("return_value")
     if deprecated:
         method.attributes.add(obsolete(deprecated))
     if return_type_data:
@@ -238,8 +238,8 @@ def interface_throw_for_invalid_function() -> MethodInfo:
 
 def obsolete(data: dict[str, str]) -> str:
     since: str = data["since"]
-    message: str | None = data.get("message")
-    replace_with: str | None = data.get("replace_with")
+    message: Optional[str] = data.get("message")
+    replace_with: Optional[str] = data.get("replace_with")
     sentences: list[str] = [f"Deprecated since Godot {since}."]
     if message:
         sentences.append(message)
