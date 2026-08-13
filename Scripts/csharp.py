@@ -217,7 +217,7 @@ class ClassInfo(TypeInfo):
                 separate = True
                 parameters: str = ", ".join(f"{parameter.type} {parameter.name}" for parameter in member.parameters)
                 yield from member.documentation(generator)
-                yield f"{member.modifiers} {member.return_value.type} {member.name}({parameters})"
+                yield f"{member.modifiers} {member.return_type.name} {member.name}({parameters})"
                 yield "{"
                 with generator.indent():
                     yield from member.body
@@ -244,7 +244,7 @@ class FieldInfo(MemberInfo):
 class MethodInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
-        self.return_value: ReturnValueInfo = ReturnValueInfo()
+        self.return_type: ReturnTypeInfo = ReturnTypeInfo()
         self.parameters: list[ParameterInfo] = []
         self.body: Iterable[str] = ()
         self.access_modifier: str = "public"
@@ -258,12 +258,12 @@ class MethodInfo(MemberInfo):
         yield from super().documentation(generator)
         for parameter in self.parameters:
             yield from parameter.documentation(generator)
-        yield from self.return_value.documentation(generator)
+        yield from self.return_type.documentation(generator)
 
-class ReturnValueInfo(MemberInfo):
+class ReturnTypeInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
-        self.type: str = "void"
+        self.name: str = "void"
 
     def documentation(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.description:
