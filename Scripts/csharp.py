@@ -253,6 +253,7 @@ class MethodInfo(MemberInfo):
         super().__init__()
         self.return_type: ReturnTypeInfo = ReturnTypeInfo()
         self.parameters: list[ParameterInfo] = []
+        self.exceptions: list[ExceptionInfo] = []
         self.body: Iterable[str] = ("throw new System.NotImplementedException();",)
         self.access_modifier: str = "public"
         self.is_static: bool = False
@@ -265,6 +266,8 @@ class MethodInfo(MemberInfo):
         yield from super().documentation(generator)
         for parameter in self.parameters:
             yield from parameter.documentation(generator)
+        for exception in self.exceptions:
+            yield from exception.documentation(generator)
         yield from self.return_type.documentation(generator)
 
 class ReturnTypeInfo(MemberInfo):
