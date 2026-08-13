@@ -292,6 +292,17 @@ class ParameterInfo(MemberInfo):
             yield f"/// {generator.translation(line)}{separator}"
         yield "/// </param>"
 
+class ExceptionInfo(MemberInfo):
+    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
+        if not self.description:
+            return
+        yield f"/// <exception cref=\"{generator.translation(self.name)}\">"
+        last: str = self.description[-1]
+        for line in self.description:
+            separator: str = "<br/>" * (line is not last)
+            yield f"/// {generator.translation(line)}{separator}"
+        yield "/// </exception>"
+
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
 
