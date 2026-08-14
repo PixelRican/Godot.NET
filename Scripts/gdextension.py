@@ -4,17 +4,17 @@ from typing import Any, Iterable, Optional
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
-    generator.expand("GDExtensionStringPtr", "GDExtensionString*")
-    generator.expand("GDExtensionConstStringPtr", "GDExtensionString*")
-    generator.expand("GDExtensionUninitializedStringPtr", "GDExtensionString*")
-    generator.expand("GDExtensionStringNamePtr", "GDExtensionStringName*")
-    generator.expand("GDExtensionConstStringNamePtr", "GDExtensionStringName*")
-    generator.expand("GDExtensionUninitializedStringNamePtr", "GDExtensionStringName*")
-    generator.expand("GDExtensionVariantPtr", "GDExtensionVariant*")
-    generator.expand("GDExtensionConstVariantPtr", "GDExtensionVariant*")
-    generator.expand("GDExtensionUninitializedVariantPtr", "GDExtensionVariant*")
-    generator.expand("GDExtensionBool", "bool")
-    generator.expand("GDExtensionInterfaceFunctionPtr", "void*")
+    generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
+    generator.set_expansion("GDExtensionConstStringPtr", "GDExtensionString*")
+    generator.set_expansion("GDExtensionUninitializedStringPtr", "GDExtensionString*")
+    generator.set_expansion("GDExtensionStringNamePtr", "GDExtensionStringName*")
+    generator.set_expansion("GDExtensionConstStringNamePtr", "GDExtensionStringName*")
+    generator.set_expansion("GDExtensionUninitializedStringNamePtr", "GDExtensionStringName*")
+    generator.set_expansion("GDExtensionVariantPtr", "GDExtensionVariant*")
+    generator.set_expansion("GDExtensionConstVariantPtr", "GDExtensionVariant*")
+    generator.set_expansion("GDExtensionUninitializedVariantPtr", "GDExtensionVariant*")
+    generator.set_expansion("GDExtensionBool", "bool")
+    generator.set_expansion("GDExtensionInterfaceFunctionPtr", "void*")
     for type_data in data["types"]:
         match type_data["kind"]:
             case "enum":
@@ -59,12 +59,12 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 def handle(generator: SourceGenerator, data: dict[str, Any]) -> None:
     handle_name: str = data["name"]
-    generator.expand(handle_name, "void*")
+    generator.set_expansion(handle_name, "void*")
 
 def alias(generator: SourceGenerator, data: dict[str, Any]) -> None:
     alias_name: str = data["name"]
     alias_type: str = data["type"]
-    generator.expand(alias_name, alias_type)
+    generator.set_expansion(alias_name, alias_type)
 
 def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure: ClassInfo = ClassInfo()
@@ -95,7 +95,7 @@ def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
     else:
         type_parameters.append("void")
     arguments: str = ", ".join(type_parameters)
-    generator.expand(function_name, f"delegate* unmanaged[Cdecl]<{arguments}>")
+    generator.set_expansion(function_name, f"delegate* unmanaged[Cdecl]<{arguments}>")
 
 def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info: ClassInfo = ClassInfo()
@@ -129,7 +129,7 @@ def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodI
     def method_body() -> Iterable[str]:
         yield "ArgumentNullException.ThrowIfNull(pGetProcAddress);"
         for field, delegate in zip(info.fields, info.methods[1:]):
-            yield f"{field.name} = ({generator.expansion(field.type)})Load(pGetProcAddress, \"{delegate.name}\"u8);"
+            yield f"{field.name} = ({generator.get_expansion(field.type)})Load(pGetProcAddress, \"{delegate.name}\"u8);"
 
     method: MethodInfo = MethodInfo()
     method.name = "Initialize"
@@ -149,7 +149,7 @@ def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodI
 
 def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tuple[FieldInfo, MethodInfo]:
     def method_body() -> Iterable[str]:
-        yield f"{generator.expansion(field.type)} function = {field.name};"
+        yield f"{generator.get_expansion(field.type)} function = {field.name};"
         yield "ThrowIfInvalid(function);"
         arguments: str = ", ".join(generator.translation(argument.name) for argument in method.parameters)
         if method.return_type.name == "void":

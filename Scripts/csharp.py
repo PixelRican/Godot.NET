@@ -39,21 +39,21 @@ class SourceGenerator:
         assert isinstance(type_info, TypeInfo), "type_info must be of type TypeInfo."
         self.__types.append(type_info)
 
-    def expand(self, symbol: str, expansion: str) -> None:
-        self.__expansions.setdefault(symbol, expansion)
+    def set_expansion(self, alias: str, value: str) -> None:
+        self.__expansions.setdefault(alias, value)
 
-    def expansion(self, symbol: str) -> str:
+    def get_expansion(self, alias: str) -> str:
         def substitute(match: Match[str]) -> str:
             group: str = match.group(1)
-            substitution: str = self.expansion(group)
+            substitution: str = self.get_expansion(group)
             return match.group().replace(group, substitution)
 
-        pointer: str = "*" * symbol.endswith("*")
-        key: str = symbol.removeprefix("const ").removesuffix("*")
+        pointer: str = "*" * alias.endswith("*")
+        key: str = alias.removeprefix("const ").removesuffix("*")
         if key.endswith(">"):
             return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
         if value := self.__expansions.get(key):
-            return (value if value == "char" else self.expansion(value)) + pointer
+            return (value if value == "char" else self.get_expansion(value)) + pointer
         return key + pointer
 
     def translate(self, string: str, translation: str) -> None:
@@ -217,7 +217,7 @@ class ClassInfo(TypeInfo):
             for member in self.fields:
                 separate = True
                 yield from member.documentation.source(generator)
-                yield f"{member.modifiers} {generator.expansion(member.type)} {generator.translation(member.name)};"
+                yield f"{member.modifiers} {generator.get_expansion(member.type)} {generator.translation(member.name)};"
             for member in self.methods:
                 if separate:
                     yield ""
@@ -263,8 +263,8 @@ class MethodInfo(EncapsulatedMemberInfo):
         yield from self.return_type.documentation.source(generator)
         for attribute in sorted(self.attributes):
             yield f"[{generator.translation(attribute)}]"
-        parameters: str = ", ".join(f"{generator.expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in self.parameters)
-        yield f"{self.modifiers} {generator.expansion(self.return_type.name)} {generator.translation(self.name)}({parameters})"
+        parameters: str = ", ".join(f"{generator.get_expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in self.parameters)
+        yield f"{self.modifiers} {generator.get_expansion(self.return_type.name)} {generator.translation(self.name)}({parameters})"
         yield "{"
         with generator.indent():
             yield from self.body
