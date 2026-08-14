@@ -39,9 +39,6 @@ class SourceGenerator:
         assert isinstance(type_info, TypeInfo), "type_info must be of type TypeInfo."
         self.__types.append(type_info)
 
-    def set_expansion(self, alias: str, value: str) -> None:
-        self.__expansions.setdefault(alias, value)
-
     def get_expansion(self, alias: str) -> str:
         def substitute(match: Match[str]) -> str:
             group: str = match.group(1)
@@ -55,6 +52,9 @@ class SourceGenerator:
         if value := self.__expansions.get(key):
             return (value if value == "char" else self.get_expansion(value)) + pointer
         return key + pointer
+
+    def set_expansion(self, alias: str, value: str) -> None:
+        self.__expansions.setdefault(alias, value)
 
     def translate(self, string: str, translation: str) -> None:
         self.__translations.setdefault(string, translation)
