@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from re import sub, Match
-from typing import Any, Iterable, Iterator, Optional
+from typing import Any, Iterable, Iterator
 
 class SourceGenerator:
     def __init__(self) -> None:
