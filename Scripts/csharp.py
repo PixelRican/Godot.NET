@@ -36,6 +36,7 @@ class SourceGenerator:
             self.__indent_level -= 1
 
     def register(self, type_info: TypeInfo) -> None:
+        assert isinstance(type_info, TypeInfo), "type_info must be of type TypeInfo."
         self.__types.append(type_info)
 
     def expand(self, symbol: str, expansion: str) -> None:
