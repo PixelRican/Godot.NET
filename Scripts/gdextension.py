@@ -180,7 +180,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     field: FieldInfo = FieldInfo()
     field.name = f"s_{camel(preprocess(method.name))}"
     field.type = f"delegate* unmanaged[Cdecl]<{type_parameters}>"
-    field.access_modifier = "private"
+    field.is_public = False
     field.is_static = True
     generator.translate(method.name, pascal(preprocess(method.name)))
     return field, method
@@ -196,7 +196,7 @@ def interface_load(generator: SourceGenerator) -> MethodInfo:
     method: MethodInfo = MethodInfo()
     method.name = "Load"
     method.body = method_body()
-    method.access_modifier = "private"
+    method.is_public = False
     method.is_static = True
     method.return_type.name = "void*"
     parameter1: ParameterInfo = ParameterInfo()
@@ -220,7 +220,7 @@ def interface_throw_if_invalid(generator: SourceGenerator) -> MethodInfo:
     method: MethodInfo = MethodInfo()
     method.name = "ThrowIfInvalid"
     method.body = method_body()
-    method.access_modifier = "private"
+    method.is_public = False
     method.is_static = True
     parameter: ParameterInfo = ParameterInfo()
     parameter.name = "pFunction"
@@ -232,7 +232,7 @@ def interface_throw_for_invalid_function() -> MethodInfo:
     method: MethodInfo = MethodInfo()
     method.name = "ThrowForInvalidFunction"
     method.body = ("throw new InvalidOperationException(\"Unable to call the specified function.\");",)
-    method.access_modifier = "private"
+    method.is_public = False
     method.is_static = True
     return method
 

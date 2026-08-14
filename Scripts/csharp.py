@@ -84,10 +84,6 @@ class MemberInfo:
         self.description: list[str] = []
         self.attributes: set[str] = set()
 
-    @property
-    def modifiers(self) -> str:
-        return "public"
-
     def documentation(self, generator: SourceGenerator) -> Iterable[str]:
         if not self.description:
             return
@@ -98,15 +94,19 @@ class MemberInfo:
             yield f"/// {generator.translation(line)}{separator}"
         yield "/// </summary>"
 
-class TypeInfo(MemberInfo):
+class EncapsulatedMemberInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
-        self.access_modifier: str = "public"
-        self.dependencies: set[str] = set()
+        self.is_public: bool = True
 
     @property
     def modifiers(self) -> str:
-        return self.access_modifier
+        return "public" if self.is_public else "private"
+
+class TypeInfo(EncapsulatedMemberInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.dependencies: set[str] = set()
 
     def source(self, generator: SourceGenerator) -> Iterable[str]:
         yield "/**************************************************************************/"
@@ -165,9 +165,9 @@ class EnumerationInfo(TypeInfo):
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
         if self.underlying_type:
-            yield f"{self.access_modifier} enum {self.name} : {self.underlying_type}"
+            yield f"{self.modifiers} enum {self.name} : {self.underlying_type}"
         else:
-            yield f"{self.access_modifier} enum {self.name}"
+            yield f"{self.modifiers} enum {self.name}"
         yield "{"
         if self.members:
             last: ConstantInfo = self.members[-1]
@@ -194,7 +194,7 @@ class ClassInfo(TypeInfo):
 
     @property
     def modifiers(self) -> str:
-        modifiers: list[str] = [self.access_modifier]
+        modifiers: list[str] = [super().modifiers]
         if not self.is_value_type and self.is_static:
             modifiers.append("static")
         if self.is_unsafe:
@@ -225,36 +225,34 @@ class ClassInfo(TypeInfo):
                 yield "}"
         yield "}"
 
-class FieldInfo(MemberInfo):
+class FieldInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
-        self.access_modifier: str = "public"
         self.is_static: bool = False
         self.is_readonly: bool = False
 
     @property
     def modifiers(self) -> str:
-        modifiers: list[str] = [self.access_modifier]
+        modifiers: list[str] = [super().modifiers]
         if self.is_static:
             modifiers.append("static")
         if self.is_readonly:
             modifiers.append("readonly")
         return " ".join(modifiers)
 
-class MethodInfo(MemberInfo):
+class MethodInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.return_type: ReturnTypeInfo = ReturnTypeInfo()
         self.parameters: list[ParameterInfo] = []
         self.exceptions: list[ExceptionInfo] = []
         self.body: Iterable[str] = ("throw new System.NotImplementedException();",)
-        self.access_modifier: str = "public"
         self.is_static: bool = False
 
     @property
     def modifiers(self) -> str:
-        return f"{self.access_modifier} static" if self.is_static else self.access_modifier
+        return f"{super().modifiers} static" if self.is_static else super().modifiers
 
     def documentation(self, generator: SourceGenerator) -> Iterable[str]:
         yield from super().documentation(generator)
