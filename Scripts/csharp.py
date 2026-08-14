@@ -27,6 +27,49 @@ class SourceGenerator:
         self.__translations: dict[str, str] = {"NULL" : "null"}
         self.__indent_level: int = 0
 
+    @contextmanager
+    def indent(self) -> Any:
+        self.__indent_level += 1
+        try:
+            yield self
+        finally:
+            self.__indent_level -= 1
+
+    def register(self, info: TypeInfo) -> None:
+        self.__types.append(info)
+
+    def expand(self, symbol: str, expansion: str) -> None:
+        self.__expansions.setdefault(symbol, expansion)
+
+    def expansion(self, symbol: str) -> str:
+        def substitute(match: Match[str]) -> str:
+            group: str = match.group(1)
+            substitution: str = self.expansion(group)
+            return match.group().replace(group, substitution)
+
+        pointer: str = "*" * symbol.endswith("*")
+        key: str = symbol.removeprefix("const ").removesuffix("*")
+        if key.endswith(">"):
+            return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
+        if value := self.__expansions.get(key):
+            return (value if value == "char" else self.expansion(value)) + pointer
+        return key + pointer
+
+    def translate(self, string: str, translation: str) -> None:
+        self.__translations.setdefault(string, translation)
+
+    def translation(self, string: str) -> str:
+        def substitute(match: Match[str]) -> str:
+            group: str = match.group()
+            result: str = "{}"
+            if group.startswith("`"):
+                group = match.group(1)
+                result = "`{}`"
+            return result.format(self.__translations.get(group, group))
+
+        return self.__translations.get(string) \
+            or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
+
     def generate(self) -> None:
         for info in self.__types:
             with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
@@ -72,49 +115,6 @@ class SourceGenerator:
                 for line in info.source(self):
                     indent: str = "    " * self.__indent_level if line else ""
                     file.write(f"{indent}{line}\n")
-
-    @contextmanager
-    def indent(self) -> Any:
-        self.__indent_level += 1
-        try:
-            yield self
-        finally:
-            self.__indent_level -= 1
-
-    def register(self, info: TypeInfo) -> None:
-        self.__types.append(info)
-
-    def expand(self, symbol: str, expansion: str) -> None:
-        self.__expansions.setdefault(symbol, expansion)
-
-    def expansion(self, symbol: str) -> str:
-        def substitute(match: Match[str]) -> str:
-            group: str = match.group(1)
-            substitution: str = self.expansion(group)
-            return match.group().replace(group, substitution)
-
-        pointer: str = "*" * symbol.endswith("*")
-        key: str = symbol.removeprefix("const ").removesuffix("*")
-        if key.endswith(">"):
-            return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        if value := self.__expansions.get(key):
-            return (value if value == "char" else self.expansion(value)) + pointer
-        return key + pointer
-
-    def translate(self, string: str, translation: str) -> None:
-        self.__translations.setdefault(string, translation)
-
-    def translation(self, string: str) -> str:
-        def substitute(match: Match[str]) -> str:
-            group: str = match.group()
-            result: str = "{}"
-            if group.startswith("`"):
-                group = match.group(1)
-                result = "`{}`"
-            return result.format(self.__translations.get(group, group))
-
-        return self.__translations.get(string) \
-            or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
 class MemberDocumentation:
     def __init__(self) -> None:
