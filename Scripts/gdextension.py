@@ -3,9 +3,7 @@ from os.path import commonprefix
 from typing import Any, Iterable, Optional
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
-    generator: SourceGenerator = SourceGenerator()
-    generator.namespace = "Godot.Interop"
-    generator.output_directory = "../Source/Interop"
+    generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.expand("GDExtensionStringPtr", "GDExtensionString*")
     generator.expand("GDExtensionConstStringPtr", "GDExtensionString*")
     generator.expand("GDExtensionUninitializedStringPtr", "GDExtensionString*")

@@ -3,9 +3,13 @@ from re import sub, Match
 from typing import Any, Iterable, Iterator
 
 class SourceGenerator:
-    def __init__(self) -> None:
-        self.types: list[TypeInfo] = []
-        self.expansions: dict[str, str] = {
+    def __init__(self, namespace: str, output_directory: str) -> None:
+        assert isinstance(namespace, str), "namespace must be a string"
+        assert isinstance(output_directory, str), "output_directory must be a string"
+        self.__namespace: str = namespace
+        self.__output_directory: str = output_directory
+        self.__types: list[TypeInfo] = []
+        self.__expansions: dict[str, str] = {
             "int8_t" : "sbyte",
             "uint8_t" : "byte",
             "int16_t" : "short",
@@ -20,14 +24,12 @@ class SourceGenerator:
             "char32_t" : "uint",
             "wchar_t" : "void"
         }
-        self.translations: dict[str, str] = {"NULL" : "null"}
-        self.namespace: str = "Godot"
-        self.output_directory: str = "."
-        self.indent_level: int = 0
+        self.__translations: dict[str, str] = {"NULL" : "null"}
+        self.__indent_level: int = 0
 
     def generate(self) -> None:
-        for info in self.types:
-            with open(f"{self.output_directory}/{info.name}.cs", "w") as file:
+        for info in self.__types:
+            with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
                 file.write("/**************************************************************************/\n")
                 file.write(f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n")
                 file.write("/**************************************************************************/\n")
@@ -65,25 +67,25 @@ class SourceGenerator:
                     separate = True
                     file.write(f"using {dependency};\n")
                 file.write("\n" * separate)
-                file.write(f"namespace {self.namespace};\n")
+                file.write(f"namespace {self.__namespace};\n")
                 file.write("\n")
                 for line in info.source(self):
-                    indent: str = "    " * self.indent_level if line else ""
+                    indent: str = "    " * self.__indent_level if line else ""
                     file.write(f"{indent}{line}\n")
 
     @contextmanager
     def indent(self) -> Any:
-        self.indent_level += 1
+        self.__indent_level += 1
         try:
             yield self
         finally:
-            self.indent_level -= 1
+            self.__indent_level -= 1
 
     def register(self, info: TypeInfo) -> None:
-        self.types.append(info)
+        self.__types.append(info)
 
     def expand(self, symbol: str, expansion: str) -> None:
-        self.expansions.setdefault(symbol, expansion)
+        self.__expansions.setdefault(symbol, expansion)
 
     def expansion(self, symbol: str) -> str:
         def substitute(match: Match[str]) -> str:
@@ -95,12 +97,12 @@ class SourceGenerator:
         key: str = symbol.removeprefix("const ").removesuffix("*")
         if key.endswith(">"):
             return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        if value := self.expansions.get(key):
+        if value := self.__expansions.get(key):
             return (value if value == "char" else self.expansion(value)) + pointer
         return key + pointer
 
     def translate(self, string: str, translation: str) -> None:
-        self.translations.setdefault(string, translation)
+        self.__translations.setdefault(string, translation)
 
     def translation(self, string: str) -> str:
         def substitute(match: Match[str]) -> str:
@@ -109,9 +111,9 @@ class SourceGenerator:
             if group.startswith("`"):
                 group = match.group(1)
                 result = "`{}`"
-            return result.format(self.translations.get(group, group))
+            return result.format(self.__translations.get(group, group))
 
-        return self.translations.get(string) \
+        return self.__translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
 class MemberDocumentation:
