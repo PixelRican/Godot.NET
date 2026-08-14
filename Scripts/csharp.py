@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from re import sub, Match
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable, Iterator, Optional
 
 class SourceGenerator:
     def __init__(self) -> None:
@@ -115,21 +115,27 @@ class SourceGenerator:
         return self.translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
+class DocumentationInfo:
+    def __init__(self) -> None:
+        self.tag: str = "summary"
+        self.attributes: Iterable[tuple[str, str]] = ()
+        self.description: Iterable[str] = ()
+
+    def source(self, generator: SourceGenerator) -> Iterable[str]:
+        description: Iterator[str] = iter(self.description)
+        if first := next(description, None):
+            prolog: str = " ".join([self.tag] + [f"{key}=\"{generator.translation(value)}\"" for key, value in self.attributes])
+            yield f"/// <{prolog}>"
+            yield f"/// {generator.translation(first)}"
+            for line in description:
+                yield f"/// {generator.translation(line)}"
+            yield f"/// </{self.tag}>"
+
 class MemberInfo:
     def __init__(self) -> None:
         self.name: str = "_"
-        self.description: list[str] = []
+        self.documentation: DocumentationInfo = DocumentationInfo()
         self.attributes: set[str] = set()
-
-    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
-        if not self.description:
-            return
-        yield "/// <summary>"
-        last: str = self.description[-1]
-        for line in self.description:
-            separator: str = "<br/>" * (line is not last)
-            yield f"/// {generator.translation(line)}{separator}"
-        yield "/// </summary>"
 
 class EncapsulatedMemberInfo(MemberInfo):
     def __init__(self) -> None:
@@ -146,7 +152,7 @@ class TypeInfo(EncapsulatedMemberInfo):
         self.dependencies: set[str] = set()
 
     def source(self, generator: SourceGenerator) -> Iterable[str]:
-        yield from self.documentation(generator)
+        yield from self.documentation.source(generator)
         for attribute in sorted(self.attributes):
             yield f"[{generator.translation(attribute)}]"
         yield from self.definition(generator)
@@ -171,7 +177,7 @@ class EnumerationInfo(TypeInfo):
             with generator.indent():
                 for member in self.members:
                     separator: str = "," * (member is not last)
-                    yield from member.documentation(generator)
+                    yield from member.documentation.source(generator)
                     yield f"{generator.translation(member.name)} = {member.value}{separator}"
         yield "}"
 
@@ -205,21 +211,13 @@ class ClassInfo(TypeInfo):
             separate: bool = False
             for member in self.fields:
                 separate = True
-                yield from member.documentation(generator)
+                yield from member.documentation.source(generator)
                 yield f"{member.modifiers} {generator.expansion(member.type)} {generator.translation(member.name)};"
             for member in self.methods:
                 if separate:
                     yield ""
                 separate = True
-                parameters: str = ", ".join(f"{generator.expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in member.parameters)
-                yield from member.documentation(generator)
-                for attribute in sorted(member.attributes):
-                    yield f"[{generator.translation(attribute)}]"
-                yield f"{member.modifiers} {generator.expansion(member.return_type.name)} {generator.translation(member.name)}({parameters})"
-                yield "{"
-                with generator.indent():
-                    yield from member.body
-                yield "}"
+                yield from member.source(generator)
         yield "}"
 
 class FieldInfo(EncapsulatedMemberInfo):
@@ -251,54 +249,46 @@ class MethodInfo(EncapsulatedMemberInfo):
     def modifiers(self) -> str:
         return f"{super().modifiers} static" if self.is_static else super().modifiers
 
-    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
-        yield from super().documentation(generator)
+    def source(self, generator: SourceGenerator) -> Iterable[str]:
+        yield from self.documentation.source(generator)
         for parameter in self.parameters:
-            yield from parameter.documentation(generator)
+            yield from parameter.documentation.source(generator)
         for exception in self.exceptions:
-            yield from exception.documentation(generator)
-        yield from self.return_type.documentation(generator)
+            yield from exception.documentation.source(generator)
+        yield from self.return_type.documentation.source(generator)
+        for attribute in sorted(self.attributes):
+            yield f"[{generator.translation(attribute)}]"
+        parameters: str = ", ".join(f"{generator.expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in self.parameters)
+        yield f"{self.modifiers} {generator.expansion(self.return_type.name)} {generator.translation(self.name)}({parameters})"
+        yield "{"
+        with generator.indent():
+            yield from self.body
+        yield "}"
 
 class ReturnTypeInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.name: str = "void"
-
-    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
-        if not self.description:
-            return
-        yield "/// <returns>"
-        last: str = self.description[-1]
-        for line in self.description:
-            separator: str = "<br/>" * (line is not last)
-            yield f"/// {generator.translation(line)}{separator}"
-        yield "/// </returns>"
+        self.documentation.tag = "returns"
 
 class ParameterInfo(MemberInfo):
     def __init__(self) -> None:
+        def attribute() -> Iterable[tuple[str, str]]:
+            yield "name", self.name
+
         super().__init__()
         self.type: str = "object"
-
-    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
-        if not self.description:
-            return
-        yield f"/// <param name=\"{generator.translation(self.name)}\">"
-        last: str = self.description[-1]
-        for line in self.description:
-            separator: str = "<br/>" * (line is not last)
-            yield f"/// {generator.translation(line)}{separator}"
-        yield "/// </param>"
+        self.documentation.tag = "param"
+        self.documentation.attributes = attribute()
 
 class ExceptionInfo(MemberInfo):
-    def documentation(self, generator: SourceGenerator) -> Iterable[str]:
-        if not self.description:
-            return
-        yield f"/// <exception cref=\"{generator.translation(self.name)}\">"
-        last: str = self.description[-1]
-        for line in self.description:
-            separator: str = "<br/>" * (line is not last)
-            yield f"/// {generator.translation(line)}{separator}"
-        yield "/// </exception>"
+    def __init__(self) -> None:
+        def attribute() -> Iterable[tuple[str, str]]:
+            yield "cref", self.name
+
+        super().__init__()
+        self.documentation.tag = "exception"
+        self.documentation.attributes = attribute()
 
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]

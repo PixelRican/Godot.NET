@@ -43,7 +43,8 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
         member: ConstantInfo = ConstantInfo()
         member.name = member_data["name"]
         member.value = member_data["value"]
-        member.description = member_data.get("description", member.description)
+        if description := member_data.get("description"):
+            member.documentation.description = documentation(description)
         enumeration.members.append(member)
     prefix: str = commonprefix([member.name for member in enumeration.members])
     for member in enumeration.members:
@@ -81,7 +82,8 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
             field.type = "GDExtensionClassMethodFlags"
         else:
             field.type = field_data["type"]
-        field.description = field_data.get("description", field.description)
+        if description := field_data.get("description"):
+            field.documentation.description = documentation(description)
         structure.fields.append(field)
         generator.translate(field.name, pascal(preprocess(field.name)))
     generator.register(structure)
@@ -102,7 +104,7 @@ def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info.dependencies.add("System")
     info.dependencies.add("System.Diagnostics.CodeAnalysis")
     info.dependencies.add("System.Runtime.CompilerServices")
-    info.description.append("Exposes functions from the GDExtension API.")
+    info.documentation.description = ("Exposes functions from the GDExtension API.",)
     info.name = "GDExtensionInterface"
     info.is_static = True
     info.is_unsafe = True
@@ -118,7 +120,8 @@ def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     info.name = data["name"]
-    info.description = data.get("description", info.description)
+    if description := data.get("description", ()):
+        info.documentation.description = documentation(description)
     deprecated: Optional[dict[str, str]] = data.get("deprecated")
     if deprecated:
         info.attributes.add(obsolete(deprecated))
@@ -134,15 +137,15 @@ def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodI
     method.name = "Initialize"
     method.is_static = True
     method.body = method_body()
-    method.description.append("Loads the GDExtensionInterface functions from the specified address loader.")
+    method.documentation.description = ("Loads the GDExtensionInterface functions from the specified address loader.",)
     parameter: ParameterInfo = ParameterInfo()
     parameter.name = "pGetProcAddress"
     parameter.type = "GDExtensionInterfaceGetProcAddress"
-    parameter.description.append("The address loader provided by the Godot Engine.")
+    parameter.documentation.description = ("The address loader provided by the Godot Engine.",)
     method.parameters.append(parameter)
     exception: ExceptionInfo = ExceptionInfo()
     exception.name = "ArgumentNullException"
-    exception.description.append("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.")
+    exception.documentation.description = ("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",)
     method.exceptions.append(exception)
     return method
 
@@ -159,7 +162,8 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     method: MethodInfo = MethodInfo()
     method.name = data["name"]
     method.attributes.add("MethodImpl(MethodImplOptions.AggressiveInlining)")
-    method.description = data.get("description", method.description)
+    if description := data.get("description"):
+        method.documentation.description = documentation(description)
     method.body = method_body()
     method.is_static = True
     deprecated: Optional[dict[str, str]] = data.get("deprecated")
@@ -168,12 +172,14 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
         method.attributes.add(obsolete(deprecated))
     if return_type_data:
         method.return_type.name = return_type_data["type"]
-        method.return_type.description = return_type_data.get("description", method.return_type.description)
+        if description := return_type_data.get("description"):
+            method.return_type.documentation.description = documentation(description)
     for parameter_data in data["arguments"]:
         parameter: ParameterInfo = ParameterInfo()
         parameter.name = parameter_data["name"]
         parameter.type = parameter_data["type"]
-        parameter.description = parameter_data.get("description", parameter.description)
+        if description := parameter_data.get("description"):
+            parameter.documentation.description = documentation(description)
         method.parameters.append(parameter)
         generator.translate(parameter.name, camel(preprocess(parameter.name)))
     type_parameters: str = ", ".join([parameter.type for parameter in method.parameters] + [method.return_type.name])
@@ -247,6 +253,12 @@ def obsolete(data: dict[str, str]) -> str:
         sentences.append(f"Use `{replace_with}` instead.")
     argument: str = " ".join(sentences)
     return f"Obsolete(\"{argument}\")"
+
+def documentation(description: list[str]) -> Iterable[str]:
+    last_line: str = description[-1]
+    for line in description:
+        separator: str = "<br/>" * (line is not last_line)
+        yield line + separator
 
 def preprocess(symbol: str) -> str:
     def substitute(match: Match[str]) -> str:
