@@ -114,7 +114,7 @@ class SourceGenerator:
         return self.translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
-class DocumentationInfo:
+class MemberDocumentation:
     def __init__(self) -> None:
         self.tag: str = "summary"
         self.attributes: Iterable[tuple[str, str]] = ()
@@ -136,7 +136,7 @@ class DocumentationInfo:
 class MemberInfo:
     def __init__(self) -> None:
         self.name: str = "_"
-        self.documentation: DocumentationInfo = DocumentationInfo()
+        self.documentation: MemberDocumentation = MemberDocumentation()
         self.attributes: set[str] = set()
 
 class EncapsulatedMemberInfo(MemberInfo):
