@@ -114,7 +114,7 @@ class SourceGenerator:
                     indent: str = "    " * self.__indent_level if line else ""
                     file.write(f"{indent}{line}\n")
 
-class MemberDocumentation:
+class XMLDocumentation:
     def __init__(self) -> None:
         self.tag: str = "summary"
         self.attributes: Iterable[tuple[str, str]] = ()
@@ -136,7 +136,7 @@ class MemberDocumentation:
 class MemberInfo:
     def __init__(self) -> None:
         self.name: str = "_"
-        self.documentation: MemberDocumentation = MemberDocumentation()
+        self.documentation: XMLDocumentation = XMLDocumentation()
         self.attributes: set[str] = set()
 
 class EncapsulatedMemberInfo(MemberInfo):
