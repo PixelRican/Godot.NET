@@ -4,8 +4,6 @@ from typing import Any, Iterable, Iterator
 
 class SourceGenerator:
     def __init__(self, namespace: str, output_directory: str) -> None:
-        assert isinstance(namespace, str), "namespace must be a string."
-        assert isinstance(output_directory, str), "output_directory must be a string."
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
         self.__types: list[TypeInfo] = []
@@ -36,7 +34,6 @@ class SourceGenerator:
             self.__indent_level -= 1
 
     def register(self, type_info: TypeInfo) -> None:
-        assert isinstance(type_info, TypeInfo), "type_info must be of type TypeInfo."
         self.__types.append(type_info)
 
     def get_expansion(self, alias: str) -> str:
@@ -45,7 +42,6 @@ class SourceGenerator:
             substitution: str = self.get_expansion(group)
             return match.group().replace(group, substitution)
 
-        assert isinstance(alias, str), "alias must be a string."
         pointer: str = "*" * alias.endswith("*")
         key: str = alias.removeprefix("const ").removesuffix("*")
         if key.endswith(">"):
@@ -55,8 +51,6 @@ class SourceGenerator:
         return key + pointer
 
     def set_expansion(self, alias: str, value: str) -> None:
-        assert isinstance(alias, str), "alias must be a string."
-        assert isinstance(value, str), "value must be a string."
         self.__expansions.setdefault(alias, value)
 
     def get_translation(self, string: str) -> str:
@@ -68,13 +62,10 @@ class SourceGenerator:
                 result = "`{}`"
             return result.format(self.__translations.get(group, group))
 
-        assert isinstance(string, str), "string must be a string."
         return self.__translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
     def set_translation(self, string: str, value: str) -> None:
-        assert isinstance(string, str), "string must be a string."
-        assert isinstance(value, str), "value must be a string."
         self.__translations.setdefault(string, value)
 
     def generate(self) -> None:
