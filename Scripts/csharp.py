@@ -45,6 +45,7 @@ class SourceGenerator:
             substitution: str = self.get_expansion(group)
             return match.group().replace(group, substitution)
 
+        assert isinstance(alias, str), "alias must be a string."
         pointer: str = "*" * alias.endswith("*")
         key: str = alias.removeprefix("const ").removesuffix("*")
         if key.endswith(">"):
@@ -54,6 +55,8 @@ class SourceGenerator:
         return key + pointer
 
     def set_expansion(self, alias: str, value: str) -> None:
+        assert isinstance(alias, str), "alias must be a string."
+        assert isinstance(value, str), "value must be a string."
         self.__expansions.setdefault(alias, value)
 
     def get_translation(self, string: str) -> str:
@@ -65,10 +68,13 @@ class SourceGenerator:
                 result = "`{}`"
             return result.format(self.__translations.get(group, group))
 
+        assert isinstance(string, str), "string must be a string."
         return self.__translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
     def set_translation(self, string: str, value: str) -> None:
+        assert isinstance(string, str), "string must be a string."
+        assert isinstance(value, str), "value must be a string."
         self.__translations.setdefault(string, value)
 
     def generate(self) -> None:
