@@ -4,8 +4,8 @@ from typing import Any, Iterable, Iterator
 
 class SourceGenerator:
     def __init__(self, namespace: str, output_directory: str) -> None:
-        assert isinstance(namespace, str), "namespace must be a string"
-        assert isinstance(output_directory, str), "output_directory must be a string"
+        assert isinstance(namespace, str), "namespace must be a string."
+        assert isinstance(output_directory, str), "output_directory must be a string."
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
         self.__types: list[TypeInfo] = []
