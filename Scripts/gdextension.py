@@ -32,17 +32,9 @@ def parse(data: dict[str, Any]) -> SourceGenerator:
     interface(generator, data)
     return generator
 
-def initialize(info: TypeInfo, data: dict[str, Any]) -> None:
-    info.name = data["name"]
-    info.description = data.get("description", info.description)
-    deprecated: Optional[dict[str, str]] = data.get("deprecated")
-    if deprecated:
-        info.attributes.add(obsolete(deprecated))
-        info.dependencies.add("System")
-
 def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
     enumeration: EnumerationInfo = EnumerationInfo()
-    initialize(enumeration, data)
+    type_initialize(enumeration, data)
     if data.get("is_bitfield"):
         enumeration.underlying_type = "uint"
         enumeration.dependencies.add("System")
@@ -77,7 +69,7 @@ def alias(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure: ClassInfo = ClassInfo()
-    initialize(structure, data)
+    type_initialize(structure, data)
     structure.is_value_type = True
     structure.is_unsafe = structure.name != "GDExtensionCallError"
     structure.dependencies.add("System.Runtime.InteropServices")
@@ -123,6 +115,14 @@ def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info.methods.append(interface_throw_if_invalid(generator))
     info.methods.append(interface_throw_for_invalid_function())
     generator.register(info)
+
+def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
+    info.name = data["name"]
+    info.description = data.get("description", info.description)
+    deprecated: Optional[dict[str, str]] = data.get("deprecated")
+    if deprecated:
+        info.attributes.add(obsolete(deprecated))
+        info.dependencies.add("System")
 
 def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodInfo:
     def method_body() -> Iterable[str]:
