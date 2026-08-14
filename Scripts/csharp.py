@@ -124,7 +124,10 @@ class DocumentationInfo:
     def source(self, generator: SourceGenerator) -> Iterable[str]:
         description: Iterator[str] = iter(self.description)
         if first := next(description, None):
-            prolog: str = " ".join([self.tag] + [f"{key}=\"{generator.translation(value)}\"" for key, value in self.attributes])
+            elements: list[str] = [self.tag]
+            for key, value in self.attributes:
+                elements.append(f"{key}=\"{generator.translation(value)}\"")
+            prolog: str = " ".join(elements)
             yield f"/// <{prolog}>"
             yield f"/// {generator.translation(first)}"
             for line in description:
