@@ -56,9 +56,6 @@ class SourceGenerator:
     def set_expansion(self, alias: str, value: str) -> None:
         self.__expansions.setdefault(alias, value)
 
-    def set_translation(self, string: str, value: str) -> None:
-        self.__translations.setdefault(string, value)
-
     def get_translation(self, string: str) -> str:
         def substitute(match: Match[str]) -> str:
             group: str = match.group()
@@ -70,6 +67,9 @@ class SourceGenerator:
 
         return self.__translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
+
+    def set_translation(self, string: str, value: str) -> None:
+        self.__translations.setdefault(string, value)
 
     def generate(self) -> None:
         for info in self.__types:
