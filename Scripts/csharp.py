@@ -91,14 +91,13 @@ class SourceGenerator:
             substitution: str = self.expansion(group)
             return match.group().replace(group, substitution)
 
-        key: str = symbol.removeprefix("const ").removesuffix("*")
         pointer: str = "*" * symbol.endswith("*")
+        key: str = symbol.removeprefix("const ").removesuffix("*")
         if key.endswith(">"):
             return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        value: Optional[str] = self.expansions.get(key)
-        if value == "char":
-            return f"char{pointer}"
-        return (self.expansion(value) if value else key) + pointer
+        if value := self.expansions.get(key):
+            return (value if value == "char" else self.expansion(value)) + pointer
+        return key + pointer
 
     def translate(self, string: str, translation: str) -> None:
         self.translations.setdefault(string, translation)
