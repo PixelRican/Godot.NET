@@ -47,14 +47,14 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
     prefix: str = commonprefix([member.name for member in enumeration.members])
     for member in enumeration.members:
         if "MAX" in member.name:
-            generator.translate(member.name, "Max")
+            generator.set_translation(member.name, "Max")
         else:
             replacement: str = pascal(member.name.removeprefix(prefix)) \
                 .removeprefix("Error") \
                 .removeprefix("Initialization") \
                 .replace("SD", "D", 1) \
                 .replace("Uint", "UInt", 1)
-            generator.translate(member.name, replacement)
+            generator.set_translation(member.name, replacement)
     generator.register(enumeration)
 
 def handle(generator: SourceGenerator, data: dict[str, Any]) -> None:
@@ -83,7 +83,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
         if description := field_data.get("description"):
             field.documentation.description = documentation(description)
         structure.fields.append(field)
-        generator.translate(field.name, pascal(preprocess(field.name)))
+        generator.set_translation(field.name, pascal(preprocess(field.name)))
     generator.register(structure)
 
 def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
@@ -151,7 +151,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     def method_body() -> Iterable[str]:
         yield f"{generator.get_expansion(field.type)} function = {field.name};"
         yield "ThrowIfInvalid(function);"
-        arguments: str = ", ".join(generator.translation(argument.name) for argument in method.parameters)
+        arguments: str = ", ".join(generator.get_translation(argument.name) for argument in method.parameters)
         if method.return_type.name == "void":
             yield f"function({arguments});"
         else:
@@ -179,14 +179,14 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
         if description := parameter_data.get("description"):
             parameter.documentation.description = documentation(description)
         method.parameters.append(parameter)
-        generator.translate(parameter.name, camel(preprocess(parameter.name)))
+        generator.set_translation(parameter.name, camel(preprocess(parameter.name)))
     type_parameters: str = ", ".join([parameter.type for parameter in method.parameters] + [method.return_type.name])
     field: FieldInfo = FieldInfo()
     field.name = f"s_{camel(preprocess(method.name))}"
     field.type = f"delegate* unmanaged[Cdecl]<{type_parameters}>"
     field.is_public = False
     field.is_static = True
-    generator.translate(method.name, pascal(preprocess(method.name)))
+    generator.set_translation(method.name, pascal(preprocess(method.name)))
     return field, method
 
 def interface_load(generator: SourceGenerator) -> MethodInfo:

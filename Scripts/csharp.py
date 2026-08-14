@@ -56,10 +56,10 @@ class SourceGenerator:
     def set_expansion(self, alias: str, value: str) -> None:
         self.__expansions.setdefault(alias, value)
 
-    def translate(self, string: str, translation: str) -> None:
-        self.__translations.setdefault(string, translation)
+    def set_translation(self, string: str, value: str) -> None:
+        self.__translations.setdefault(string, value)
 
-    def translation(self, string: str) -> str:
+    def get_translation(self, string: str) -> str:
         def substitute(match: Match[str]) -> str:
             group: str = match.group()
             result: str = "{}"
@@ -128,12 +128,12 @@ class MemberDocumentation:
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
             for key, value in self.attributes:
-                elements.append(f"{key}=\"{generator.translation(value)}\"")
+                elements.append(f"{key}=\"{generator.get_translation(value)}\"")
             prolog: str = " ".join(elements)
             yield f"/// <{prolog}>"
-            yield f"/// {generator.translation(first_line)}"
+            yield f"/// {generator.get_translation(first_line)}"
             for line in description:
-                yield f"/// {generator.translation(line)}"
+                yield f"/// {generator.get_translation(line)}"
             yield f"/// </{self.tag}>"
 
 class MemberInfo:
@@ -159,7 +159,7 @@ class TypeInfo(EncapsulatedMemberInfo):
     def source(self, generator: SourceGenerator) -> Iterable[str]:
         yield from self.documentation.source(generator)
         for attribute in sorted(self.attributes):
-            yield f"[{generator.translation(attribute)}]"
+            yield f"[{generator.get_translation(attribute)}]"
         yield from self.definition(generator)
 
     def definition(self, generator: SourceGenerator) -> Iterable[str]:
@@ -183,7 +183,7 @@ class EnumerationInfo(TypeInfo):
                 for member in self.members:
                     separator: str = "," * (member is not last)
                     yield from member.documentation.source(generator)
-                    yield f"{generator.translation(member.name)} = {member.value}{separator}"
+                    yield f"{generator.get_translation(member.name)} = {member.value}{separator}"
         yield "}"
 
 class ConstantInfo(MemberInfo):
@@ -217,7 +217,7 @@ class ClassInfo(TypeInfo):
             for member in self.fields:
                 separate = True
                 yield from member.documentation.source(generator)
-                yield f"{member.modifiers} {generator.get_expansion(member.type)} {generator.translation(member.name)};"
+                yield f"{member.modifiers} {generator.get_expansion(member.type)} {generator.get_translation(member.name)};"
             for member in self.methods:
                 if separate:
                     yield ""
@@ -262,9 +262,9 @@ class MethodInfo(EncapsulatedMemberInfo):
             yield from exception.documentation.source(generator)
         yield from self.return_type.documentation.source(generator)
         for attribute in sorted(self.attributes):
-            yield f"[{generator.translation(attribute)}]"
-        parameters: str = ", ".join(f"{generator.get_expansion(parameter.type)} {generator.translation(parameter.name)}" for parameter in self.parameters)
-        yield f"{self.modifiers} {generator.get_expansion(self.return_type.name)} {generator.translation(self.name)}({parameters})"
+            yield f"[{generator.get_translation(attribute)}]"
+        parameters: str = ", ".join(f"{generator.get_expansion(parameter.type)} {generator.get_translation(parameter.name)}" for parameter in self.parameters)
+        yield f"{self.modifiers} {generator.get_expansion(self.return_type.name)} {generator.get_translation(self.name)}({parameters})"
         yield "{"
         with generator.indent():
             yield from self.body
