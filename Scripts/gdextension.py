@@ -121,7 +121,7 @@ def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     info.description = data.get("description", info.description)
     deprecated: Optional[dict[str, str]] = data.get("deprecated")
     if deprecated:
-        info.attributes.add(obsolete(deprecated))
+        info.attributes.add(deprecated(deprecated))
         info.dependencies.add("System")
 
 def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodInfo:
@@ -165,7 +165,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     deprecated: Optional[dict[str, str]] = data.get("deprecated")
     return_type_data: Optional[dict[str, Any]] = data.get("return_value")
     if deprecated:
-        method.attributes.add(obsolete(deprecated))
+        method.attributes.add(deprecated(deprecated))
     if return_type_data:
         method.return_type.name = return_type_data["type"]
         method.return_type.description = return_type_data.get("description", method.return_type.description)
@@ -236,7 +236,7 @@ def interface_throw_for_invalid_function() -> MethodInfo:
     method.is_static = True
     return method
 
-def obsolete(data: dict[str, str]) -> str:
+def deprecated(data: dict[str, str]) -> str:
     since: str = data["since"]
     message: Optional[str] = data.get("message")
     replace_with: Optional[str] = data.get("replace_with")
