@@ -55,7 +55,7 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
                 .replace("SD", "D", 1) \
                 .replace("Uint", "UInt", 1)
             generator.set_translation(member.name, replacement)
-    generator.register(enumeration)
+    generator.add_type(enumeration)
 
 def handle(generator: SourceGenerator, data: dict[str, Any]) -> None:
     handle_name: str = data["name"]
@@ -84,7 +84,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
             field.documentation.description = documentation(description)
         structure.fields.append(field)
         generator.set_translation(field.name, pascal(preprocess(field.name)))
-    generator.register(structure)
+    generator.add_type(structure)
 
 def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
     function_name: str = data["name"]
@@ -114,7 +114,7 @@ def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info.methods.append(interface_load(generator))
     info.methods.append(interface_throw_if_invalid(generator))
     info.methods.append(interface_throw_for_invalid_function())
-    generator.register(info)
+    generator.add_type(info)
 
 def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     info.name = data["name"]

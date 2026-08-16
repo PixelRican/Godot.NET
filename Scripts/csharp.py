@@ -33,8 +33,8 @@ class SourceGenerator:
         finally:
             self.__indent_level -= 1
 
-    def register(self, type_info: TypeInfo) -> None:
-        self.__types.append(type_info)
+    def add_type(self, item: TypeInfo) -> None:
+        self.__types.append(item)
 
     def get_expansion(self, alias: str) -> str:
         def substitute(match: Match[str]) -> str:
