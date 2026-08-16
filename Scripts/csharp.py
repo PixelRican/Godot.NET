@@ -120,7 +120,7 @@ class XMLDocumentation:
         self.attributes: Iterable[tuple[str, str]] = ()
         self.description: Iterable[str] = ()
 
-    def source(self, generator: SourceGenerator) -> Iterable[str]:
+    def source(self, generator: SourceGenerator) -> Iterator[str]:
         description: Iterator[str] = iter(self.description)
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
@@ -153,13 +153,13 @@ class TypeInfo(EncapsulatedMemberInfo):
         super().__init__()
         self.dependencies: set[str] = set()
 
-    def source(self, generator: SourceGenerator) -> Iterable[str]:
+    def source(self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
         for attribute in sorted(self.attributes):
             yield f"[{generator.get_translation(attribute)}]"
         yield from self.definition(generator)
 
-    def definition(self, generator: SourceGenerator) -> Iterable[str]:
+    def definition(self, generator: SourceGenerator) -> Iterator[str]:
         raise NotImplementedError()
 
 class EnumerationInfo(TypeInfo):
@@ -168,7 +168,7 @@ class EnumerationInfo(TypeInfo):
         self.underlying_type: str = ""
         self.members: list[ConstantInfo] = []
 
-    def definition(self, generator: SourceGenerator) -> Iterable[str]:
+    def definition(self, generator: SourceGenerator) -> Iterator[str]:
         if self.underlying_type:
             yield f"{self.modifiers} enum {self.name} : {self.underlying_type}"
         else:
@@ -206,7 +206,7 @@ class ClassInfo(TypeInfo):
             modifiers.append("unsafe")
         return " ".join(modifiers)
 
-    def definition(self, generator: SourceGenerator) -> Iterable[str]:
+    def definition(self, generator: SourceGenerator) -> Iterator[str]:
         yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
         yield "{"
         with generator.indent():
@@ -251,7 +251,7 @@ class MethodInfo(EncapsulatedMemberInfo):
     def modifiers(self) -> str:
         return f"{super().modifiers} static" if self.is_static else super().modifiers
 
-    def source(self, generator: SourceGenerator) -> Iterable[str]:
+    def source(self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
         for parameter in self.parameters:
             yield from parameter.documentation.source(generator)
@@ -275,7 +275,7 @@ class ReturnTypeInfo(MemberInfo):
 
 class ParameterInfo(MemberInfo):
     def __init__(self) -> None:
-        def attribute() -> Iterable[tuple[str, str]]:
+        def attribute() -> Iterator[tuple[str, str]]:
             yield "name", self.name
 
         super().__init__()
@@ -285,7 +285,7 @@ class ParameterInfo(MemberInfo):
 
 class ExceptionInfo(MemberInfo):
     def __init__(self) -> None:
-        def attribute() -> Iterable[tuple[str, str]]:
+        def attribute() -> Iterator[tuple[str, str]]:
             yield "cref", self.name
 
         super().__init__()
