@@ -117,21 +117,34 @@ class SourceGenerator:
 class XMLDocumentation:
     def __init__(self) -> None:
         self.tag: str = "summary"
-        self.attributes: Iterable[tuple[str, str]] = ()
+        self.attributes: Iterable[XMLAttribute] = ()
         self.description: Iterable[str] = ()
 
     def source(self, generator: SourceGenerator) -> Iterator[str]:
         description: Iterator[str] = iter(self.description)
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
-            for key, value in self.attributes:
-                elements.append(f"{key}=\"{generator.get_translation(value)}\"")
+            for attribute in self.attributes:
+                elements.append(f"{attribute.name}=\"{generator.get_translation(attribute.value)}\"")
             header: str = " ".join(elements)
             yield f"/// <{header}>"
             yield f"/// {generator.get_translation(first_line)}"
             for line in description:
                 yield f"/// {generator.get_translation(line)}"
             yield f"/// </{self.tag}>"
+
+class XMLAttribute:
+    def __init__(self, name: str, value: str) -> None:
+        self.__name: str = name
+        self.__value: str = value
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def value(self) -> str:
+        return self.__value
 
 class MemberInfo:
     def __init__(self) -> None:
@@ -275,8 +288,8 @@ class ReturnTypeInfo(MemberInfo):
 
 class ParameterInfo(MemberInfo):
     def __init__(self) -> None:
-        def attribute() -> Iterator[tuple[str, str]]:
-            yield "name", self.name
+        def attribute() -> Iterator[XMLAttribute]:
+            yield XMLAttribute("name", self.name)
 
         super().__init__()
         self.type: str = "object"
@@ -285,8 +298,8 @@ class ParameterInfo(MemberInfo):
 
 class ExceptionInfo(MemberInfo):
     def __init__(self) -> None:
-        def attribute() -> Iterator[tuple[str, str]]:
-            yield "cref", self.name
+        def attribute() -> Iterator[XMLAttribute]:
+            yield XMLAttribute("cref", self.name)
 
         super().__init__()
         self.documentation.tag = "exception"
