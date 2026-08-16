@@ -126,8 +126,8 @@ class XMLDocumentation:
             elements: list[str] = [self.tag]
             for key, value in self.attributes:
                 elements.append(f"{key}=\"{generator.get_translation(value)}\"")
-            prolog: str = " ".join(elements)
-            yield f"/// <{prolog}>"
+            header: str = " ".join(elements)
+            yield f"/// <{header}>"
             yield f"/// {generator.get_translation(first_line)}"
             for line in description:
                 yield f"/// {generator.get_translation(line)}"
