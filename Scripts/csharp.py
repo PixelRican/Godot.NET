@@ -2,6 +2,7 @@ from contextlib import contextmanager
 from re import sub, Match
 from typing import Any, Iterable, Iterator
 
+
 class SourceGenerator:
     def __init__(self, namespace: str, output_directory: str) -> None:
         self.__namespace: str = namespace
@@ -118,6 +119,7 @@ class SourceGenerator:
             indent: str = "    " * self.__indent_level if line else ""
             yield f"{indent}{line}\n"
 
+
 class XMLDocumentation:
     def __init__(self) -> None:
         self.tag: str = "summary"
@@ -137,6 +139,7 @@ class XMLDocumentation:
                 yield f"/// {generator.get_translation(line)}"
             yield f"/// </{self.tag}>"
 
+
 class XMLAttribute:
     def __init__(self, name: str, value: str) -> None:
         self.__name: str = name
@@ -150,11 +153,13 @@ class XMLAttribute:
     def value(self) -> str:
         return self.__value
 
+
 class MemberInfo:
     def __init__(self) -> None:
         self.name: str = "_"
         self.documentation: XMLDocumentation = XMLDocumentation()
         self.attributes: set[str] = set()
+
 
 class EncapsulatedMemberInfo(MemberInfo):
     def __init__(self) -> None:
@@ -164,6 +169,7 @@ class EncapsulatedMemberInfo(MemberInfo):
     @property
     def modifiers(self) -> str:
         return "public" if self.is_public else "private"
+
 
 class TypeInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
@@ -178,6 +184,7 @@ class TypeInfo(EncapsulatedMemberInfo):
 
     def definition(self, generator: SourceGenerator) -> Iterator[str]:
         raise NotImplementedError()
+
 
 class EnumerationInfo(TypeInfo):
     def __init__(self) -> None:
@@ -200,10 +207,12 @@ class EnumerationInfo(TypeInfo):
                     yield f"{generator.get_translation(member.name)} = {member.value}{separator}"
         yield "}"
 
+
 class ConstantInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.value: int = 0
+
 
 class ClassInfo(TypeInfo):
     def __init__(self) -> None:
@@ -239,6 +248,7 @@ class ClassInfo(TypeInfo):
                 yield from member.source(generator)
         yield "}"
 
+
 class FieldInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
         super().__init__()
@@ -254,6 +264,7 @@ class FieldInfo(EncapsulatedMemberInfo):
         if self.is_readonly:
             modifiers.append("readonly")
         return " ".join(modifiers)
+
 
 class MethodInfo(EncapsulatedMemberInfo):
     def __init__(self) -> None:
@@ -284,11 +295,13 @@ class MethodInfo(EncapsulatedMemberInfo):
             yield from self.body
         yield "}"
 
+
 class ReturnTypeInfo(MemberInfo):
     def __init__(self) -> None:
         super().__init__()
         self.name: str = "void"
         self.documentation.tag = "returns"
+
 
 class ParameterInfo(MemberInfo):
     def __init__(self) -> None:
@@ -300,6 +313,7 @@ class ParameterInfo(MemberInfo):
         self.documentation.tag = "param"
         self.documentation.attributes = attribute()
 
+
 class ExceptionInfo(MemberInfo):
     def __init__(self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
@@ -309,8 +323,10 @@ class ExceptionInfo(MemberInfo):
         self.documentation.tag = "exception"
         self.documentation.attributes = attribute()
 
+
 def camel(symbol: str) -> str:
     return symbol[0].lower() + pascal(symbol)[1:]
+
 
 def pascal(symbol: str) -> str:
     return symbol.title().replace("_", "")
