@@ -236,6 +236,7 @@ def interface_throw_for_invalid_function() -> MethodInfo:
     method: MethodInfo = MethodInfo()
     method.name = "ThrowForInvalidFunction"
     method.body = ("throw new InvalidOperationException(\"Unable to call the specified function.\");",)
+    method.attributes.add("DoesNotReturn")
     method.is_public = False
     method.is_static = True
     return method

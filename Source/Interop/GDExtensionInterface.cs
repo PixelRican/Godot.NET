@@ -4166,6 +4166,7 @@ public static unsafe class GDExtensionInterface
         }
     }
 
+    [DoesNotReturn]
     private static void ThrowForInvalidFunction()
     {
         throw new InvalidOperationException("Unable to call the specified function.");
