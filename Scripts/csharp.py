@@ -7,7 +7,7 @@ class SourceGenerator:
     def __init__(self: Self, namespace: str, output_directory: str) -> None:
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
-        self.__types: list[TypeInfo] = []
+        self.__types: list[CSharpType] = []
         self.__expansions: dict[str, str] = {
             "int8_t" : "sbyte",
             "uint8_t" : "byte",
@@ -34,7 +34,7 @@ class SourceGenerator:
         finally:
             self.__indent_level -= 1
 
-    def add_type(self: Self, item: TypeInfo) -> None:
+    def add_type(self: Self, item: CSharpType) -> None:
         self.__types.append(item)
 
     def get_expansion(self: Self, alias: str) -> str:
@@ -74,7 +74,7 @@ class SourceGenerator:
             with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
                 file.writelines(self.__source(info))
 
-    def __source(self: Self, info: TypeInfo) -> Iterable[str]:
+    def __source(self: Self, info: CSharpType) -> Iterable[str]:
         yield "/**************************************************************************/\n"
         yield f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n"
         yield "/**************************************************************************/\n"
@@ -154,14 +154,14 @@ class XMLAttribute:
         return self.__value
 
 
-class ProgramElement:
+class CSharpElement:
     def __init__(self: Self) -> None:
         self.name: str = "_"
         self.documentation: XMLDocumentation = XMLDocumentation()
         self.attributes: set[str] = set()
 
 
-class EncapsulatedProgramElement(ProgramElement):
+class EncapsulatedCSharpElement(CSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
         self.is_public: bool = True
@@ -171,7 +171,7 @@ class EncapsulatedProgramElement(ProgramElement):
         return "public" if self.is_public else "private"
 
 
-class TypeInfo(EncapsulatedProgramElement):
+class CSharpType(EncapsulatedCSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
         self.dependencies: set[str] = set()
@@ -186,11 +186,11 @@ class TypeInfo(EncapsulatedProgramElement):
         raise NotImplementedError()
 
 
-class EnumerationInfo(TypeInfo):
+class CSharpEnumeration(CSharpType):
     def __init__(self: Self) -> None:
         super().__init__()
         self.underlying_type: str = ""
-        self.members: list[ConstantInfo] = []
+        self.members: list[CSharpConstant] = []
 
     def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
         if self.underlying_type:
@@ -199,7 +199,7 @@ class EnumerationInfo(TypeInfo):
             yield f"{self.modifiers} enum {self.name}"
         yield "{"
         if self.members:
-            last: ConstantInfo = self.members[-1]
+            last: CSharpConstant = self.members[-1]
             with generator.indent():
                 for member in self.members:
                     separator: str = "," * (member is not last)
@@ -208,17 +208,17 @@ class EnumerationInfo(TypeInfo):
         yield "}"
 
 
-class ConstantInfo(ProgramElement):
+class CSharpConstant(CSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
         self.value: int = 0
 
 
-class ClassInfo(TypeInfo):
+class CSharpClass(CSharpType):
     def __init__(self: Self) -> None:
         super().__init__()
-        self.fields: list[FieldInfo] = []
-        self.methods: list[MethodInfo] = []
+        self.fields: list[CSharpField] = []
+        self.methods: list[CSharpMethod] = []
         self.is_value_type: bool = False
         self.is_static: bool = False
         self.is_unsafe: bool = False
@@ -249,7 +249,7 @@ class ClassInfo(TypeInfo):
         yield "}"
 
 
-class FieldInfo(EncapsulatedProgramElement):
+class CSharpField(EncapsulatedCSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
         self.type: str = "object"
@@ -266,12 +266,12 @@ class FieldInfo(EncapsulatedProgramElement):
         return " ".join(modifiers)
 
 
-class MethodInfo(EncapsulatedProgramElement):
+class CSharpMethod(EncapsulatedCSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
-        self.return_type: ReturnTypeInfo = ReturnTypeInfo()
-        self.parameters: list[ParameterInfo] = []
-        self.exceptions: list[ExceptionInfo] = []
+        self.return_type: CSharpReturnType = CSharpReturnType()
+        self.parameters: list[CSharpParameter] = []
+        self.exceptions: list[CSharpException] = []
         self.body: Iterable[str] = ("throw new System.NotImplementedException();",)
         self.is_static: bool = False
 
@@ -296,14 +296,14 @@ class MethodInfo(EncapsulatedProgramElement):
         yield "}"
 
 
-class ReturnTypeInfo(ProgramElement):
+class CSharpReturnType(CSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
         self.name: str = "void"
         self.documentation.tag = "returns"
 
 
-class ParameterInfo(ProgramElement):
+class CSharpParameter(CSharpElement):
     def __init__(self: Self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("name", self.name)
@@ -314,7 +314,7 @@ class ParameterInfo(ProgramElement):
         self.documentation.attributes = attribute()
 
 
-class ExceptionInfo(ProgramElement):
+class CSharpException(CSharpElement):
     def __init__(self: Self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("cref", self.name)

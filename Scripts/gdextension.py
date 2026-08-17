@@ -33,14 +33,14 @@ def parse(data: dict[str, Any]) -> SourceGenerator:
 
 
 def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
-    enumeration: EnumerationInfo = EnumerationInfo()
+    enumeration: CSharpEnumeration = CSharpEnumeration()
     type_initialize(enumeration, data)
     if data.get("is_bitfield"):
         enumeration.underlying_type = "uint"
         enumeration.dependencies.add("System")
         enumeration.attributes.add("Flags")
     for member_data in data["values"]:
-        member: ConstantInfo = ConstantInfo()
+        member: CSharpConstant = CSharpConstant()
         member.name = member_data["name"]
         member.value = member_data["value"]
         if description := member_data.get("description"):
@@ -72,14 +72,14 @@ def alias(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 
 def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
-    structure: ClassInfo = ClassInfo()
+    structure: CSharpClass = CSharpClass()
     type_initialize(structure, data)
     structure.is_value_type = True
     structure.is_unsafe = structure.name != "GDExtensionCallError"
     structure.dependencies.add("System.Runtime.InteropServices")
     structure.attributes.add("StructLayout(LayoutKind.Sequential)")
     for field_data in data["members"]:
-        field: FieldInfo = FieldInfo()
+        field: CSharpField = CSharpField()
         field.name = field_data["name"]
         if field.name == "method_flags":
             field.type = "GDExtensionClassMethodFlags"
@@ -105,7 +105,7 @@ def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
 
 
 def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
-    info: ClassInfo = ClassInfo()
+    info: CSharpClass = CSharpClass()
     info.dependencies.add("System")
     info.dependencies.add("System.Diagnostics.CodeAnalysis")
     info.dependencies.add("System.Runtime.CompilerServices")
@@ -124,7 +124,7 @@ def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     generator.add_type(info)
 
 
-def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
+def type_initialize(info: CSharpType, data: dict[str, Any]) -> None:
     info.name = data["name"]
     if description := data.get("description", ()):
         info.documentation.description = documentation(description)
@@ -134,30 +134,30 @@ def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
         info.dependencies.add("System")
 
 
-def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodInfo:
+def interface_initialize(generator: SourceGenerator, info: CSharpClass) -> CSharpMethod:
     def method_body() -> Iterable[str]:
         yield "ArgumentNullException.ThrowIfNull(pGetProcAddress);"
         for field, delegate in zip(info.fields, info.methods[1:]):
             yield f"{field.name} = ({generator.get_expansion(field.type)})Load(pGetProcAddress, \"{delegate.name}\"u8);"
 
-    method: MethodInfo = MethodInfo()
+    method: CSharpMethod = CSharpMethod()
     method.name = "Initialize"
     method.is_static = True
     method.body = method_body()
     method.documentation.description = ("Loads the GDExtensionInterface functions from the specified address loader.",)
-    parameter: ParameterInfo = ParameterInfo()
+    parameter: CSharpParameter = CSharpParameter()
     parameter.name = "pGetProcAddress"
     parameter.type = "GDExtensionInterfaceGetProcAddress"
     parameter.documentation.description = ("The address loader provided by the Godot Engine.",)
     method.parameters.append(parameter)
-    exception: ExceptionInfo = ExceptionInfo()
+    exception: CSharpException = CSharpException()
     exception.name = "ArgumentNullException"
     exception.documentation.description = ("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",)
     method.exceptions.append(exception)
     return method
 
 
-def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tuple[FieldInfo, MethodInfo]:
+def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tuple[CSharpField, CSharpMethod]:
     def method_body() -> Iterable[str]:
         yield f"{generator.get_expansion(field.type)} function = {field.name};"
         yield "ThrowIfInvalid(function);"
@@ -167,7 +167,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
         else:
             yield f"return function({arguments});"
 
-    method: MethodInfo = MethodInfo()
+    method: CSharpMethod = CSharpMethod()
     method.name = data["name"]
     method.attributes.add("MethodImpl(MethodImplOptions.AggressiveInlining)")
     if description := data.get("description"):
@@ -183,7 +183,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
         if description := return_type_data.get("description"):
             method.return_type.documentation.description = documentation(description)
     for parameter_data in data["arguments"]:
-        parameter: ParameterInfo = ParameterInfo()
+        parameter: CSharpParameter = CSharpParameter()
         parameter.name = parameter_data["name"]
         parameter.type = parameter_data["type"]
         if description := parameter_data.get("description"):
@@ -191,7 +191,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
         method.parameters.append(parameter)
         generator.set_translation(parameter.name, camel(preprocess(parameter.name)))
     type_parameters: str = ", ".join([parameter.type for parameter in method.parameters] + [method.return_type.name])
-    field: FieldInfo = FieldInfo()
+    field: CSharpField = CSharpField()
     field.name = f"s_{camel(preprocess(method.name))}"
     field.type = f"delegate* unmanaged[Cdecl]<{type_parameters}>"
     field.is_public = False
@@ -200,7 +200,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     return field, method
 
 
-def interface_load(generator: SourceGenerator) -> MethodInfo:
+def interface_load(generator: SourceGenerator) -> CSharpMethod:
     def method_body() -> Iterable[str]:
         yield "fixed (byte* functionName = pFunctionName)"
         yield "{"
@@ -208,16 +208,16 @@ def interface_load(generator: SourceGenerator) -> MethodInfo:
             yield "return pGetProcAddress(functionName);"
         yield "}"
 
-    method: MethodInfo = MethodInfo()
+    method: CSharpMethod = CSharpMethod()
     method.name = "Load"
     method.body = method_body()
     method.is_public = False
     method.is_static = True
     method.return_type.name = "void*"
-    parameter1: ParameterInfo = ParameterInfo()
+    parameter1: CSharpParameter = CSharpParameter()
     parameter1.name = "pGetProcAddress"
     parameter1.type = "GDExtensionInterfaceGetProcAddress"
-    parameter2: ParameterInfo = ParameterInfo()
+    parameter2: CSharpParameter = CSharpParameter()
     parameter2.name = "pFunctionName"
     parameter2.type = "ReadOnlySpan<byte>"
     method.parameters.append(parameter1)
@@ -225,7 +225,7 @@ def interface_load(generator: SourceGenerator) -> MethodInfo:
     return method
 
 
-def interface_throw_if_invalid(generator: SourceGenerator) -> MethodInfo:
+def interface_throw_if_invalid(generator: SourceGenerator) -> CSharpMethod:
     def method_body() -> Iterable[str]:
         yield "if (pFunction == null)"
         yield "{"
@@ -233,20 +233,20 @@ def interface_throw_if_invalid(generator: SourceGenerator) -> MethodInfo:
             yield "ThrowForInvalidFunction();"
         yield "}"
 
-    method: MethodInfo = MethodInfo()
+    method: CSharpMethod = CSharpMethod()
     method.name = "ThrowIfInvalid"
     method.body = method_body()
     method.is_public = False
     method.is_static = True
-    parameter: ParameterInfo = ParameterInfo()
+    parameter: CSharpParameter = CSharpParameter()
     parameter.name = "pFunction"
     parameter.type = "void*"
     method.parameters.append(parameter)
     return method
 
 
-def interface_throw_for_invalid_function() -> MethodInfo:
-    method: MethodInfo = MethodInfo()
+def interface_throw_for_invalid_function() -> CSharpMethod:
+    method: CSharpMethod = CSharpMethod()
     method.name = "ThrowForInvalidFunction"
     method.body = ("throw new InvalidOperationException(\"Unable to call the specified function.\");",)
     method.attributes.add("DoesNotReturn")
