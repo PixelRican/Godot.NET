@@ -54,7 +54,7 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
     if data.get("is_bitfield"):
         enumeration.underlying_type = "uint"
         enumeration.dependencies.add("System")
-        enumeration.attributes.add("Flags")
+        enumeration.attributes.append(CSharpAttribute("Flags"))
     for member_data in data["values"]:
         member: CSharpConstant = CSharpConstant()
         member.name = member_data["name"]
@@ -93,7 +93,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure.is_value_type = True
     structure.is_unsafe = structure.name != "GDExtensionCallError"
     structure.dependencies.add("System.Runtime.InteropServices")
-    structure.attributes.add("StructLayout(LayoutKind.Sequential)")
+    structure.attributes.append(CSharpAttribute("StructLayout", ["LayoutKind.Sequential"]))
     for field_data in data["members"]:
         field: CSharpField = CSharpField()
         field.name = field_data["name"]
@@ -146,7 +146,7 @@ def type_initialize(info: CSharpType, data: dict[str, Any]) -> None:
         info.documentation.description = documentation(description)
     deprecated: Optional[dict[str, str]] = data.get("deprecated")
     if deprecated:
-        info.attributes.add(obsolete(deprecated))
+        info.attributes.append(obsolete(deprecated))
         info.dependencies.add("System")
 
 
@@ -185,7 +185,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
 
     method: CSharpMethod = CSharpMethod()
     method.name = data["name"]
-    method.attributes.add("MethodImpl(MethodImplOptions.AggressiveInlining)")
+    method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
     if description := data.get("description"):
         method.documentation.description = documentation(description)
     method.body = method_body()
@@ -193,7 +193,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     deprecated: Optional[dict[str, str]] = data.get("deprecated")
     return_type_data: Optional[dict[str, Any]] = data.get("return_value")
     if deprecated:
-        method.attributes.add(obsolete(deprecated))
+        method.attributes.append(obsolete(deprecated))
     if return_type_data:
         method.return_type.name = return_type_data["type"]
         if description := return_type_data.get("description"):
@@ -265,13 +265,13 @@ def interface_throw_for_invalid_function() -> CSharpMethod:
     method: CSharpMethod = CSharpMethod()
     method.name = "ThrowForInvalidFunction"
     method.body = ("throw new InvalidOperationException(\"Unable to call the specified function.\");",)
-    method.attributes.add("DoesNotReturn")
+    method.attributes.append(CSharpAttribute("DoesNotReturn"))
     method.is_public = False
     method.is_static = True
     return method
 
 
-def obsolete(data: dict[str, str]) -> str:
+def obsolete(data: dict[str, str]) -> CSharpAttribute:
     since: str = data["since"]
     message: Optional[str] = data.get("message")
     replace_with: Optional[str] = data.get("replace_with")
@@ -281,7 +281,7 @@ def obsolete(data: dict[str, str]) -> str:
     if replace_with:
         sentences.append(f"Use `{replace_with}` instead.")
     argument: str = " ".join(sentences)
-    return f"Obsolete(\"{argument}\")"
+    return CSharpAttribute("Obsolete", [f"\"{argument}\""])
 
 
 def documentation(description: list[str]) -> Iterable[str]:

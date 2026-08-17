@@ -154,11 +154,31 @@ class XMLAttribute:
         return self.__value
 
 
+class CSharpAttribute:
+    def __init__(self: Self, name: str, arguments: Iterable[str] = ()) -> None:
+        self.__name: str = name
+        self.__arguments: tuple[str, ...] = tuple(arguments)
+
+    @property
+    def name(self: Self) -> str:
+        return self.__name
+
+    @property
+    def arguments(self: Self) -> tuple[str, ...]:
+        return self.__arguments
+
+    def statement(self: Self, generator: SourceGenerator) -> str:
+        if self.__arguments:
+            arguments: str = ", ".join(generator.get_translation(argument) for argument in self.__arguments)
+            return f"[{self.__name}({arguments})]"
+        return f"[{self.__name}]"
+
+
 class CSharpElement:
     def __init__(self: Self) -> None:
         self.name: str = "_"
         self.documentation: XMLDocumentation = XMLDocumentation()
-        self.attributes: set[str] = set()
+        self.attributes: list[CSharpAttribute] = []
 
 
 class EncapsulatedCSharpElement(CSharpElement):
@@ -178,8 +198,8 @@ class CSharpType(EncapsulatedCSharpElement):
 
     def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
-        for attribute in sorted(self.attributes):
-            yield f"[{generator.get_translation(attribute)}]"
+        for attribute in sorted(self.attributes, key=lambda a: a.name):
+            yield attribute.statement(generator)
         yield from self.definition(generator)
 
     def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
@@ -286,8 +306,8 @@ class CSharpMethod(EncapsulatedCSharpElement):
         for exception in self.exceptions:
             yield from exception.documentation.source(generator)
         yield from self.return_type.documentation.source(generator)
-        for attribute in sorted(self.attributes):
-            yield f"[{generator.get_translation(attribute)}]"
+        for attribute in sorted(self.attributes, key=lambda a: a.name):
+            yield attribute.statement(generator)
         parameters: str = ", ".join(f"{generator.get_expansion(parameter.type)} {generator.get_translation(parameter.name)}" for parameter in self.parameters)
         yield f"{self.modifiers} {generator.get_expansion(self.return_type.name)} {generator.get_translation(self.name)}({parameters})"
         yield "{"
