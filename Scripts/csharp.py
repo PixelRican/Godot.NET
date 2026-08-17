@@ -154,14 +154,14 @@ class XMLAttribute:
         return self.__value
 
 
-class MemberInfo:
+class ProgramElement:
     def __init__(self) -> None:
         self.name: str = "_"
         self.documentation: XMLDocumentation = XMLDocumentation()
         self.attributes: set[str] = set()
 
 
-class EncapsulatedMemberInfo(MemberInfo):
+class EncapsulatedProgramElement(ProgramElement):
     def __init__(self) -> None:
         super().__init__()
         self.is_public: bool = True
@@ -171,7 +171,7 @@ class EncapsulatedMemberInfo(MemberInfo):
         return "public" if self.is_public else "private"
 
 
-class TypeInfo(EncapsulatedMemberInfo):
+class TypeInfo(EncapsulatedProgramElement):
     def __init__(self) -> None:
         super().__init__()
         self.dependencies: set[str] = set()
@@ -208,7 +208,7 @@ class EnumerationInfo(TypeInfo):
         yield "}"
 
 
-class ConstantInfo(MemberInfo):
+class ConstantInfo(ProgramElement):
     def __init__(self) -> None:
         super().__init__()
         self.value: int = 0
@@ -249,7 +249,7 @@ class ClassInfo(TypeInfo):
         yield "}"
 
 
-class FieldInfo(EncapsulatedMemberInfo):
+class FieldInfo(EncapsulatedProgramElement):
     def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
@@ -266,7 +266,7 @@ class FieldInfo(EncapsulatedMemberInfo):
         return " ".join(modifiers)
 
 
-class MethodInfo(EncapsulatedMemberInfo):
+class MethodInfo(EncapsulatedProgramElement):
     def __init__(self) -> None:
         super().__init__()
         self.return_type: ReturnTypeInfo = ReturnTypeInfo()
@@ -296,14 +296,14 @@ class MethodInfo(EncapsulatedMemberInfo):
         yield "}"
 
 
-class ReturnTypeInfo(MemberInfo):
+class ReturnTypeInfo(ProgramElement):
     def __init__(self) -> None:
         super().__init__()
         self.name: str = "void"
         self.documentation.tag = "returns"
 
 
-class ParameterInfo(MemberInfo):
+class ParameterInfo(ProgramElement):
     def __init__(self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("name", self.name)
@@ -314,7 +314,7 @@ class ParameterInfo(MemberInfo):
         self.documentation.attributes = attribute()
 
 
-class ExceptionInfo(MemberInfo):
+class ExceptionInfo(ProgramElement):
     def __init__(self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("cref", self.name)
