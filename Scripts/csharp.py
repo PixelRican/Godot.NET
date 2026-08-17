@@ -1,10 +1,10 @@
 from contextlib import contextmanager
 from re import Match, sub
-from typing import Any, Iterable, Iterator
+from typing import Any, Iterable, Iterator, Self
 
 
 class SourceGenerator:
-    def __init__(self, namespace: str, output_directory: str) -> None:
+    def __init__(self: Self, namespace: str, output_directory: str) -> None:
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
         self.__types: list[TypeInfo] = []
@@ -27,17 +27,17 @@ class SourceGenerator:
         self.__indent_level: int = 0
 
     @contextmanager
-    def indent(self) -> Any:
+    def indent(self: Self) -> Any:
         self.__indent_level += 1
         try:
             yield self
         finally:
             self.__indent_level -= 1
 
-    def add_type(self, item: TypeInfo) -> None:
+    def add_type(self: Self, item: TypeInfo) -> None:
         self.__types.append(item)
 
-    def get_expansion(self, alias: str) -> str:
+    def get_expansion(self: Self, alias: str) -> str:
         def substitute(match: Match[str]) -> str:
             group: str = match.group(1)
             substitution: str = self.get_expansion(group)
@@ -51,10 +51,10 @@ class SourceGenerator:
             return (value if value == "char" else self.get_expansion(value)) + pointer
         return key + pointer
 
-    def set_expansion(self, alias: str, value: str) -> None:
+    def set_expansion(self: Self, alias: str, value: str) -> None:
         self.__expansions.setdefault(alias, value)
 
-    def get_translation(self, string: str) -> str:
+    def get_translation(self: Self, string: str) -> str:
         def substitute(match: Match[str]) -> str:
             group: str = match.group()
             result: str = "{}"
@@ -66,15 +66,15 @@ class SourceGenerator:
         return self.__translations.get(string) \
             or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
 
-    def set_translation(self, string: str, value: str) -> None:
+    def set_translation(self: Self, string: str, value: str) -> None:
         self.__translations.setdefault(string, value)
 
-    def generate(self) -> None:
+    def generate(self: Self) -> None:
         for info in self.__types:
             with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
                 file.writelines(self.__source(info))
 
-    def __source(self, info: TypeInfo) -> Iterable[str]:
+    def __source(self: Self, info: TypeInfo) -> Iterable[str]:
         yield "/**************************************************************************/\n"
         yield f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n"
         yield "/**************************************************************************/\n"
@@ -121,12 +121,12 @@ class SourceGenerator:
 
 
 class XMLDocumentation:
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         self.tag: str = "summary"
         self.attributes: Iterable[XMLAttribute] = ()
         self.description: Iterable[str] = ()
 
-    def source(self, generator: SourceGenerator) -> Iterator[str]:
+    def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
         description: Iterator[str] = iter(self.description)
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
@@ -141,58 +141,58 @@ class XMLDocumentation:
 
 
 class XMLAttribute:
-    def __init__(self, name: str, value: str) -> None:
+    def __init__(self: Self, name: str, value: str) -> None:
         self.__name: str = name
         self.__value: str = value
 
     @property
-    def name(self) -> str:
+    def name(self: Self) -> str:
         return self.__name
 
     @property
-    def value(self) -> str:
+    def value(self: Self) -> str:
         return self.__value
 
 
 class ProgramElement:
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         self.name: str = "_"
         self.documentation: XMLDocumentation = XMLDocumentation()
         self.attributes: set[str] = set()
 
 
 class EncapsulatedProgramElement(ProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.is_public: bool = True
 
     @property
-    def modifiers(self) -> str:
+    def modifiers(self: Self) -> str:
         return "public" if self.is_public else "private"
 
 
 class TypeInfo(EncapsulatedProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.dependencies: set[str] = set()
 
-    def source(self, generator: SourceGenerator) -> Iterator[str]:
+    def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
         for attribute in sorted(self.attributes):
             yield f"[{generator.get_translation(attribute)}]"
         yield from self.definition(generator)
 
-    def definition(self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
         raise NotImplementedError()
 
 
 class EnumerationInfo(TypeInfo):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.underlying_type: str = ""
         self.members: list[ConstantInfo] = []
 
-    def definition(self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
         if self.underlying_type:
             yield f"{self.modifiers} enum {self.name} : {self.underlying_type}"
         else:
@@ -209,13 +209,13 @@ class EnumerationInfo(TypeInfo):
 
 
 class ConstantInfo(ProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.value: int = 0
 
 
 class ClassInfo(TypeInfo):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.fields: list[FieldInfo] = []
         self.methods: list[MethodInfo] = []
@@ -224,7 +224,7 @@ class ClassInfo(TypeInfo):
         self.is_unsafe: bool = False
 
     @property
-    def modifiers(self) -> str:
+    def modifiers(self: Self) -> str:
         modifiers: list[str] = [super().modifiers]
         if not self.is_value_type and self.is_static:
             modifiers.append("static")
@@ -232,7 +232,7 @@ class ClassInfo(TypeInfo):
             modifiers.append("unsafe")
         return " ".join(modifiers)
 
-    def definition(self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
         yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
         yield "{"
         with generator.indent():
@@ -250,14 +250,14 @@ class ClassInfo(TypeInfo):
 
 
 class FieldInfo(EncapsulatedProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.type: str = "object"
         self.is_static: bool = False
         self.is_readonly: bool = False
 
     @property
-    def modifiers(self) -> str:
+    def modifiers(self: Self) -> str:
         modifiers: list[str] = [super().modifiers]
         if self.is_static:
             modifiers.append("static")
@@ -267,7 +267,7 @@ class FieldInfo(EncapsulatedProgramElement):
 
 
 class MethodInfo(EncapsulatedProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.return_type: ReturnTypeInfo = ReturnTypeInfo()
         self.parameters: list[ParameterInfo] = []
@@ -276,10 +276,10 @@ class MethodInfo(EncapsulatedProgramElement):
         self.is_static: bool = False
 
     @property
-    def modifiers(self) -> str:
+    def modifiers(self: Self) -> str:
         return f"{super().modifiers} static" if self.is_static else super().modifiers
 
-    def source(self, generator: SourceGenerator) -> Iterator[str]:
+    def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
         for parameter in self.parameters:
             yield from parameter.documentation.source(generator)
@@ -297,14 +297,14 @@ class MethodInfo(EncapsulatedProgramElement):
 
 
 class ReturnTypeInfo(ProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         super().__init__()
         self.name: str = "void"
         self.documentation.tag = "returns"
 
 
 class ParameterInfo(ProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("name", self.name)
 
@@ -315,7 +315,7 @@ class ParameterInfo(ProgramElement):
 
 
 class ExceptionInfo(ProgramElement):
-    def __init__(self) -> None:
+    def __init__(self: Self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("cref", self.name)
 
