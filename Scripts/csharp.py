@@ -71,48 +71,52 @@ class SourceGenerator:
     def generate(self) -> None:
         for info in self.__types:
             with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
-                file.write("/**************************************************************************/\n")
-                file.write(f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n")
-                file.write("/**************************************************************************/\n")
-                file.write("/*                         This file is part of:                          */\n")
-                file.write("/*                             GODOT ENGINE                               */\n")
-                file.write("/*                        https://godotengine.org                         */\n")
-                file.write("/**************************************************************************/\n")
-                file.write("/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */\n")
-                file.write("/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */\n")
-                file.write("/*                                                                        */\n")
-                file.write("/* Permission is hereby granted, free of charge, to any person obtaining  */\n")
-                file.write("/* a copy of this software and associated documentation files (the        */\n")
-                file.write("/* \"Software\"), to deal in the Software without restriction, including    */\n")
-                file.write("/* without limitation the rights to use, copy, modify, merge, publish,    */\n")
-                file.write("/* distribute, sublicense, and/or sell copies of the Software, and to     */\n")
-                file.write("/* permit persons to whom the Software is furnished to do so, subject to  */\n")
-                file.write("/* the following conditions:                                              */\n")
-                file.write("/*                                                                        */\n")
-                file.write("/* The above copyright notice and this permission notice shall be         */\n")
-                file.write("/* included in all copies or substantial portions of the Software.        */\n")
-                file.write("/*                                                                        */\n")
-                file.write("/* THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,        */\n")
-                file.write("/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF     */\n")
-                file.write("/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. */\n")
-                file.write("/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY   */\n")
-                file.write("/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,   */\n")
-                file.write("/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE      */\n")
-                file.write("/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */\n")
-                file.write("/**************************************************************************/\n")
-                file.write("/*              This file is generated. Edits will be lost.               */\n")
-                file.write("/**************************************************************************/\n")
-                file.write("\n")
-                separate: bool = False
-                for dependency in sorted(info.dependencies):
-                    separate = True
-                    file.write(f"using {dependency};\n")
-                file.write("\n" * separate)
-                file.write(f"namespace {self.__namespace};\n")
-                file.write("\n")
-                for line in info.source(self):
-                    indent: str = "    " * self.__indent_level if line else ""
-                    file.write(f"{indent}{line}\n")
+                file.writelines(self.__source(info))
+
+    def __source(self, info: TypeInfo) -> Iterable[str]:
+        yield "/**************************************************************************/\n"
+        yield f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n"
+        yield "/**************************************************************************/\n"
+        yield "/*                         This file is part of:                          */\n"
+        yield "/*                             GODOT ENGINE                               */\n"
+        yield "/*                        https://godotengine.org                         */\n"
+        yield "/**************************************************************************/\n"
+        yield "/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */\n"
+        yield "/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */\n"
+        yield "/*                                                                        */\n"
+        yield "/* Permission is hereby granted, free of charge, to any person obtaining  */\n"
+        yield "/* a copy of this software and associated documentation files (the        */\n"
+        yield "/* \"Software\"), to deal in the Software without restriction, including    */\n"
+        yield "/* without limitation the rights to use, copy, modify, merge, publish,    */\n"
+        yield "/* distribute, sublicense, and/or sell copies of the Software, and to     */\n"
+        yield "/* permit persons to whom the Software is furnished to do so, subject to  */\n"
+        yield "/* the following conditions:                                              */\n"
+        yield "/*                                                                        */\n"
+        yield "/* The above copyright notice and this permission notice shall be         */\n"
+        yield "/* included in all copies or substantial portions of the Software.        */\n"
+        yield "/*                                                                        */\n"
+        yield "/* THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,        */\n"
+        yield "/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF     */\n"
+        yield "/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. */\n"
+        yield "/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY   */\n"
+        yield "/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,   */\n"
+        yield "/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE      */\n"
+        yield "/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */\n"
+        yield "/**************************************************************************/\n"
+        yield "/*              This file is generated. Edits will be lost.               */\n"
+        yield "/**************************************************************************/\n"
+        yield "\n"
+        separate: bool = False
+        for dependency in sorted(info.dependencies):
+            separate = True
+            yield f"using {dependency};\n"
+        if separate:
+            yield "\n"
+        yield f"namespace {self.__namespace};\n"
+        yield "\n"
+        for line in info.source(self):
+            indent: str = "    " * self.__indent_level if line else ""
+            yield f"{indent}{line}\n"
 
 class XMLDocumentation:
     def __init__(self) -> None:
