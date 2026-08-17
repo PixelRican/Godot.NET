@@ -2,6 +2,7 @@
 from os.path import commonprefix
 from typing import Any, Iterable, Optional
 
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
@@ -30,6 +31,7 @@ def parse(data: dict[str, Any]) -> SourceGenerator:
     interface(generator, data)
     return generator
 
+
 def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
     enumeration: EnumerationInfo = EnumerationInfo()
     type_initialize(enumeration, data)
@@ -57,14 +59,17 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
             generator.set_translation(member.name, replacement)
     generator.add_type(enumeration)
 
+
 def handle(generator: SourceGenerator, data: dict[str, Any]) -> None:
     handle_name: str = data["name"]
     generator.set_expansion(handle_name, "void*")
+
 
 def alias(generator: SourceGenerator, data: dict[str, Any]) -> None:
     alias_name: str = data["name"]
     alias_type: str = data["type"]
     generator.set_expansion(alias_name, alias_type)
+
 
 def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
     structure: ClassInfo = ClassInfo()
@@ -86,6 +91,7 @@ def struct(generator: SourceGenerator, data: dict[str, Any]) -> None:
         generator.set_translation(field.name, pascal(preprocess(field.name)))
     generator.add_type(structure)
 
+
 def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
     function_name: str = data["name"]
     function_return_value: Optional[dict[str, Any]] = data.get("return_value")
@@ -96,6 +102,7 @@ def function(generator: SourceGenerator, data: dict[str, Any]) -> None:
         type_parameters.append("void")
     arguments: str = ", ".join(type_parameters)
     generator.set_expansion(function_name, f"delegate* unmanaged[Cdecl]<{arguments}>")
+
 
 def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info: ClassInfo = ClassInfo()
@@ -116,6 +123,7 @@ def interface(generator: SourceGenerator, data: dict[str, Any]) -> None:
     info.methods.append(interface_throw_for_invalid_function())
     generator.add_type(info)
 
+
 def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     info.name = data["name"]
     if description := data.get("description", ()):
@@ -124,6 +132,7 @@ def type_initialize(info: TypeInfo, data: dict[str, Any]) -> None:
     if deprecated:
         info.attributes.add(obsolete(deprecated))
         info.dependencies.add("System")
+
 
 def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodInfo:
     def method_body() -> Iterable[str]:
@@ -146,6 +155,7 @@ def interface_initialize(generator: SourceGenerator, info: ClassInfo) -> MethodI
     exception.documentation.description = ("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",)
     method.exceptions.append(exception)
     return method
+
 
 def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tuple[FieldInfo, MethodInfo]:
     def method_body() -> Iterable[str]:
@@ -189,6 +199,7 @@ def interface_delegate(generator: SourceGenerator, data: dict[str, Any]) -> tupl
     generator.set_translation(method.name, pascal(preprocess(method.name)))
     return field, method
 
+
 def interface_load(generator: SourceGenerator) -> MethodInfo:
     def method_body() -> Iterable[str]:
         yield "fixed (byte* functionName = pFunctionName)"
@@ -213,6 +224,7 @@ def interface_load(generator: SourceGenerator) -> MethodInfo:
     method.parameters.append(parameter2)
     return method
 
+
 def interface_throw_if_invalid(generator: SourceGenerator) -> MethodInfo:
     def method_body() -> Iterable[str]:
         yield "if (pFunction == null)"
@@ -232,6 +244,7 @@ def interface_throw_if_invalid(generator: SourceGenerator) -> MethodInfo:
     method.parameters.append(parameter)
     return method
 
+
 def interface_throw_for_invalid_function() -> MethodInfo:
     method: MethodInfo = MethodInfo()
     method.name = "ThrowForInvalidFunction"
@@ -240,6 +253,7 @@ def interface_throw_for_invalid_function() -> MethodInfo:
     method.is_public = False
     method.is_static = True
     return method
+
 
 def obsolete(data: dict[str, str]) -> str:
     since: str = data["since"]
@@ -253,11 +267,13 @@ def obsolete(data: dict[str, str]) -> str:
     argument: str = " ".join(sentences)
     return f"Obsolete(\"{argument}\")"
 
+
 def documentation(description: list[str]) -> Iterable[str]:
     last_line: str = description[-1]
     for line in description:
         separator: str = "<br/>" * (line is not last_line)
         yield line + separator
+
 
 def preprocess(symbol: str) -> str:
     def substitute(match: Match[str]) -> str:
