@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from re import sub, Match
+from re import Match, sub
 from typing import Any, Iterable, Iterator
 
 
