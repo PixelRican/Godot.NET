@@ -1,6 +1,22 @@
 ﻿from csharp import *
 from os.path import commonprefix
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable, Optional, Self
+
+
+class GDExtensionDeprecated:
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        self.__since: str = data["since"]
+        self.__message: Optional[str] = data.get("message")
+        self.__replace_with: Optional[str] = data.get("replace_with")
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> str:
+        sentences: list[str] = [f"Deprecated since Godot {self.__since}."]
+        if self.__message:
+            sentences.append(self.__message)
+        if self.__replace_with:
+            sentences.append(f"Use `{generator.get_translation(self.__replace_with)}` instead.")
+        argument: str = " ".join(sentences)
+        return f"Obsolete(\"{argument}\")"
 
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
