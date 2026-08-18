@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from typing import Any, Iterable, Iterator
+from typing import Generator, Iterable, Iterator
 
 
 class SourceGenerator:
@@ -10,7 +10,7 @@ class SourceGenerator:
         self.__indent_level: int = 0
 
     @contextmanager
-    def indent(self) -> Any:
+    def indent(self) -> Generator[SourceGenerator]:
         self.__indent_level += 1
         try:
             yield self
