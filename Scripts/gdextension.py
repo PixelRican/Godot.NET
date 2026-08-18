@@ -58,10 +58,6 @@ class GDExtensionType(ABC):
     def stylize(self: Self, generator: SourceGenerator) -> None:
         pass
 
-    @abstractmethod
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpType:
-        pass
-
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
