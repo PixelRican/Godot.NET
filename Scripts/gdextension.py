@@ -36,7 +36,7 @@ class GDExtensionType(ABC):
     def __init__(self: Self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__kind: Optional[str] = data.get("kind")
-        self.__description: tuple[str, ...] = ()
+        self.__description: Optional[tuple[str, ...]] = None
         self.__deprecated: Optional[GDExtensionDeprecated] = None
         if description := data.get("description"):
             self.__description = tuple(description)
@@ -52,7 +52,7 @@ class GDExtensionType(ABC):
         return self.__kind
 
     @property
-    def description(self: Self) -> tuple[str, ...]:
+    def description(self: Self) -> Optional[tuple[str, ...]]:
         return self.__description
 
     @property
@@ -67,13 +67,13 @@ class GDExtensionType(ABC):
 class GDExtensionEnumeration(GDExtensionType):
     def __init__(self: Self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.__is_bitfield: bool = data.get("is_bitfield", False)
+        self.__is_bitfield: Optional[bool] = data.get("is_bitfield")
         self.__values: tuple[GDExtensionEnumerationConstant, ...] = tuple(
             GDExtensionEnumerationConstant(value) for value in data["values"]
         )
 
     @property
-    def is_bitfield(self: Self) -> bool:
+    def is_bitfield(self: Self) -> Optional[bool]:
         return self.__is_bitfield
 
     @property
@@ -113,7 +113,7 @@ class GDExtensionEnumerationConstant:
     def __init__(self: Self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
-        self.__description: tuple[str, ...] = ()
+        self.__description: Optional[tuple[str, ...]] = None
         if description := data.get("description"):
             self.__description = tuple(description)
 
@@ -126,7 +126,7 @@ class GDExtensionEnumerationConstant:
         return self.__value
 
     @property
-    def description(self: Self) -> tuple[str, ...]:
+    def description(self: Self) -> Optional[tuple[str, ...]]:
         return self.__description
 
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpEnumerationConstant:
@@ -140,16 +140,16 @@ class GDExtensionEnumerationConstant:
 class GDExtensionHandle(GDExtensionType):
     def __init__(self: Self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.__is_const: bool = data.get("is_const", False)
-        self.__is_uninitialized: bool = data.get("is_uninitialized", False)
+        self.__is_const: Optional[bool] = data.get("is_const")
+        self.__is_uninitialized: Optional[bool] = data.get("is_uninitialized")
         self.__parent: Optional[str] = data.get("parent")
 
     @property
-    def is_const(self: Self) -> bool:
+    def is_const(self: Self) -> Optional[bool]:
         return self.__is_const
 
     @property
-    def is_uninitialized(self: Self) -> bool:
+    def is_uninitialized(self: Self) -> Optional[bool]:
         return self.__is_uninitialized
 
     @property
@@ -208,7 +208,7 @@ class GDExtensionStructureField:
     def __init__(self: Self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
-        self.__description: tuple[str, ...] = ()
+        self.__description: Optional[tuple[str, ...]] = None
         if description := data.get("description"):
             self.__description = tuple(description)
 
@@ -221,7 +221,7 @@ class GDExtensionStructureField:
         return self.__type
 
     @property
-    def description(self: Self) -> tuple[str, ...]:
+    def description(self: Self) -> Optional[tuple[str, ...]]:
         return self.__description
 
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpField:
@@ -268,7 +268,7 @@ class GDExtensionParameter:
     def __init__(self: Self, data: dict[str, Any]) -> None:
         self.__name: str = data.get("name", "")
         self.__type: str = data["type"]
-        self.__description: tuple[str, ...] = ()
+        self.__description: Optional[tuple[str, ...]] = None
         if description := data.get("description"):
             self.__description = tuple(description)
 
@@ -281,7 +281,7 @@ class GDExtensionParameter:
         return self.__type
 
     @property
-    def description(self: Self) -> tuple[str, ...]:
+    def description(self: Self) -> Optional[tuple[str, ...]]:
         return self.__description
 
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpParameter:
