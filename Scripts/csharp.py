@@ -4,29 +4,29 @@ from typing import Any, Iterable, Iterator, Self
 
 
 class SourceGenerator:
-    def __init__(self: Self, namespace: str, output_directory: str) -> None:
+    def __init__(self, namespace: str, output_directory: str) -> None:
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
         self.__types: list[CSharpType] = []
         self.__indent_level: int = 0
 
     @contextmanager
-    def indent(self: Self) -> Any:
+    def indent(self) -> Any:
         self.__indent_level += 1
         try:
             yield self
         finally:
             self.__indent_level -= 1
 
-    def add_type(self: Self, item: CSharpType) -> None:
+    def add_type(self, item: CSharpType) -> None:
         self.__types.append(item)
 
-    def generate(self: Self) -> None:
+    def generate(self) -> None:
         for info in self.__types:
             with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
                 file.writelines(self.__source(info))
 
-    def __source(self: Self, info: CSharpType) -> Iterable[str]:
+    def __source(self, info: CSharpType) -> Iterable[str]:
         yield "/**************************************************************************/\n"
         yield f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n"
         yield "/**************************************************************************/\n"
@@ -73,12 +73,12 @@ class SourceGenerator:
 
 
 class XMLDocumentation:
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         self.tag: str = "summary"
         self.attributes: Iterable[XMLAttribute] = ()
         self.description: Iterable[str] = ()
 
-    def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
+    def source(self, generator: SourceGenerator) -> Iterator[str]:
         description: Iterator[str] = iter(self.description)
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
@@ -93,33 +93,33 @@ class XMLDocumentation:
 
 
 class XMLAttribute:
-    def __init__(self: Self, name: str, value: str) -> None:
+    def __init__(self, name: str, value: str) -> None:
         self.__name: str = name
         self.__value: str = value
 
     @property
-    def name(self: Self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def value(self: Self) -> str:
+    def value(self) -> str:
         return self.__value
 
 
 class CSharpAttribute:
-    def __init__(self: Self, name: str, arguments: Iterable[str] = ()) -> None:
+    def __init__(self, name: str, arguments: Iterable[str] = ()) -> None:
         self.__name: str = name
         self.__arguments: tuple[str, ...] = tuple(arguments)
 
     @property
-    def name(self: Self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def arguments(self: Self) -> tuple[str, ...]:
+    def arguments(self) -> tuple[str, ...]:
         return self.__arguments
 
-    def statement(self: Self, generator: SourceGenerator) -> str:
+    def statement(self, generator: SourceGenerator) -> str:
         if self.__arguments:
             arguments: str = ", ".join(argument for argument in self.__arguments)
             return f"[{self.__name}({arguments})]"
@@ -127,44 +127,44 @@ class CSharpAttribute:
 
 
 class CSharpElement:
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         self.name: str = "_"
         self.documentation: XMLDocumentation = XMLDocumentation()
         self.attributes: list[CSharpAttribute] = []
 
 
 class EncapsulatedCSharpElement(CSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.is_public: bool = True
 
     @property
-    def modifiers(self: Self) -> str:
+    def modifiers(self) -> str:
         return "public" if self.is_public else "private"
 
 
 class CSharpType(EncapsulatedCSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.dependencies: set[str] = set()
 
-    def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
+    def source(self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
         for attribute in sorted(self.attributes, key=lambda a: a.name):
             yield attribute.statement(generator)
         yield from self.definition(generator)
 
-    def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self, generator: SourceGenerator) -> Iterator[str]:
         raise NotImplementedError()
 
 
 class CSharpEnumeration(CSharpType):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.underlying_type: str = ""
         self.members: list[CSharpEnumerationConstant] = []
 
-    def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self, generator: SourceGenerator) -> Iterator[str]:
         if self.underlying_type:
             yield f"{self.modifiers} enum {self.name} : {self.underlying_type}"
         else:
@@ -181,13 +181,13 @@ class CSharpEnumeration(CSharpType):
 
 
 class CSharpEnumerationConstant(CSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.value: int = 0
 
 
 class CSharpClass(CSharpType):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.fields: list[CSharpField] = []
         self.methods: list[CSharpMethod] = []
@@ -196,7 +196,7 @@ class CSharpClass(CSharpType):
         self.is_unsafe: bool = False
 
     @property
-    def modifiers(self: Self) -> str:
+    def modifiers(self) -> str:
         modifiers: list[str] = [super().modifiers]
         if not self.is_value_type and self.is_static:
             modifiers.append("static")
@@ -204,7 +204,7 @@ class CSharpClass(CSharpType):
             modifiers.append("unsafe")
         return " ".join(modifiers)
 
-    def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self, generator: SourceGenerator) -> Iterator[str]:
         yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
         yield "{"
         with generator.indent():
@@ -222,14 +222,14 @@ class CSharpClass(CSharpType):
 
 
 class CSharpField(EncapsulatedCSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
         self.is_static: bool = False
         self.is_readonly: bool = False
 
     @property
-    def modifiers(self: Self) -> str:
+    def modifiers(self) -> str:
         modifiers: list[str] = [super().modifiers]
         if self.is_static:
             modifiers.append("static")
@@ -239,7 +239,7 @@ class CSharpField(EncapsulatedCSharpElement):
 
 
 class CSharpMethod(EncapsulatedCSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.return_type: CSharpReturnType = CSharpReturnType()
         self.parameters: list[CSharpParameter] = []
@@ -248,10 +248,10 @@ class CSharpMethod(EncapsulatedCSharpElement):
         self.is_static: bool = False
 
     @property
-    def modifiers(self: Self) -> str:
+    def modifiers(self) -> str:
         return f"{super().modifiers} static" if self.is_static else super().modifiers
 
-    def source(self: Self, generator: SourceGenerator) -> Iterator[str]:
+    def source(self, generator: SourceGenerator) -> Iterator[str]:
         yield from self.documentation.source(generator)
         for parameter in self.parameters:
             yield from parameter.documentation.source(generator)
@@ -269,14 +269,14 @@ class CSharpMethod(EncapsulatedCSharpElement):
 
 
 class CSharpReturnType(CSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.name: str = "void"
         self.documentation.tag = "returns"
 
 
 class CSharpParameter(CSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("name", self.name)
 
@@ -287,7 +287,7 @@ class CSharpParameter(CSharpElement):
 
 
 class CSharpException(CSharpElement):
-    def __init__(self: Self) -> None:
+    def __init__(self) -> None:
         def attribute() -> Iterator[XMLAttribute]:
             yield XMLAttribute("cref", self.name)
 
