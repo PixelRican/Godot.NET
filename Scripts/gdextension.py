@@ -118,7 +118,7 @@ class GDExtensionType(ABC):
         return self.__deprecated
 
     @abstractmethod
-    def stylize(self, generator: SourceGenerator) -> None:
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
         pass
 
 
@@ -138,18 +138,18 @@ class GDExtensionEnumeration(GDExtensionType):
     def values(self) -> tuple[GDExtensionEnumerationConstant, ...]:
         return self.__values
 
-    def stylize(self, generator: SourceGenerator) -> None:
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
         prefix: str = commonprefix([value.name for value in self.values])
         for value in self.values:
             if "MAX" in value.name:
-                generator.set_translation(value.name, "Max")
+                stylizer.set_translation(value.name, "Max")
             else:
                 replacement: str = pascal(value.name.removeprefix(prefix)) \
                     .removeprefix("Error") \
                     .removeprefix("Initialization") \
                     .replace("SD", "D", 1) \
                     .replace("Uint", "UInt", 1)
-                generator.set_translation(value.name, replacement)
+                stylizer.set_translation(value.name, replacement)
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpEnumeration:
         enumeration: CSharpEnumeration = CSharpEnumeration()
@@ -214,8 +214,8 @@ class GDExtensionHandle(GDExtensionType):
     def parent(self) -> Optional[str]:
         return self.__parent
 
-    def stylize(self, generator: SourceGenerator) -> None:
-        generator.set_expansion(self.name, self.parent or "void*")
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
+        stylizer.set_expansion(self.name, self.parent or "void*")
 
 
 class GDExtensionAlias(GDExtensionType):
@@ -227,8 +227,8 @@ class GDExtensionAlias(GDExtensionType):
     def type(self) -> str:
         return self.__type
 
-    def stylize(self, generator: SourceGenerator) -> None:
-        generator.set_expansion(self.name, self.type)
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
+        stylizer.set_expansion(self.name, self.type)
 
 
 class GDExtensionStructure(GDExtensionType):
@@ -242,9 +242,9 @@ class GDExtensionStructure(GDExtensionType):
     def members(self) -> tuple[GDExtensionStructureField, ...]:
         return self.__members
 
-    def stylize(self, generator: SourceGenerator) -> None:
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
         for member in self.members:
-            generator.set_translation(member.name, pascal(preprocess(member.name)))
+            stylizer.set_translation(member.name, pascal(preprocess(member.name)))
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpClass:
         structure: CSharpClass = CSharpClass()
@@ -312,14 +312,14 @@ class GDExtensionFunction(GDExtensionType):
     def return_value(self) -> Optional[GDExtensionReturnType]:
         return self.__return_value
 
-    def stylize(self, generator: SourceGenerator) -> None:
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
         type_parameters: list[str] = [argument.type for argument in self.arguments]
         if self.return_value:
             type_parameters.append(self.return_value.type)
         else:
             type_parameters.append("void")
         arguments: str = ", ".join(type_parameters)
-        generator.set_expansion(self.name, f"delegate* unmanaged[Cdecl]<{arguments}>")
+        stylizer.set_expansion(self.name, f"delegate* unmanaged[Cdecl]<{arguments}>")
 
 
 class GDExtensionParameter:
@@ -391,11 +391,11 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
     def legacy_type_name(self) -> Optional[str]:
         return self.__legacy_type_name
 
-    def stylize(self, generator: SourceGenerator) -> None:
-        super().stylize(generator)
-        generator.set_translation(self.name, pascal(preprocess(self.name)))
+    def stylize(self, stylizer: GDExtensionStylizer) -> None:
+        super().stylize(stylizer)
+        stylizer.set_translation(self.name, pascal(preprocess(self.name)))
         for argument in self.arguments:
-            generator.set_translation(argument.name, camel(preprocess(argument.name)))
+            stylizer.set_translation(argument.name, camel(preprocess(argument.name)))
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> tuple[CSharpField, CSharpMethod]:
         def method_body() -> Iterable[str]:
