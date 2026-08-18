@@ -210,7 +210,7 @@ class CSharpEnumeration(CSharpType):
     def __init__(self: Self) -> None:
         super().__init__()
         self.underlying_type: str = ""
-        self.members: list[CSharpConstant] = []
+        self.members: list[CSharpEnumerationConstant] = []
 
     def definition(self: Self, generator: SourceGenerator) -> Iterator[str]:
         if self.underlying_type:
@@ -219,7 +219,7 @@ class CSharpEnumeration(CSharpType):
             yield f"{self.modifiers} enum {self.name}"
         yield "{"
         if self.members:
-            last: CSharpConstant = self.members[-1]
+            last: CSharpEnumerationConstant = self.members[-1]
             with generator.indent():
                 for member in self.members:
                     separator: str = "," * (member is not last)
@@ -228,7 +228,7 @@ class CSharpEnumeration(CSharpType):
         yield "}"
 
 
-class CSharpConstant(CSharpElement):
+class CSharpEnumerationConstant(CSharpElement):
     def __init__(self: Self) -> None:
         super().__init__()
         self.value: int = 0

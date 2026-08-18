@@ -124,8 +124,8 @@ class GDExtensionEnumValue:
     def description(self: Self) -> tuple[str, ...]:
         return self.__description
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpConstant:
-        constant: CSharpConstant = CSharpConstant()
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpEnumerationConstant:
+        constant: CSharpEnumerationConstant = CSharpEnumerationConstant()
         constant.name = generator.get_translation(self.name)
         constant.value = self.value
         constant.documentation.description = documentation(self.description)
@@ -192,7 +192,7 @@ def enum(generator: SourceGenerator, data: dict[str, Any]) -> None:
         enumeration.dependencies.add("System")
         enumeration.attributes.append(CSharpAttribute("Flags"))
     for member_data in data["values"]:
-        member: CSharpConstant = CSharpConstant()
+        member: CSharpEnumerationConstant = CSharpEnumerationConstant()
         member.name = member_data["name"]
         member.value = member_data["value"]
         if description := member_data.get("description"):
