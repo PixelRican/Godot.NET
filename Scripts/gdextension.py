@@ -132,6 +132,29 @@ class GDExtensionEnumValue:
         return constant
 
 
+class GDExtensionHandle(GDExtensionType):
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.__is_const: bool = data.get("is_const", False)
+        self.__is_uninitialized: bool = data.get("is_uninitialized", False)
+        self.__parent: Optional[str] = data.get("parent")
+
+    @property
+    def is_const(self: Self) -> bool:
+        return self.__is_const
+
+    @property
+    def is_uninitialized(self: Self) -> bool:
+        return self.__is_uninitialized
+
+    @property
+    def parent(self: Self) -> Optional[str]:
+        return self.__parent
+
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        generator.set_expansion(self.name, self.__parent or "void*")
+
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
