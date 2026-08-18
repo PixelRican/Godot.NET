@@ -23,11 +23,11 @@ class GDExtensionDeprecated:
         return self.__replace_with
 
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpAttribute:
-        sentences: list[str] = [f"Deprecated since Godot {self.__since}."]
-        if self.__message:
-            sentences.append(self.__message)
-        if self.__replace_with:
-            sentences.append(f"Use `{generator.get_translation(self.__replace_with)}` instead.")
+        sentences: list[str] = [f"Deprecated since Godot {self.since}."]
+        if self.message:
+            sentences.append(self.message)
+        if self.replace_with:
+            sentences.append(f"Use `{generator.get_translation(self.replace_with)}` instead.")
         argument: str = " ".join(sentences)
         return CSharpAttribute("Obsolete", [f"\"{argument}\""])
 
@@ -76,8 +76,8 @@ class GDExtensionEnum(GDExtensionType):
         return self.__values
 
     def stylize(self: Self, generator: SourceGenerator) -> None:
-        prefix: str = commonprefix([value.name for value in self.__values])
-        for value in self.__values:
+        prefix: str = commonprefix([value.name for value in self.values])
+        for value in self.values:
             if "MAX" in value.name:
                 generator.set_translation(value.name, "Max")
             else:
@@ -90,16 +90,16 @@ class GDExtensionEnum(GDExtensionType):
 
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpEnumeration:
         enumeration: CSharpEnumeration = CSharpEnumeration()
-        enumeration.name = self.__name
-        enumeration.documentation.description = documentation(self.__description)
-        if self.__deprecated:
-            enumeration.attributes.append(self.__deprecated.to_csharp(generator))
+        enumeration.name = self.name
+        enumeration.documentation.description = documentation(self.description)
+        if self.deprecated:
+            enumeration.attributes.append(self.deprecated.to_csharp(generator))
             enumeration.dependencies.add("System")
-        if self.__is_bitfield:
+        if self.is_bitfield:
             enumeration.underlying_type = "uint"
             enumeration.dependencies.add("System")
             enumeration.attributes.append(CSharpAttribute("Flags"))
-        for value in self.__values:
+        for value in self.values:
             enumeration.members.append(value.to_csharp(generator))
         return enumeration
 
@@ -126,9 +126,9 @@ class GDExtensionEnumValue:
 
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpConstant:
         constant: CSharpConstant = CSharpConstant()
-        constant.name = generator.get_translation(self.__name)
-        constant.value = self.__value
-        constant.documentation.description = documentation(self.__description)
+        constant.name = generator.get_translation(self.name)
+        constant.value = self.value
+        constant.documentation.description = documentation(self.description)
         return constant
 
 
@@ -152,7 +152,7 @@ class GDExtensionHandle(GDExtensionType):
         return self.__parent
 
     def stylize(self: Self, generator: SourceGenerator) -> None:
-        generator.set_expansion(self.name, self.__parent or "void*")
+        generator.set_expansion(self.name, self.parent or "void*")
 
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
