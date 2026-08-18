@@ -216,7 +216,8 @@ class GDExtensionEnumeration(GDExtensionType):
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpEnumeration:
         enumeration: CSharpEnumeration = CSharpEnumeration()
         enumeration.name = self.name
-        enumeration.documentation.description = documentation(self.description, stylizer)
+        if description := self.description:
+            enumeration.documentation.description = documentation(description, stylizer)
         if self.deprecated:
             enumeration.attributes.append(self.deprecated.to_csharp(stylizer))
             enumeration.dependencies.add("System")
@@ -253,7 +254,8 @@ class GDExtensionConstant:
         constant: CSharpEnumerationConstant = CSharpEnumerationConstant()
         constant.name = stylizer.get_translation(self.name)
         constant.value = self.value
-        constant.documentation.description = documentation(self.description, stylizer)
+        if description := self.description:
+            constant.documentation.description = documentation(description, stylizer)
         return constant
 
 
@@ -315,7 +317,8 @@ class GDExtensionStructure(GDExtensionType):
         structure.is_unsafe = structure.name != "GDExtensionCallError"
         structure.dependencies.add("System.Runtime.InteropServices")
         structure.attributes.append(CSharpAttribute("StructLayout", ["LayoutKind.Sequential"]))
-        structure.documentation.description = documentation(self.description, stylizer)
+        if description := self.description:
+            structure.documentation.description = documentation(description, stylizer)
         if self.deprecated:
             structure.attributes.append(self.deprecated.to_csharp(stylizer))
             structure.dependencies.add("System")
@@ -352,7 +355,8 @@ class GDExtensionField:
         else:
             field.name = stylizer.get_translation(self.name)
             field.type = stylizer.get_expansion(self.type)
-        field.documentation.description = documentation(self.description, stylizer)
+        if description := self.description:
+            field.documentation.description = documentation(description, stylizer)
         return field
 
 
@@ -408,7 +412,8 @@ class GDExtensionParameter:
         parameter: CSharpParameter = CSharpParameter()
         parameter.name = stylizer.get_translation(self.name)
         parameter.type = stylizer.get_expansion(self.type)
-        parameter.documentation.description = documentation(self.description, stylizer)
+        if description := self.description:
+            parameter.documentation.description = documentation(description, stylizer)
         return parameter
 
 
@@ -430,7 +435,8 @@ class GDExtensionReturnType:
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpReturnType:
         return_type: CSharpReturnType = CSharpReturnType()
         return_type.name = stylizer.get_expansion(self.type)
-        return_type.documentation.description = documentation(self.description, stylizer)
+        if description := self.description:
+            return_type.documentation.description = documentation(description, stylizer)
         return return_type
 
 
@@ -475,7 +481,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
         method.is_static = True
         if description := self.description:
-            method.documentation.description = documentation(description)
+            method.documentation.description = documentation(description, stylizer)
         if deprecated := self.deprecated:
             method.attributes.append(deprecated.to_csharp(stylizer))
             method.dependencies.add("System")
