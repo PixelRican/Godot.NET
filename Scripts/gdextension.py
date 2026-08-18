@@ -314,6 +314,53 @@ class GDExtensionReturnType:
         return return_type
 
 
+class GDExtensionInterfaceFunction(GDExtensionFunction):
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.__since: str = data["since"]
+        self.__see: Optional[str] = data.get("see")
+        self.__legacy_type_name: Optional[str] = data.get("legacy_type_name")
+
+    @property
+    def since(self: Self) -> str:
+        return self.__since
+
+    @property
+    def see(self: Self) -> Optional[str]:
+        return self.__see
+
+    @property
+    def legacy_type_name(self: Self) -> Optional[str]:
+        return self.__legacy_type_name
+
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        super().stylize(generator)
+        generator.set_translation(self.name, pascal(preprocess(self.name)))
+        for argument in self.arguments:
+            generator.set_translation(argument.name, camel(preprocess(argument.name)))
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> tuple[CSharpField, CSharpMethod]:
+        method: CSharpMethod = CSharpMethod()
+        method.name = generator.get_translation(self.name)
+        method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
+        method.is_static = True
+        if description := self.description:
+            method.documentation.description = documentation(description)
+        if deprecated := self.deprecated:
+            method.attributes.append(deprecated.to_csharp(generator))
+            method.dependencies.add("System")
+        if return_value := self.return_value:
+            method.return_type = return_value.to_csharp(generator)
+        for argument in self.arguments:
+            method.parameters.append(argument.to_csharp(generator))
+        field: CSharpField = CSharpField()
+        field.name = f"s_{method.name[0].lower()}{method.name[1:]}"
+        field.type = generator.get_expansion(self.name)
+        field.is_public = False
+        field.is_static = True
+        return field, method
+
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
