@@ -1,4 +1,5 @@
-﻿from csharp import *
+﻿from abc import ABC, abstractmethod
+from csharp import *
 from os.path import commonprefix
 from typing import Any, Iterable, Optional, Self
 
@@ -29,6 +30,37 @@ class GDExtensionDeprecated:
             sentences.append(f"Use `{generator.get_translation(self.__replace_with)}` instead.")
         argument: str = " ".join(sentences)
         return CSharpAttribute("Obsolete", [f"\"{argument}\""])
+
+
+class GDExtensionType(ABC):
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        self.__name: str = data["name"]
+        self.__description: tuple[str, ...] = ()
+        self.__deprecated: Optional[GDExtensionDeprecated] = None
+        if description := data.get("description"):
+            self.__description = tuple(description)
+        if deprecated := data.get("deprecated"):
+            self.__deprecated = GDExtensionDeprecated(deprecated)
+
+    @property
+    def name(self: Self) -> str:
+        return self.__name
+
+    @property
+    def description(self: Self) -> tuple[str, ...]:
+        return self.__description
+
+    @property
+    def deprecated(self: Self) -> Optional[GDExtensionDeprecated]:
+        return self.__deprecated
+
+    @abstractmethod
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        pass
+
+    @abstractmethod
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpType:
+        pass
 
 
 def parse(data: dict[str, Any]) -> SourceGenerator:
