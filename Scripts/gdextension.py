@@ -79,12 +79,12 @@ class GDExtensionDeprecated:
     def replace_with(self) -> Optional[str]:
         return self.__replace_with
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpAttribute:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpAttribute:
         sentences: list[str] = [f"Deprecated since Godot {self.since}."]
         if self.message:
             sentences.append(self.message)
         if self.replace_with:
-            sentences.append(f"Use `{generator.get_translation(self.replace_with)}` instead.")
+            sentences.append(f"Use `{stylizer.get_translation(self.replace_with)}` instead.")
         argument: str = " ".join(sentences)
         return CSharpAttribute("Obsolete", [f"\"{argument}\""])
 
@@ -150,19 +150,19 @@ class GDExtensionEnumeration(GDExtensionType):
                     .replace("Uint", "UInt", 1)
                 generator.set_translation(value.name, replacement)
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpEnumeration:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpEnumeration:
         enumeration: CSharpEnumeration = CSharpEnumeration()
         enumeration.name = self.name
         enumeration.documentation.description = documentation(self.description)
         if self.deprecated:
-            enumeration.attributes.append(self.deprecated.to_csharp(generator))
+            enumeration.attributes.append(self.deprecated.to_csharp(stylizer))
             enumeration.dependencies.add("System")
         if self.is_bitfield:
             enumeration.underlying_type = "uint"
             enumeration.dependencies.add("System")
             enumeration.attributes.append(CSharpAttribute("Flags"))
         for value in self.values:
-            enumeration.members.append(value.to_csharp(generator))
+            enumeration.members.append(value.to_csharp(stylizer))
         return enumeration
 
 
@@ -186,9 +186,9 @@ class GDExtensionEnumerationConstant:
     def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpEnumerationConstant:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpEnumerationConstant:
         constant: CSharpEnumerationConstant = CSharpEnumerationConstant()
-        constant.name = generator.get_translation(self.name)
+        constant.name = stylizer.get_translation(self.name)
         constant.value = self.value
         constant.documentation.description = documentation(self.description)
         return constant
@@ -245,7 +245,7 @@ class GDExtensionStructure(GDExtensionType):
         for member in self.members:
             generator.set_translation(member.name, pascal(preprocess(member.name)))
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpClass:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpClass:
         structure: CSharpClass = CSharpClass()
         structure.name = self.name
         structure.is_value_type = True
@@ -254,10 +254,10 @@ class GDExtensionStructure(GDExtensionType):
         structure.attributes.append(CSharpAttribute("StructLayout", ["LayoutKind.Sequential"]))
         structure.documentation.description = documentation(self.description)
         if self.deprecated:
-            structure.attributes.append(self.deprecated.to_csharp(generator))
+            structure.attributes.append(self.deprecated.to_csharp(stylizer))
             structure.dependencies.add("System")
         for member in self.members:
-            structure.fields.append(member.to_csharp(generator))
+            structure.fields.append(member.to_csharp(stylizer))
         return structure
 
 
@@ -281,14 +281,14 @@ class GDExtensionStructureField:
     def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpField:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpField:
         field: CSharpField = CSharpField()
         if self.name == "method_flags":
             field.name = "MethodFlags"
             field.type = "GDExtensionClassMethodFlags"
         else:
-            field.name = generator.get_translation(self.name)
-            field.type = generator.get_expansion(self.type)
+            field.name = stylizer.get_translation(self.name)
+            field.type = stylizer.get_expansion(self.type)
         field.documentation.description = documentation(self.description)
         return field
 
@@ -341,10 +341,10 @@ class GDExtensionParameter:
     def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpParameter:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpParameter:
         parameter: CSharpParameter = CSharpParameter()
-        parameter.name = generator.get_translation(self.name)
-        parameter.type = generator.get_expansion(self.type)
+        parameter.name = stylizer.get_translation(self.name)
+        parameter.type = stylizer.get_expansion(self.type)
         parameter.documentation.description = documentation(self.description)
         return parameter
 
@@ -364,9 +364,9 @@ class GDExtensionReturnType:
     def description(self) -> tuple[str, ...]:
         return self.__description
 
-    def to_csharp(self, generator: SourceGenerator) -> CSharpReturnType:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpReturnType:
         return_type: CSharpReturnType = CSharpReturnType()
-        return_type.name = generator.get_expansion(self.type)
+        return_type.name = stylizer.get_expansion(self.type)
         return_type.documentation.description = documentation(self.description)
         return return_type
 
@@ -396,23 +396,23 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         for argument in self.arguments:
             generator.set_translation(argument.name, camel(preprocess(argument.name)))
 
-    def to_csharp(self, generator: SourceGenerator) -> tuple[CSharpField, CSharpMethod]:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> tuple[CSharpField, CSharpMethod]:
         method: CSharpMethod = CSharpMethod()
-        method.name = generator.get_translation(self.name)
+        method.name = stylizer.get_translation(self.name)
         method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
         method.is_static = True
         if description := self.description:
             method.documentation.description = documentation(description)
         if deprecated := self.deprecated:
-            method.attributes.append(deprecated.to_csharp(generator))
+            method.attributes.append(deprecated.to_csharp(stylizer))
             method.dependencies.add("System")
         if return_value := self.return_value:
-            method.return_type = return_value.to_csharp(generator)
+            method.return_type = return_value.to_csharp(stylizer)
         for argument in self.arguments:
-            method.parameters.append(argument.to_csharp(generator))
+            method.parameters.append(argument.to_csharp(stylizer))
         field: CSharpField = CSharpField()
         field.name = f"s_{method.name[0].lower()}{method.name[1:]}"
-        field.type = generator.get_expansion(self.name)
+        field.type = stylizer.get_expansion(self.name)
         field.is_public = False
         field.is_static = True
         return field, method
