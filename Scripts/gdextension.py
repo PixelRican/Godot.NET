@@ -64,12 +64,12 @@ class GDExtensionType(ABC):
         pass
 
 
-class GDExtensionEnum(GDExtensionType):
+class GDExtensionEnumeration(GDExtensionType):
     def __init__(self: Self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__is_bitfield: bool = data.get("is_bitfield", False)
-        self.__values: tuple[GDExtensionEnumValue, ...] = tuple(
-            GDExtensionEnumValue(value) for value in data["values"]
+        self.__values: tuple[GDExtensionEnumerationConstant, ...] = tuple(
+            GDExtensionEnumerationConstant(value) for value in data["values"]
         )
 
     @property
@@ -77,7 +77,7 @@ class GDExtensionEnum(GDExtensionType):
         return self.__is_bitfield
 
     @property
-    def values(self: Self) -> tuple[GDExtensionEnumValue, ...]:
+    def values(self: Self) -> tuple[GDExtensionEnumerationConstant, ...]:
         return self.__values
 
     def stylize(self: Self, generator: SourceGenerator) -> None:
@@ -109,7 +109,7 @@ class GDExtensionEnum(GDExtensionType):
         return enumeration
 
 
-class GDExtensionEnumValue:
+class GDExtensionEnumerationConstant:
     def __init__(self: Self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
