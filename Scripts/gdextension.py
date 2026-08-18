@@ -1,6 +1,7 @@
 ﻿from abc import ABC, abstractmethod
 from csharp import *
 from os.path import commonprefix
+from re import Match, sub
 from typing import Any, Iterable, Optional
 
 

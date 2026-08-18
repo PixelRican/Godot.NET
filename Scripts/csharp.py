@@ -1,6 +1,5 @@
 from contextlib import contextmanager
-from re import Match, sub
-from typing import Any, Iterable, Iterator, Self
+from typing import Any, Iterable, Iterator
 
 
 class SourceGenerator:
