@@ -8,22 +8,6 @@ class SourceGenerator:
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
         self.__types: list[CSharpType] = []
-        self.__expansions: dict[str, str] = {
-            "int8_t" : "sbyte",
-            "uint8_t" : "byte",
-            "int16_t" : "short",
-            "uint16_t" : "ushort",
-            "int32_t" : "int",
-            "uint32_t" : "uint",
-            "int64_t" : "long",
-            "uint64_t" : "ulong",
-            "size_t" : "nuint",
-            "char" : "byte",
-            "char16_t" : "char",
-            "char32_t" : "uint",
-            "wchar_t" : "void"
-        }
-        self.__translations: dict[str, str] = {"NULL" : "null"}
         self.__indent_level: int = 0
 
     @contextmanager
@@ -36,38 +20,6 @@ class SourceGenerator:
 
     def add_type(self: Self, item: CSharpType) -> None:
         self.__types.append(item)
-
-    def get_expansion(self: Self, alias: str) -> str:
-        def substitute(match: Match[str]) -> str:
-            group: str = match.group(1)
-            substitution: str = self.get_expansion(group)
-            return match.group().replace(group, substitution)
-
-        pointer: str = "*" * alias.endswith("*")
-        key: str = alias.removeprefix("const ").removesuffix("*")
-        if key.endswith(">"):
-            return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        if value := self.__expansions.get(key):
-            return (value if value == "char" else self.get_expansion(value)) + pointer
-        return key + pointer
-
-    def set_expansion(self: Self, alias: str, value: str) -> None:
-        self.__expansions.setdefault(alias, value)
-
-    def get_translation(self: Self, string: str) -> str:
-        def substitute(match: Match[str]) -> str:
-            group: str = match.group()
-            result: str = "{}"
-            if group.startswith("`"):
-                group = match.group(1)
-                result = "`{}`"
-            return result.format(self.__translations.get(group, group))
-
-        return self.__translations.get(string) \
-            or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
-
-    def set_translation(self: Self, string: str, value: str) -> None:
-        self.__translations.setdefault(string, value)
 
     def generate(self: Self) -> None:
         for info in self.__types:
@@ -131,12 +83,12 @@ class XMLDocumentation:
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
             for attribute in self.attributes:
-                elements.append(f"{attribute.name}=\"{generator.get_translation(attribute.value)}\"")
+                elements.append(f"{attribute.name}=\"{attribute.value}\"")
             header: str = " ".join(elements)
             yield f"/// <{header}>"
-            yield f"/// {generator.get_translation(first_line)}"
+            yield f"/// {first_line}"
             for line in description:
-                yield f"/// {generator.get_translation(line)}"
+                yield f"/// {line}"
             yield f"/// </{self.tag}>"
 
 
@@ -169,7 +121,7 @@ class CSharpAttribute:
 
     def statement(self: Self, generator: SourceGenerator) -> str:
         if self.__arguments:
-            arguments: str = ", ".join(generator.get_translation(argument) for argument in self.__arguments)
+            arguments: str = ", ".join(argument for argument in self.__arguments)
             return f"[{self.__name}({arguments})]"
         return f"[{self.__name}]"
 
@@ -224,7 +176,7 @@ class CSharpEnumeration(CSharpType):
                 for member in self.members:
                     separator: str = "," * (member is not last)
                     yield from member.documentation.source(generator)
-                    yield f"{generator.get_translation(member.name)} = {member.value}{separator}"
+                    yield f"{member.name} = {member.value}{separator}"
         yield "}"
 
 
@@ -260,7 +212,7 @@ class CSharpClass(CSharpType):
             for member in self.fields:
                 separate = True
                 yield from member.documentation.source(generator)
-                yield f"{member.modifiers} {generator.get_expansion(member.type)} {generator.get_translation(member.name)};"
+                yield f"{member.modifiers} {member.type} {member.name};"
             for member in self.methods:
                 if separate:
                     yield ""
@@ -308,8 +260,8 @@ class CSharpMethod(EncapsulatedCSharpElement):
         yield from self.return_type.documentation.source(generator)
         for attribute in sorted(self.attributes, key=lambda a: a.name):
             yield attribute.statement(generator)
-        parameters: str = ", ".join(f"{generator.get_expansion(parameter.type)} {generator.get_translation(parameter.name)}" for parameter in self.parameters)
-        yield f"{self.modifiers} {generator.get_expansion(self.return_type.name)} {generator.get_translation(self.name)}({parameters})"
+        parameters: str = ", ".join(f"{parameter.type} {parameter.name}" for parameter in self.parameters)
+        yield f"{self.modifiers} {self.return_type.name} {self.name}({parameters})"
         yield "{"
         with generator.indent():
             yield from self.body
