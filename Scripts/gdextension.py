@@ -59,6 +59,79 @@ class GDExtensionType(ABC):
         pass
 
 
+class GDExtensionEnum(GDExtensionType):
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.__is_bitfield: bool = data.get("is_bitfield", False)
+        self.__values: tuple[GDExtensionEnumValue, ...] = tuple(
+            GDExtensionEnumValue(value) for value in data["values"]
+        )
+
+    @property
+    def is_bitfield(self: Self) -> bool:
+        return self.__is_bitfield
+
+    @property
+    def values(self: Self) -> tuple[GDExtensionEnumValue, ...]:
+        return self.__values
+
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        prefix: str = commonprefix([value.name for value in self.__values])
+        for value in self.__values:
+            if "MAX" in value.name:
+                generator.set_translation(value.name, "Max")
+            else:
+                replacement: str = pascal(value.name.removeprefix(prefix)) \
+                    .removeprefix("Error") \
+                    .removeprefix("Initialization") \
+                    .replace("SD", "D", 1) \
+                    .replace("Uint", "UInt", 1)
+                generator.set_translation(value.name, replacement)
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpEnumeration:
+        enumeration: CSharpEnumeration = CSharpEnumeration()
+        enumeration.name = self.__name
+        enumeration.documentation.description = documentation(self.__description)
+        if self.__deprecated:
+            enumeration.attributes.append(self.__deprecated.to_csharp(generator))
+            enumeration.dependencies.add("System")
+        if self.__is_bitfield:
+            enumeration.underlying_type = "uint"
+            enumeration.dependencies.add("System")
+            enumeration.attributes.append(CSharpAttribute("Flags"))
+        for value in self.__values:
+            enumeration.members.append(value.to_csharp(generator))
+        return enumeration
+
+
+class GDExtensionEnumValue:
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        self.__name: str = data["name"]
+        self.__value: int = data["value"]
+        self.__description: tuple[str, ...] = ()
+        if description := data.get("description"):
+            self.__description = tuple(description)
+
+    @property
+    def name(self: Self) -> str:
+        return self.__name
+
+    @property
+    def value(self: Self) -> int:
+        return self.__value
+
+    @property
+    def description(self: Self) -> tuple[str, ...]:
+        return self.__description
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpConstant:
+        constant: CSharpConstant = CSharpConstant()
+        constant.name = generator.get_translation(self.__name)
+        constant.value = self.__value
+        constant.documentation.description = documentation(self.__description)
+        return constant
+
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
