@@ -6,6 +6,63 @@ from re import Match, sub
 from typing import Any, Generator, Iterable, Optional
 
 
+class GDExtensionStylizer:
+    def __init__(self) -> None:
+        self.__expansions: dict[str, str] = {
+            "int8_t": "sbyte",
+            "uint8_t": "byte",
+            "int16_t": "short",
+            "uint16_t": "ushort",
+            "int32_t": "int",
+            "uint32_t": "uint",
+            "int64_t": "long",
+            "uint64_t": "ulong",
+            "size_t": "nuint",
+            "char": "byte",
+            "char16_t": "char",
+            "char32_t": "uint",
+            "wchar_t": "void",
+            "GDExtensionStringPtr": "GDExtensionString*",
+            "GDExtensionStringNamePtr": "GDExtensionStringName*",
+            "GDExtensionVariantPtr": "GDExtensionVariant*",
+            "GDExtensionBool": "bool",
+            "GDExtensionInterfaceFunctionPtr": "void*"
+        }
+        self.__translations: dict[str, str] = {"NULL": "null"}
+
+    def get_expansion(self, alias: str) -> str:
+        def substitute(match: Match[str]) -> str:
+            group: str = match.group(1)
+            substitution: str = self.get_expansion(group)
+            return match.group().replace(group, substitution)
+
+        pointer: str = "*" * alias.endswith("*")
+        key: str = alias.removeprefix("const ").removesuffix("*")
+        if key.endswith(">"):
+            return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
+        if value := self.__expansions.get(key):
+            return (value if value == "char" else self.get_expansion(value)) + pointer
+        return key + pointer
+
+    def set_expansion(self, alias: str, value: str) -> None:
+        self.__expansions.setdefault(alias, value)
+
+    def get_translation(self, string: str) -> str:
+        def substitute(match: Match[str]) -> str:
+            group: str = match.group()
+            result: str = "{}"
+            if group.startswith("`"):
+                group = match.group(1)
+                result = "`{}`"
+            return result.format(self.__translations.get(group, group))
+
+        return self.__translations.get(string) \
+            or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
+
+    def set_translation(self, string: str, value: str) -> None:
+        self.__translations.setdefault(string, value)
+
+
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         def create(type_data: dict[str, Any]) -> GDExtensionType:
@@ -65,63 +122,6 @@ class GDExtensionInterface:
             result: CSharpType = instance.to_csharp(stylizer)
             generator.add_type(result)
         generator.generate()
-
-
-class GDExtensionStylizer:
-    def __init__(self) -> None:
-        self.__expansions: dict[str, str] = {
-            "int8_t": "sbyte",
-            "uint8_t": "byte",
-            "int16_t": "short",
-            "uint16_t": "ushort",
-            "int32_t": "int",
-            "uint32_t": "uint",
-            "int64_t": "long",
-            "uint64_t": "ulong",
-            "size_t": "nuint",
-            "char": "byte",
-            "char16_t": "char",
-            "char32_t": "uint",
-            "wchar_t": "void",
-            "GDExtensionStringPtr": "GDExtensionString*",
-            "GDExtensionStringNamePtr": "GDExtensionStringName*",
-            "GDExtensionVariantPtr": "GDExtensionVariant*",
-            "GDExtensionBool": "bool",
-            "GDExtensionInterfaceFunctionPtr": "void*"
-        }
-        self.__translations: dict[str, str] = {"NULL": "null"}
-
-    def get_expansion(self, alias: str) -> str:
-        def substitute(match: Match[str]) -> str:
-            group: str = match.group(1)
-            substitution: str = self.get_expansion(group)
-            return match.group().replace(group, substitution)
-
-        pointer: str = "*" * alias.endswith("*")
-        key: str = alias.removeprefix("const ").removesuffix("*")
-        if key.endswith(">"):
-            return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        if value := self.__expansions.get(key):
-            return (value if value == "char" else self.get_expansion(value)) + pointer
-        return key + pointer
-
-    def set_expansion(self, alias: str, value: str) -> None:
-        self.__expansions.setdefault(alias, value)
-
-    def get_translation(self, string: str) -> str:
-        def substitute(match: Match[str]) -> str:
-            group: str = match.group()
-            result: str = "{}"
-            if group.startswith("`"):
-                group = match.group(1)
-                result = "`{}`"
-            return result.format(self.__translations.get(group, group))
-
-        return self.__translations.get(string) \
-            or sub(r"`(\w+)`|([A-Z]{4,}+(_[A-Z]+)*)|([a-z]+(_[a-z]+)+)", substitute, string)
-
-    def set_translation(self, string: str, value: str) -> None:
-        self.__translations.setdefault(string, value)
 
 
 class GDExtensionDeprecated:
