@@ -126,8 +126,8 @@ class GDExtensionEnumeration(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__is_bitfield: Optional[bool] = data.get("is_bitfield")
-        self.__values: tuple[GDExtensionEnumerationConstant, ...] = tuple(
-            GDExtensionEnumerationConstant(value) for value in data["values"]
+        self.__values: tuple[GDExtensionConstant, ...] = tuple(
+            GDExtensionConstant(value) for value in data["values"]
         )
 
     @property
@@ -135,7 +135,7 @@ class GDExtensionEnumeration(GDExtensionType):
         return self.__is_bitfield
 
     @property
-    def values(self) -> tuple[GDExtensionEnumerationConstant, ...]:
+    def values(self) -> tuple[GDExtensionConstant, ...]:
         return self.__values
 
     def stylize(self, stylizer: GDExtensionStylizer) -> None:
@@ -167,7 +167,7 @@ class GDExtensionEnumeration(GDExtensionType):
         return enumeration
 
 
-class GDExtensionEnumerationConstant:
+class GDExtensionConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
@@ -234,12 +234,12 @@ class GDExtensionAlias(GDExtensionType):
 class GDExtensionStructure(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.__members: tuple[GDExtensionStructureField, ...] = tuple(
-            GDExtensionStructureField(member_data) for member_data in data["members"]
+        self.__members: tuple[GDExtensionField, ...] = tuple(
+            GDExtensionField(member_data) for member_data in data["members"]
         )
 
     @property
-    def members(self) -> tuple[GDExtensionStructureField, ...]:
+    def members(self) -> tuple[GDExtensionField, ...]:
         return self.__members
 
     def stylize(self, stylizer: GDExtensionStylizer) -> None:
@@ -262,7 +262,7 @@ class GDExtensionStructure(GDExtensionType):
         return structure
 
 
-class GDExtensionStructureField:
+class GDExtensionField:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
