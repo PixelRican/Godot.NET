@@ -9,6 +9,18 @@ class GDExtensionDeprecated:
         self.__message: Optional[str] = data.get("message")
         self.__replace_with: Optional[str] = data.get("replace_with")
 
+    @property
+    def since(self: Self) -> str:
+        return self.__since
+
+    @property
+    def message(self: Self) -> Optional[str]:
+        return self.__message
+
+    @property
+    def replace_with(self: Self) -> Optional[str]:
+        return self.__replace_with
+
     def to_csharp(self: Self, generator: SourceGenerator) -> CSharpAttribute:
         sentences: list[str] = [f"Deprecated since Godot {self.__since}."]
         if self.__message:
