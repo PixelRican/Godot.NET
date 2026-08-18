@@ -161,7 +161,7 @@ class GDExtensionHandle(GDExtensionType):
 
 
 class GDExtensionAlias(GDExtensionType):
-    def __init__(self, data: dict[str, Any]) -> None:
+    def __init__(self: Self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__type: str = data["type"]
 
