@@ -10,7 +10,7 @@ class SourceGenerator:
         self.__indent_level: int = 0
 
     @contextmanager
-    def indent(self) -> Generator[SourceGenerator]:
+    def indent(self) -> Generator[SourceGenerator, None, None]:
         self.__indent_level += 1
         try:
             yield self
