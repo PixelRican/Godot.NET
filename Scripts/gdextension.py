@@ -1,8 +1,70 @@
 ﻿from abc import ABC, abstractmethod
 from csharp import *
+from itertools import chain
 from os.path import commonprefix
 from re import Match, sub
 from typing import Any, Generator, Iterable, Optional
+
+
+class GDExtensionInterface:
+    def __init__(self, data: dict[str, Any]) -> None:
+        def create(type_data: dict[str, Any]) -> GDExtensionType:
+            match type_data["kind"]:
+                case "enum":
+                    return GDExtensionEnumeration(type_data)
+                case "handle":
+                    return GDExtensionHandle(type_data)
+                case "alias":
+                    return GDExtensionAlias(type_data)
+                case "struct":
+                    return GDExtensionStructure(type_data)
+                case "function":
+                    return GDExtensionFunction(type_data)
+                case _:
+                    raise ValueError(f"Unknown kind: {type_data['kind']}")
+
+        self.__copyright: tuple[str, ...] = tuple(data["_copyright"])
+        self.__schema: str = data["$schema"]
+        self.__format_version: int = data["format_version"]
+        self.__types: tuple[GDExtensionType, ...] = tuple(
+            create(type_data) for type_data in data["types"]
+        )
+        self.__interface: tuple[GDExtensionInterfaceFunction, ...] = tuple(
+            GDExtensionInterfaceFunction(interface_data) for interface_data in data["interface"]
+        )
+
+    @property
+    def copyright(self) -> tuple[str, ...]:
+        return self.__copyright
+
+    @property
+    def schema(self) -> str:
+        return self.__schema
+
+    @property
+    def format_version(self) -> int:
+        return self.__format_version
+
+    @property
+    def types(self) -> tuple[GDExtensionType, ...]:
+        return self.__types
+
+    @property
+    def interface(self) -> tuple[GDExtensionInterfaceFunction, ...]:
+        return self.__interface
+
+    def generate(self) -> None:
+        def predicate(instance: GDExtensionType) -> bool:
+            return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
+
+        stylizer: GDExtensionStylizer = GDExtensionStylizer()
+        for instance in chain(self.types, self.interface):
+            instance.stylize(stylizer)
+        generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
+        for instance in filter(predicate, self.types):
+            result: CSharpType = instance.to_csharp(stylizer)
+            generator.add_type(result)
+        generator.generate()
 
 
 class GDExtensionStylizer:
