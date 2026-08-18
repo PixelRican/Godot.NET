@@ -35,7 +35,7 @@ class GDExtensionDeprecated:
 class GDExtensionType(ABC):
     def __init__(self: Self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__kind: str = data.get("kind", "unknown")
+        self.__kind: Optional[str] = data.get("kind")
         self.__description: tuple[str, ...] = ()
         self.__deprecated: Optional[GDExtensionDeprecated] = None
         if description := data.get("description"):
@@ -48,7 +48,7 @@ class GDExtensionType(ABC):
         return self.__name
 
     @property
-    def kind(self: Self) -> str:
+    def kind(self: Self) -> Optional[str]:
         return self.__kind
 
     @property
