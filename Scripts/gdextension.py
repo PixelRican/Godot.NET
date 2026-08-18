@@ -173,6 +173,69 @@ class GDExtensionAlias(GDExtensionType):
         generator.set_expansion(self.name, self.type)
 
 
+class GDExtensionStructure(GDExtensionType):
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.__members: tuple[GDExtensionStructureField, ...] = tuple(
+            GDExtensionStructureField(member_data) for member_data in data["members"]
+        )
+
+    @property
+    def members(self: Self) -> tuple[GDExtensionStructureField, ...]:
+        return self.__members
+
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        for member in self.members:
+            generator.set_translation(member.name, pascal(preprocess(member.name)))
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpClass:
+        structure: CSharpClass = CSharpClass()
+        structure.name = self.name
+        structure.is_value_type = True
+        structure.is_unsafe = structure.name != "GDExtensionCallError"
+        structure.dependencies.add("System.Runtime.InteropServices")
+        structure.attributes.append(CSharpAttribute("StructLayout", ["LayoutKind.Sequential"]))
+        structure.documentation.description = documentation(self.description)
+        if self.deprecated:
+            structure.attributes.append(self.deprecated.to_csharp(generator))
+            structure.dependencies.add("System")
+        for member in self.members:
+            structure.fields.append(member.to_csharp(generator))
+        return structure
+
+
+class GDExtensionStructureField:
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        self.__name: str = data["name"]
+        self.__type: str = data["type"]
+        self.__description: tuple[str, ...] = ()
+        if description := data.get("description"):
+            self.__description = tuple(description)
+
+    @property
+    def name(self: Self) -> str:
+        return self.__name
+
+    @property
+    def type(self: Self) -> str:
+        return self.__type
+
+    @property
+    def description(self: Self) -> tuple[str, ...]:
+        return self.__description
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpField:
+        field: CSharpField = CSharpField()
+        if self.name == "method_flags":
+            field.name = "MethodFlags"
+            field.type = "GDExtensionClassMethodFlags"
+        else:
+            field.name = generator.get_translation(self.name)
+            field.type = generator.get_expansion(self.type)
+        field.documentation.description = documentation(self.description)
+        return field
+
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
