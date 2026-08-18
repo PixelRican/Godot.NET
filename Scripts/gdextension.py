@@ -236,6 +236,84 @@ class GDExtensionStructureField:
         return field
 
 
+class GDExtensionFunction(GDExtensionType):
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.__arguments: tuple[GDExtensionParameter, ...] = tuple(
+            GDExtensionParameter(argument) for argument in data["arguments"]
+        )
+        self.__return_value: Optional[GDExtensionReturnType] = None
+        if return_value := data.get("return_value"):
+            self.__return_value = GDExtensionReturnType(return_value)
+
+    @property
+    def arguments(self: Self) -> tuple[GDExtensionParameter, ...]:
+        return self.__arguments
+
+    @property
+    def return_value(self: Self) -> Optional[GDExtensionReturnType]:
+        return self.__return_value
+
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        type_parameters: list[str] = [argument.type for argument in self.arguments]
+        if self.return_value:
+            type_parameters.append(self.return_value.type)
+        else:
+            type_parameters.append("void")
+        arguments: str = ", ".join(type_parameters)
+        generator.set_expansion(self.name, f"delegate* unmanaged[Cdecl]<{arguments}>")
+
+
+class GDExtensionParameter:
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        self.__name: str = data.get("name", "")
+        self.__type: str = data["type"]
+        self.__description: tuple[str, ...] = ()
+        if description := data.get("description"):
+            self.__description = tuple(description)
+
+    @property
+    def name(self: Self) -> str:
+        return self.__name
+
+    @property
+    def type(self: Self) -> str:
+        return self.__type
+
+    @property
+    def description(self: Self) -> tuple[str, ...]:
+        return self.__description
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpParameter:
+        parameter: CSharpParameter = CSharpParameter()
+        parameter.name = generator.get_translation(self.name)
+        parameter.type = generator.get_expansion(self.type)
+        parameter.documentation.description = documentation(self.description)
+        return parameter
+
+
+class GDExtensionReturnType:
+    def __init__(self: Self, data: dict[str, Any]) -> None:
+        self.__type: str = data["type"]
+        self.__description: tuple[str, ...] = ()
+        if description := data.get("description"):
+            self.__description = tuple(description)
+
+    @property
+    def type(self: Self) -> str:
+        return self.__type
+
+    @property
+    def description(self: Self) -> tuple[str, ...]:
+        return self.__description
+
+    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpReturnType:
+        return_type: CSharpReturnType = CSharpReturnType()
+        return_type.name = generator.get_expansion(self.type)
+        return_type.documentation.description = documentation(self.description)
+        return return_type
+
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
