@@ -160,6 +160,19 @@ class GDExtensionHandle(GDExtensionType):
         generator.set_expansion(self.name, self.parent or "void*")
 
 
+class GDExtensionAlias(GDExtensionType):
+    def __init__(self, data: dict[str, Any]) -> None:
+        super().__init__(data)
+        self.__type: str = data["type"]
+
+    @property
+    def type(self: Self) -> str:
+        return self.__type
+
+    def stylize(self: Self, generator: SourceGenerator) -> None:
+        generator.set_expansion(self.name, self.type)
+
+
 def parse(data: dict[str, Any]) -> SourceGenerator:
     generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
     generator.set_expansion("GDExtensionStringPtr", "GDExtensionString*")
