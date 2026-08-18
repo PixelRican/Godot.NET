@@ -1,28 +1,28 @@
 ﻿from abc import ABC, abstractmethod
 from csharp import *
 from os.path import commonprefix
-from typing import Any, Iterable, Optional, Self
+from typing import Any, Iterable, Optional
 
 
 class GDExtensionDeprecated:
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         self.__since: str = data["since"]
         self.__message: Optional[str] = data.get("message")
         self.__replace_with: Optional[str] = data.get("replace_with")
 
     @property
-    def since(self: Self) -> str:
+    def since(self) -> str:
         return self.__since
 
     @property
-    def message(self: Self) -> Optional[str]:
+    def message(self) -> Optional[str]:
         return self.__message
 
     @property
-    def replace_with(self: Self) -> Optional[str]:
+    def replace_with(self) -> Optional[str]:
         return self.__replace_with
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpAttribute:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpAttribute:
         sentences: list[str] = [f"Deprecated since Godot {self.since}."]
         if self.message:
             sentences.append(self.message)
@@ -33,7 +33,7 @@ class GDExtensionDeprecated:
 
 
 class GDExtensionType(ABC):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__kind: Optional[str] = data.get("kind")
         self.__description: Optional[tuple[str, ...]] = None
@@ -44,28 +44,28 @@ class GDExtensionType(ABC):
             self.__deprecated = GDExtensionDeprecated(deprecated)
 
     @property
-    def name(self: Self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def kind(self: Self) -> Optional[str]:
+    def kind(self) -> Optional[str]:
         return self.__kind
 
     @property
-    def description(self: Self) -> Optional[tuple[str, ...]]:
+    def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
     @property
-    def deprecated(self: Self) -> Optional[GDExtensionDeprecated]:
+    def deprecated(self) -> Optional[GDExtensionDeprecated]:
         return self.__deprecated
 
     @abstractmethod
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         pass
 
 
 class GDExtensionEnumeration(GDExtensionType):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__is_bitfield: Optional[bool] = data.get("is_bitfield")
         self.__values: tuple[GDExtensionEnumerationConstant, ...] = tuple(
@@ -73,14 +73,14 @@ class GDExtensionEnumeration(GDExtensionType):
         )
 
     @property
-    def is_bitfield(self: Self) -> Optional[bool]:
+    def is_bitfield(self) -> Optional[bool]:
         return self.__is_bitfield
 
     @property
-    def values(self: Self) -> tuple[GDExtensionEnumerationConstant, ...]:
+    def values(self) -> tuple[GDExtensionEnumerationConstant, ...]:
         return self.__values
 
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         prefix: str = commonprefix([value.name for value in self.values])
         for value in self.values:
             if "MAX" in value.name:
@@ -93,7 +93,7 @@ class GDExtensionEnumeration(GDExtensionType):
                     .replace("Uint", "UInt", 1)
                 generator.set_translation(value.name, replacement)
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpEnumeration:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpEnumeration:
         enumeration: CSharpEnumeration = CSharpEnumeration()
         enumeration.name = self.name
         enumeration.documentation.description = documentation(self.description)
@@ -110,7 +110,7 @@ class GDExtensionEnumeration(GDExtensionType):
 
 
 class GDExtensionEnumerationConstant:
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
         self.__description: Optional[tuple[str, ...]] = None
@@ -118,18 +118,18 @@ class GDExtensionEnumerationConstant:
             self.__description = tuple(description)
 
     @property
-    def name(self: Self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def value(self: Self) -> int:
+    def value(self) -> int:
         return self.__value
 
     @property
-    def description(self: Self) -> Optional[tuple[str, ...]]:
+    def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpEnumerationConstant:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpEnumerationConstant:
         constant: CSharpEnumerationConstant = CSharpEnumerationConstant()
         constant.name = generator.get_translation(self.name)
         constant.value = self.value
@@ -138,57 +138,57 @@ class GDExtensionEnumerationConstant:
 
 
 class GDExtensionHandle(GDExtensionType):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__is_const: Optional[bool] = data.get("is_const")
         self.__is_uninitialized: Optional[bool] = data.get("is_uninitialized")
         self.__parent: Optional[str] = data.get("parent")
 
     @property
-    def is_const(self: Self) -> Optional[bool]:
+    def is_const(self) -> Optional[bool]:
         return self.__is_const
 
     @property
-    def is_uninitialized(self: Self) -> Optional[bool]:
+    def is_uninitialized(self) -> Optional[bool]:
         return self.__is_uninitialized
 
     @property
-    def parent(self: Self) -> Optional[str]:
+    def parent(self) -> Optional[str]:
         return self.__parent
 
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         generator.set_expansion(self.name, self.parent or "void*")
 
 
 class GDExtensionAlias(GDExtensionType):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__type: str = data["type"]
 
     @property
-    def type(self: Self) -> str:
+    def type(self) -> str:
         return self.__type
 
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         generator.set_expansion(self.name, self.type)
 
 
 class GDExtensionStructure(GDExtensionType):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__members: tuple[GDExtensionStructureField, ...] = tuple(
             GDExtensionStructureField(member_data) for member_data in data["members"]
         )
 
     @property
-    def members(self: Self) -> tuple[GDExtensionStructureField, ...]:
+    def members(self) -> tuple[GDExtensionStructureField, ...]:
         return self.__members
 
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         for member in self.members:
             generator.set_translation(member.name, pascal(preprocess(member.name)))
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpClass:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpClass:
         structure: CSharpClass = CSharpClass()
         structure.name = self.name
         structure.is_value_type = True
@@ -205,7 +205,7 @@ class GDExtensionStructure(GDExtensionType):
 
 
 class GDExtensionStructureField:
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
         self.__description: Optional[tuple[str, ...]] = None
@@ -213,18 +213,18 @@ class GDExtensionStructureField:
             self.__description = tuple(description)
 
     @property
-    def name(self: Self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def type(self: Self) -> str:
+    def type(self) -> str:
         return self.__type
 
     @property
-    def description(self: Self) -> Optional[tuple[str, ...]]:
+    def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpField:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpField:
         field: CSharpField = CSharpField()
         if self.name == "method_flags":
             field.name = "MethodFlags"
@@ -237,7 +237,7 @@ class GDExtensionStructureField:
 
 
 class GDExtensionFunction(GDExtensionType):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__arguments: tuple[GDExtensionParameter, ...] = tuple(
             GDExtensionParameter(argument) for argument in data["arguments"]
@@ -247,14 +247,14 @@ class GDExtensionFunction(GDExtensionType):
             self.__return_value = GDExtensionReturnType(return_value)
 
     @property
-    def arguments(self: Self) -> tuple[GDExtensionParameter, ...]:
+    def arguments(self) -> tuple[GDExtensionParameter, ...]:
         return self.__arguments
 
     @property
-    def return_value(self: Self) -> Optional[GDExtensionReturnType]:
+    def return_value(self) -> Optional[GDExtensionReturnType]:
         return self.__return_value
 
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         type_parameters: list[str] = [argument.type for argument in self.arguments]
         if self.return_value:
             type_parameters.append(self.return_value.type)
@@ -265,7 +265,7 @@ class GDExtensionFunction(GDExtensionType):
 
 
 class GDExtensionParameter:
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data.get("name", "")
         self.__type: str = data["type"]
         self.__description: Optional[tuple[str, ...]] = None
@@ -273,18 +273,18 @@ class GDExtensionParameter:
             self.__description = tuple(description)
 
     @property
-    def name(self: Self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def type(self: Self) -> str:
+    def type(self) -> str:
         return self.__type
 
     @property
-    def description(self: Self) -> Optional[tuple[str, ...]]:
+    def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpParameter:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpParameter:
         parameter: CSharpParameter = CSharpParameter()
         parameter.name = generator.get_translation(self.name)
         parameter.type = generator.get_expansion(self.type)
@@ -293,21 +293,21 @@ class GDExtensionParameter:
 
 
 class GDExtensionReturnType:
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         self.__type: str = data["type"]
         self.__description: tuple[str, ...] = ()
         if description := data.get("description"):
             self.__description = tuple(description)
 
     @property
-    def type(self: Self) -> str:
+    def type(self) -> str:
         return self.__type
 
     @property
-    def description(self: Self) -> tuple[str, ...]:
+    def description(self) -> tuple[str, ...]:
         return self.__description
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> CSharpReturnType:
+    def to_csharp(self, generator: SourceGenerator) -> CSharpReturnType:
         return_type: CSharpReturnType = CSharpReturnType()
         return_type.name = generator.get_expansion(self.type)
         return_type.documentation.description = documentation(self.description)
@@ -315,31 +315,31 @@ class GDExtensionReturnType:
 
 
 class GDExtensionInterfaceFunction(GDExtensionFunction):
-    def __init__(self: Self, data: dict[str, Any]) -> None:
+    def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__since: str = data["since"]
         self.__see: Optional[str] = data.get("see")
         self.__legacy_type_name: Optional[str] = data.get("legacy_type_name")
 
     @property
-    def since(self: Self) -> str:
+    def since(self) -> str:
         return self.__since
 
     @property
-    def see(self: Self) -> Optional[str]:
+    def see(self) -> Optional[str]:
         return self.__see
 
     @property
-    def legacy_type_name(self: Self) -> Optional[str]:
+    def legacy_type_name(self) -> Optional[str]:
         return self.__legacy_type_name
 
-    def stylize(self: Self, generator: SourceGenerator) -> None:
+    def stylize(self, generator: SourceGenerator) -> None:
         super().stylize(generator)
         generator.set_translation(self.name, pascal(preprocess(self.name)))
         for argument in self.arguments:
             generator.set_translation(argument.name, camel(preprocess(argument.name)))
 
-    def to_csharp(self: Self, generator: SourceGenerator) -> tuple[CSharpField, CSharpMethod]:
+    def to_csharp(self, generator: SourceGenerator) -> tuple[CSharpField, CSharpMethod]:
         method: CSharpMethod = CSharpMethod()
         method.name = generator.get_translation(self.name)
         method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
