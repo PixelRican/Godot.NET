@@ -66,7 +66,7 @@ class GDExtensionStylizer:
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
         def create(type_data: dict[str, Any]) -> GDExtensionType:
-            match type_data["kind"]:
+            match kind := type_data["kind"]:
                 case "enum":
                     return GDExtensionEnumeration(type_data)
                 case "handle":
@@ -78,7 +78,7 @@ class GDExtensionInterface:
                 case "function":
                     return GDExtensionFunction(type_data)
                 case _:
-                    raise ValueError(f"Unknown kind: {type_data['kind']}")
+                    raise ValueError(f"Unknown kind: {kind}")
 
         self.__copyright: tuple[str, ...] = tuple(data["_copyright"])
         self.__schema: str = data["$schema"]
