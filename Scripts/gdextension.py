@@ -397,8 +397,18 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
             generator.set_translation(argument.name, camel(preprocess(argument.name)))
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> tuple[CSharpField, CSharpMethod]:
+        def method_body() -> Iterable[str]:
+            yield f"{field.type} function = {field.name};"
+            yield "ThrowIfInvalid(function);"
+            arguments: str = ", ".join(argument.name for argument in method.parameters)
+            if method.return_type.name == "void":
+                yield f"function({arguments});"
+            else:
+                yield f"return function({arguments});"
+
         method: CSharpMethod = CSharpMethod()
         method.name = stylizer.get_translation(self.name)
+        method.body = method_body()
         method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
         method.is_static = True
         if description := self.description:
