@@ -1,4 +1,3 @@
-from contextlib import contextmanager
 from typing import Generator, Iterable, Iterator
 
 
@@ -7,15 +6,6 @@ class SourceGenerator:
         self.__namespace: str = namespace
         self.__output_directory: str = output_directory
         self.__types: list[CSharpType] = []
-        self.__indent_level: int = 0
-
-    @contextmanager
-    def indent(self) -> Generator[SourceGenerator, None, None]:
-        self.__indent_level += 1
-        try:
-            yield self
-        finally:
-            self.__indent_level -= 1
 
     def add_type(self, item: CSharpType) -> None:
         self.__types.append(item)
@@ -66,9 +56,8 @@ class SourceGenerator:
             yield "\n"
         yield f"namespace {self.__namespace};\n"
         yield "\n"
-        for line in info.generator(self):
-            indent: str = "    " * self.__indent_level if line else ""
-            yield f"{indent}{line}\n"
+        for line in info.generator():
+            yield f"{line}\n"
 
 
 class XMLDocumentation:
@@ -77,7 +66,7 @@ class XMLDocumentation:
         self.attributes: Iterable[XMLAttribute] = ()
         self.description: Iterable[str] = ()
 
-    def generator(self, generator: SourceGenerator) -> Iterator[str]:
+    def generator(self) -> Iterator[str]:
         description: Iterator[str] = iter(self.description)
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
@@ -118,7 +107,7 @@ class CSharpAttribute:
     def arguments(self) -> tuple[str, ...]:
         return self.__arguments
 
-    def statement(self, generator: SourceGenerator) -> str:
+    def statement(self) -> str:
         if self.__arguments:
             arguments: str = ", ".join(argument for argument in self.__arguments)
             return f"[{self.__name}({arguments})]"
@@ -147,13 +136,13 @@ class CSharpType(EncapsulatedCSharpElement):
         super().__init__()
         self.dependencies: set[str] = set()
 
-    def generator(self, generator: SourceGenerator) -> Iterator[str]:
-        yield from self.documentation.generator(generator)
+    def generator(self) -> Iterator[str]:
+        yield from self.documentation.generator()
         for attribute in sorted(self.attributes, key=lambda a: a.name):
-            yield attribute.statement(generator)
-        yield from self.definition(generator)
+            yield attribute.statement()
+        yield from self.definition()
 
-    def definition(self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self) -> Iterator[str]:
         raise NotImplementedError()
 
 
@@ -163,7 +152,7 @@ class CSharpEnumeration(CSharpType):
         self.underlying_type: str = ""
         self.members: list[CSharpEnumerationConstant] = []
 
-    def definition(self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self) -> Iterator[str]:
         if self.underlying_type:
             yield f"{self.modifiers} enum {self.name} : {self.underlying_type}"
         else:
@@ -171,11 +160,10 @@ class CSharpEnumeration(CSharpType):
         yield "{"
         if self.members:
             last: CSharpEnumerationConstant = self.members[-1]
-            with generator.indent():
-                for member in self.members:
-                    separator: str = "," * (member is not last)
-                    yield from member.documentation.generator(generator)
-                    yield f"{member.name} = {member.value}{separator}"
+            for member in self.members:
+                separator: str = "," * (member is not last)
+                yield from (indent(line) for line in member.documentation.generator())
+                yield indent(f"{member.name} = {member.value}{separator}")
         yield "}"
 
 
@@ -203,20 +191,19 @@ class CSharpClass(CSharpType):
             modifiers.append("unsafe")
         return " ".join(modifiers)
 
-    def definition(self, generator: SourceGenerator) -> Iterator[str]:
+    def definition(self) -> Iterator[str]:
         yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
         yield "{"
-        with generator.indent():
-            separate: bool = False
-            for member in self.fields:
-                separate = True
-                yield from member.documentation.generator(generator)
-                yield f"{member.modifiers} {member.type} {member.name};"
-            for member in self.methods:
-                if separate:
-                    yield ""
-                separate = True
-                yield from member.generator(generator)
+        separate: bool = False
+        for member in self.fields:
+            separate = True
+            yield from (indent(line) for line in member.documentation.generator())
+            yield indent(f"{member.modifiers} {member.type} {member.name};")
+        for member in self.methods:
+            if separate:
+                yield ""
+            separate = True
+            yield from (indent(line) for line in member.generator())
         yield "}"
 
 
@@ -250,20 +237,19 @@ class CSharpMethod(EncapsulatedCSharpElement):
     def modifiers(self) -> str:
         return f"{super().modifiers} static" if self.is_static else super().modifiers
 
-    def generator(self, generator: SourceGenerator) -> Iterator[str]:
-        yield from self.documentation.generator(generator)
+    def generator(self) -> Iterator[str]:
+        yield from self.documentation.generator()
         for parameter in self.parameters:
-            yield from parameter.documentation.generator(generator)
+            yield from parameter.documentation.generator()
         for exception in self.exceptions:
-            yield from exception.documentation.generator(generator)
-        yield from self.return_type.documentation.generator(generator)
+            yield from exception.documentation.generator()
+        yield from self.return_type.documentation.generator()
         for attribute in sorted(self.attributes, key=lambda a: a.name):
-            yield attribute.statement(generator)
+            yield attribute.statement()
         parameters: str = ", ".join(f"{parameter.type} {parameter.name}" for parameter in self.parameters)
         yield f"{self.modifiers} {self.return_type.name} {self.name}({parameters})"
         yield "{"
-        with generator.indent():
-            yield from self.body
+        yield from (indent(line) for line in self.body)
         yield "}"
 
 
@@ -293,6 +279,10 @@ class CSharpException(CSharpElement):
         super().__init__()
         self.documentation.tag = "exception"
         self.documentation.attributes = attribute()
+
+
+def indent(line: str) -> str:
+    return f"    {line}".rstrip()
 
 
 def camel(symbol: str) -> str:
