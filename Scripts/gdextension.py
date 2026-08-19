@@ -484,7 +484,6 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
             method.documentation.description = documentation(description, stylizer)
         if deprecated := self.deprecated:
             method.attributes.append(deprecated.to_csharp(stylizer))
-            method.dependencies.add("System")
         if return_value := self.return_value:
             method.return_type = return_value.to_csharp(stylizer)
         for argument in self.arguments:
