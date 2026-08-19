@@ -66,7 +66,7 @@ class SourceGenerator:
             yield "\n"
         yield f"namespace {self.__namespace};\n"
         yield "\n"
-        for line in info.source(self):
+        for line in info.generator(self):
             indent: str = "    " * self.__indent_level if line else ""
             yield f"{indent}{line}\n"
 
@@ -77,7 +77,7 @@ class XMLDocumentation:
         self.attributes: Iterable[XMLAttribute] = ()
         self.description: Iterable[str] = ()
 
-    def source(self, generator: SourceGenerator) -> Iterator[str]:
+    def generator(self, generator: SourceGenerator) -> Iterator[str]:
         description: Iterator[str] = iter(self.description)
         if first_line := next(description, None):
             elements: list[str] = [self.tag]
@@ -147,8 +147,8 @@ class CSharpType(EncapsulatedCSharpElement):
         super().__init__()
         self.dependencies: set[str] = set()
 
-    def source(self, generator: SourceGenerator) -> Iterator[str]:
-        yield from self.documentation.source(generator)
+    def generator(self, generator: SourceGenerator) -> Iterator[str]:
+        yield from self.documentation.generator(generator)
         for attribute in sorted(self.attributes, key=lambda a: a.name):
             yield attribute.statement(generator)
         yield from self.definition(generator)
@@ -174,7 +174,7 @@ class CSharpEnumeration(CSharpType):
             with generator.indent():
                 for member in self.members:
                     separator: str = "," * (member is not last)
-                    yield from member.documentation.source(generator)
+                    yield from member.documentation.generator(generator)
                     yield f"{member.name} = {member.value}{separator}"
         yield "}"
 
@@ -210,13 +210,13 @@ class CSharpClass(CSharpType):
             separate: bool = False
             for member in self.fields:
                 separate = True
-                yield from member.documentation.source(generator)
+                yield from member.documentation.generator(generator)
                 yield f"{member.modifiers} {member.type} {member.name};"
             for member in self.methods:
                 if separate:
                     yield ""
                 separate = True
-                yield from member.source(generator)
+                yield from member.generator(generator)
         yield "}"
 
 
@@ -250,13 +250,13 @@ class CSharpMethod(EncapsulatedCSharpElement):
     def modifiers(self) -> str:
         return f"{super().modifiers} static" if self.is_static else super().modifiers
 
-    def source(self, generator: SourceGenerator) -> Iterator[str]:
-        yield from self.documentation.source(generator)
+    def generator(self, generator: SourceGenerator) -> Iterator[str]:
+        yield from self.documentation.generator(generator)
         for parameter in self.parameters:
-            yield from parameter.documentation.source(generator)
+            yield from parameter.documentation.generator(generator)
         for exception in self.exceptions:
-            yield from exception.documentation.source(generator)
-        yield from self.return_type.documentation.source(generator)
+            yield from exception.documentation.generator(generator)
+        yield from self.return_type.documentation.generator(generator)
         for attribute in sorted(self.attributes, key=lambda a: a.name):
             yield attribute.statement(generator)
         parameters: str = ", ".join(f"{parameter.type} {parameter.name}" for parameter in self.parameters)
