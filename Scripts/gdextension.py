@@ -110,6 +110,100 @@ class GDExtensionInterface:
     def interface(self) -> tuple[GDExtensionInterfaceFunction, ...]:
         return self.__interface
 
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpClass:
+        def initialize() -> CSharpMethod:
+            def body() -> Iterable[str]:
+                yield "ArgumentNullException.ThrowIfNull(pGetProcAddress);"
+                for interface, field in zip(self.interface, csharp_class.fields):
+                    yield f"{field.name} = ({field.type})Load(pGetProcAddress, \"{interface.name}\"u8);"
+
+            method: CSharpMethod = CSharpMethod()
+            method.name = "Initialize"
+            method.is_static = True
+            method.body = body()
+            method.documentation.description = ("Loads the GDExtensionInterface functions from the specified address loader.",)
+            parameter: CSharpParameter = CSharpParameter()
+            parameter.name = "pGetProcAddress"
+            parameter.type = stylizer.get_expansion("GDExtensionInterfaceGetProcAddress")
+            parameter.documentation.description = ("The address loader provided by the Godot Engine.",)
+            method.parameters.append(parameter)
+            exception: CSharpException = CSharpException()
+            exception.name = "ArgumentNullException"
+            exception.documentation.description = ("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",)
+            method.exceptions.append(exception)
+            return method
+
+        def load() -> CSharpMethod:
+            def body() -> Iterable[str]:
+                yield "fixed (byte* functionName = pFunctionName)"
+                yield "{"
+                yield "    return pGetProcAddress(functionName);"
+                yield "}"
+
+            method: CSharpMethod = CSharpMethod()
+            method.name = "Load"
+            method.body = body()
+            method.is_public = False
+            method.is_static = True
+            method.return_type.name = "void*"
+            parameter1: CSharpParameter = CSharpParameter()
+            parameter1.name = "pGetProcAddress"
+            parameter1.type = stylizer.get_expansion("GDExtensionInterfaceGetProcAddress")
+            parameter2: CSharpParameter = CSharpParameter()
+            parameter2.name = "pFunctionName"
+            parameter2.type = "ReadOnlySpan<byte>"
+            method.parameters.append(parameter1)
+            method.parameters.append(parameter2)
+            return method
+
+        def throw_if_invalid() -> CSharpMethod:
+            def body() -> Iterable[str]:
+                yield "if (pFunction == null)"
+                yield "{"
+                yield "    ThrowForInvalidFunction();"
+                yield "}"
+
+            method: CSharpMethod = CSharpMethod()
+            method.name = "ThrowIfInvalid"
+            method.body = body()
+            method.is_public = False
+            method.is_static = True
+            parameter: CSharpParameter = CSharpParameter()
+            parameter.name = "pFunction"
+            parameter.type = "void*"
+            method.parameters.append(parameter)
+            return method
+
+        def throw_for_invalid_function() -> CSharpMethod:
+            def body() -> Iterable[str]:
+                yield "throw new InvalidOperationException(\"Unable to call the specified function.\");"
+
+            method: CSharpMethod = CSharpMethod()
+            method.name = "ThrowForInvalidFunction"
+            method.body = body()
+            method.attributes.append(CSharpAttribute("DoesNotReturn"))
+            method.is_public = False
+            method.is_static = True
+            return method
+
+        csharp_class: CSharpClass = CSharpClass()
+        csharp_class.dependencies.add("System")
+        csharp_class.dependencies.add("System.Diagnostics.CodeAnalysis")
+        csharp_class.dependencies.add("System.Runtime.CompilerServices")
+        csharp_class.documentation.description = ("Exposes functions from the GDExtension API.",)
+        csharp_class.name = "GDExtensionInterface"
+        csharp_class.is_static = True
+        csharp_class.is_unsafe = True
+        csharp_class.methods.append(initialize())
+        for interface in self.interface:
+            field, method = interface.to_csharp(stylizer)
+            csharp_class.fields.append(field)
+            csharp_class.methods.append(method)
+        csharp_class.methods.append(load())
+        csharp_class.methods.append(throw_if_invalid())
+        csharp_class.methods.append(throw_for_invalid_function())
+        return csharp_class
+
     def generate(self) -> None:
         def predicate(instance: GDExtensionType) -> bool:
             return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
@@ -121,6 +215,7 @@ class GDExtensionInterface:
         for instance in filter(predicate, self.types):
             result: CSharpType = instance.to_csharp(stylizer)
             generator.add_type(result)
+        generator.add_type(self.to_csharp(stylizer))
         generator.generate()
 
 
