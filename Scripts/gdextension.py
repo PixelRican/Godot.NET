@@ -204,7 +204,7 @@ class GDExtensionInterface:
         csharp_class.methods.append(throw_for_invalid_function())
         return csharp_class
 
-    def generate(self) -> None:
+    def dump(self) -> None:
         def predicate(instance: GDExtensionType) -> bool:
             return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
 
