@@ -1,65 +1,6 @@
 from typing import Generator, Iterable, Iterator
 
 
-class SourceGenerator:
-    def __init__(self, namespace: str, output_directory: str) -> None:
-        self.__namespace: str = namespace
-        self.__output_directory: str = output_directory
-        self.__types: list[CSharpType] = []
-
-    def add_type(self, item: CSharpType) -> None:
-        self.__types.append(item)
-
-    def generate(self) -> None:
-        for info in self.__types:
-            with open(f"{self.__output_directory}/{info.name}.cs", "w") as file:
-                file.writelines(self.__source(info))
-
-    def __source(self, info: CSharpType) -> Iterable[str]:
-        yield "/**************************************************************************/\n"
-        yield f"/*  {info.name}.cs  {" " * (65 - len(info.name))}*/\n"
-        yield "/**************************************************************************/\n"
-        yield "/*                         This file is part of:                          */\n"
-        yield "/*                             GODOT ENGINE                               */\n"
-        yield "/*                        https://godotengine.org                         */\n"
-        yield "/**************************************************************************/\n"
-        yield "/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */\n"
-        yield "/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */\n"
-        yield "/*                                                                        */\n"
-        yield "/* Permission is hereby granted, free of charge, to any person obtaining  */\n"
-        yield "/* a copy of this software and associated documentation files (the        */\n"
-        yield "/* \"Software\"), to deal in the Software without restriction, including    */\n"
-        yield "/* without limitation the rights to use, copy, modify, merge, publish,    */\n"
-        yield "/* distribute, sublicense, and/or sell copies of the Software, and to     */\n"
-        yield "/* permit persons to whom the Software is furnished to do so, subject to  */\n"
-        yield "/* the following conditions:                                              */\n"
-        yield "/*                                                                        */\n"
-        yield "/* The above copyright notice and this permission notice shall be         */\n"
-        yield "/* included in all copies or substantial portions of the Software.        */\n"
-        yield "/*                                                                        */\n"
-        yield "/* THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,        */\n"
-        yield "/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF     */\n"
-        yield "/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. */\n"
-        yield "/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY   */\n"
-        yield "/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,   */\n"
-        yield "/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE      */\n"
-        yield "/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */\n"
-        yield "/**************************************************************************/\n"
-        yield "/*              This file is generated. Edits will be lost.               */\n"
-        yield "/**************************************************************************/\n"
-        yield "\n"
-        separate: bool = False
-        for dependency in sorted(info.dependencies):
-            separate = True
-            yield f"using {dependency};\n"
-        if separate:
-            yield "\n"
-        yield f"namespace {self.__namespace};\n"
-        yield "\n"
-        for line in info.generator():
-            yield f"{line}\n"
-
-
 class XMLDocumentation:
     def __init__(self) -> None:
         self.tag: str = "summary"
@@ -279,6 +220,53 @@ class CSharpException(CSharpElement):
         super().__init__()
         self.documentation.tag = "exception"
         self.documentation.attributes = attribute()
+
+
+def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
+    for source in types:
+        with open(f"{directory}/{source.name}.cs", "w") as file:
+            file.writelines(f"{line}\n" for line in generate(source, namespace))
+
+
+def generate(source: CSharpType, namespace: str) -> Generator[str, None, None]:
+    yield "/**************************************************************************/"
+    yield f"/*  {source.name}.cs  {" " * (65 - len(source.name))}*/"
+    yield "/**************************************************************************/"
+    yield "/*                         This file is part of:                          */"
+    yield "/*                             GODOT ENGINE                               */"
+    yield "/*                        https://godotengine.org                         */"
+    yield "/**************************************************************************/"
+    yield "/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */"
+    yield "/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */"
+    yield "/*                                                                        */"
+    yield "/* Permission is hereby granted, free of charge, to any person obtaining  */"
+    yield "/* a copy of this software and associated documentation files (the        */"
+    yield "/* \"Software\"), to deal in the Software without restriction, including    */"
+    yield "/* without limitation the rights to use, copy, modify, merge, publish,    */"
+    yield "/* distribute, sublicense, and/or sell copies of the Software, and to     */"
+    yield "/* permit persons to whom the Software is furnished to do so, subject to  */"
+    yield "/* the following conditions:                                              */"
+    yield "/*                                                                        */"
+    yield "/* The above copyright notice and this permission notice shall be         */"
+    yield "/* included in all copies or substantial portions of the Software.        */"
+    yield "/*                                                                        */"
+    yield "/* THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,        */"
+    yield "/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF     */"
+    yield "/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. */"
+    yield "/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY   */"
+    yield "/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,   */"
+    yield "/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE      */"
+    yield "/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */"
+    yield "/**************************************************************************/"
+    yield "/*              This file is generated. Edits will be lost.               */"
+    yield "/**************************************************************************/"
+    yield ""
+    if dependencies := sorted(source.dependencies):
+        yield from (f"using {dependency};" for dependency in dependencies)
+        yield ""
+    yield f"namespace {namespace};"
+    yield ""
+    yield from source.generator()
 
 
 def indent(line: str) -> str:

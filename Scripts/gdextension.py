@@ -208,15 +208,14 @@ class GDExtensionInterface:
         def predicate(instance: GDExtensionType) -> bool:
             return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
 
-        stylizer: GDExtensionStylizer = GDExtensionStylizer()
-        for instance in chain(self.types, self.interface):
-            instance.stylize(stylizer)
-        generator: SourceGenerator = SourceGenerator("Godot.Interop", "../Source/Interop")
-        for instance in filter(predicate, self.types):
-            result: CSharpType = instance.to_csharp(stylizer)
-            generator.add_type(result)
-        generator.add_type(self.to_csharp(stylizer))
-        generator.generate()
+        def types() -> Iterable[str]:
+            stylizer: GDExtensionStylizer = GDExtensionStylizer()
+            for instance in chain(self.types, self.interface):
+                instance.stylize(stylizer)
+            yield from (instance.to_csharp(stylizer) for instance in filter(predicate, self.types))
+            yield self.to_csharp(stylizer)
+
+        dump(types(), "Godot.Interop", "../Source/Interop")
 
 
 class GDExtensionDeprecated:
