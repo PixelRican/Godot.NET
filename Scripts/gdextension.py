@@ -204,7 +204,7 @@ class GDExtensionInterface:
         csharp_class.methods.append(throw_for_invalid_function())
         return csharp_class
 
-    def dump(self) -> None:
+    def dump(self, namespace: str, directory: str) -> None:
         def predicate(instance: GDExtensionType) -> bool:
             return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
 
@@ -215,7 +215,7 @@ class GDExtensionInterface:
             yield from (instance.to_csharp(stylizer) for instance in filter(predicate, self.types))
             yield self.to_csharp(stylizer)
 
-        dump(types(), "Godot.Interop", "../Source/Interop")
+        dump(types(), namespace, directory)
 
 
 class GDExtensionDeprecated:
