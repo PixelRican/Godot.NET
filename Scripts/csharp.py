@@ -185,9 +185,19 @@ class CSharpEnumeration(CSharpMember):
 
 
 class CSharpConstant(CSharpElement):
-    def __init__(self) -> None:
-        super().__init__()
-        self.value: int = 0
+    def __init__(
+            self,
+            name: str,
+            description: Iterable[str],
+            attributes: Iterable[CSharpAttribute],
+            value: int
+        ) -> None:
+        super().__init__(name, XMLDocumentation.summary(description), attributes)
+        self.__value: int = value
+
+    @property
+    def value(self) -> int:
+        return self.__value
 
 
 class CSharpClass(CSharpMember):
