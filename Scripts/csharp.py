@@ -65,6 +65,7 @@ class XMLAttribute:
 
 
 class CSharpAccessModifier(StrEnum):
+    NONE = ""
     PUBLIC = "public"
     PRIVATE = "private"
 
