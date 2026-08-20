@@ -1,3 +1,4 @@
+from enum import StrEnum
 from typing import Generator, Iterable, Iterator, Union
 
 
@@ -63,6 +64,12 @@ class XMLAttribute:
         return self.__value
 
 
+class CSharpAccessModifier(StrEnum):
+    NONE = ""
+    PUBLIC = "public"
+    PRIVATE = "private"
+
+
 class CSharpAttribute:
     def __init__(self, name: str, arguments: Iterable[str] = ()) -> None:
         self.__name: str = name
@@ -110,11 +117,11 @@ class CSharpElement:
 class EncapsulatedCSharpElement(CSharpElement):
     def __init__(self) -> None:
         super().__init__()
-        self.is_public: bool = True
+        self.access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC
 
     @property
     def modifiers(self) -> str:
-        return "public" if self.is_public else "private"
+        return self.access_modifier
 
 
 class CSharpType(EncapsulatedCSharpElement):
