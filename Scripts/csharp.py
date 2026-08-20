@@ -131,34 +131,23 @@ class CSharpElement:
         return self.__attributes
 
 
-class EncapsulatedCSharpElement(CSharpElement):
-    def __init__(self) -> None:
-        super().__init__()
-        self.access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC
+class CSharpMember(CSharpElement):
+    def __init__(
+            self,
+            name: str,
+            description: Iterable[str],
+            attributes: Iterable[CSharpAttribute],
+            access_modifier: CSharpAccessModifier
+        ) -> None:
+        super().__init__(name, XMLDocumentation.summary(description), attributes)
+        self.__access_modifier: CSharpAccessModifier = access_modifier
 
     @property
-    def modifiers(self) -> str:
-        return self.access_modifier
+    def access_modifier(self) -> CSharpAccessModifier:
+        return self.__access_modifier
 
 
-class CSharpType(EncapsulatedCSharpElement):
-    def __init__(self) -> None:
-        super().__init__()
-        self.dependencies: set[str] = set()
-
-    def __iter__(self) -> Generator[str]:
-        def key(attribute: CSharpAttribute) -> str:
-            return attribute.name
-
-        yield from self.documentation
-        yield from (str(attribute) for attribute in sorted(self.attributes, key=key))
-        yield from self.definition()
-
-    def definition(self) -> Generator[str]:
-        raise NotImplementedError()
-
-
-class CSharpEnumeration(CSharpType):
+class CSharpEnumeration(CSharpMember):
     def __init__(self) -> None:
         super().__init__()
         self.underlying_type: str = ""
@@ -183,7 +172,7 @@ class CSharpEnumerationConstant(CSharpElement):
         self.value: int = 0
 
 
-class CSharpClass(CSharpType):
+class CSharpClass(CSharpMember):
     def __init__(self) -> None:
         super().__init__()
         self.fields: list[CSharpField] = []
@@ -217,7 +206,7 @@ class CSharpClass(CSharpType):
         yield "}"
 
 
-class CSharpField(EncapsulatedCSharpElement):
+class CSharpField(CSharpMember):
     def __init__(self) -> None:
         super().__init__()
         self.type: str = "object"
@@ -226,11 +215,11 @@ class CSharpField(EncapsulatedCSharpElement):
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield f"{self.modifiers} {self.type} {self.name};"
+        yield f"{self.access_modifier} {self.type} {self.name};"
 
     @property
-    def modifiers(self) -> str:
-        modifiers: list[str] = [super().modifiers]
+    def access_modifier(self) -> str:
+        modifiers: list[str] = [super().access_modifier]
         if self.is_static:
             modifiers.append("static")
         if self.is_readonly:
@@ -238,7 +227,7 @@ class CSharpField(EncapsulatedCSharpElement):
         return " ".join(modifiers)
 
 
-class CSharpMethod(EncapsulatedCSharpElement):
+class CSharpMethod(CSharpMember):
     def __init__(self) -> None:
         super().__init__()
         self.return_type: CSharpReturnType = CSharpReturnType()
@@ -248,8 +237,8 @@ class CSharpMethod(EncapsulatedCSharpElement):
         self.is_static: bool = False
 
     @property
-    def modifiers(self) -> str:
-        return f"{super().modifiers} static" if self.is_static else super().modifiers
+    def access_modifier(self) -> str:
+        return f"{super().access_modifier} static" if self.is_static else super().access_modifier
 
     def generator(self) -> Iterator[str]:
         def key(attribute: CSharpAttribute) -> str:
@@ -263,7 +252,7 @@ class CSharpMethod(EncapsulatedCSharpElement):
         yield from self.return_type.documentation
         yield from (str(attribute) for attribute in sorted(self.attributes, key=key))
         parameters: str = ", ".join(str(parameter) for parameter in self.parameters)
-        yield f"{self.modifiers} {self.return_type.name} {self.name}({parameters})"
+        yield f"{self.access_modifier} {self.return_type.name} {self.name}({parameters})"
         yield "{"
         yield from (indent(line) for line in self.body)
         yield "}"
@@ -288,13 +277,13 @@ class CSharpException(CSharpElement):
     pass
 
 
-def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
+def dump(types: Iterable[CSharpMember], namespace: str, directory: str) -> None:
     for source in types:
         with open(f"{directory}/{source.name}.cs", "w") as file:
             file.writelines(f"{line}\n" for line in generate(source, namespace))
 
 
-def generate(source: CSharpType, namespace: str) -> Generator[str, None, None]:
+def generate(source: CSharpMember, namespace: str) -> Generator[str, None, None]:
     yield "/**************************************************************************/"
     yield f"/*  {source.name}.cs  {" " * (65 - len(source.name))}*/"
     yield "/**************************************************************************/"
