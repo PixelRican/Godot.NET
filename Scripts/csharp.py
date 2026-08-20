@@ -2,20 +2,48 @@ from typing import Generator, Iterable, Iterator, Union
 
 
 class XMLDocumentation:
-    def __init__(self) -> None:
-        self.tag: str = "summary"
-        self.attributes: Iterable[XMLAttribute] = ()
-        self.description: Iterable[str] = ()
+    def __init__(self, tag: str, attributes: Iterable[XMLAttribute], description: Iterable[str]) -> None:
+        self.__tag: str = tag
+        self.__attributes: tuple[XMLAttribute, ...] = tuple(attributes)
+        self.__description: tuple[str, ...] = tuple(description)
 
     def __iter__(self) -> Generator[str]:
-        description: Iterator[str] = iter(self.description)
-        if first_line := next(description, None):
+        if self.description:
             elements: list[str] = [self.tag] + [str(attribute) for attribute in self.attributes]
             header: str = " ".join(elements)
             yield f"/// <{header}>"
-            yield f"/// {first_line}"
-            yield from (f"/// {line}" for line in description)
+            yield from (f"/// {line}" for line in self.description)
             yield f"/// </{self.tag}>"
+
+    @property
+    def tag(self) -> str:
+        return self.__tag
+
+    @property
+    def attributes(self) -> tuple[XMLAttribute, ...]:
+        return self.__attributes
+
+    @property
+    def description(self) -> tuple[str, ...]:
+        return self.__description
+
+    @staticmethod
+    def exception(name: str, description: Iterable[str]) -> XMLDocumentation:
+        attribute: XMLAttribute = XMLAttribute("cref", name)
+        return XMLDocumentation("exception", (attribute,), description)
+
+    @staticmethod
+    def param(name: str, description: Iterable[str]) -> XMLDocumentation:
+        attribute: XMLAttribute = XMLAttribute("name", name)
+        return XMLDocumentation("param", (attribute,), description)
+
+    @staticmethod
+    def returns(description: Iterable[str]) -> XMLDocumentation:
+        return XMLDocumentation("returns", (), description)
+
+    @staticmethod
+    def summary(description: Iterable[str]) -> XMLDocumentation:
+        return XMLDocumentation("summary", (), description)
 
 
 class XMLAttribute:
@@ -75,7 +103,7 @@ class CSharpAttribute:
 class CSharpElement:
     def __init__(self) -> None:
         self.name: str = "_"
-        self.documentation: XMLDocumentation = XMLDocumentation()
+        self.documentation: XMLDocumentation = XMLDocumentation.summary(())
         self.attributes: list[CSharpAttribute] = []
 
 
@@ -221,31 +249,19 @@ class CSharpReturnType(CSharpElement):
     def __init__(self) -> None:
         super().__init__()
         self.name: str = "void"
-        self.documentation.tag = "returns"
 
 
 class CSharpParameter(CSharpElement):
     def __init__(self) -> None:
-        def attribute() -> Iterator[XMLAttribute]:
-            yield XMLAttribute("name", self.name)
-
         super().__init__()
         self.type: str = "object"
-        self.documentation.tag = "param"
-        self.documentation.attributes = attribute()
 
     def __str__(self) -> str:
         return f"{self.type} {self.name}"
 
 
 class CSharpException(CSharpElement):
-    def __init__(self) -> None:
-        def attribute() -> Iterator[XMLAttribute]:
-            yield XMLAttribute("cref", self.name)
-
-        super().__init__()
-        self.documentation.tag = "exception"
-        self.documentation.attributes = attribute()
+    pass
 
 
 def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:

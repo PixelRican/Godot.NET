@@ -121,15 +121,15 @@ class GDExtensionInterface:
             method.name = "Initialize"
             method.is_static = True
             method.body = body()
-            method.documentation.description = ("Loads the GDExtensionInterface functions from the specified address loader.",)
+            method.documentation = XMLDocumentation.summary(("Loads the GDExtensionInterface functions from the specified address loader.",))
             parameter: CSharpParameter = CSharpParameter()
             parameter.name = "pGetProcAddress"
             parameter.type = stylizer.get_expansion("GDExtensionInterfaceGetProcAddress")
-            parameter.documentation.description = ("The address loader provided by the Godot Engine.",)
+            parameter.documentation = XMLDocumentation.param(parameter.name, ("The address loader provided by the Godot Engine.",))
             method.parameters.append(parameter)
             exception: CSharpException = CSharpException()
             exception.name = "ArgumentNullException"
-            exception.documentation.description = ("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",)
+            exception.documentation = XMLDocumentation.exception(exception.name, ("<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",))
             method.exceptions.append(exception)
             return method
 
@@ -190,7 +190,7 @@ class GDExtensionInterface:
         csharp_class.dependencies.add("System")
         csharp_class.dependencies.add("System.Diagnostics.CodeAnalysis")
         csharp_class.dependencies.add("System.Runtime.CompilerServices")
-        csharp_class.documentation.description = ("Exposes functions from the GDExtension API.",)
+        csharp_class.documentation = XMLDocumentation.summary(("Exposes functions from the GDExtension API.",))
         csharp_class.name = "GDExtensionInterface"
         csharp_class.is_static = True
         csharp_class.is_unsafe = True
@@ -349,7 +349,7 @@ class GDExtensionConstant:
         constant.name = stylizer.get_translation(self.name)
         constant.value = self.value
         if description := self.description:
-            constant.documentation.description = documentation(description, stylizer)
+            constant.documentation = XMLDocumentation.summary(documentation(description, stylizer))
         return constant
 
 
@@ -412,7 +412,7 @@ class GDExtensionStructure(GDExtensionType):
         structure.dependencies.add("System.Runtime.InteropServices")
         structure.attributes.append(CSharpAttribute.struct_layout("Sequential"))
         if description := self.description:
-            structure.documentation.description = documentation(description, stylizer)
+            structure.documentation = XMLDocumentation.summary(documentation(description, stylizer))
         if self.deprecated:
             structure.attributes.append(self.deprecated.to_csharp(stylizer))
             structure.dependencies.add("System")
@@ -450,7 +450,7 @@ class GDExtensionField:
             field.name = stylizer.get_translation(self.name)
             field.type = stylizer.get_expansion(self.type)
         if description := self.description:
-            field.documentation.description = documentation(description, stylizer)
+            field.documentation = XMLDocumentation.summary(documentation(description, stylizer))
         return field
 
 
@@ -507,7 +507,7 @@ class GDExtensionParameter:
         parameter.name = stylizer.get_translation(self.name)
         parameter.type = stylizer.get_expansion(self.type)
         if description := self.description:
-            parameter.documentation.description = documentation(description, stylizer)
+            parameter.documentation = XMLDocumentation.param(parameter.name, documentation(description, stylizer))
         return parameter
 
 
@@ -530,7 +530,7 @@ class GDExtensionReturnType:
         return_type: CSharpReturnType = CSharpReturnType()
         return_type.name = stylizer.get_expansion(self.type)
         if description := self.description:
-            return_type.documentation.description = documentation(description, stylizer)
+            return_type.documentation = XMLDocumentation.returns(documentation(description, stylizer))
         return return_type
 
 
@@ -575,7 +575,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         method.attributes.append(CSharpAttribute.method_impl("AggressiveInlining"))
         method.is_static = True
         if description := self.description:
-            method.documentation.description = documentation(description, stylizer)
+            method.documentation = XMLDocumentation.summary(documentation(description, stylizer))
         if deprecated := self.deprecated:
             method.attributes.append(deprecated.to_csharp(stylizer))
         if return_value := self.return_value:
