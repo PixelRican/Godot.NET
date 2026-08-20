@@ -320,7 +320,7 @@ class GDExtensionEnumeration(GDExtensionType):
             enumeration.dependencies.add("System")
             enumeration.attributes.append(CSharpAttribute("Flags"))
         for value in self.values:
-            enumeration.members.append(value.to_csharp(stylizer))
+            enumeration.constants.append(value.to_csharp(stylizer))
         return enumeration
 
 

@@ -151,7 +151,7 @@ class CSharpEnumeration(CSharpMember):
     def __init__(self) -> None:
         super().__init__()
         self.underlying_type: str = ""
-        self.members: list[CSharpEnumerationConstant] = []
+        self.constants: list[CSharpEnumerationConstant] = []
 
     def definition(self) -> Generator[str]:
         if self.underlying_type:
@@ -159,8 +159,8 @@ class CSharpEnumeration(CSharpMember):
         else:
             yield f"{self.modifiers} enum {self.name}"
         yield "{"
-        for constant in self.members:
-            separator: str = "," * (constant is not self.members[-1])
+        for constant in self.constants:
+            separator: str = "," * (constant is not self.constants[-1])
             yield from (indent(line) for line in constant.documentation)
             yield indent(f"{constant.name} = {constant.value}{separator}")
         yield "}"
