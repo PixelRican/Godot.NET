@@ -242,8 +242,8 @@ class GDExtensionDeprecated:
             sentences.append(self.message)
         if self.replace_with:
             sentences.append(f"Use `{stylizer.get_translation(self.replace_with)}` instead.")
-        argument: str = " ".join(sentences)
-        return CSharpAttribute("Obsolete", [f"\"{argument}\""])
+        message: str = " ".join(sentences)
+        return CSharpAttribute.obsolete(message)
 
 
 class GDExtensionType(ABC):
@@ -410,7 +410,7 @@ class GDExtensionStructure(GDExtensionType):
         structure.is_value_type = True
         structure.is_unsafe = structure.name != "GDExtensionCallError"
         structure.dependencies.add("System.Runtime.InteropServices")
-        structure.attributes.append(CSharpAttribute("StructLayout", ["LayoutKind.Sequential"]))
+        structure.attributes.append(CSharpAttribute.struct_layout("Sequential"))
         if description := self.description:
             structure.documentation.description = documentation(description, stylizer)
         if self.deprecated:
@@ -572,7 +572,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         method: CSharpMethod = CSharpMethod()
         method.name = stylizer.get_translation(self.name)
         method.body = method_body()
-        method.attributes.append(CSharpAttribute("MethodImpl", ["MethodImplOptions.AggressiveInlining"]))
+        method.attributes.append(CSharpAttribute.method_impl("AggressiveInlining"))
         method.is_static = True
         if description := self.description:
             method.documentation.description = documentation(description, stylizer)
