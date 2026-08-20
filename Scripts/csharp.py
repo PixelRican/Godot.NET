@@ -112,7 +112,7 @@ class CSharpElement:
             self,
             name: str,
             documentation: XMLDocumentation,
-            attributes: Iterable[CSharpAttribute]
+            attributes: Iterable[CSharpAttribute] = ()
         ) -> None:
         self.__name: str = name
         self.__documentation: XMLDocumentation = documentation
@@ -135,8 +135,8 @@ class CSharpMember(CSharpElement):
     def __init__(
             self,
             name: str,
-            description: Iterable[str],
-            attributes: Iterable[CSharpAttribute],
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = (),
             access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC
         ) -> None:
         super().__init__(name, XMLDocumentation.summary(description), attributes)
@@ -151,9 +151,9 @@ class CSharpEnumeration(CSharpMember):
     def __init__(
             self,
             name: str,
-            description: Iterable[str],
-            attributes: Iterable[CSharpAttribute],
             constants: Iterable[CSharpConstant],
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = (),
             access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC,
             underlying_type: str = ""
         ) -> None:
@@ -188,9 +188,9 @@ class CSharpConstant(CSharpElement):
     def __init__(
             self,
             name: str,
-            description: Iterable[str],
-            attributes: Iterable[CSharpAttribute],
-            value: int
+            value: int,
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = ()
         ) -> None:
         super().__init__(name, XMLDocumentation.summary(description), attributes)
         self.__value: int = value
