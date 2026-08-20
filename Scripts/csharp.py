@@ -137,7 +137,7 @@ class CSharpMember(CSharpElement):
             name: str,
             description: Iterable[str],
             attributes: Iterable[CSharpAttribute],
-            access_modifier: CSharpAccessModifier
+            access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC
         ) -> None:
         super().__init__(name, XMLDocumentation.summary(description), attributes)
         self.__access_modifier: CSharpAccessModifier = access_modifier
