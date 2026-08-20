@@ -148,22 +148,40 @@ class CSharpMember(CSharpElement):
 
 
 class CSharpEnumeration(CSharpMember):
-    def __init__(self) -> None:
-        super().__init__()
-        self.underlying_type: str = ""
-        self.constants: list[CSharpConstant] = []
+    def __init__(
+            self,
+            name: str,
+            description: Iterable[str],
+            attributes: Iterable[CSharpAttribute],
+            constants: Iterable[CSharpConstant],
+            access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC,
+            underlying_type: str = ""
+        ) -> None:
+        super().__init__(name, description, attributes, access_modifier)
+        self.__constants: tuple[CSharpConstant, ...] = tuple(constants)
+        self.__underlying_type: str = underlying_type
 
-    def definition(self) -> Generator[str]:
+    def __iter__(self) -> Generator[str]:
+        yield from self.documentation
+        yield from (str(attribute) for attribute in self.attributes)
         if self.underlying_type:
-            yield f"{self.modifiers} enum {self.name} : {self.underlying_type}"
+            yield f"{self.access_modifier} enum {self.name} : {self.underlying_type}"
         else:
-            yield f"{self.modifiers} enum {self.name}"
+            yield f"{self.access_modifier} enum {self.name}"
         yield "{"
         for constant in self.constants:
             separator: str = "," * (constant is not self.constants[-1])
             yield from (indent(line) for line in constant.documentation)
             yield indent(f"{constant.name} = {constant.value}{separator}")
         yield "}"
+
+    @property
+    def constants(self) -> tuple[CSharpConstant, ...]:
+        return self.__constants
+
+    @property
+    def underlying_type(self) -> str:
+        return self.__underlying_type
 
 
 class CSharpConstant(CSharpElement):
