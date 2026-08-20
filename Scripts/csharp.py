@@ -108,10 +108,27 @@ class CSharpAttribute:
 
 
 class CSharpElement:
-    def __init__(self) -> None:
-        self.name: str = "_"
-        self.documentation: XMLDocumentation = XMLDocumentation.summary(())
-        self.attributes: list[CSharpAttribute] = []
+    def __init__(
+            self,
+            name: str,
+            documentation: XMLDocumentation,
+            attributes: Iterable[CSharpAttribute]
+        ) -> None:
+        self.__name: str = name
+        self.__documentation: XMLDocumentation = documentation
+        self.__attributes: tuple[CSharpAttribute, ...] = tuple(sorted(attributes, key=lambda a: a.name))
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def documentation(self) -> XMLDocumentation:
+        return self.__documentation
+
+    @property
+    def attributes(self) -> tuple[CSharpAttribute, ...]:
+        return self.__attributes
 
 
 class EncapsulatedCSharpElement(CSharpElement):
