@@ -61,15 +61,15 @@ class CSharpAttribute:
             argument = f"MethodImplOptions.{options}"
         else:
             argument = " | ".join(f"MethodImplOptions.{option}" for option in options)
-        return CSharpAttribute(name="MethodImpl", arguments=(argument,))
+        return CSharpAttribute("MethodImpl", (argument,))
 
     @staticmethod
     def obsolete(message: str) -> CSharpAttribute:
-        return CSharpAttribute(name="Obsolete", arguments=(f"\"{message}\"",))
+        return CSharpAttribute("Obsolete", (f"\"{message}\"",))
 
     @staticmethod
     def struct_layout(kind: str) -> CSharpAttribute:
-        return CSharpAttribute(name="StructLayout", arguments=(f"LayoutKind.{kind}",))
+        return CSharpAttribute("StructLayout", (f"LayoutKind.{kind}",))
 
 
 class CSharpElement:
