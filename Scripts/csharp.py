@@ -151,7 +151,7 @@ class CSharpEnumeration(CSharpMember):
     def __init__(self) -> None:
         super().__init__()
         self.underlying_type: str = ""
-        self.constants: list[CSharpEnumerationConstant] = []
+        self.constants: list[CSharpConstant] = []
 
     def definition(self) -> Generator[str]:
         if self.underlying_type:
@@ -166,7 +166,7 @@ class CSharpEnumeration(CSharpMember):
         yield "}"
 
 
-class CSharpEnumerationConstant(CSharpElement):
+class CSharpConstant(CSharpElement):
     def __init__(self) -> None:
         super().__init__()
         self.value: int = 0

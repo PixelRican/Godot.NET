@@ -344,8 +344,8 @@ class GDExtensionConstant:
     def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
-    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpEnumerationConstant:
-        constant: CSharpEnumerationConstant = CSharpEnumerationConstant()
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpConstant:
+        constant: CSharpConstant = CSharpConstant()
         constant.name = stylizer.get_translation(self.name)
         constant.value = self.value
         if description := self.description:
