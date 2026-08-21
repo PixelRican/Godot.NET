@@ -147,7 +147,24 @@ class CSharpMember(CSharpElement):
         return self.__access_modifier
 
 
-class CSharpEnumeration(CSharpMember):
+class CSharpType(CSharpMember):
+    def __init__(
+            self,
+            name: str,
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = (),
+            access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC,
+            dependencies: Iterable[str] = ()
+        ) -> None:
+        super().__init__(name, description, attributes, access_modifier)
+        self.__dependencies: tuple[str, ...] = tuple(sorted(dependencies))
+
+    @property
+    def dependencies(self) -> tuple[str, ...]:
+        return self.__dependencies
+
+
+class CSharpEnumeration(CSharpType):
     def __init__(
             self,
             name: str,
@@ -155,9 +172,10 @@ class CSharpEnumeration(CSharpMember):
             description: Iterable[str] = (),
             attributes: Iterable[CSharpAttribute] = (),
             access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC,
+            dependencies: Iterable[str] = (),
             underlying_type: str = ""
         ) -> None:
-        super().__init__(name, description, attributes, access_modifier)
+        super().__init__(name, description, attributes, access_modifier, dependencies)
         self.__constants: tuple[CSharpConstant, ...] = tuple(constants)
         self.__underlying_type: str = underlying_type
 
@@ -305,13 +323,13 @@ class CSharpException(CSharpElement):
     pass
 
 
-def dump(types: Iterable[CSharpMember], namespace: str, directory: str) -> None:
+def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
     for source in types:
         with open(f"{directory}/{source.name}.cs", "w") as file:
             file.writelines(f"{line}\n" for line in generate(source, namespace))
 
 
-def generate(source: CSharpMember, namespace: str) -> Generator[str, None, None]:
+def generate(source: CSharpType, namespace: str) -> Generator[str, None, None]:
     yield "/**************************************************************************/"
     yield f"/*  {source.name}.cs  {" " * (65 - len(source.name))}*/"
     yield "/**************************************************************************/"
@@ -344,7 +362,7 @@ def generate(source: CSharpMember, namespace: str) -> Generator[str, None, None]
     yield "/*              This file is generated. Edits will be lost.               */"
     yield "/**************************************************************************/"
     yield ""
-    if dependencies := sorted(source.dependencies):
+    if dependencies := source.dependencies:
         yield from (f"using {dependency};" for dependency in dependencies)
         yield ""
     yield f"namespace {namespace};"
