@@ -222,7 +222,7 @@ class CSharpConstant(CSharpElement):
         return self.__value
 
 
-class CSharpClass(CSharpType):
+class CSharpStructure(CSharpType):
     def __init__(
             self,
             name: str,

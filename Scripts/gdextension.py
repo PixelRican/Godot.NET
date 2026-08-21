@@ -110,7 +110,7 @@ class GDExtensionInterface:
     def interface(self) -> tuple[GDExtensionInterfaceFunction, ...]:
         return self.__interface
 
-    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpClass:
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpStructure:
         def initialize() -> CSharpMethod:
             def body() -> Iterable[str]:
                 yield "ArgumentNullException.ThrowIfNull(pGetProcAddress);"
@@ -186,7 +186,7 @@ class GDExtensionInterface:
             method.is_static = True
             return method
 
-        csharp_class: CSharpClass = CSharpClass()
+        csharp_class: CSharpStructure = CSharpStructure()
         csharp_class.dependencies.add("System")
         csharp_class.dependencies.add("System.Diagnostics.CodeAnalysis")
         csharp_class.dependencies.add("System.Runtime.CompilerServices")
@@ -404,8 +404,8 @@ class GDExtensionStructure(GDExtensionType):
         for member in self.members:
             stylizer.set_translation(member.name, pascal(preprocess(member.name)))
 
-    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpClass:
-        structure: CSharpClass = CSharpClass()
+    def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpStructure:
+        structure: CSharpStructure = CSharpStructure()
         structure.name = self.name
         structure.is_value_type = True
         structure.is_unsafe = structure.name != "GDExtensionCallError"
