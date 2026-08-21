@@ -532,11 +532,10 @@ class GDExtensionReturnType:
         return self.__description
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpReturnType:
-        return_type: CSharpReturnType = CSharpReturnType()
-        return_type.name = stylizer.get_expansion(self.type)
-        if description := self.description:
-            return_type.documentation = XMLDocumentation.returns(stylizer.documentation(description))
-        return return_type
+        return CSharpReturnType(
+            name=stylizer.get_expansion(self.type),
+            description=stylizer.translated(self.description or ())
+        )
 
 
 class GDExtensionInterfaceFunction(GDExtensionFunction):
