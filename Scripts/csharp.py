@@ -416,8 +416,18 @@ class CSharpParameter(CSharpElement):
         return self.__type
 
 
-class CSharpException(CSharpElement):
-    pass
+class CSharpException:
+    def __init__(self, name: str, description: Iterable[str]):
+        self.__name: str = name
+        self.__documentation: XMLDocumentation = XMLDocumentation.exception(name, description)
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def documentation(self) -> XMLDocumentation:
+        return self.__documentation
 
 
 def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
