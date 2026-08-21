@@ -134,11 +134,15 @@ class CSharpMember(CSharpElement):
             is_public: bool = True
         ) -> None:
         super().__init__(name, XMLDocumentation.summary(description), attributes)
-        self.__access_modifier: str = "public" if is_public else "private"
+        self.__is_public: bool = is_public
+
+    @property
+    def is_public(self) -> bool:
+        return self.__is_public
 
     @property
     def access_modifier(self) -> str:
-        return self.__access_modifier
+        return "public" if self.is_public else "private"
 
 
 class CSharpType(CSharpMember):
