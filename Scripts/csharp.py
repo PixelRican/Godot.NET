@@ -70,10 +70,8 @@ class CSharpAttribute:
         self.__arguments: tuple[str, ...] = tuple(arguments)
 
     def __str__(self) -> str:
-        if self.arguments:
-            arguments: str = ", ".join(argument for argument in self.arguments)
-            return f"[{self.name}({arguments})]"
-        return f"[{self.name}]"
+        arguments: str = ", ".join(self.arguments)
+        return f"[{self.name}({arguments})]" if arguments else f"[{self.name}]"
 
     @property
     def name(self) -> str:
