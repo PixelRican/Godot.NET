@@ -244,7 +244,7 @@ class CSharpStructure(CSharpType):
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
         yield from (str(attribute) for attribute in self.attributes)
-        yield f"{self.access_modifier} {self.kind} {self.name}"
+        yield f"{self.modifiers} {self.kind} {self.name}"
         yield "{"
         separate: bool = False
         for field in self.fields:
@@ -279,12 +279,15 @@ class CSharpStructure(CSharpType):
 
     @property
     def kind(self) -> str:
-        modifiers: list[str] = []
+        return "struct" if self.is_value_type else "class"
+
+    @property
+    def modifiers(self) -> str:
+        modifiers: list[str] = [self.access_modifier]
         if self.is_static:
             modifiers.append("static")
         if self.is_unsafe:
             modifiers.append("unsafe")
-        modifiers.append("struct" if self.is_value_type else "class")
         return " ".join(modifiers)
 
 
