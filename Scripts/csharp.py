@@ -187,8 +187,11 @@ class CSharpEnumeration(CSharpType):
         else:
             yield f"{self.access_modifier} enum {self.name}"
         yield "{"
-        for constant in self.constants:
-            yield from (indent(line) for line in constant)
+        if self.constants:
+            for constant in self.constants[:-1]:
+                yield from (indent(line) for line in constant)
+            for line in self.constants[-1]:
+                yield indent(line if line.startswith("///") else line.removesuffix(","))
         yield "}"
 
     @property
