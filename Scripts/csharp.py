@@ -1,5 +1,4 @@
-from enum import StrEnum
-from typing import Generator, Iterable, Iterator, Union
+from typing import Generator, Iterable, Union
 
 
 class XMLDocumentation:
