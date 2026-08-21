@@ -519,7 +519,7 @@ class GDExtensionParameter:
 class GDExtensionReturnType:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__type: str = data["type"]
-        self.__description: tuple[str, ...] = ()
+        self.__description: Optional[tuple[str, ...]] = None
         if description := data.get("description"):
             self.__description = tuple(description)
 
@@ -528,7 +528,7 @@ class GDExtensionReturnType:
         return self.__type
 
     @property
-    def description(self) -> tuple[str, ...]:
+    def description(self) -> Optional[tuple[str, ...]]:
         return self.__description
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpReturnType:
