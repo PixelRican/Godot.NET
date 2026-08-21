@@ -143,7 +143,7 @@ class GDExtensionInterface:
             method: CSharpMethod = CSharpMethod()
             method.name = "Load"
             method.body = body()
-            method.access_modifier = CSharpAccessModifier.PRIVATE
+            method.is_public = False
             method.is_static = True
             method.return_type.name = "void*"
             parameter1: CSharpParameter = CSharpParameter()
@@ -166,7 +166,7 @@ class GDExtensionInterface:
             method: CSharpMethod = CSharpMethod()
             method.name = "ThrowIfInvalid"
             method.body = body()
-            method.access_modifier = CSharpAccessModifier.PRIVATE
+            method.is_public = False
             method.is_static = True
             parameter: CSharpParameter = CSharpParameter()
             parameter.name = "pFunction"
@@ -182,7 +182,7 @@ class GDExtensionInterface:
             method.name = "ThrowForInvalidFunction"
             method.body = body()
             method.attributes.append(CSharpAttribute("DoesNotReturn"))
-            method.access_modifier = CSharpAccessModifier.PRIVATE
+            method.is_public = False
             method.is_static = True
             return method
 
@@ -585,7 +585,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         field: CSharpField = CSharpField()
         field.name = f"s_{method.name[0].lower()}{method.name[1:]}"
         field.type = stylizer.get_expansion(self.name)
-        field.access_modifier = CSharpAccessModifier.PRIVATE
+        field.is_public = False
         field.is_static = True
         return field, method
 
