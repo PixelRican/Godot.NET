@@ -62,7 +62,7 @@ class GDExtensionStylizer:
     def set_translation(self, string: str, value: str) -> None:
         self.__translations.setdefault(string, value)
 
-    def documentation(self, description: list[str]) -> Generator[str]:
+    def documentation(self, description: tuple[str, ...]) -> Generator[str]:
         for line in description:
             separator: str = "<br/>" * (line is not description[-1])
             yield self.get_translation(line) + separator
