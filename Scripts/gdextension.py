@@ -447,16 +447,11 @@ class GDExtensionField:
         return self.__description
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpField:
-        field: CSharpField = CSharpField()
-        if self.name == "method_flags":
-            field.name = "MethodFlags"
-            field.type = "GDExtensionClassMethodFlags"
-        else:
-            field.name = stylizer.get_translation(self.name)
-            field.type = stylizer.get_expansion(self.type)
-        if description := self.description:
-            field.documentation = XMLDocumentation.summary(stylizer.translated(description))
-        return field
+        return CSharpField(
+            name=stylizer.get_translation(self.name),
+            type="GDExtensionClassMethodFlags" if self.name == "method_flags" else stylizer.get_expansion(self.type),
+            description=stylizer.translated(self.description or ())
+        )
 
 
 class GDExtensionFunction(GDExtensionType):
