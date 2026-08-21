@@ -388,14 +388,6 @@ class CSharpMethod(CSharpMember):
         return " ".join(modifiers)
 
 
-class CSharpReturnType(CSharpElement):
-    def __init__(self, name: str, description: Iterable[str] = ()) -> None:
-        super().__init__(name, XMLDocumentation.returns(description))
-
-    def __str__(self) -> str:
-        return self.name
-
-
 class CSharpParameter(CSharpElement):
     def __init__(self, name: str, type: str, description: Iterable[str] = ()) -> None:
         super().__init__(name, XMLDocumentation.param(name, description))
@@ -407,6 +399,14 @@ class CSharpParameter(CSharpElement):
     @property
     def type(self) -> str:
         return self.__type
+
+
+class CSharpReturnType(CSharpElement):
+    def __init__(self, name: str, description: Iterable[str] = ()) -> None:
+        super().__init__(name, XMLDocumentation.returns(description))
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class CSharpException(CSharpElement):
