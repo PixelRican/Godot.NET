@@ -292,19 +292,41 @@ class CSharpStructure(CSharpType):
 
 
 class CSharpField(CSharpMember):
-    def __init__(self) -> None:
-        super().__init__()
-        self.type: str = "object"
-        self.is_static: bool = False
-        self.is_readonly: bool = False
+    def __init__(
+            self,
+            name: str,
+            type: str,
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = (),
+            is_public: bool = True,
+            is_static: bool = False,
+            is_readonly: bool = False
+        ) -> None:
+        super().__init__(name, description, attributes, is_public)
+        self.__type: str = type
+        self.__is_static: bool = is_static
+        self.__is_readonly: bool = is_readonly
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield f"{self.access_modifier} {self.type} {self.name};"
+        yield from (str(attribute) for attribute in self.attributes)
+        yield f"{self.modifiers} {self.type} {self.name};"
 
     @property
-    def access_modifier(self) -> str:
-        modifiers: list[str] = [super().access_modifier]
+    def type(self) -> str:
+        return self.__type
+
+    @property
+    def is_static(self) -> bool:
+        return self.__is_static
+
+    @property
+    def is_readonly(self) -> bool:
+        return self.__is_readonly
+
+    @property
+    def modifiers(self) -> str:
+        modifiers: list[str] = [self.access_modifier]
         if self.is_static:
             modifiers.append("static")
         if self.is_readonly:
