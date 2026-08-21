@@ -245,7 +245,7 @@ class CSharpStructure(CSharpType):
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield (str(attribute) for attribute in self.attributes)
+        yield from (str(attribute) for attribute in self.attributes)
         yield f"{self.access_modifier} {self.kind} {self.name}"
         yield "{"
         separate: bool = False
