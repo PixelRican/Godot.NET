@@ -508,12 +508,11 @@ class GDExtensionParameter:
         return self.__description
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpParameter:
-        parameter: CSharpParameter = CSharpParameter()
-        parameter.name = stylizer.get_translation(self.name)
-        parameter.type = stylizer.get_expansion(self.type)
-        if description := self.description:
-            parameter.documentation = XMLDocumentation.param(parameter.name, stylizer.translated(description))
-        return parameter
+        return CSharpParameter(
+            name=stylizer.get_translation(self.name),
+            type=stylizer.get_expansion(self.type),
+            description=stylizer.translated(self.description or ())
+        )
 
 
 class GDExtensionReturnType:
