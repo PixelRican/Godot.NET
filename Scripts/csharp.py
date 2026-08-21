@@ -335,34 +335,65 @@ class CSharpField(CSharpMember):
 
 
 class CSharpMethod(CSharpMember):
-    def __init__(self) -> None:
-        super().__init__()
-        self.return_type: CSharpReturnType = CSharpReturnType()
-        self.parameters: list[CSharpParameter] = []
-        self.exceptions: list[CSharpException] = []
-        self.body: Iterable[str] = ("throw new System.NotImplementedException();",)
-        self.is_static: bool = False
+    def __init__(
+            self,
+            name: str,
+            parameters: Iterable[CSharpParameter],
+            return_type: CSharpReturnType,
+            exceptions: Iterable[CSharpException],
+            body: Iterable[str],
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = (),
+            is_public: bool = True,
+            is_static: bool = False
+        ) -> None:
+        super().__init__(name, description, attributes, is_public)
+        self.__parameters: tuple[CSharpParameter, ...] = tuple(parameters)
+        self.__return_type: CSharpReturnType = return_type
+        self.__exceptions: tuple[CSharpException, ...] = tuple(exceptions)
+        self.__body: tuple[str, ...] = tuple(body)
+        self.__is_static: bool = is_static
 
-    @property
-    def access_modifier(self) -> str:
-        return f"{super().access_modifier} static" if self.is_static else super().access_modifier
-
-    def generator(self) -> Iterator[str]:
-        def key(attribute: CSharpAttribute) -> str:
-            return attribute.name
-
+    def __iter__(self) -> Generator[str]:
         yield from self.documentation
         for parameter in self.parameters:
             yield from parameter.documentation
         for exception in self.exceptions:
             yield from exception.documentation
         yield from self.return_type.documentation
-        yield from (str(attribute) for attribute in sorted(self.attributes, key=key))
+        yield from (str(attribute) for attribute in self.attributes)
         parameters: str = ", ".join(str(parameter) for parameter in self.parameters)
         yield f"{self.access_modifier} {self.return_type.name} {self.name}({parameters})"
         yield "{"
         yield from (indent(line) for line in self.body)
         yield "}"
+
+    @property
+    def parameters(self) -> tuple[CSharpParameter, ...]:
+        return self.__parameters
+
+    @property
+    def return_type(self) -> CSharpReturnType:
+        return self.__return_type
+
+    @property
+    def exceptions(self) -> tuple[CSharpException, ...]:
+        return self.__exceptions
+
+    @property
+    def body(self) -> tuple[str, ...]:
+        return self.__body
+
+    @property
+    def is_static(self) -> bool:
+        return self.__is_static
+
+    @property
+    def modifiers(self) -> str:
+        modifiers: list[str] = [self.access_modifier]
+        if self.is_static:
+            modifiers.append("static")
+        return " ".join(modifiers)
 
 
 class CSharpReturnType(CSharpElement):
