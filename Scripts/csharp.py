@@ -362,7 +362,7 @@ class CSharpMethod(CSharpMember):
         yield from self.return_type.documentation
         yield from (str(attribute) for attribute in self.attributes)
         parameters: str = ", ".join(str(parameter) for parameter in self.parameters)
-        yield f"{self.access_modifier} {self.return_type.name} {self.name}({parameters})"
+        yield f"{self.access_modifier} {self.return_type} {self.name}({parameters})"
         yield "{"
         yield from (indent(line) for line in self.body)
         yield "}"
@@ -396,9 +396,11 @@ class CSharpMethod(CSharpMember):
 
 
 class CSharpReturnType(CSharpElement):
-    def __init__(self) -> None:
-        super().__init__()
-        self.name: str = "void"
+    def __init__(self, name: str, description: Iterable[str] = ()) -> None:
+        super().__init__(name, XMLDocumentation.returns(description))
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class CSharpParameter(CSharpElement):
