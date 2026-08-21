@@ -62,6 +62,11 @@ class GDExtensionStylizer:
     def set_translation(self, string: str, value: str) -> None:
         self.__translations.setdefault(string, value)
 
+    def documentation(self, description: list[str]) -> Generator[str]:
+        for line in description:
+            separator: str = "<br/>" * (line is not description[-1])
+            yield self.get_translation(line) + separator
+
 
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -311,7 +316,7 @@ class GDExtensionEnumeration(GDExtensionType):
         enumeration: CSharpEnumeration = CSharpEnumeration()
         enumeration.name = self.name
         if description := self.description:
-            enumeration.documentation.description = documentation(description, stylizer)
+            enumeration.documentation.description = stylizer.documentation(description)
         if self.deprecated:
             enumeration.attributes.append(self.deprecated.to_csharp(stylizer))
             enumeration.dependencies.add("System")
@@ -349,7 +354,7 @@ class GDExtensionConstant:
         constant.name = stylizer.get_translation(self.name)
         constant.value = self.value
         if description := self.description:
-            constant.documentation = XMLDocumentation.summary(documentation(description, stylizer))
+            constant.documentation = XMLDocumentation.summary(stylizer.documentation(description))
         return constant
 
 
@@ -412,7 +417,7 @@ class GDExtensionStructure(GDExtensionType):
         structure.dependencies.add("System.Runtime.InteropServices")
         structure.attributes.append(CSharpAttribute.struct_layout("Sequential"))
         if description := self.description:
-            structure.documentation = XMLDocumentation.summary(documentation(description, stylizer))
+            structure.documentation = XMLDocumentation.summary(stylizer.documentation(description))
         if self.deprecated:
             structure.attributes.append(self.deprecated.to_csharp(stylizer))
             structure.dependencies.add("System")
@@ -450,7 +455,7 @@ class GDExtensionField:
             field.name = stylizer.get_translation(self.name)
             field.type = stylizer.get_expansion(self.type)
         if description := self.description:
-            field.documentation = XMLDocumentation.summary(documentation(description, stylizer))
+            field.documentation = XMLDocumentation.summary(stylizer.documentation(description))
         return field
 
 
@@ -507,7 +512,7 @@ class GDExtensionParameter:
         parameter.name = stylizer.get_translation(self.name)
         parameter.type = stylizer.get_expansion(self.type)
         if description := self.description:
-            parameter.documentation = XMLDocumentation.param(parameter.name, documentation(description, stylizer))
+            parameter.documentation = XMLDocumentation.param(parameter.name, stylizer.documentation(description))
         return parameter
 
 
@@ -530,7 +535,7 @@ class GDExtensionReturnType:
         return_type: CSharpReturnType = CSharpReturnType()
         return_type.name = stylizer.get_expansion(self.type)
         if description := self.description:
-            return_type.documentation = XMLDocumentation.returns(documentation(description, stylizer))
+            return_type.documentation = XMLDocumentation.returns(stylizer.documentation(description))
         return return_type
 
 
@@ -575,7 +580,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         method.attributes.append(CSharpAttribute.method_impl("AggressiveInlining"))
         method.is_static = True
         if description := self.description:
-            method.documentation = XMLDocumentation.summary(documentation(description, stylizer))
+            method.documentation = XMLDocumentation.summary(stylizer.documentation(description))
         if deprecated := self.deprecated:
             method.attributes.append(deprecated.to_csharp(stylizer))
         if return_value := self.return_value:
@@ -588,15 +593,6 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
         field.is_public = False
         field.is_static = True
         return field, method
-
-
-def documentation(description: Iterable[str], stylizer: GDExtensionStylizer) -> Generator[str, None, None]:
-    iterator: Iterator[str] = iter(description)
-    if current_line := next(iterator, None):
-        for next_line in iterator:
-            yield f"{stylizer.get_translation(current_line)}<br/>"
-            current_line = next_line
-        yield stylizer.get_translation(current_line)
 
 
 def preprocess(symbol: str) -> str:
