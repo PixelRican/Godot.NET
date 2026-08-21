@@ -404,12 +404,16 @@ class CSharpReturnType(CSharpElement):
 
 
 class CSharpParameter(CSharpElement):
-    def __init__(self) -> None:
-        super().__init__()
-        self.type: str = "object"
+    def __init__(self, name: str, type: str, description: Iterable[str] = ()) -> None:
+        super().__init__(name, XMLDocumentation.param(name, description))
+        self.__type: str = type
 
     def __str__(self) -> str:
         return f"{self.type} {self.name}"
+
+    @property
+    def type(self) -> str:
+        return self.__type
 
 
 class CSharpException(CSharpElement):
