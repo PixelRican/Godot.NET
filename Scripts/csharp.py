@@ -64,12 +64,6 @@ class XMLAttribute:
         return self.__value
 
 
-class CSharpAccessModifier(StrEnum):
-    NONE = ""
-    PUBLIC = "public"
-    PRIVATE = "private"
-
-
 class CSharpAttribute:
     def __init__(self, name: str, arguments: Iterable[str] = ()) -> None:
         self.__name: str = name
@@ -137,13 +131,13 @@ class CSharpMember(CSharpElement):
             name: str,
             description: Iterable[str] = (),
             attributes: Iterable[CSharpAttribute] = (),
-            access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC
+            is_public: bool = True
         ) -> None:
         super().__init__(name, XMLDocumentation.summary(description), attributes)
-        self.__access_modifier: CSharpAccessModifier = access_modifier
+        self.__access_modifier: str = "public" if is_public else "private"
 
     @property
-    def access_modifier(self) -> CSharpAccessModifier:
+    def access_modifier(self) -> str:
         return self.__access_modifier
 
 
@@ -153,10 +147,10 @@ class CSharpType(CSharpMember):
             name: str,
             description: Iterable[str] = (),
             attributes: Iterable[CSharpAttribute] = (),
-            access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC,
+            is_public: bool = True,
             dependencies: Iterable[str] = ()
         ) -> None:
-        super().__init__(name, description, attributes, access_modifier)
+        super().__init__(name, description, attributes, is_public)
         self.__dependencies: tuple[str, ...] = tuple(sorted(dependencies))
 
     @property
@@ -171,11 +165,11 @@ class CSharpEnumeration(CSharpType):
             constants: Iterable[CSharpConstant],
             description: Iterable[str] = (),
             attributes: Iterable[CSharpAttribute] = (),
-            access_modifier: CSharpAccessModifier = CSharpAccessModifier.PUBLIC,
+            is_public: bool = True,
             dependencies: Iterable[str] = (),
             underlying_type: str = ""
         ) -> None:
-        super().__init__(name, description, attributes, access_modifier, dependencies)
+        super().__init__(name, description, attributes, is_public, dependencies)
         self.__constants: tuple[CSharpConstant, ...] = tuple(constants)
         self.__underlying_type: str = underlying_type
 
