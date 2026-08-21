@@ -99,15 +99,9 @@ class CSharpAttribute:
 
 
 class CSharpElement:
-    def __init__(
-            self,
-            name: str,
-            documentation: XMLDocumentation,
-            attributes: Iterable[CSharpAttribute] = ()
-        ) -> None:
+    def __init__(self, name: str, documentation: XMLDocumentation) -> None:
         self.__name: str = name
         self.__documentation: XMLDocumentation = documentation
-        self.__attributes: tuple[CSharpAttribute, ...] = tuple(sorted(attributes, key=lambda a: a.name))
 
     @property
     def name(self) -> str:
@@ -116,10 +110,6 @@ class CSharpElement:
     @property
     def documentation(self) -> XMLDocumentation:
         return self.__documentation
-
-    @property
-    def attributes(self) -> tuple[CSharpAttribute, ...]:
-        return self.__attributes
 
 
 class CSharpMember(CSharpElement):
@@ -130,8 +120,13 @@ class CSharpMember(CSharpElement):
             attributes: Iterable[CSharpAttribute] = (),
             is_public: bool = True
         ) -> None:
-        super().__init__(name, XMLDocumentation.summary(description), attributes)
+        super().__init__(name, XMLDocumentation.summary(description))
+        self.__attributes: tuple[CSharpAttribute, ...] = tuple(sorted(attributes, key=lambda a: a.name))
         self.__is_public: bool = is_public
+
+    @property
+    def attributes(self) -> tuple[CSharpAttribute, ...]:
+        return self.__attributes
 
     @property
     def is_public(self) -> bool:
@@ -203,15 +198,13 @@ class CSharpConstant(CSharpElement):
             self,
             name: str,
             value: int,
-            description: Iterable[str] = (),
-            attributes: Iterable[CSharpAttribute] = ()
+            description: Iterable[str] = ()
         ) -> None:
-        super().__init__(name, XMLDocumentation.summary(description), attributes)
+        super().__init__(name, XMLDocumentation.summary(description))
         self.__value: int = value
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield from (str(attribute) for attribute in self.attributes)
         yield f"{self.name} = {self.value},"
 
     @property
@@ -416,18 +409,9 @@ class CSharpParameter(CSharpElement):
         return self.__type
 
 
-class CSharpException:
+class CSharpException(CSharpElement):
     def __init__(self, name: str, description: Iterable[str]):
-        self.__name: str = name
-        self.__documentation: XMLDocumentation = XMLDocumentation.exception(name, description)
-
-    @property
-    def name(self) -> str:
-        return self.__name
-
-    @property
-    def documentation(self) -> XMLDocumentation:
-        return self.__documentation
+        super().__init__(name, XMLDocumentation.exception(name, description))
 
 
 def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
