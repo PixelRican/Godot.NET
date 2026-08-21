@@ -188,9 +188,7 @@ class CSharpEnumeration(CSharpType):
             yield f"{self.access_modifier} enum {self.name}"
         yield "{"
         for constant in self.constants:
-            separator: str = "," * (constant is not self.constants[-1])
-            yield from (indent(line) for line in constant.documentation)
-            yield indent(f"{constant.name} = {constant.value}{separator}")
+            yield from (indent(line) for line in constant)
         yield "}"
 
     @property
@@ -212,6 +210,11 @@ class CSharpConstant(CSharpElement):
         ) -> None:
         super().__init__(name, XMLDocumentation.summary(description), attributes)
         self.__value: int = value
+
+    def __iter__(self) -> Generator[str]:
+        yield from self.documentation
+        yield from (str(attribute) for attribute in self.attributes)
+        yield f"{self.name} = {self.value},"
 
     @property
     def value(self) -> int:
