@@ -222,38 +222,72 @@ class CSharpConstant(CSharpElement):
         return self.__value
 
 
-class CSharpClass(CSharpMember):
-    def __init__(self) -> None:
-        super().__init__()
-        self.fields: list[CSharpField] = []
-        self.methods: list[CSharpMethod] = []
-        self.is_value_type: bool = False
-        self.is_static: bool = False
-        self.is_unsafe: bool = False
+class CSharpClass(CSharpType):
+    def __init__(
+            self,
+            name: str,
+            fields: Iterable[CSharpField],
+            methods: Iterable[CSharpMethod],
+            description: Iterable[str] = (),
+            attributes: Iterable[CSharpAttribute] = (),
+            is_public: bool = True,
+            dependencies: Iterable[str] = (),
+            is_value_type: bool = False,
+            is_static: bool = False,
+            is_unsafe: bool = False
+        ) -> None:
+        super().__init__(name, description, attributes, is_public, dependencies)
+        self.__fields: tuple[CSharpField, ...] = tuple(fields)
+        self.__methods: tuple[CSharpMethod, ...] = tuple(methods)
+        self.__is_value_type: bool = is_value_type
+        self.__is_static: bool = is_static
+        self.__is_unsafe: bool = is_unsafe
 
-    @property
-    def modifiers(self) -> str:
-        modifiers: list[str] = [super().modifiers]
-        if not self.is_value_type and self.is_static:
-            modifiers.append("static")
-        if self.is_unsafe:
-            modifiers.append("unsafe")
-        return " ".join(modifiers)
-
-    def definition(self) -> Iterator[str]:
-        yield f"{self.modifiers} {"struct" if self.is_value_type else "class"} {self.name}"
+    def __iter__(self) -> Generator[str]:
+        yield from self.documentation
+        yield (str(attribute) for attribute in self.attributes)
+        yield f"{self.access_modifier} {self.kind} {self.name}"
         yield "{"
         separate: bool = False
         for field in self.fields:
             separate = True
             yield from (indent(line) for line in field)
-        for member in self.methods:
+        for method in self.methods:
             if separate:
                 yield ""
-            else:
-                separate = True
-            yield from (indent(line) for line in member.generator())
+            separate = True
+            yield from (indent(line) for line in method)
         yield "}"
+
+    @property
+    def fields(self) -> tuple[CSharpField, ...]:
+        return self.__fields
+
+    @property
+    def methods(self) -> tuple[CSharpMethod, ...]:
+        return self.__methods
+
+    @property
+    def is_value_type(self) -> bool:
+        return self.__is_value_type
+
+    @property
+    def is_static(self) -> bool:
+        return self.__is_static
+
+    @property
+    def is_unsafe(self) -> bool:
+        return self.__is_unsafe
+
+    @property
+    def kind(self) -> str:
+        modifiers: list[str] = []
+        if self.is_static:
+            modifiers.append("static")
+        if self.is_unsafe:
+            modifiers.append("unsafe")
+        modifiers.append("struct" if self.is_value_type else "class")
+        return " ".join(modifiers)
 
 
 class CSharpField(CSharpMember):
