@@ -112,58 +112,50 @@ class GDExtensionInterface:
         return self.__interface
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpStructure:
-        def initialize_body() -> Generator[str]:
-            yield "ArgumentNullException.ThrowIfNull(pGetProcAddress);"
-            for member, interface in zip(members, self.interface):
-                field: CSharpField = member[0]
-                yield f"{field.name} = ({field.type})Load(pGetProcAddress, \"{interface.name}\"u8);"
+        def load_statement(pair: tuple[CSharpField, GDExtensionInterfaceFunction]) -> str:
+            field, interface = pair
+            return f"{field.name} = ({field.type})Load(pGetProcAddress, \"{interface.name}\"u8);"
 
-        def load_body() -> Generator[str]:
-            yield "fixed (byte* functionName = pFunctionName)"
-            yield "{"
-            yield indent("return pGetProcAddress(functionName);")
-            yield "}"
-
-        def throw_if_invalid_body() -> Generator[str]:
-            yield "if (pFunction == null)"
-            yield "{"
-            yield "    ThrowForInvalidFunction();"
-            yield "}"
-
-        def throw_for_invalid_function_body() -> Generator[str]:
-            yield "throw new InvalidOperationException(\"Unable to call the specified function.\");"
-
-        members: list[tuple[CSharpField, CSharpMethod]] = [
-            interface.to_csharp(stylizer) for interface in self.interface
-        ]
+        fields: tuple[CSharpField, ...]
+        methods: tuple[CSharpMethod, ...]
+        fields, methods = zip(*(interface.to_csharp(stylizer) for interface in self.interface))
         return CSharpStructure(
             name="GDExtensionInterface",
-            fields=(pair[0] for pair in members),
-            methods=[
+            fields=fields,
+            methods=(
                 CSharpMethod(
                     name="Initialize",
-                    parameters=[
+                    parameters=(
                         CSharpParameter(
                             name="pGetProcAddress",
                             type=stylizer.get_expansion("GDExtensionInterfaceGetProcAddress"),
-                            description=["The address loader provided by the Godot Engine."],
-                        )
-                    ],
+                            description=(
+                                "The address loader provided by the Godot Engine.",
+                            ),
+                        ),
+                    ),
                     return_type=CSharpReturnType("void"),
-                    exceptions=[
+                    exceptions=(
                         CSharpException(
                             name="ArgumentNullException",
-                            description=["<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>."]
-                        )
-                    ],
-                    body=initialize_body(),
-                    description=["Loads the GDExtensionInterface functions from the specified address loader."],
+                            description=(
+                                "<paramref name=\"pGetProcAddress\"/> is <see langword=\"null\"/>.",
+                            )
+                        ),
+                    ),
+                    body=(
+                        "ArgumentNullException.ThrowIfNull(pGetProcAddress);",
+                        *map(load_statement, zip(fields, self.interface))
+                    ),
+                    description=(
+                        "Loads the GDExtensionInterface functions from the specified address loader.",
+                    ),
                     is_static=True
                 ),
-                *(pair[1] for pair in members),
+                *methods,
                 CSharpMethod(
                     name="Load",
-                    parameters=[
+                    parameters=(
                         CSharpParameter(
                             name="pGetProcAddress",
                             type=stylizer.get_expansion("GDExtensionInterfaceGetProcAddress")
@@ -172,40 +164,60 @@ class GDExtensionInterface:
                             name="pFunctionName",
                             type="ReadOnlySpan<byte>"
                         )
-                    ],
+                    ),
                     return_type=CSharpReturnType("void*"),
-                    exceptions=[],
-                    body=load_body(),
+                    exceptions=(),
+                    body=(
+                        "fixed (byte* functionName = pFunctionName)",
+                        "{",
+                        indent("return pGetProcAddress(functionName);"),
+                        "}"
+                    ),
                     is_public=False,
                     is_static=True
                 ),
                 CSharpMethod(
                     name="ThrowIfInvalid",
-                    parameters=[
+                    parameters=(
                         CSharpParameter(
                             name="pFunction",
                             type="void*"
-                        )
-                    ],
+                        ),
+                    ),
                     return_type=CSharpReturnType("void"),
-                    exceptions=[],
-                    body=throw_if_invalid_body(),
+                    exceptions=(),
+                    body=(
+                        "if (pFunction == null)",
+                        "{",
+                        indent("ThrowForInvalidFunction();"),
+                        "}"
+                    ),
                     is_public=False,
                     is_static=True
                 ),
                 CSharpMethod(
                     name="ThrowForInvalidFunction",
-                    parameters=[],
+                    parameters=(),
                     return_type=CSharpReturnType("void"),
-                    exceptions=[],
-                    body=throw_for_invalid_function_body(),
-                    attributes=[CSharpAttribute("DoesNotReturn")],
+                    exceptions=(),
+                    body=(
+                        "throw new InvalidOperationException(\"Unable to call the specified function.\");",
+                    ),
+                    attributes=(
+                        CSharpAttribute("DoesNotReturn"),
+                    ),
                     is_public=False,
                     is_static=True
                 )
-            ],
-            description=["Exposes functions from the GDExtension API."],
-            dependencies=["System", "System.Diagnostics.CodeAnalysis", "System.Runtime.CompilerServices"],
+            ),
+            description=(
+                "Exposes functions from the GDExtension API.",
+            ),
+            dependencies=(
+                "System",
+                "System.Diagnostics.CodeAnalysis",
+                "System.Runtime.CompilerServices"
+            ),
             is_static=True,
             is_unsafe=True
         )
