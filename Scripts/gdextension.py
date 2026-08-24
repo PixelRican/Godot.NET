@@ -3,7 +3,7 @@ from csharp import *
 from itertools import chain
 from os.path import commonprefix
 from re import Match, sub
-from typing import Any, Generator, Iterable, Optional
+from typing import Any, Generator, Optional
 
 
 class GDExtensionStylizer:
@@ -211,7 +211,7 @@ class GDExtensionInterface:
         def predicate(instance: GDExtensionType) -> bool:
             return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
 
-        def types() -> Iterable[str]:
+        def types() -> Generator[str]:
             stylizer: GDExtensionStylizer = GDExtensionStylizer()
             for instance in chain(self.types, self.interface):
                 instance.stylize(stylizer)
