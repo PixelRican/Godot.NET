@@ -557,37 +557,40 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
             stylizer.set_translation(argument.name, camel(preprocess(argument.name)))
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> tuple[CSharpField, CSharpMethod]:
-        def method_body() -> Iterable[str]:
-            yield f"{field_type} function = {field_name};"
-            yield "ThrowIfInvalid(function);"
-            arguments: str = ", ".join(argument.name for argument in parameters)
-            if return_type.name == "void":
-                yield f"function({arguments});"
-            else:
-                yield f"return function({arguments});"
-
-        method_name: str = stylizer.get_translation(self.name)
-        field_name: str = f"s_{method_name[0].lower()}{method_name[1:]}"
-        field_type: str = stylizer.get_expansion(self.name)
-        parameters: list[CSharpParameter] = [parameter.to_csharp(stylizer) for parameter in self.arguments]
+        name: str = stylizer.get_translation(self.name)
+        parameters: tuple[CSharpParameter, ...] = tuple(
+            argument.to_csharp(stylizer) for argument in self.arguments
+        )
+        arguments: str = ", ".join(argument.name for argument in parameters)
         return_type: CSharpReturnType = self.return_value.to_csharp(stylizer) if self.return_value else CSharpReturnType("void")
         attributes: list[CSharpAttribute] = [CSharpAttribute.method_impl("AggressiveInlining")]
         if self.deprecated:
             attributes.append(self.deprecated.to_csharp(stylizer))
-        method: CSharpMethod = CSharpMethod(
-            name=method_name,
-            parameters=parameters,
-            return_type=return_type,
-            exceptions=(CSharpException("InvalidOperationException", ("Unable to call the specified function.",)),),
-            body=method_body(),
-            description=stylizer.translate(self.description or ()),
-            attributes=attributes,
+        field: CSharpField = CSharpField(
+            name=f"s_{name[0].lower()}{name[1:]}",
+            type=stylizer.get_expansion(self.name),
+            is_public=False,
             is_static=True
         )
-        field: CSharpField = CSharpField(
-            name=field_name,
-            type=field_type,
-            is_public=False,
+        method: CSharpMethod = CSharpMethod(
+            name=name,
+            parameters=parameters,
+            return_type=return_type,
+            exceptions=(
+                CSharpException(
+                    name="InvalidOperationException",
+                    description=(
+                        "Unable to call the specified function.",
+                    )
+                ),
+            ),
+            body=(
+                f"{field.type} function = {field.name};",
+                "ThrowIfInvalid(function);",
+                f"function({arguments});" if return_type.name == "void" else f"return function({arguments});"
+            ),
+            description=stylizer.translate(self.description or ()),
+            attributes=attributes,
             is_static=True
         )
         return field, method
