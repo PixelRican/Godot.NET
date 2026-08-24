@@ -412,7 +412,8 @@ class CSharpException(CSharpElement):
 def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
     for source in types:
         with open(f"{directory}/{source.name}.cs", "w") as file:
-            file.writelines(f"{line}\n" for line in generate(source, namespace))
+            generator: Generator[str] = generate(source, namespace)
+            print(*generator, sep="\n", file=file)
 
 
 def generate(source: CSharpType, namespace: str) -> Generator[str, None, None]:
