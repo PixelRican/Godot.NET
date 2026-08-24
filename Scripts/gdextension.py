@@ -472,12 +472,11 @@ class GDExtensionFunction(GDExtensionType):
         return self.__return_value
 
     def stylize(self, stylizer: GDExtensionStylizer) -> None:
-        type_parameters: list[str] = [argument.type for argument in self.arguments]
-        if self.return_value:
-            type_parameters.append(self.return_value.type)
-        else:
-            type_parameters.append("void")
-        arguments: str = ", ".join(type_parameters)
+        types: tuple[str, ...] = (
+            *(argument.type for argument in self.arguments),
+            self.return_value.type if self.return_value else "void"
+        )
+        arguments: str = ", ".join(types)
         stylizer.set_expansion(self.name, f"delegate* unmanaged[Cdecl]<{arguments}>")
 
 
