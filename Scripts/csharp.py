@@ -355,7 +355,7 @@ class CSharpMethod(CSharpMember):
         yield from self.return_type.documentation
         yield from (str(attribute) for attribute in self.attributes)
         parameters: str = ", ".join(str(parameter) for parameter in self.parameters)
-        yield f"{self.access_modifier} {self.return_type} {self.name}({parameters})"
+        yield f"{self.modifiers} {self.return_type} {self.name}({parameters})"
         yield "{"
         yield from (indent(line) for line in self.body)
         yield "}"
