@@ -165,6 +165,9 @@ class CSharpEnumeration(CSharpType):
         self.__underlying_type: str = underlying_type
 
     def __iter__(self) -> Generator[str]:
+        def indent_without_separator(line: str) -> str:
+            return indent(line if line.startswith("///") else line.removesuffix(","))
+
         yield from self.documentation
         yield from map(str, self.attributes)
         if self.underlying_type:
@@ -175,8 +178,7 @@ class CSharpEnumeration(CSharpType):
         if self.constants:
             for constant in self.constants[:-1]:
                 yield from map(indent, constant)
-            for line in self.constants[-1]:
-                yield indent(line if line.startswith("///") else line.removesuffix(","))
+            yield from map(indent_without_separator, self.constants[-1])
         yield "}"
 
     @property
