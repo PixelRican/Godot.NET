@@ -9,10 +9,10 @@ class XMLDocumentation:
 
     def __iter__(self) -> Generator[str]:
         if self.description:
-            elements: list[str] = [self.tag] + [str(attribute) for attribute in self.attributes]
+            elements: list[str] = [self.tag] + [*map(str, self.attributes)]
             header: str = " ".join(elements)
             yield f"/// <{header}>"
-            yield from (f"/// {line}" for line in self.description)
+            yield from map(lambda line: f"/// {line}", self.description)
             yield f"/// </{self.tag}>"
 
     @property
@@ -166,7 +166,7 @@ class CSharpEnumeration(CSharpType):
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield from (str(attribute) for attribute in self.attributes)
+        yield from map(str, self.attributes)
         if self.underlying_type:
             yield f"{self.access_modifier} enum {self.name} : {self.underlying_type}"
         else:
@@ -174,7 +174,7 @@ class CSharpEnumeration(CSharpType):
         yield "{"
         if self.constants:
             for constant in self.constants[:-1]:
-                yield from (indent(line) for line in constant)
+                yield from map(indent, constant)
             for line in self.constants[-1]:
                 yield indent(line if line.startswith("///") else line.removesuffix(","))
         yield "}"
@@ -230,18 +230,18 @@ class CSharpStructure(CSharpType):
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield from (str(attribute) for attribute in self.attributes)
+        yield from map(str, self.attributes)
         yield f"{self.modifiers} {self.kind} {self.name}"
         yield "{"
         separate: bool = False
         for field in self.fields:
             separate = True
-            yield from (indent(line) for line in field)
+            yield from map(indent, field)
         for method in self.methods:
             if separate:
                 yield ""
             separate = True
-            yield from (indent(line) for line in method)
+            yield from map(indent, method)
         yield "}"
 
     @property
@@ -296,7 +296,7 @@ class CSharpField(CSharpMember):
 
     def __iter__(self) -> Generator[str]:
         yield from self.documentation
-        yield from (str(attribute) for attribute in self.attributes)
+        yield from map(str, self.attributes)
         yield f"{self.modifiers} {self.type} {self.name};"
 
     @property
@@ -348,11 +348,11 @@ class CSharpMethod(CSharpMember):
         for exception in self.exceptions:
             yield from exception.documentation
         yield from self.return_type.documentation
-        yield from (str(attribute) for attribute in self.attributes)
+        yield from map(str, self.attributes)
         parameters: str = ", ".join(str(parameter) for parameter in self.parameters)
         yield f"{self.modifiers} {self.return_type} {self.name}({parameters})"
         yield "{"
-        yield from (indent(line) for line in self.body)
+        yield from map(indent, self.body)
         yield "}"
 
     @property
@@ -450,7 +450,7 @@ def generate(source: CSharpType, namespace: str) -> Generator[str]:
     yield "/**************************************************************************/"
     yield ""
     if dependencies := source.dependencies:
-        yield from (f"using {dependency};" for dependency in dependencies)
+        yield from map(lambda dependency: f"using {dependency};", dependencies)
         yield ""
     yield f"namespace {namespace};"
     yield ""
