@@ -70,25 +70,10 @@ class GDExtensionStylizer:
 
 class GDExtensionInterface:
     def __init__(self, data: dict[str, Any]) -> None:
-        def create(type_data: dict[str, Any]) -> GDExtensionType:
-            match kind := type_data["kind"]:
-                case "enum":
-                    return GDExtensionEnumeration(type_data)
-                case "handle":
-                    return GDExtensionHandle(type_data)
-                case "alias":
-                    return GDExtensionAlias(type_data)
-                case "struct":
-                    return GDExtensionStructure(type_data)
-                case "function":
-                    return GDExtensionFunction(type_data)
-                case _:
-                    raise ValueError(f"Unknown kind: {kind}")
-
         self.__copyright: tuple[str, ...] = tuple(data["_copyright"])
         self.__schema: str = data["$schema"]
         self.__format_version: int = data["format_version"]
-        self.__types: tuple[GDExtensionType, ...] = tuple(map(create, data["types"]))
+        self.__types: tuple[GDExtensionType, ...] = tuple(map(GDExtensionType.create, data["types"]))
         self.__interface: tuple[GDExtensionInterfaceFunction, ...] = tuple(map(GDExtensionInterfaceFunction, data["interface"]))
 
     @property
@@ -294,6 +279,22 @@ class GDExtensionType(ABC):
     @abstractmethod
     def stylize(self, stylizer: GDExtensionStylizer) -> None:
         pass
+
+    @staticmethod
+    def create(data: dict[str, Any]) -> GDExtensionType:
+        match kind := data["kind"]:
+            case "enum":
+                return GDExtensionEnumeration(data)
+            case "handle":
+                return GDExtensionHandle(data)
+            case "alias":
+                return GDExtensionAlias(data)
+            case "struct":
+                return GDExtensionStructure(data)
+            case "function":
+                return GDExtensionFunction(data)
+            case _:
+                raise ValueError(f"Unknown kind: {kind}")
 
 
 class GDExtensionEnumeration(GDExtensionType):
