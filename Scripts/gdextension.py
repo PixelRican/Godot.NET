@@ -118,7 +118,8 @@ class GDExtensionInterface:
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpStructure:
         def initialize_body() -> Generator[str]:
             yield "ArgumentNullException.ThrowIfNull(pGetProcAddress);"
-            for interface, field in members:
+            for member, interface in zip(members, self.interface):
+                field: CSharpField = member[0]
                 yield f"{field.name} = ({field.type})Load(pGetProcAddress, \"{interface.name}\"u8);"
 
         def load_body() -> Generator[str]:
