@@ -416,7 +416,7 @@ def dump(types: Iterable[CSharpType], namespace: str, directory: str) -> None:
             print(*generator, sep="\n", file=file)
 
 
-def generate(source: CSharpType, namespace: str) -> Generator[str, None, None]:
+def generate(source: CSharpType, namespace: str) -> Generator[str]:
     yield "/**************************************************************************/"
     yield f"/*  {source.name}.cs  {" " * (65 - len(source.name))}*/"
     yield "/**************************************************************************/"
