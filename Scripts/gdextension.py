@@ -88,12 +88,8 @@ class GDExtensionInterface:
         self.__copyright: tuple[str, ...] = tuple(data["_copyright"])
         self.__schema: str = data["$schema"]
         self.__format_version: int = data["format_version"]
-        self.__types: tuple[GDExtensionType, ...] = tuple(
-            create(type_data) for type_data in data["types"]
-        )
-        self.__interface: tuple[GDExtensionInterfaceFunction, ...] = tuple(
-            GDExtensionInterfaceFunction(interface_data) for interface_data in data["interface"]
-        )
+        self.__types: tuple[GDExtensionType, ...] = tuple(map(create, data["types"]))
+        self.__interface: tuple[GDExtensionInterfaceFunction, ...] = tuple(map(GDExtensionInterfaceFunction, data["interface"]))
 
     @property
     def copyright(self) -> tuple[str, ...]:
@@ -292,9 +288,7 @@ class GDExtensionEnumeration(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
         self.__is_bitfield: Optional[bool] = data.get("is_bitfield")
-        self.__values: tuple[GDExtensionConstant, ...] = tuple(
-            GDExtensionConstant(value) for value in data["values"]
-        )
+        self.__values: tuple[GDExtensionConstant, ...] = tuple(map(GDExtensionConstant, data["values"]))
 
     @property
     def is_bitfield(self) -> Optional[bool]:
@@ -405,9 +399,7 @@ class GDExtensionAlias(GDExtensionType):
 class GDExtensionStructure(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.__members: tuple[GDExtensionField, ...] = tuple(
-            GDExtensionField(member_data) for member_data in data["members"]
-        )
+        self.__members: tuple[GDExtensionField, ...] = tuple(map(GDExtensionField, data["members"]))
 
     @property
     def members(self) -> tuple[GDExtensionField, ...]:
@@ -466,9 +458,7 @@ class GDExtensionField:
 class GDExtensionFunction(GDExtensionType):
     def __init__(self, data: dict[str, Any]) -> None:
         super().__init__(data)
-        self.__arguments: tuple[GDExtensionParameter, ...] = tuple(
-            GDExtensionParameter(argument) for argument in data["arguments"]
-        )
+        self.__arguments: tuple[GDExtensionParameter, ...] = tuple(map(GDExtensionParameter, data["arguments"]))
         self.__return_value: Optional[GDExtensionReturnType] = None
         if return_value := data.get("return_value"):
             self.__return_value = GDExtensionReturnType(return_value)
