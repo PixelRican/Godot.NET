@@ -409,20 +409,21 @@ class GDExtensionStructure(GDExtensionType):
             stylizer.set_translation(member.name, pascal(preprocess(member.name)))
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpStructure:
-        structure: CSharpStructure = CSharpStructure()
-        structure.name = self.name
-        structure.is_value_type = True
-        structure.is_unsafe = structure.name != "GDExtensionCallError"
-        structure.dependencies.add("System.Runtime.InteropServices")
-        structure.attributes.append(CSharpAttribute.struct_layout("Sequential"))
-        if description := self.description:
-            structure.documentation = XMLDocumentation.summary(stylizer.translate(description))
+        attributes: list[CSharpAttribute] = [CSharpAttribute.struct_layout("Sequential")]
+        dependencies: list[str] = ["System.Runtime.InteropServices"]
         if self.deprecated:
-            structure.attributes.append(self.deprecated.to_csharp(stylizer))
-            structure.dependencies.add("System")
-        for member in self.members:
-            structure.fields.append(member.to_csharp(stylizer))
-        return structure
+            attributes.append(self.deprecated.to_csharp(stylizer))
+            dependencies.append("System")
+        return CSharpStructure(
+            name=self.name,
+            fields=(field.to_csharp(stylizer) for field in self.members),
+            methods=(),
+            description=stylizer.translate(self.description or ()),
+            attributes=attributes,
+            dependencies=dependencies,
+            is_value_type=True,
+            is_unsafe=self.name != "GDExtensionCallError"
+        )
 
 
 class GDExtensionField:
