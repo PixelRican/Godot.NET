@@ -571,24 +571,25 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
             else:
                 yield f"return function({arguments});"
 
-        method: CSharpMethod = CSharpMethod()
-        method.name = stylizer.get_translation(self.name)
-        method.body = method_body()
-        method.attributes.append(CSharpAttribute.method_impl("AggressiveInlining"))
-        method.is_static = True
-        if description := self.description:
-            method.documentation = XMLDocumentation.summary(stylizer.translate(description))
-        if deprecated := self.deprecated:
-            method.attributes.append(deprecated.to_csharp(stylizer))
-        if return_value := self.return_value:
-            method.return_type = return_value.to_csharp(stylizer)
-        for argument in self.arguments:
-            method.parameters.append(argument.to_csharp(stylizer))
-        field: CSharpField = CSharpField()
-        field.name = f"s_{method.name[0].lower()}{method.name[1:]}"
-        field.type = stylizer.get_expansion(self.name)
-        field.is_public = False
-        field.is_static = True
+        attributes: list[CSharpAttribute] = [CSharpAttribute.method_impl("AggressiveInlining")]
+        if self.deprecated:
+            attributes.append(self.deprecated.to_csharp(stylizer))
+        method: CSharpMethod = CSharpMethod(
+            name=stylizer.get_translation(self.name),
+            parameters=(parameter.to_csharp(stylizer) for parameter in self.arguments),
+            return_type=self.return_value.to_csharp(stylizer) if self.return_value else CSharpReturnType("void"),
+            exceptions=(CSharpException("InvalidOperationException", ("Unable to call the specified function.",)),),
+            body=method_body(),
+            description=stylizer.translate(self.description or ()),
+            attributes=attributes,
+            is_static=True
+        )
+        field: CSharpField = CSharpField(
+            name=f"s_{method.name[0].lower()}{method.name[1:]}",
+            type=stylizer.get_expansion(self.name),
+            is_public=False,
+            is_static=True
+        )
         return field, method
 
 
