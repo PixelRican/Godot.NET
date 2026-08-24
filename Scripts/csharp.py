@@ -349,7 +349,7 @@ class CSharpMethod(CSharpMember):
             yield from exception.documentation
         yield from self.return_type.documentation
         yield from map(str, self.attributes)
-        parameters: str = ", ".join(str(parameter) for parameter in self.parameters)
+        parameters: str = ", ".join(map(str, self.parameters))
         yield f"{self.modifiers} {self.return_type} {self.name}({parameters})"
         yield "{"
         yield from map(indent, self.body)
