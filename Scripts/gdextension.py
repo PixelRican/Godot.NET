@@ -313,20 +313,24 @@ class GDExtensionEnumeration(GDExtensionType):
                 stylizer.set_translation(value.name, replacement)
 
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpEnumeration:
-        enumeration: CSharpEnumeration = CSharpEnumeration()
-        enumeration.name = self.name
-        if description := self.description:
-            enumeration.documentation.description = stylizer.translate(description)
+        attributes: list[CSharpAttribute] = []
+        dependencies: list[str] = []
+        underlying_type: str = ""
         if self.deprecated:
-            enumeration.attributes.append(self.deprecated.to_csharp(stylizer))
-            enumeration.dependencies.add("System")
+            attributes.append(self.deprecated.to_csharp(stylizer))
+            dependencies = ["System"]
         if self.is_bitfield:
-            enumeration.underlying_type = "uint"
-            enumeration.dependencies.add("System")
-            enumeration.attributes.append(CSharpAttribute("Flags"))
-        for value in self.values:
-            enumeration.constants.append(value.to_csharp(stylizer))
-        return enumeration
+            attributes.append(CSharpAttribute("Flags"))
+            dependencies = ["System"]
+            underlying_type = "uint"
+        return CSharpEnumeration(
+            name=self.name,
+            constants=(constant.to_csharp(stylizer) for constant in self.values),
+            description=stylizer.translate(self.description or ()),
+            attributes=attributes,
+            dependencies=dependencies,
+            underlying_type=underlying_type
+        )
 
 
 class GDExtensionConstant:
