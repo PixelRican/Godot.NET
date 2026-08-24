@@ -1,4 +1,4 @@
-from typing import Generator, Iterable, Union
+from typing import Generator, Iterable
 
 
 class XMLDocumentation:
@@ -81,13 +81,8 @@ class CSharpAttribute:
         return self.__arguments
 
     @staticmethod
-    def method_impl(options: Union[str, Iterable[str]]) -> CSharpAttribute:
-        argument: str
-        if isinstance(options, str):
-            argument = f"MethodImplOptions.{options}"
-        else:
-            argument = " | ".join(f"MethodImplOptions.{option}" for option in options)
-        return CSharpAttribute("MethodImpl", (argument,))
+    def method_impl(option: str) -> CSharpAttribute:
+        return CSharpAttribute("MethodImpl", (f"MethodImplOptions.{option}",))
 
     @staticmethod
     def obsolete(message: str) -> CSharpAttribute:
