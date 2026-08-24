@@ -420,6 +420,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rGodotVersion">
     /// A pointer to the structure to write the version information into.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.5. Use `GetGodotVersion2` instead.")]
     public static void GetGodotVersion(GDExtensionGodotVersion* rGodotVersion)
@@ -435,6 +438,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rGodotVersion">
     /// A pointer to the structure to write the version information into.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GetGodotVersion2(GDExtensionGodotVersion2* rGodotVersion)
     {
@@ -449,6 +455,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pBytes">
     /// The amount of memory to allocate in bytes.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
@@ -470,6 +479,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pBytes">
     /// The number of bytes to resize the memory block to.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
@@ -488,6 +500,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPtr">
     /// A pointer to the previously allocated memory.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.6. Does not allow explicitly requesting padding. Use `MemFree2` instead.")]
     public static void MemFree(void* pPtr)
@@ -506,6 +521,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPadAlign">
     /// If true, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
@@ -529,6 +547,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPadAlign">
     /// If true, the returned memory will have prepadding of at least 8 bytes.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the allocated memory, or null if unsuccessful.
     /// </returns>
@@ -549,6 +570,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPadAlign">
     /// If true, the given memory was allocated with prepadding.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemFree2(void* pPtr, bool pPadAlign)
     {
@@ -575,6 +599,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pEditorNotify">
     /// Whether or not to notify the editor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
@@ -604,6 +631,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pEditorNotify">
     /// Whether or not to notify the editor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
@@ -630,6 +660,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pEditorNotify">
     /// Whether or not to notify the editor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintWarning(byte* pDescription, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
@@ -659,6 +692,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pEditorNotify">
     /// Whether or not to notify the editor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintWarningWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
@@ -685,6 +721,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pEditorNotify">
     /// Whether or not to notify the editor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintScriptError(byte* pDescription, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
@@ -714,6 +753,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pEditorNotify">
     /// Whether or not to notify the editor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PrintScriptErrorWithMessage(byte* pDescription, byte* pMessage, byte* pFunction, byte* pFile, int pLine, bool pEditorNotify)
     {
@@ -728,6 +770,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pName">
     /// A pointer to a StringName identifying the struct name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The size in bytes.
     /// </returns>
@@ -748,6 +793,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSrc">
     /// A pointer to the source Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantNewCopy(GDExtensionVariant* rDest, GDExtensionVariant* pSrc)
     {
@@ -762,6 +810,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rDest">
     /// A pointer to the destination Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantNewNil(GDExtensionVariant* rDest)
     {
@@ -776,6 +827,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSelf">
     /// A pointer to the Variant to destroy.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantDestroy(GDExtensionVariant* pSelf)
     {
@@ -805,6 +859,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rError">
     /// A pointer the structure which will hold error information.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantCall(GDExtensionVariant* pSelf, GDExtensionStringName* pMethod, GDExtensionVariant** pArgs, long pArgumentCount, GDExtensionVariant* rReturn, GDExtensionCallError* rError)
     {
@@ -834,6 +891,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rError">
     /// A pointer the structure which will be updated with error information.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantCallStatic(GDExtensionVariantType pType, GDExtensionStringName* pMethod, GDExtensionVariant** pArgs, long pArgumentCount, GDExtensionVariant* rReturn, GDExtensionCallError* rError)
     {
@@ -860,6 +920,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantEvaluate(GDExtensionVariantOperator pOp, GDExtensionVariant* pA, GDExtensionVariant* pB, GDExtensionVariant* rReturn, bool* rValid)
     {
@@ -883,6 +946,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSet(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* pValue, bool* rValid)
     {
@@ -906,6 +972,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetNamed(GDExtensionVariant* pSelf, GDExtensionStringName* pKey, GDExtensionVariant* pValue, bool* rValid)
     {
@@ -929,6 +998,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetKeyed(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* pValue, bool* rValid)
     {
@@ -955,6 +1027,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rOob">
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantSetIndexed(GDExtensionVariant* pSelf, long pIndex, GDExtensionVariant* pValue, bool* rValid, bool* rOob)
     {
@@ -978,6 +1053,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGet(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* rRet, bool* rValid)
     {
@@ -1001,6 +1079,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetNamed(GDExtensionVariant* pSelf, GDExtensionStringName* pKey, GDExtensionVariant* rRet, bool* rValid)
     {
@@ -1024,6 +1105,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetKeyed(GDExtensionVariant* pSelf, GDExtensionVariant* pKey, GDExtensionVariant* rRet, bool* rValid)
     {
@@ -1050,6 +1134,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rOob">
     /// A pointer to a boolean which will be set to true if the index is out of bounds.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetIndexed(GDExtensionVariant* pSelf, long pIndex, GDExtensionVariant* rRet, bool* rValid, bool* rOob)
     {
@@ -1070,6 +1157,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the operation is valid; otherwise false.
     /// </returns>
@@ -1093,6 +1183,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the operation is valid; otherwise false.
     /// </returns>
@@ -1119,6 +1212,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the operation is invalid.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantIterGet(GDExtensionVariant* pSelf, GDExtensionVariant* rIter, GDExtensionVariant* rRet, bool* rValid)
     {
@@ -1133,6 +1229,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSelf">
     /// A pointer to the Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The hash value.
     /// </returns>
@@ -1153,6 +1252,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pRecursionCount">
     /// The number of recursive loops so far.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The hash value.
     /// </returns>
@@ -1173,6 +1275,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pOther">
     /// A pointer to the other Variant to compare it to.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The hash value.
     /// </returns>
@@ -1190,6 +1295,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSelf">
     /// A pointer to the Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The boolean value of the Variant.
     /// </returns>
@@ -1213,6 +1321,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pDeep">
     /// Whether or not to duplicate deeply (when supported by the Variant type).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantDuplicate(GDExtensionVariant* pSelf, GDExtensionVariant* rRet, bool pDeep)
     {
@@ -1230,6 +1341,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rRet">
     /// A pointer to a String to store the resulting value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantStringify(GDExtensionVariant* pSelf, GDExtensionString* rRet)
     {
@@ -1244,6 +1358,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSelf">
     /// A pointer to the Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The variant type.
     /// </returns>
@@ -1264,6 +1381,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMethod">
     /// A pointer to a StringName with the method name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the variant has the given method; otherwise false.
     /// </returns>
@@ -1284,6 +1404,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMember">
     /// A pointer to a StringName with the member name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the variant has the given method; otherwise false.
     /// </returns>
@@ -1307,6 +1430,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rValid">
     /// A pointer to a boolean which will be set to false if the key doesn't exist.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the key exists; otherwise false.
     /// </returns>
@@ -1326,6 +1452,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSelf">
     /// A pointer to the Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The instance ID for the contained object.
     /// </returns>
@@ -1346,6 +1475,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rName">
     /// A pointer to a String to store the Variant type name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetTypeName(GDExtensionVariantType pType, GDExtensionString* rName)
     {
@@ -1360,6 +1492,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pTypeName">
     /// The variant type name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The variant type for the given name; otherwise VARIANT_MAX if name is invalid.
     /// </returns>
@@ -1380,6 +1515,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pTo">
     /// The Variant type to convert to.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the conversion is possible; otherwise false.
     /// </returns>
@@ -1400,6 +1538,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pTo">
     /// The Variant type to convert to.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the conversion is possible; otherwise false.
     /// </returns>
@@ -1417,6 +1558,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can create a Variant of the given type from a raw value.
     /// </returns>
@@ -1434,6 +1578,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can get the raw value from a Variant of the given type.
     /// </returns>
@@ -1456,6 +1603,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a type-specific function that returns a pointer to the internal value of a variant. Check the implementation of this function (gdextension_variant_get_ptr_internal_getter) for pointee type info of each variant type.
     /// </returns>
@@ -1479,6 +1629,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pTypeB">
     /// The type of the second Variant.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can evaluate the given Variant operator on the given Variant types.
     /// </returns>
@@ -1502,6 +1655,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pHash">
     /// A hash representing the method signature.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can call a builtin method on a type of Variant.
     /// </returns>
@@ -1522,6 +1678,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pConstructor">
     /// The index of the constructor.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can call one of the constructors for a type of Variant.
     /// </returns>
@@ -1539,6 +1698,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function than can call the destructor for a type of Variant.
     /// </returns>
@@ -1568,6 +1730,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rError">
     /// A pointer the structure which will be updated with error information.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantConstruct(GDExtensionVariantType pType, GDExtensionVariant* rBase, GDExtensionVariant** pArgs, int pArgumentCount, GDExtensionCallError* rError)
     {
@@ -1585,6 +1750,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMember">
     /// A pointer to a StringName with the member name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can call a member's setter on the given Variant type.
     /// </returns>
@@ -1605,6 +1773,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMember">
     /// A pointer to a StringName with the member name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can call a member's getter on the given Variant type.
     /// </returns>
@@ -1622,6 +1793,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can set an index on the given Variant type.
     /// </returns>
@@ -1639,6 +1813,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can get an index on the given Variant type.
     /// </returns>
@@ -1656,6 +1833,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can set a key on the given Variant type.
     /// </returns>
@@ -1673,6 +1853,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can get a key on the given Variant type.
     /// </returns>
@@ -1690,6 +1873,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pType">
     /// The Variant type.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can check a key on the given Variant type.
     /// </returns>
@@ -1713,6 +1899,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rRet">
     /// A pointer to a Variant to store the value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void VariantGetConstantValue(GDExtensionVariantType pType, GDExtensionStringName* pConstant, GDExtensionVariant* rRet)
     {
@@ -1730,6 +1919,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pHash">
     /// A hash representing the function signature.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a function that can call a Variant utility function.
     /// </returns>
@@ -1750,6 +1942,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pContents">
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithLatin1Chars(GDExtensionString* rDest, byte* pContents)
     {
@@ -1767,6 +1962,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pContents">
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf8Chars(GDExtensionString* rDest, byte* pContents)
     {
@@ -1784,6 +1982,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pContents">
     /// A pointer to a UTF-16 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf16Chars(GDExtensionString* rDest, char* pContents)
     {
@@ -1801,6 +2002,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pContents">
     /// A pointer to a UTF-32 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf32Chars(GDExtensionString* rDest, uint* pContents)
     {
@@ -1818,6 +2022,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pContents">
     /// A pointer to a wide C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithWideChars(GDExtensionString* rDest, void* pContents)
     {
@@ -1838,6 +2045,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of characters (= number of bytes).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithLatin1CharsAndLen(GDExtensionString* rDest, byte* pContents, long pSize)
     {
@@ -1858,6 +2068,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of bytes (not code units).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf8CharsAndLen2` instead.")]
     public static void StringNewWithUtf8CharsAndLen(GDExtensionString* rDest, byte* pContents, long pSize)
@@ -1879,6 +2092,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of bytes (not code units).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// Error code signifying if the operation successful.
     /// </returns>
@@ -1902,6 +2118,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCharCount">
     /// The number of characters (not bytes).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.3. Use `StringNewWithUtf16CharsAndLen2` instead.")]
     public static void StringNewWithUtf16CharsAndLen(GDExtensionString* rDest, char* pContents, long pCharCount)
@@ -1926,6 +2145,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pDefaultLittleEndian">
     /// If true, UTF-16 use little endian.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// Error code signifying if the operation successful.
     /// </returns>
@@ -1949,6 +2171,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCharCount">
     /// The number of characters (not bytes).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithUtf32CharsAndLen(GDExtensionString* rDest, uint* pContents, long pCharCount)
     {
@@ -1969,6 +2194,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCharCount">
     /// The number of characters (not bytes).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNewWithWideCharsAndLen(GDExtensionString* rDest, void* pContents, long pCharCount)
     {
@@ -1990,6 +2218,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMaxWriteLength">
     /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The resulting encoded string length in characters, not including a null terminator. Characters that cannot be converted to Latin-1 are replaced with a space.
     /// </returns>
@@ -2014,6 +2245,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMaxWriteLength">
     /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The resulting encoded string length in bytes (not characters), not including a null terminator.
     /// </returns>
@@ -2038,6 +2272,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMaxWriteLength">
     /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
     /// </returns>
@@ -2062,6 +2299,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMaxWriteLength">
     /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The resulting encoded string length in characters (not bytes), not including a null terminator.
     /// </returns>
@@ -2086,6 +2326,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMaxWriteLength">
     /// The maximum number of characters that can be written to rText. It has no affect on the return value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
     /// </returns>
@@ -2106,6 +2349,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested character.
     /// </returns>
@@ -2126,6 +2372,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested character.
     /// </returns>
@@ -2146,6 +2395,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pB">
     /// A pointer to the other String to append.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqString(GDExtensionString* pSelf, GDExtensionString* pB)
     {
@@ -2163,6 +2415,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pB">
     /// A pointer to the character to append.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqChar(GDExtensionString* pSelf, uint pB)
     {
@@ -2180,6 +2435,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pB">
     /// A pointer to a Latin-1 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqCstr(GDExtensionString* pSelf, byte* pB)
     {
@@ -2197,6 +2455,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pB">
     /// A pointer to a wide C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqWcstr(GDExtensionString* pSelf, void* pB)
     {
@@ -2214,6 +2475,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pB">
     /// A pointer to a UTF-32 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringOperatorPlusEqC32Str(GDExtensionString* pSelf, uint* pB)
     {
@@ -2236,6 +2500,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pResize">
     /// The new length for the String.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// Error code signifying if the operation successful.
     /// </returns>
@@ -2265,6 +2532,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIsStatic">
     /// Whether the StringName reuses the buffer directly (see above).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNameNewWithLatin1Chars(GDExtensionStringName* rDest, byte* pContents, bool pIsStatic)
     {
@@ -2282,6 +2552,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pContents">
     /// A pointer to a C string (null terminated and UTF-8 encoded).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNameNewWithUtf8Chars(GDExtensionStringName* rDest, byte* pContents)
     {
@@ -2302,6 +2575,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of bytes (not UTF-8 code points).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void StringNameNewWithUtf8CharsAndLen(GDExtensionStringName* rDest, byte* pContents, long pSize)
     {
@@ -2322,6 +2598,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The size of the buffer.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A Godot error code (ex. OK, ERR_INVALID_DATA, etc).
     /// </returns>
@@ -2345,6 +2624,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pLength">
     /// The size of the buffer.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FileAccessStoreBuffer(void* pInstance, byte* pSrc, ulong pLength)
     {
@@ -2365,6 +2647,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pLength">
     /// The requested number of bytes to read.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The actual number of bytes read (may be less than requested).
     /// </returns>
@@ -2382,6 +2667,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstance">
     /// A pointer to a Image object.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// Pointer to internal Image buffer.
     /// </returns>
@@ -2399,6 +2687,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstance">
     /// A pointer to a Image object.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// Pointer to internal Image buffer.
     /// </returns>
@@ -2434,6 +2725,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pDescription">
     /// A pointer to a String with the task description.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The task group ID.
     /// </returns>
@@ -2463,6 +2757,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pDescription">
     /// A pointer to a String with the task description.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The task ID.
     /// </returns>
@@ -2483,6 +2780,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the byte to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested byte.
     /// </returns>
@@ -2503,6 +2803,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the byte to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested byte.
     /// </returns>
@@ -2523,6 +2826,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the float to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested 32-bit float.
     /// </returns>
@@ -2543,6 +2849,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the float to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested 32-bit float.
     /// </returns>
@@ -2563,6 +2872,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the float to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested 64-bit float.
     /// </returns>
@@ -2583,6 +2895,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the float to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested 64-bit float.
     /// </returns>
@@ -2603,6 +2918,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the integer to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested 32-bit integer.
     /// </returns>
@@ -2623,6 +2941,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the integer to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested 32-bit integer.
     /// </returns>
@@ -2643,6 +2964,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the integer to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested 64-bit integer.
     /// </returns>
@@ -2663,6 +2987,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the integer to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested 64-bit integer.
     /// </returns>
@@ -2683,6 +3010,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the String to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested String.
     /// </returns>
@@ -2703,6 +3033,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the String to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested String.
     /// </returns>
@@ -2723,6 +3056,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Vector2 to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested Vector2.
     /// </returns>
@@ -2743,6 +3079,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Vector2 to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested Vector2.
     /// </returns>
@@ -2763,6 +3102,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Vector3 to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested Vector3.
     /// </returns>
@@ -2783,6 +3125,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Vector3 to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested Vector3.
     /// </returns>
@@ -2803,6 +3148,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Vector4 to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested Vector4.
     /// </returns>
@@ -2823,6 +3171,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Vector4 to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested Vector4.
     /// </returns>
@@ -2843,6 +3194,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Color to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested Color.
     /// </returns>
@@ -2863,6 +3217,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Color to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested Color.
     /// </returns>
@@ -2883,6 +3240,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Variant to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the requested Variant.
     /// </returns>
@@ -2903,6 +3263,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index of the Variant to get.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to the requested Variant.
     /// </returns>
@@ -2923,6 +3286,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pFrom">
     /// A pointer to the Array object to reference.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.5. Removed from interface. Use copy constructor instead.")]
     public static void ArrayRef(void* pSelf, void* pFrom)
@@ -2947,6 +3313,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pScript">
     /// A pointer to a Script object (if pType is Object and the base class is extended by a script).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ArraySetTyped(void* pSelf, GDExtensionVariantType pType, GDExtensionStringName* pClassName, GDExtensionVariant* pScript)
     {
@@ -2964,6 +3333,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pKey">
     /// A pointer to a Variant representing the key.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a Variant representing the value at the given key.
     /// </returns>
@@ -2984,6 +3356,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pKey">
     /// A pointer to a Variant representing the key.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A const pointer to a Variant representing the value at the given key.
     /// </returns>
@@ -3019,6 +3394,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pValueScript">
     /// A pointer to a Script object (if pValueType is Object and the base class is extended by a script).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DictionarySetTyped(void* pSelf, GDExtensionVariantType pKeyType, GDExtensionStringName* pKeyClassName, GDExtensionVariant* pKeyScript, GDExtensionVariantType pValueType, GDExtensionStringName* pValueClassName, GDExtensionVariant* pValueScript)
     {
@@ -3048,6 +3426,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rError">
     /// A pointer to a GDExtensionCallError struct that will receive error information.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectMethodBindCall(void* pMethodBind, void* pInstance, GDExtensionVariant** pArgs, long pArgCount, GDExtensionVariant* rRet, GDExtensionCallError* rError)
     {
@@ -3071,6 +3452,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rRet">
     /// A pointer to the Object that will receive the return value.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectMethodBindPtrCall(void* pMethodBind, void* pInstance, void** pArgs, void* rRet)
     {
@@ -3085,6 +3469,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pO">
     /// A pointer to the Object.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectDestroy(void* pO)
     {
@@ -3099,6 +3486,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pName">
     /// A pointer to a StringName with the singleton name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the singleton Object.
     /// </returns>
@@ -3122,6 +3512,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallbacks">
     /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the instance binding.
     /// </returns>
@@ -3148,6 +3541,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallbacks">
     /// A pointer to a GDExtensionInstanceBindingCallbacks struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectSetInstanceBinding(void* pO, void* pToken, void* pBinding, GDExtensionInstanceBindingCallbacks* pCallbacks)
     {
@@ -3165,6 +3561,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pToken">
     /// A token the library received by the GDExtension's entry point function.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectFreeInstanceBinding(void* pO, void* pToken)
     {
@@ -3186,6 +3585,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstance">
     /// A pointer to the extension class instance.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectSetInstance(void* pO, GDExtensionStringName* pClassName, void* pInstance)
     {
@@ -3208,6 +3610,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rClassName">
     /// A pointer to a String to receive the class name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if successful in getting the class name; otherwise false.
     /// </returns>
@@ -3228,6 +3633,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassTag">
     /// A pointer uniquely identifying a built-in class in the ClassDB.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// Returns a pointer to the Object, or null if it can't be cast to the requested type.
     /// </returns>
@@ -3246,6 +3654,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstanceId">
     /// The instance ID.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the Object.
     /// </returns>
@@ -3263,6 +3674,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pObject">
     /// A pointer to the Object.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The instance ID.
     /// </returns>
@@ -3283,6 +3697,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMethod">
     /// A pointer to a StringName identifying the method.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
     /// </returns>
@@ -3315,6 +3732,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rError">
     /// A pointer the structure which will hold error information.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectCallScriptMethod(void* pObject, GDExtensionStringName* pMethod, GDExtensionVariant** pArgs, long pArgumentCount, GDExtensionVariant* rReturn, GDExtensionCallError* rError)
     {
@@ -3329,6 +3749,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pRef">
     /// A pointer to the reference.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the Object from the reference or null.
     /// </returns>
@@ -3349,6 +3772,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pObject">
     /// A pointer to the Object to refer to.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RefSetObject(void* pRef, void* pObject)
     {
@@ -3366,6 +3792,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstanceData">
     /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on pInfo.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
@@ -3387,6 +3816,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstanceData">
     /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on pInfo.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
@@ -3408,6 +3840,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pInstanceData">
     /// A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on pInfo.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a ScriptInstanceExtension object.
     /// </returns>
@@ -3432,6 +3867,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pOwner">
     /// A pointer to an Object.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to a PlaceHolderScriptInstance object.
     /// </returns>
@@ -3457,6 +3895,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pValues">
     /// A pointer to a Dictionary mapping StringName to Variant values.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void PlaceholderScriptInstanceUpdate(void* pPlaceholder, void* pProperties, void* pValues)
     {
@@ -3474,6 +3915,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pLanguage">
     /// A pointer to the language expected for this script instance.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A GDExtensionScriptInstanceDataPtr that was attached to this object as part of ScriptInstanceCreate.
     /// </returns>
@@ -3494,6 +3938,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pScriptInstance">
     /// A pointer to the script instance data to attach to this object.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ObjectSetScriptInstance(void* pObject, void* pScriptInstance)
     {
@@ -3512,6 +3959,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallableCustomInfo">
     /// The info required to construct a Callable.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.3. Use `CallableCustomCreate2` instead.")]
     public static void CallableCustomCreate(void* rCallable, GDExtensionCallableCustomInfo* pCallableCustomInfo)
@@ -3531,6 +3981,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallableCustomInfo">
     /// The info required to construct a Callable.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void CallableCustomCreate2(void* rCallable, GDExtensionCallableCustomInfo2* pCallableCustomInfo)
     {
@@ -3549,6 +4002,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pToken">
     /// A pointer to an address that uniquely identifies the GDExtension.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// The userdata pointer given when creating this custom Callable.
     /// </returns>
@@ -3567,6 +4023,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
@@ -3588,6 +4047,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
@@ -3610,6 +4072,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the newly created Object.
     /// </returns>
@@ -3633,6 +4098,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pHash">
     /// A hash representing the function signature.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer to the MethodBind from ClassDB.
     /// </returns>
@@ -3650,6 +4118,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     /// <returns>
     /// A pointer uniquely identifying the built-in class in the ClassDB.
     /// </returns>
@@ -3678,6 +4149,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.2. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo* pExtensionFuncs)
@@ -3703,6 +4177,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo2 struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.3. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass2(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo2* pExtensionFuncs)
@@ -3728,6 +4205,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo3 struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.4. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass3(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo3* pExtensionFuncs)
@@ -3753,6 +4233,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo4 struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.5. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass4(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
@@ -3778,6 +4261,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo5 struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Deprecated since Godot 4.7. Use `ClassDBRegisterExtensionClass6` instead.")]
     public static void ClassDBRegisterExtensionClass5(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo4* pExtensionFuncs)
@@ -3803,6 +4289,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pExtensionFuncs">
     /// A pointer to a GDExtensionClassCreationInfo6 struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClass6(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pParentClassName, GDExtensionClassCreationInfo6* pExtensionFuncs)
     {
@@ -3824,6 +4313,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMethodInfo">
     /// A pointer to a GDExtensionClassMethodInfo struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassMethod(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionClassMethodInfo* pMethodInfo)
     {
@@ -3845,6 +4337,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pMethodInfo">
     /// A pointer to a GDExtensionClassMethodInfo struct.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassVirtualMethod(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionClassVirtualMethodInfo* pMethodInfo)
     {
@@ -3877,6 +4372,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIsBitfield">
     /// Whether or not this constant is part of a bitfield.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassIntegerConstant(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pEnumName, GDExtensionStringName* pConstantName, long pConstantValue, bool pIsBitfield)
     {
@@ -3904,6 +4402,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pGetter">
     /// A pointer to a StringName with the name of the getter method.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassProperty(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionStringName* pSetter, GDExtensionStringName* pGetter)
     {
@@ -3934,6 +4435,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pIndex">
     /// The index to pass as the first argument to the getter and setter methods.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassPropertyIndexed(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionPropertyInfo* pInfo, GDExtensionStringName* pSetter, GDExtensionStringName* pGetter, long pIndex)
     {
@@ -3957,6 +4461,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPrefix">
     /// A pointer to a String with the prefix used by properties in this group.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassPropertyGroup(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionString* pGroupName, GDExtensionString* pPrefix)
     {
@@ -3980,6 +4487,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pPrefix">
     /// A pointer to a String with the prefix used by properties in this subgroup.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassPropertySubgroup(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionString* pSubgroupName, GDExtensionString* pPrefix)
     {
@@ -4007,6 +4517,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pArgumentCount">
     /// The number of arguments the signal receives.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBRegisterExtensionClassSignal(void* pLibrary, GDExtensionStringName* pClassName, GDExtensionStringName* pSignalName, GDExtensionPropertyInfo* pArgumentInfo, long pArgumentCount)
     {
@@ -4025,6 +4538,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the class name.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ClassDBUnregisterExtensionClass(void* pLibrary, GDExtensionStringName* pClassName)
     {
@@ -4042,6 +4558,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="rPath">
     /// A pointer to a String which will receive the path.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GetLibraryPath(void* pLibrary, GDExtensionString* rPath)
     {
@@ -4057,6 +4576,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorAddPlugin(GDExtensionStringName* pClassName)
     {
@@ -4071,6 +4593,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pClassName">
     /// A pointer to a StringName with the name of a class that was previously added as an editor plugin.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorRemovePlugin(GDExtensionStringName* pClassName)
     {
@@ -4086,6 +4611,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pData">
     /// A pointer to a UTF-8 encoded C string (null terminated).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorHelpLoadXmlFromUtf8Chars(byte* pData)
     {
@@ -4104,6 +4632,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pSize">
     /// The number of bytes (not code units).
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorHelpLoadXmlFromUtf8CharsAndLen(byte* pData, long pSize)
     {
@@ -4125,6 +4656,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallback">
     /// The callback to retrieve the list of classes used.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void EditorRegisterGetClassesUsedCallback(void* pLibrary, delegate* unmanaged[Cdecl]<void*, void> pCallback)
     {
@@ -4142,6 +4676,9 @@ public static unsafe class GDExtensionInterface
     /// <param name="pCallbacks">
     /// A pointer to the structure that contains the callbacks.
     /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Unable to call the specified function.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RegisterMainLoopCallbacks(void* pLibrary, GDExtensionMainLoopCallbacks* pCallbacks)
     {
