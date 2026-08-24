@@ -332,18 +332,18 @@ class CSharpMethod(CSharpMember):
             name: str,
             parameters: Iterable[CSharpParameter],
             return_type: CSharpReturnType,
+            exceptions: Iterable[CSharpException],
             body: Iterable[str],
             description: Iterable[str] = (),
             attributes: Iterable[CSharpAttribute] = (),
             is_public: bool = True,
-            exceptions: Iterable[CSharpException] = (),
             is_static: bool = False
         ) -> None:
         super().__init__(name, description, attributes, is_public)
         self.__parameters: tuple[CSharpParameter, ...] = tuple(parameters)
         self.__return_type: CSharpReturnType = return_type
-        self.__body: tuple[str, ...] = tuple(body)
         self.__exceptions: tuple[CSharpException, ...] = tuple(exceptions)
+        self.__body: tuple[str, ...] = tuple(body)
         self.__is_static: bool = is_static
 
     def __iter__(self) -> Generator[str]:
