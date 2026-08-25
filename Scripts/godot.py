@@ -73,13 +73,41 @@ class GodotExtensionAPI:
 
 class GodotHeader:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.version_major: int = data["version_major"]
-        self.version_minor: int = data["version_minor"]
-        self.version_patch: int = data["version_patch"]
-        self.version_status: str = data["version_status"]
-        self.version_build: str = data["version_build"]
-        self.version_full_name: str = data["version_full_name"]
-        self.precision: str = data["precision"]
+        self.__version_major: int = data["version_major"]
+        self.__version_minor: int = data["version_minor"]
+        self.__version_patch: int = data["version_patch"]
+        self.__version_status: str = data["version_status"]
+        self.__version_build: str = data["version_build"]
+        self.__version_full_name: str = data["version_full_name"]
+        self.__precision: str = data["precision"]
+
+    @property
+    def version_major(self) -> int:
+        return self.__version_major
+
+    @property
+    def version_minor(self) -> int:
+        return self.__version_minor
+
+    @property
+    def version_patch(self) -> int:
+        return self.__version_patch
+
+    @property
+    def version_status(self) -> str:
+        return self.__version_status
+
+    @property
+    def version_build(self) -> str:
+        return self.__version_build
+
+    @property
+    def version_full_name(self) -> str:
+        return self.__version_full_name
+
+    @property
+    def precision(self) -> str:
+        return self.__precision
 
 
 class GodotBuiltinClassSize:
