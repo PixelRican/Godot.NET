@@ -1,5 +1,6 @@
 ﻿from typing import Any
 
+
 class GodotExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
         self.header: GodotHeader = GodotHeader(data["header"])
@@ -29,6 +30,7 @@ class GodotExtensionAPI:
             GodotNativeStructure(element) for element in data["native_structures"]
         ]
 
+
 class GodotHeader:
     def __init__(self, data: dict[str, Any]) -> None:
         self.version_major: int = data["version_major"]
@@ -39,6 +41,7 @@ class GodotHeader:
         self.version_full_name: str = data["version_full_name"]
         self.precision: str = data["precision"]
 
+
 class GodotBuiltinClassSize:
     def __init__(self, data: dict[str, Any]) -> None:
         self.build_configuration: str = data["build_configuration"]
@@ -46,10 +49,12 @@ class GodotBuiltinClassSize:
             GodotBuiltinClassSizeRecord(element) for element in data["sizes"]
         ]
 
+
 class GodotBuiltinClassSizeRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.size: int = data["size"]
+
 
 class GodotBuiltinClassMemberOffset:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -58,6 +63,7 @@ class GodotBuiltinClassMemberOffset:
             GodotBuiltinClassMemberOffsetGrouping(element) for element in data["classes"]
         ]
 
+
 class GodotBuiltinClassMemberOffsetGrouping:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
@@ -65,11 +71,13 @@ class GodotBuiltinClassMemberOffsetGrouping:
             GodotBuiltinClassMemberOffsetRecord(element) for element in data["members"]
         ]
 
+
 class GodotBuiltinClassMemberOffsetRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.member: str = data["member"]
         self.offset: int = data["offset"]
         self.meta: str = data["meta"]
+
 
 class GodotGlobalEnum:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -79,10 +87,12 @@ class GodotGlobalEnum:
             GodotGlobalEnumValue(element) for element in data["values"]
         ]
 
+
 class GodotGlobalEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
+
 
 class GodotUtilityFunction:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -98,10 +108,12 @@ class GodotUtilityFunction:
                 GodotUtilityFunctionArgument(element) for element in arguments
             ]
 
+
 class GodotUtilityFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
+
 
 class GodotBuiltinClass:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -134,11 +146,13 @@ class GodotBuiltinClass:
                 GodotBuiltinClassEnum(element) for element in enums
             ]
 
+
 class GodotBuiltinClassOperator:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.right_type: str | None = data.get("right_type")
         self.return_type: str = data["return_type"]
+
 
 class GodotBuiltinClassConstructor:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -150,10 +164,12 @@ class GodotBuiltinClassConstructor:
                 GodotBuiltinClassConstructorArgument(element) for element in arguments
             ]
 
+
 class GodotBuiltinClassConstructorArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
+
 
 class GodotBuiltinClassMethod:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -171,17 +187,20 @@ class GodotBuiltinClassMethod:
                 GodotBuiltinClassMethodArgument(element) for element in arguments
             ]
 
+
 class GodotBuiltinClassMethodArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
         self.default_value: str | float | int | bool | None = data.get("default_value")
 
+
 class GodotBuiltinClassConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
         self.value: str = data["value"]
+
 
 class GodotBuiltinClassEnum:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -190,10 +209,12 @@ class GodotBuiltinClassEnum:
             GodotBuiltinClassEnumValue(element) for element in data["values"]
         ]
 
+
 class GodotBuiltinClassEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
+
 
 class GodotClass:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -233,6 +254,7 @@ class GodotClass:
                 GodotClassConstant(element) for element in constants
             ]
 
+
 class GodotClassEnum:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
@@ -241,10 +263,12 @@ class GodotClassEnum:
         ]
         self.is_bitfield: bool = data["is_bitfield"]
 
+
 class GodotClassEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
+
 
 class GodotClassMethod:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -267,10 +291,12 @@ class GodotClassMethod:
                 GodotClassMethodArgument(element) for element in arguments
             ]
 
+
 class GodotClassMethodReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.type: str = data["type"]
         self.meta: str | None = data.get("meta")
+
 
 class GodotClassMethodArgument:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -279,6 +305,7 @@ class GodotClassMethodArgument:
         self.default_value: str | float | int | bool | None = data.get("default_value")
         self.meta: str | None = data.get("meta")
 
+
 class GodotClassProperty:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
@@ -286,6 +313,7 @@ class GodotClassProperty:
         self.setter: str | None = data.get("setter")
         self.getter: str | None = data.get("getter")
         self.index: int | None = data.get("index")
+
 
 class GodotClassSignal:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -297,20 +325,24 @@ class GodotClassSignal:
                 GodotClassSignalArgument(element) for element in arguments
             ]
 
+
 class GodotClassSignalArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
+
 
 class GodotClassConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.value: int = data["value"]
 
+
 class GodotSingleton:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
+
 
 class GodotNativeStructure:
     def __init__(self, data: dict[str, Any]) -> None:
