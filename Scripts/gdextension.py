@@ -62,8 +62,8 @@ class GDExtensionStylizer:
     def set_translation(self, string: str, value: str) -> None:
         self.__translations.setdefault(string, value)
 
-    def translate(self, description: tuple[str, ...]) -> Generator[str]:
-        for line in description:
+    def translate(self, description: Optional[tuple[str, ...]]) -> Generator[str]:
+        for line in description or ():
             separator: str = "<br/>" * (line is not description[-1])
             yield self.get_translation(line) + separator
 
@@ -338,7 +338,7 @@ class GDExtensionEnumeration(GDExtensionType):
         return CSharpEnumeration(
             name=self.name,
             constants=(constant.to_csharp(stylizer) for constant in self.values),
-            description=stylizer.translate(self.description or ()),
+            description=stylizer.translate(self.description),
             attributes=attributes,
             dependencies=dependencies,
             underlying_type=underlying_type
@@ -369,7 +369,7 @@ class GDExtensionConstant:
         return CSharpConstant(
             name=stylizer.get_translation(self.name),
             value=self.value,
-            description=stylizer.translate(self.description or ())
+            description=stylizer.translate(self.description)
         )
 
 
@@ -432,7 +432,7 @@ class GDExtensionStructure(GDExtensionType):
             name=self.name,
             fields=(field.to_csharp(stylizer) for field in self.members),
             methods=(),
-            description=stylizer.translate(self.description or ()),
+            description=stylizer.translate(self.description),
             attributes=attributes,
             dependencies=dependencies,
             is_value_type=True,
@@ -464,7 +464,7 @@ class GDExtensionField:
         return CSharpField(
             name=stylizer.get_translation(self.name),
             type="GDExtensionClassMethodFlags" if self.name == "method_flags" else stylizer.get_expansion(self.type),
-            description=stylizer.translate(self.description or ())
+            description=stylizer.translate(self.description)
         )
 
 
@@ -517,7 +517,7 @@ class GDExtensionParameter:
         return CSharpParameter(
             name=stylizer.get_translation(self.name),
             type=stylizer.get_expansion(self.type),
-            description=stylizer.translate(self.description or ())
+            description=stylizer.translate(self.description)
         )
 
 
@@ -539,7 +539,7 @@ class GDExtensionReturnType:
     def to_csharp(self, stylizer: GDExtensionStylizer) -> CSharpReturnType:
         return CSharpReturnType(
             name=stylizer.get_expansion(self.type),
-            description=stylizer.translate(self.description or ())
+            description=stylizer.translate(self.description)
         )
 
 
@@ -601,7 +601,7 @@ class GDExtensionInterfaceFunction(GDExtensionFunction):
                 "ThrowIfInvalid(function);",
                 f"function({arguments});" if return_type.name == "void" else f"return function({arguments});"
             ),
-            description=stylizer.translate(self.description or ()),
+            description=stylizer.translate(self.description),
             attributes=attributes,
             is_static=True
         )
