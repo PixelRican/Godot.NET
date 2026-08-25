@@ -10,7 +10,7 @@ class GodotExtensionAPI:
         self.builtin_class_member_offsets: list[GodotBuiltinClassMemberOffset] = [
             GodotBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
         ]
-        self.global_constants: list = data["global_constants"]
+        self.global_constants: list[Any] = data["global_constants"]
         self.global_enums: list[GodotGlobalEnum] = [
             GodotGlobalEnum(element) for element in data["global_enums"]
         ]
