@@ -4,31 +4,31 @@
 class GodotExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
         self.header: GodotHeader = GodotHeader(data["header"])
-        self.builtin_class_sizes: list[GodotBuiltinClassSize] = [
-            GodotBuiltinClassSize(element) for element in data["builtin_class_sizes"]
-        ]
-        self.builtin_class_member_offsets: list[GodotBuiltinClassMemberOffset] = [
-            GodotBuiltinClassMemberOffset(element) for element in data["builtin_class_member_offsets"]
-        ]
-        self.global_constants: list[Any] = data["global_constants"]
-        self.global_enums: list[GodotGlobalEnum] = [
-            GodotGlobalEnum(element) for element in data["global_enums"]
-        ]
-        self.utility_functions: list[GodotUtilityFunction] = [
-            GodotUtilityFunction(element) for element in data["utility_functions"]
-        ]
-        self.builtin_classes: list[GodotBuiltinClass] = [
-            GodotBuiltinClass(element) for element in data["builtin_classes"]
-        ]
-        self.classes: list[GodotClass] = [
-            GodotClass(element) for element in data["classes"]
-        ]
-        self.singletons: list[GodotSingleton] = [
-            GodotSingleton(element) for element in data["singletons"]
-        ]
-        self.native_structures: list[GodotNativeStructure] = [
-            GodotNativeStructure(element) for element in data["native_structures"]
-        ]
+        self.builtin_class_sizes: tuple[GodotBuiltinClassSize, ...] = tuple(
+            map(GodotBuiltinClassSize, data["builtin_class_sizes"])
+        )
+        self.builtin_class_member_offsets: tuple[GodotBuiltinClassMemberOffset, ...] = tuple(
+            map(GodotBuiltinClassMemberOffset, data["builtin_class_member_offsets"])
+        )
+        self.global_constants: tuple[Any, ...] = tuple(data["global_constants"])
+        self.global_enums: tuple[GodotGlobalEnum, ...] = tuple(
+            map(GodotGlobalEnum, data["global_enums"])
+        )
+        self.utility_functions: tuple[GodotUtilityFunction, ...] = tuple(
+            map(GodotUtilityFunction, data["utility_functions"])
+        )
+        self.builtin_classes: tuple[GodotBuiltinClass, ...] = tuple(
+            map(GodotBuiltinClass, data["builtin_classes"])
+        )
+        self.classes: tuple[GodotClass, ...] = tuple(
+            map(GodotClass, data["classes"])
+        )
+        self.singletons: tuple[GodotSingleton, ...] = tuple(
+            map(GodotSingleton, data["singletons"])
+        )
+        self.native_structures: tuple[GodotNativeStructure, ...] = tuple(
+            map(GodotNativeStructure, data["native_structures"])
+        )
 
 
 class GodotHeader:
