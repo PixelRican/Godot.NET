@@ -102,8 +102,7 @@ class GodotUtilityFunction:
         self.is_vararg: bool = data["is_vararg"]
         self.hash: int = data["hash"]
         self.arguments: list[GodotUtilityFunctionArgument] | None = None
-        arguments: list[dict[str, Any]] | None = data.get("arguments")
-        if arguments:
+        if arguments := data.get("arguments"):
             self.arguments = [
                 GodotUtilityFunctionArgument(element) for element in arguments
             ]
@@ -130,18 +129,15 @@ class GodotBuiltinClass:
         self.methods: list[GodotBuiltinClassMethod] | None = None
         self.constants: list[GodotBuiltinClassConstant] | None = None
         self.enums: list[GodotBuiltinClassEnum] | None = None
-        methods: list[dict[str, Any]] | None = data.get("methods")
-        constants: list[dict[str, Any]] | None = data.get("constants")
-        enums: list[dict[str, Any]] | None = data.get("enums")
-        if methods:
+        if methods := data.get("methods"):
             self.methods = [
                 GodotBuiltinClassMethod(element) for element in methods
             ]
-        if constants:
+        if constants := data.get("constants"):
             self.constants = [
                 GodotBuiltinClassConstant(element) for element in constants
             ]
-        if enums:
+        if enums := data.get("enums"):
             self.enums = [
                 GodotBuiltinClassEnum(element) for element in enums
             ]
@@ -158,8 +154,7 @@ class GodotBuiltinClassConstructor:
     def __init__(self, data: dict[str, Any]) -> None:
         self.index: int = data["index"]
         self.arguments: list[GodotBuiltinClassConstructorArgument] | None = None
-        arguments: list[dict[str, Any]] | None = data.get("arguments")
-        if arguments:
+        if arguments := data.get("arguments"):
             self.arguments = [
                 GodotBuiltinClassConstructorArgument(element) for element in arguments
             ]
@@ -181,8 +176,7 @@ class GodotBuiltinClassMethod:
         self.hash: int = data["hash"]
         self.arguments: list | None = None
         self.hash_compatibility: int = data["hash"]
-        arguments: list[dict[str, Any]] | None = data.get("arguments")
-        if arguments:
+        if arguments := data.get("arguments"):
             self.arguments = [
                 GodotBuiltinClassMethodArgument(element) for element in arguments
             ]
@@ -228,28 +222,23 @@ class GodotClass:
         self.properties: list[GodotClassProperty] | None = None
         self.signals: list[GodotClassSignal] | None = None
         self.constants: list[GodotClassConstant] | None = None
-        enums: list[dict[str, Any]] | None = data.get("enums")
-        methods: list[dict[str, Any]] | None = data.get("methods")
-        properties: list[dict[str, Any]] | None = data.get("properties")
-        signals: list[dict[str, Any]] | None = data.get("signals")
-        constants: list[dict[str, Any]] | None = data.get("constants")
-        if enums:
+        if enums := data.get("enums"):
             self.enums = [
                 GodotClassEnum(element) for element in enums
             ]
-        if methods:
+        if methods := data.get("methods"):
             self.methods = [
                 GodotClassMethod(element) for element in methods
             ]
-        if properties:
+        if properties := data.get("properties"):
             self.properties = [
                 GodotClassProperty(element) for element in properties
             ]
-        if signals:
+        if signals := data.get("signals"):
             self.signals = [
                 GodotClassSignal(element) for element in signals
             ]
-        if constants:
+        if constants := data.get("constants"):
             self.constants = [
                 GodotClassConstant(element) for element in constants
             ]
@@ -282,11 +271,9 @@ class GodotClassMethod:
         self.return_value: GodotClassMethodReturnValue | None = None
         self.arguments: list[GodotClassMethodArgument] | None = None
         self.is_required: bool | None = data.get("is_required")
-        return_value: dict[str, Any] | None = data.get("return_value")
-        arguments: list[dict[str, Any]] | None = data.get("arguments")
-        if return_value:
+        if return_value := data.get("return_value"):
             self.return_value = GodotClassMethodReturnValue(return_value)
-        if arguments:
+        if arguments := data.get("arguments"):
             self.arguments = [
                 GodotClassMethodArgument(element) for element in arguments
             ]
@@ -319,8 +306,7 @@ class GodotClassSignal:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.arguments: list[GodotClassSignalArgument] | None = None
-        arguments: list[dict[str, Any]] | None = data.get("arguments")
-        if arguments:
+        if arguments := data.get("arguments"):
             self.arguments = [
                 GodotClassSignalArgument(element) for element in arguments
             ]
