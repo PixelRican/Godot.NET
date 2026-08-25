@@ -1,4 +1,4 @@
-﻿from typing import Any
+﻿from typing import Any, Optional, Union
 
 
 class GodotExtensionAPI:
@@ -97,11 +97,11 @@ class GodotGlobalEnumValue:
 class GodotUtilityFunction:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.return_type: str | None = data.get("return_type")
+        self.return_type: Optional[str] = data.get("return_type")
         self.category: str = data["category"]
         self.is_vararg: bool = data["is_vararg"]
         self.hash: int = data["hash"]
-        self.arguments: list[GodotUtilityFunctionArgument] | None = None
+        self.arguments: Optional[list[GodotUtilityFunctionArgument]] = None
         if arguments := data.get("arguments"):
             self.arguments = [
                 GodotUtilityFunctionArgument(element) for element in arguments
@@ -125,10 +125,10 @@ class GodotBuiltinClass:
             GodotBuiltinClassConstructor(element) for element in data["constructors"]
         ]
         self.has_destructor: bool = data["has_destructor"]
-        self.indexing_return_type: str | None = data.get("indexing_return_type")
-        self.methods: list[GodotBuiltinClassMethod] | None = None
-        self.constants: list[GodotBuiltinClassConstant] | None = None
-        self.enums: list[GodotBuiltinClassEnum] | None = None
+        self.indexing_return_type: Optional[str] = data.get("indexing_return_type")
+        self.methods: Optional[list[GodotBuiltinClassMethod]] = None
+        self.constants: Optional[list[GodotBuiltinClassConstant]] = None
+        self.enums: Optional[list[GodotBuiltinClassEnum]] = None
         if methods := data.get("methods"):
             self.methods = [
                 GodotBuiltinClassMethod(element) for element in methods
@@ -146,14 +146,14 @@ class GodotBuiltinClass:
 class GodotBuiltinClassOperator:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.right_type: str | None = data.get("right_type")
+        self.right_type: Optional[str] = data.get("right_type")
         self.return_type: str = data["return_type"]
 
 
 class GodotBuiltinClassConstructor:
     def __init__(self, data: dict[str, Any]) -> None:
         self.index: int = data["index"]
-        self.arguments: list[GodotBuiltinClassConstructorArgument] | None = None
+        self.arguments: Optional[list[GodotBuiltinClassConstructorArgument]] = None
         if arguments := data.get("arguments"):
             self.arguments = [
                 GodotBuiltinClassConstructorArgument(element) for element in arguments
@@ -169,12 +169,12 @@ class GodotBuiltinClassConstructorArgument:
 class GodotBuiltinClassMethod:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.return_type: str | None = data.get("return_type")
+        self.return_type: Optional[str] = data.get("return_type")
         self.is_vararg: bool = data["is_vararg"]
         self.is_const: bool = data["is_const"]
         self.is_static: bool = data["is_static"]
         self.hash: int = data["hash"]
-        self.arguments: list | None = None
+        self.arguments: Optional[list[GodotBuiltinClassMethodArgument]] = None
         self.hash_compatibility: int = data["hash"]
         if arguments := data.get("arguments"):
             self.arguments = [
@@ -186,7 +186,7 @@ class GodotBuiltinClassMethodArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
-        self.default_value: str | float | int | bool | None = data.get("default_value")
+        self.default_value: Union[str, float, int, bool, None] = data.get("default_value")
 
 
 class GodotBuiltinClassConstant:
@@ -215,13 +215,13 @@ class GodotClass:
         self.name: str = data["name"]
         self.is_refcounted: bool = data["is_refcounted"]
         self.is_instantiable: bool = data["is_instantiable"]
-        self.inherits: str | None = data.get("inherits")
+        self.inherits: Optional[str] = data.get("inherits")
         self.api_type: str = data["api_type"]
-        self.enums: list[GodotClassEnum] | None = None
-        self.methods: list[GodotClassMethod] | None = None
-        self.properties: list[GodotClassProperty] | None = None
-        self.signals: list[GodotClassSignal] | None = None
-        self.constants: list[GodotClassConstant] | None = None
+        self.enums: Optional[list[GodotClassEnum]] = None
+        self.methods: Optional[list[GodotClassMethod]] = None
+        self.properties: Optional[list[GodotClassProperty]] = None
+        self.signals: Optional[list[GodotClassSignal]] = None
+        self.constants: Optional[list[GodotClassConstant]] = None
         if enums := data.get("enums"):
             self.enums = [
                 GodotClassEnum(element) for element in enums
@@ -267,10 +267,10 @@ class GodotClassMethod:
         self.is_static: bool = data["is_static"]
         self.is_virtual: bool = data["is_virtual"]
         self.hash: int = data["hash"]
-        self.hash_compatibility: list[int] | None = data.get("hash_compatibility")
-        self.return_value: GodotClassMethodReturnValue | None = None
-        self.arguments: list[GodotClassMethodArgument] | None = None
-        self.is_required: bool | None = data.get("is_required")
+        self.hash_compatibility: Optional[list[int]] = data.get("hash_compatibility")
+        self.return_value: Optional[GodotClassMethodReturnValue] = None
+        self.arguments: Optional[list[GodotClassMethodArgument]] = None
+        self.is_required: Optional[bool] = data.get("is_required")
         if return_value := data.get("return_value"):
             self.return_value = GodotClassMethodReturnValue(return_value)
         if arguments := data.get("arguments"):
@@ -282,30 +282,30 @@ class GodotClassMethod:
 class GodotClassMethodReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.type: str = data["type"]
-        self.meta: str | None = data.get("meta")
+        self.meta: Optional[str] = data.get("meta")
 
 
 class GodotClassMethodArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
-        self.default_value: str | float | int | bool | None = data.get("default_value")
-        self.meta: str | None = data.get("meta")
+        self.default_value: Union[str, float, int, bool, None] = data.get("default_value")
+        self.meta: Optional[str] = data.get("meta")
 
 
 class GodotClassProperty:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
         self.type: str = data["type"]
-        self.setter: str | None = data.get("setter")
-        self.getter: str | None = data.get("getter")
-        self.index: int | None = data.get("index")
+        self.setter: Optional[str] = data.get("setter")
+        self.getter: Optional[str] = data.get("getter")
+        self.index: Optional[int] = data.get("index")
 
 
 class GodotClassSignal:
     def __init__(self, data: dict[str, Any]) -> None:
         self.name: str = data["name"]
-        self.arguments: list[GodotClassSignalArgument] | None = None
+        self.arguments: Optional[list[GodotClassSignalArgument]] = None
         if arguments := data.get("arguments"):
             self.arguments = [
                 GodotClassSignalArgument(element) for element in arguments
