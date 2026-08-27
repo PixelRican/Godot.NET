@@ -183,9 +183,9 @@ class GodotGlobalEnum:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__is_bitfield: bool = data["is_bitfield"]
-        self.__values: list[GodotGlobalEnumValue] = [
-            GodotGlobalEnumValue(element) for element in data["values"]
-        ]
+        self.__values: tuple[GodotGlobalEnumValue, ...] = tuple(
+            map(GodotGlobalEnumValue, data["values"])
+        )
 
 
 class GodotGlobalEnumValue:
@@ -201,11 +201,11 @@ class GodotUtilityFunction:
         self.__category: str = data["category"]
         self.__is_vararg: bool = data["is_vararg"]
         self.__hash: int = data["hash"]
-        self.__arguments: Optional[list[GodotUtilityFunctionArgument]] = None
+        self.__arguments: Optional[tuple[GodotUtilityFunctionArgument, ...]] = None
         if arguments := data.get("arguments"):
-            self.__arguments = [
-                GodotUtilityFunctionArgument(element) for element in arguments
-            ]
+            self.__arguments = tuple(
+                map(GodotUtilityFunctionArgument, arguments)
+            )
 
 
 class GodotUtilityFunctionArgument:
@@ -218,29 +218,29 @@ class GodotBuiltinClass:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__is_keyed: bool = data["is_keyed"]
-        self.__operators: list[GodotBuiltinClassOperator] = [
-            GodotBuiltinClassOperator(element) for element in data["operators"]
-        ]
-        self.__constructors: list[GodotBuiltinClassConstructor] = [
-            GodotBuiltinClassConstructor(element) for element in data["constructors"]
-        ]
+        self.__operators: tuple[GodotBuiltinClassOperator, ...] = tuple(
+            map(GodotBuiltinClassOperator, data["operators"])
+        )
+        self.__constructors: tuple[GodotBuiltinClassConstructor, ...] = tuple(
+            map(GodotBuiltinClassConstructor, data["constructors"])
+        )
         self.__has_destructor: bool = data["has_destructor"]
         self.__indexing_return_type: Optional[str] = data.get("indexing_return_type")
-        self.__methods: Optional[list[GodotBuiltinClassMethod]] = None
-        self.__constants: Optional[list[GodotBuiltinClassConstant]] = None
-        self.__enums: Optional[list[GodotBuiltinClassEnum]] = None
+        self.__methods: Optional[tuple[GodotBuiltinClassMethod, ...]] = None
+        self.__constants: Optional[tuple[GodotBuiltinClassConstant, ...]] = None
+        self.__enums: Optional[tuple[GodotBuiltinClassEnum, ...]] = None
         if methods := data.get("methods"):
-            self.__methods = [
-                GodotBuiltinClassMethod(element) for element in methods
-            ]
+            self.__methods = tuple(
+                map(GodotBuiltinClassMethod, methods)
+            )
         if constants := data.get("constants"):
-            self.__constants = [
-                GodotBuiltinClassConstant(element) for element in constants
-            ]
+            self.__constants = tuple(
+                map(GodotBuiltinClassConstant, constants)
+            )
         if enums := data.get("enums"):
-            self.__enums = [
-                GodotBuiltinClassEnum(element) for element in enums
-            ]
+            self.__enums = tuple(
+                map(GodotBuiltinClassEnum, enums)
+            )
 
 
 class GodotBuiltinClassOperator:
@@ -253,11 +253,11 @@ class GodotBuiltinClassOperator:
 class GodotBuiltinClassConstructor:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__index: int = data["index"]
-        self.__arguments: Optional[list[GodotBuiltinClassConstructorArgument]] = None
+        self.__arguments: Optional[tuple[GodotBuiltinClassConstructorArgument, ...]] = None
         if arguments := data.get("arguments"):
-            self.__arguments = [
-                GodotBuiltinClassConstructorArgument(element) for element in arguments
-            ]
+            self.__arguments = tuple(
+                map(GodotBuiltinClassConstructorArgument, arguments)
+            )
 
 
 class GodotBuiltinClassConstructorArgument:
@@ -274,12 +274,12 @@ class GodotBuiltinClassMethod:
         self.__is_const: bool = data["is_const"]
         self.__is_static: bool = data["is_static"]
         self.__hash: int = data["hash"]
-        self.__arguments: Optional[list[GodotBuiltinClassMethodArgument]] = None
+        self.__arguments: Optional[tuple[GodotBuiltinClassMethodArgument, ...]] = None
         self.__hash_compatibility: int = data["hash"]
         if arguments := data.get("arguments"):
-            self.__arguments = [
-                GodotBuiltinClassMethodArgument(element) for element in arguments
-            ]
+            self.__arguments = tuple(
+                map(GodotBuiltinClassMethodArgument, arguments)
+            )
 
 
 class GodotBuiltinClassMethodArgument:
@@ -299,9 +299,9 @@ class GodotBuiltinClassConstant:
 class GodotBuiltinClassEnum:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__values: list[GodotBuiltinClassEnumValue] = [
-            GodotBuiltinClassEnumValue(element) for element in data["values"]
-        ]
+        self.__values: tuple[GodotBuiltinClassEnumValue, ...] = tuple(
+            map(GodotBuiltinClassEnumValue, data["values"])
+        )
 
 
 class GodotBuiltinClassEnumValue:
@@ -317,39 +317,39 @@ class GodotClass:
         self.__is_instantiable: bool = data["is_instantiable"]
         self.__inherits: Optional[str] = data.get("inherits")
         self.__api_type: str = data["api_type"]
-        self.__enums: Optional[list[GodotClassEnum]] = None
-        self.__methods: Optional[list[GodotClassMethod]] = None
-        self.__properties: Optional[list[GodotClassProperty]] = None
-        self.__signals: Optional[list[GodotClassSignal]] = None
-        self.__constants: Optional[list[GodotClassConstant]] = None
+        self.__enums: Optional[tuple[GodotClassEnum, ...]] = None
+        self.__methods: Optional[tuple[GodotClassMethod, ...]] = None
+        self.__properties: Optional[tuple[GodotClassProperty, ...]] = None
+        self.__signals: Optional[tuple[GodotClassSignal, ...]] = None
+        self.__constants: Optional[tuple[GodotClassConstant, ...]] = None
         if enums := data.get("enums"):
-            self.__enums = [
-                GodotClassEnum(element) for element in enums
-            ]
+            self.__enums = tuple(
+                map(GodotClassEnum, enums)
+            )
         if methods := data.get("methods"):
-            self.__methods = [
-                GodotClassMethod(element) for element in methods
-            ]
+            self.__methods = tuple(
+                map(GodotClassMethod, methods)
+            )
         if properties := data.get("properties"):
-            self.__properties = [
-                GodotClassProperty(element) for element in properties
-            ]
+            self.__properties = tuple(
+                map(GodotClassProperty, properties)
+            )
         if signals := data.get("signals"):
-            self.__signals = [
-                GodotClassSignal(element) for element in signals
-            ]
+            self.__signals = tuple(
+                map(GodotClassSignal, signals)
+            )
         if constants := data.get("constants"):
-            self.__constants = [
-                GodotClassConstant(element) for element in constants
-            ]
+            self.__constants = tuple(
+                map(GodotClassConstant, constants)
+            )
 
 
 class GodotClassEnum:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__values: list[GodotClassEnumValue] = [
-            GodotClassEnumValue(element) for element in data["values"]
-        ]
+        self.__values: tuple[GodotClassEnumValue, ...] = tuple(
+            map(GodotClassEnumValue, data["values"])
+        )
         self.__is_bitfield: bool = data["is_bitfield"]
 
 
@@ -367,16 +367,16 @@ class GodotClassMethod:
         self.__is_static: bool = data["is_static"]
         self.__is_virtual: bool = data["is_virtual"]
         self.__hash: int = data["hash"]
-        self.__hash_compatibility: Optional[list[int]] = data.get("hash_compatibility")
+        self.__hash_compatibility: Optional[tuple[int, ...]] = data.get("hash_compatibility")
         self.__return_value: Optional[GodotClassMethodReturnValue] = None
-        self.__arguments: Optional[list[GodotClassMethodArgument]] = None
+        self.__arguments: Optional[tuple[GodotClassMethodArgument, ...]] = None
         self.__is_required: Optional[bool] = data.get("is_required")
         if return_value := data.get("return_value"):
             self.__return_value = GodotClassMethodReturnValue(return_value)
         if arguments := data.get("arguments"):
-            self.__arguments = [
-                GodotClassMethodArgument(element) for element in arguments
-            ]
+            self.__arguments = tuple(
+                map(GodotClassMethodArgument, arguments)
+            )
 
 
 class GodotClassMethodReturnValue:
@@ -405,11 +405,11 @@ class GodotClassProperty:
 class GodotClassSignal:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__arguments: Optional[list[GodotClassSignalArgument]] = None
+        self.__arguments: Optional[tuple[GodotClassSignalArgument, ...]] = None
         if arguments := data.get("arguments"):
-            self.__arguments = [
-                GodotClassSignalArgument(element) for element in arguments
-            ]
+            self.__arguments = tuple(
+                map(GodotClassSignalArgument, arguments)
+            )
 
 
 class GodotClassSignalArgument:
