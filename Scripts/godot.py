@@ -1,4 +1,6 @@
-﻿from typing import Any, Optional, Union
+﻿from csharp import *
+from itertools import chain
+from typing import Any, Optional, Union
 
 
 class GodotExtensionAPI:
@@ -69,6 +71,35 @@ class GodotExtensionAPI:
     @property
     def native_structures(self) -> tuple[GodotNativeStructure, ...]:
         return self.__native_structures
+
+    def dump(self, namespace: str, directory: str) -> None:
+        def field_to_csharp(builds: tuple[GodotBuiltinClassMemberOffsetRecord, GodotBuiltinClassMemberOffsetRecord]) -> CSharpField:
+            float_build, double_build = builds
+            is_real_t: bool = float_build.meta == "float" and double_build.meta == "double"
+            return CSharpField(
+                name=pascal(float_build.member),
+                type="real_t" if is_real_t else float_build.meta.removesuffix("32").replace("2i", "2I")
+            )
+
+        def class_to_csharp(builds: tuple[GodotBuiltinClassMemberOffsetGrouping, GodotBuiltinClassMemberOffsetGrouping]) -> CSharpStructure:
+            float_build, double_build = builds
+            return CSharpStructure(
+                name=pascal(float_build.name),
+                fields=map(field_to_csharp, zip(float_build.members, double_build.members)),
+                methods=(),
+                attributes=(
+                    CSharpAttribute.struct_layout("Sequential"),
+                ),
+                dependencies=(
+                    "System.Runtime.InteropServices",
+                ),
+                is_value_type=True
+            )
+
+        types: chain[CSharpType] = chain(
+            map(class_to_csharp, zip(self.builtin_class_member_offsets[1].classes, self.builtin_class_member_offsets[3].classes))
+        )
+        dump(types, namespace, directory)
 
 
 class GodotHeader:

@@ -10,4 +10,4 @@ if __name__ == "__main__":
     GDExtensionInterface(data).dump("Godot.Interop", "../Source/Interop")
     with open("data/extension_api.json", "r") as file:
         data: dict[str, Any] = load(file)
-    GodotExtensionAPI(data)
+    GodotExtensionAPI(data).dump("Godot", "../Source")
