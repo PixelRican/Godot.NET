@@ -211,14 +211,14 @@ class GDExtensionInterface:
         def predicate(instance: GDExtensionType) -> bool:
             return isinstance(instance, (GDExtensionEnumeration, GDExtensionStructure))
 
-        def types() -> Generator[str]:
-            stylizer: GDExtensionStylizer = GDExtensionStylizer()
-            for instance in chain(self.types, self.interface):
-                instance.stylize(stylizer)
-            yield from (instance.to_csharp(stylizer) for instance in filter(predicate, self.types))
-            yield self.to_csharp(stylizer)
-
-        dump(types(), namespace, directory)
+        stylizer: GDExtensionStylizer = GDExtensionStylizer()
+        for instance in chain(self.types, self.interface):
+            instance.stylize(stylizer)
+        types: tuple[CSharpType, ...] = (
+            *(instance.to_csharp(stylizer) for instance in filter(predicate, self.types)),
+            self.to_csharp(stylizer)
+        )
+        dump(types, namespace, directory)
 
 
 class GDExtensionDeprecated:
