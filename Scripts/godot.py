@@ -112,10 +112,18 @@ class GodotHeader:
 
 class GodotBuiltinClassSize:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.build_configuration: str = data["build_configuration"]
-        self.sizes: list[GodotBuiltinClassSizeRecord] = [
-            GodotBuiltinClassSizeRecord(element) for element in data["sizes"]
-        ]
+        self.__build_configuration: str = data["build_configuration"]
+        self.__sizes: tuple[GodotBuiltinClassSizeRecord, ...] = tuple(
+            map(GodotBuiltinClassSizeRecord, data["sizes"])
+        )
+
+    @property
+    def build_configuration(self) -> str:
+        return self.__build_configuration
+
+    @property
+    def sizes(self) -> tuple[GodotBuiltinClassSizeRecord, ...]:
+        return self.__sizes
 
 
 class GodotBuiltinClassSizeRecord:
