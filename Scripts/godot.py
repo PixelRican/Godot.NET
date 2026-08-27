@@ -178,6 +178,18 @@ class GodotBuiltinClassMemberOffsetRecord:
         self.__offset: int = data["offset"]
         self.__meta: str = data["meta"]
 
+    @property
+    def member(self) -> str:
+        return self.__member
+
+    @property
+    def offset(self) -> int:
+        return self.__offset
+
+    @property
+    def meta(self) -> str:
+        return self.__meta
+
 
 class GodotGlobalEnum:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -187,11 +199,31 @@ class GodotGlobalEnum:
             map(GodotGlobalEnumValue, data["values"])
         )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def is_bitfield(self) -> bool:
+        return self.__is_bitfield
+
+    @property
+    def values(self) -> tuple[GodotGlobalEnumValue, ...]:
+        return self.__values
+
 
 class GodotGlobalEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def value(self) -> int:
+        return self.__value
 
 
 class GodotUtilityFunction:
@@ -207,11 +239,43 @@ class GodotUtilityFunction:
                 map(GodotUtilityFunctionArgument, arguments)
             )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def return_type(self) -> Optional[str]:
+        return self.__return_type
+
+    @property
+    def category(self) -> str:
+        return self.__category
+
+    @property
+    def is_vararg(self) -> bool:
+        return self.__is_vararg
+
+    @property
+    def hash(self) -> int:
+        return self.__hash
+
+    @property
+    def arguments(self) -> Optional[tuple[GodotUtilityFunctionArgument, ...]]:
+        return self.__arguments
+
 
 class GodotUtilityFunctionArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
 
 
 class GodotBuiltinClass:
@@ -242,12 +306,60 @@ class GodotBuiltinClass:
                 map(GodotBuiltinClassEnum, enums)
             )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def is_keyed(self) -> bool:
+        return self.__is_keyed
+
+    @property
+    def operators(self) -> tuple[GodotBuiltinClassOperator, ...]:
+        return self.__operators
+
+    @property
+    def constructors(self) -> tuple[GodotBuiltinClassConstructor, ...]:
+        return self.__constructors
+
+    @property
+    def has_destructor(self) -> bool:
+        return self.__has_destructor
+
+    @property
+    def indexing_return_type(self) -> Optional[str]:
+        return self.__indexing_return_type
+
+    @property
+    def methods(self) -> Optional[tuple[GodotBuiltinClassMethod, ...]]:
+        return self.__methods
+
+    @property
+    def constants(self) -> Optional[tuple[GodotBuiltinClassConstant, ...]]:
+        return self.__constants
+
+    @property
+    def enums(self) -> Optional[tuple[GodotBuiltinClassEnum, ...]]:
+        return self.__enums
+
 
 class GodotBuiltinClassOperator:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__right_type: Optional[str] = data.get("right_type")
         self.__return_type: str = data["return_type"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def right_type(self) -> Optional[str]:
+        return self.__right_type
+
+    @property
+    def return_type(self) -> str:
+        return self.__return_type
 
 
 class GodotBuiltinClassConstructor:
@@ -259,11 +371,27 @@ class GodotBuiltinClassConstructor:
                 map(GodotBuiltinClassConstructorArgument, arguments)
             )
 
+    @property
+    def index(self) -> int:
+        return self.__index
+
+    @property
+    def arguments(self) -> Optional[tuple[GodotBuiltinClassConstructorArgument, ...]]:
+        return self.__arguments
+
 
 class GodotBuiltinClassConstructorArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
 
 
 class GodotBuiltinClassMethod:
@@ -281,6 +409,38 @@ class GodotBuiltinClassMethod:
                 map(GodotBuiltinClassMethodArgument, arguments)
             )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def return_type(self) -> Optional[str]:
+        return self.__return_type
+
+    @property
+    def is_vararg(self) -> bool:
+        return self.__is_vararg
+
+    @property
+    def is_const(self) -> bool:
+        return self.__is_const
+
+    @property
+    def is_static(self) -> bool:
+        return self.__is_static
+
+    @property
+    def hash(self) -> int:
+        return self.__hash
+
+    @property
+    def arguments(self) -> Optional[tuple[GodotBuiltinClassMethodArgument, ...]]:
+        return self.__arguments
+
+    @property
+    def hash_compatibility(self) -> int:
+        return self.__hash_compatibility
+
 
 class GodotBuiltinClassMethodArgument:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -288,12 +448,36 @@ class GodotBuiltinClassMethodArgument:
         self.__type: str = data["type"]
         self.__default_value: Union[str, float, int, bool, None] = data.get("default_value")
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
+
+    @property
+    def default_value(self) -> Union[str, float, int, bool, None]:
+        return self.__default_value
+
 
 class GodotBuiltinClassConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
         self.__value: str = data["value"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
+
+    @property
+    def value(self) -> str:
+        return self.__value
 
 
 class GodotBuiltinClassEnum:
@@ -303,11 +487,27 @@ class GodotBuiltinClassEnum:
             map(GodotBuiltinClassEnumValue, data["values"])
         )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def values(self) -> tuple[GodotBuiltinClassEnumValue, ...]:
+        return self.__values
+
 
 class GodotBuiltinClassEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def value(self) -> int:
+        return self.__value
 
 
 class GodotClass:
@@ -343,6 +543,46 @@ class GodotClass:
                 map(GodotClassConstant, constants)
             )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def is_refcounted(self) -> bool:
+        return self.__is_refcounted
+
+    @property
+    def is_instantiable(self) -> bool:
+        return self.__is_instantiable
+
+    @property
+    def inherits(self) -> Optional[str]:
+        return self.__inherits
+
+    @property
+    def api_type(self) -> str:
+        return self.__api_type
+
+    @property
+    def enums(self) -> Optional[tuple[GodotClassEnum, ...]]:
+        return self.__enums
+
+    @property
+    def methods(self) -> Optional[tuple[GodotClassMethod, ...]]:
+        return self.__methods
+
+    @property
+    def properties(self) -> Optional[tuple[GodotClassProperty, ...]]:
+        return self.__properties
+
+    @property
+    def signals(self) -> Optional[tuple[GodotClassSignal, ...]]:
+        return self.__signals
+
+    @property
+    def constants(self) -> Optional[tuple[GodotClassConstant, ...]]:
+        return self.__constants
+
 
 class GodotClassEnum:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -352,11 +592,31 @@ class GodotClassEnum:
         )
         self.__is_bitfield: bool = data["is_bitfield"]
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def values(self) -> tuple[GodotClassEnumValue, ...]:
+        return self.__values
+
+    @property
+    def is_bitfield(self) -> bool:
+        return self.__is_bitfield
+
 
 class GodotClassEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def value(self) -> int:
+        return self.__value
 
 
 class GodotClassMethod:
@@ -378,11 +638,59 @@ class GodotClassMethod:
                 map(GodotClassMethodArgument, arguments)
             )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def is_const(self) -> bool:
+        return self.__is_const
+
+    @property
+    def is_vararg(self) -> bool:
+        return self.__is_vararg
+
+    @property
+    def is_static(self) -> bool:
+        return self.__is_static
+
+    @property
+    def is_virtual(self) -> bool:
+        return self.__is_virtual
+
+    @property
+    def hash(self) -> int:
+        return self.__hash
+
+    @property
+    def hash_compatibility(self) -> Optional[tuple[int, ...]]:
+        return self.__hash_compatibility
+
+    @property
+    def return_value(self) -> Optional[GodotClassMethodReturnValue]:
+        return self.__return_value
+
+    @property
+    def arguments(self) -> Optional[tuple[GodotClassMethodArgument, ...]]:
+        return self.__arguments
+
+    @property
+    def is_required(self) -> Optional[bool]:
+        return self.__is_required
+
 
 class GodotClassMethodReturnValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__type: str = data["type"]
         self.__meta: Optional[str] = data.get("meta")
+
+    @property
+    def type(self) -> str:
+        return self.__type
+
+    @property
+    def meta(self) -> Optional[str]:
+        return self.__meta
 
 
 class GodotClassMethodArgument:
@@ -392,6 +700,22 @@ class GodotClassMethodArgument:
         self.__default_value: Union[str, float, int, bool, None] = data.get("default_value")
         self.__meta: Optional[str] = data.get("meta")
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
+
+    @property
+    def default_value(self) -> Union[str, float, int, bool, None]:
+        return self.__default_value
+
+    @property
+    def meta(self) -> Optional[str]:
+        return self.__meta
+
 
 class GodotClassProperty:
     def __init__(self, data: dict[str, Any]) -> None:
@@ -400,6 +724,26 @@ class GodotClassProperty:
         self.__setter: Optional[str] = data.get("setter")
         self.__getter: Optional[str] = data.get("getter")
         self.__index: Optional[int] = data.get("index")
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
+
+    @property
+    def setter(self) -> Optional[str]:
+        return self.__setter
+
+    @property
+    def getter(self) -> Optional[str]:
+        return self.__getter
+
+    @property
+    def index(self) -> Optional[int]:
+        return self.__index
 
 
 class GodotClassSignal:
@@ -411,11 +755,27 @@ class GodotClassSignal:
                 map(GodotClassSignalArgument, arguments)
             )
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def arguments(self) -> Optional[tuple[GodotClassSignalArgument, ...]]:
+        return self.__arguments
+
 
 class GodotClassSignalArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
 
 
 class GodotClassConstant:
@@ -423,14 +783,38 @@ class GodotClassConstant:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def value(self) -> int:
+        return self.__value
+
 
 class GodotSingleton:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def type(self) -> str:
+        return self.__type
+
 
 class GodotNativeStructure:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__format: str = data["format"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def format(self) -> str:
+        return self.__format
