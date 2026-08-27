@@ -128,8 +128,16 @@ class GodotBuiltinClassSize:
 
 class GodotBuiltinClassSizeRecord:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"]
-        self.size: int = data["size"]
+        self.__name: str = data["name"]
+        self.__size: int = data["size"]
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def size(self) -> int:
+        return self.__size
 
 
 class GodotBuiltinClassMemberOffset:
