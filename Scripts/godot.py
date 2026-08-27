@@ -158,10 +158,18 @@ class GodotBuiltinClassMemberOffset:
 
 class GodotBuiltinClassMemberOffsetGrouping:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.name: str = data["name"]
-        self.members: list[GodotBuiltinClassMemberOffsetRecord] = [
-            GodotBuiltinClassMemberOffsetRecord(element) for element in data["members"]
-        ]
+        self.__name: str = data["name"]
+        self.__members: tuple[GodotBuiltinClassMemberOffsetRecord, ...] = tuple(
+            map(GodotBuiltinClassMemberOffsetRecord, data["members"])
+        )
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def members(self) -> tuple[GodotBuiltinClassMemberOffsetRecord, ...]:
+        return self.__members
 
 
 class GodotBuiltinClassMemberOffsetRecord:
