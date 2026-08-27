@@ -142,10 +142,18 @@ class GodotBuiltinClassSizeRecord:
 
 class GodotBuiltinClassMemberOffset:
     def __init__(self, data: dict[str, Any]) -> None:
-        self.build_configuration: str = data["build_configuration"]
-        self.classes: list[GodotBuiltinClassMemberOffsetGrouping] = [
-            GodotBuiltinClassMemberOffsetGrouping(element) for element in data["classes"]
-        ]
+        self.__build_configuration: str = data["build_configuration"]
+        self.__classes: tuple[GodotBuiltinClassMemberOffsetGrouping, ...] = tuple(
+            map(GodotBuiltinClassMemberOffsetGrouping, data["classes"])
+        )
+
+    @property
+    def build_configuration(self) -> str:
+        return self.__build_configuration
+
+    @property
+    def classes(self) -> tuple[GodotBuiltinClassMemberOffsetGrouping, ...]:
+        return self.__classes
 
 
 class GodotBuiltinClassMemberOffsetGrouping:
