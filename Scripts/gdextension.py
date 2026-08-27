@@ -214,9 +214,9 @@ class GDExtensionInterface:
         stylizer: GDExtensionStylizer = GDExtensionStylizer()
         for instance in chain(self.types, self.interface):
             instance.stylize(stylizer)
-        types: tuple[CSharpType, ...] = (
-            *(instance.to_csharp(stylizer) for instance in filter(predicate, self.types)),
-            self.to_csharp(stylizer)
+        types: chain[CSharpType] = chain(
+            (instance.to_csharp(stylizer) for instance in filter(predicate, self.types)),
+            (self.to_csharp(stylizer),)
         )
         dump(types, namespace, directory)
 
