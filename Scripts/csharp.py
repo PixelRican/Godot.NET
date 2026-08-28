@@ -1,3 +1,4 @@
+from itertools import chain
 from typing import Generator, Iterable
 
 
@@ -9,7 +10,7 @@ class XMLDocumentation:
 
     def __iter__(self) -> Generator[str]:
         if self.description:
-            elements: list[str] = [self.tag] + [*map(str, self.attributes)]
+            elements: chain[str] = chain((self.tag,), map(str, self.attributes))
             header: str = " ".join(elements)
             yield f"/// <{header}>"
             yield from map(lambda line: f"/// {line}", self.description)
