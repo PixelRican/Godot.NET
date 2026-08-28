@@ -314,12 +314,10 @@ class CSharpField(CSharpMember):
 
     @property
     def modifiers(self) -> str:
-        modifiers: list[str] = [self.access_modifier]
-        if self.is_static:
-            modifiers.append("static")
-        if self.is_readonly:
-            modifiers.append("readonly")
-        return " ".join(modifiers)
+        access_modifier: tuple[str] = (self.access_modifier,)
+        static_modifier: tuple[str] = ("static",) if self.is_static else ()
+        readonly_modifier: tuple[str] = ("readonly",) if self.is_readonly else ()
+        return " ".join(access_modifier + static_modifier + readonly_modifier)
 
 
 class CSharpMethod(CSharpMember):
