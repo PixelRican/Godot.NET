@@ -6,11 +6,11 @@ from typing import Any, Optional, Union
 class GodotExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__header: GodotHeader = GodotHeader(data["header"])
-        self.__builtin_class_sizes: tuple[GodotBuiltinClassSize, ...] = tuple(
-            map(GodotBuiltinClassSize, data["builtin_class_sizes"])
+        self.__builtin_class_sizes: tuple[GodotBuiltInClassSize, ...] = tuple(
+            map(GodotBuiltInClassSize, data["builtin_class_sizes"])
         )
-        self.__builtin_class_member_offsets: tuple[GodotBuiltinClassMemberOffset, ...] = tuple(
-            map(GodotBuiltinClassMemberOffset, data["builtin_class_member_offsets"])
+        self.__builtin_class_member_offsets: tuple[GodotBuiltInClassMemberOffset, ...] = tuple(
+            map(GodotBuiltInClassMemberOffset, data["builtin_class_member_offsets"])
         )
         self.__global_constants: tuple[Any, ...] = tuple(data["global_constants"])
         self.__global_enums: tuple[GodotGlobalEnum, ...] = tuple(
@@ -19,8 +19,8 @@ class GodotExtensionAPI:
         self.__utility_functions: tuple[GodotUtilityFunction, ...] = tuple(
             map(GodotUtilityFunction, data["utility_functions"])
         )
-        self.__builtin_classes: tuple[GodotBuiltinClass, ...] = tuple(
-            map(GodotBuiltinClass, data["builtin_classes"])
+        self.__builtin_classes: tuple[GodotBuiltInClass, ...] = tuple(
+            map(GodotBuiltInClass, data["builtin_classes"])
         )
         self.__classes: tuple[GodotClass, ...] = tuple(
             map(GodotClass, data["classes"])
@@ -37,11 +37,11 @@ class GodotExtensionAPI:
         return self.__header
 
     @property
-    def builtin_class_sizes(self) -> tuple[GodotBuiltinClassSize, ...]:
+    def builtin_class_sizes(self) -> tuple[GodotBuiltInClassSize, ...]:
         return self.__builtin_class_sizes
 
     @property
-    def builtin_class_member_offsets(self) -> tuple[GodotBuiltinClassMemberOffset, ...]:
+    def builtin_class_member_offsets(self) -> tuple[GodotBuiltInClassMemberOffset, ...]:
         return self.__builtin_class_member_offsets
 
     @property
@@ -57,7 +57,7 @@ class GodotExtensionAPI:
         return self.__utility_functions
 
     @property
-    def builtin_classes(self) -> tuple[GodotBuiltinClass, ...]:
+    def builtin_classes(self) -> tuple[GodotBuiltInClass, ...]:
         return self.__builtin_classes
 
     @property
@@ -73,7 +73,7 @@ class GodotExtensionAPI:
         return self.__native_structures
 
     def dump(self, namespace: str, directory: str) -> None:
-        def field_to_csharp(builds: tuple[GodotBuiltinClassMemberOffsetRecord, GodotBuiltinClassMemberOffsetRecord]) -> CSharpField:
+        def field_to_csharp(builds: tuple[GodotBuiltInClassMemberOffsetRecord, GodotBuiltInClassMemberOffsetRecord]) -> CSharpField:
             float_build, double_build = builds
             is_real_t: bool = float_build.meta == "float" and double_build.meta == "double"
             return CSharpField(
@@ -81,7 +81,7 @@ class GodotExtensionAPI:
                 type="real_t" if is_real_t else float_build.meta.removesuffix("32").replace("2i", "2I")
             )
 
-        def class_to_csharp(builds: tuple[GodotBuiltinClassMemberOffsetGrouping, GodotBuiltinClassMemberOffsetGrouping]) -> CSharpStructure:
+        def class_to_csharp(builds: tuple[GodotBuiltInClassMemberOffsetGrouping, GodotBuiltInClassMemberOffsetGrouping]) -> CSharpStructure:
             float_build, double_build = builds
             return CSharpStructure(
                 name=pascal(float_build.name),
@@ -141,11 +141,11 @@ class GodotHeader:
         return self.__precision
 
 
-class GodotBuiltinClassSize:
+class GodotBuiltInClassSize:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__build_configuration: str = data["build_configuration"]
-        self.__sizes: tuple[GodotBuiltinClassSizeRecord, ...] = tuple(
-            map(GodotBuiltinClassSizeRecord, data["sizes"])
+        self.__sizes: tuple[GodotBuiltInClassSizeRecord, ...] = tuple(
+            map(GodotBuiltInClassSizeRecord, data["sizes"])
         )
 
     @property
@@ -153,11 +153,11 @@ class GodotBuiltinClassSize:
         return self.__build_configuration
 
     @property
-    def sizes(self) -> tuple[GodotBuiltinClassSizeRecord, ...]:
+    def sizes(self) -> tuple[GodotBuiltInClassSizeRecord, ...]:
         return self.__sizes
 
 
-class GodotBuiltinClassSizeRecord:
+class GodotBuiltInClassSizeRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__size: int = data["size"]
@@ -171,11 +171,11 @@ class GodotBuiltinClassSizeRecord:
         return self.__size
 
 
-class GodotBuiltinClassMemberOffset:
+class GodotBuiltInClassMemberOffset:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__build_configuration: str = data["build_configuration"]
-        self.__classes: tuple[GodotBuiltinClassMemberOffsetGrouping, ...] = tuple(
-            map(GodotBuiltinClassMemberOffsetGrouping, data["classes"])
+        self.__classes: tuple[GodotBuiltInClassMemberOffsetGrouping, ...] = tuple(
+            map(GodotBuiltInClassMemberOffsetGrouping, data["classes"])
         )
 
     @property
@@ -183,15 +183,15 @@ class GodotBuiltinClassMemberOffset:
         return self.__build_configuration
 
     @property
-    def classes(self) -> tuple[GodotBuiltinClassMemberOffsetGrouping, ...]:
+    def classes(self) -> tuple[GodotBuiltInClassMemberOffsetGrouping, ...]:
         return self.__classes
 
 
-class GodotBuiltinClassMemberOffsetGrouping:
+class GodotBuiltInClassMemberOffsetGrouping:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__members: tuple[GodotBuiltinClassMemberOffsetRecord, ...] = tuple(
-            map(GodotBuiltinClassMemberOffsetRecord, data["members"])
+        self.__members: tuple[GodotBuiltInClassMemberOffsetRecord, ...] = tuple(
+            map(GodotBuiltInClassMemberOffsetRecord, data["members"])
         )
 
     @property
@@ -199,11 +199,11 @@ class GodotBuiltinClassMemberOffsetGrouping:
         return self.__name
 
     @property
-    def members(self) -> tuple[GodotBuiltinClassMemberOffsetRecord, ...]:
+    def members(self) -> tuple[GodotBuiltInClassMemberOffsetRecord, ...]:
         return self.__members
 
 
-class GodotBuiltinClassMemberOffsetRecord:
+class GodotBuiltInClassMemberOffsetRecord:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__member: str = data["member"]
         self.__offset: int = data["offset"]
@@ -309,32 +309,32 @@ class GodotUtilityFunctionArgument:
         return self.__type
 
 
-class GodotBuiltinClass:
+class GodotBuiltInClass:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__is_keyed: bool = data["is_keyed"]
-        self.__operators: tuple[GodotBuiltinClassOperator, ...] = tuple(
-            map(GodotBuiltinClassOperator, data["operators"])
+        self.__operators: tuple[GodotBuiltInClassOperator, ...] = tuple(
+            map(GodotBuiltInClassOperator, data["operators"])
         )
-        self.__constructors: tuple[GodotBuiltinClassConstructor, ...] = tuple(
-            map(GodotBuiltinClassConstructor, data["constructors"])
+        self.__constructors: tuple[GodotBuiltInClassConstructor, ...] = tuple(
+            map(GodotBuiltInClassConstructor, data["constructors"])
         )
         self.__has_destructor: bool = data["has_destructor"]
         self.__indexing_return_type: Optional[str] = data.get("indexing_return_type")
-        self.__methods: Optional[tuple[GodotBuiltinClassMethod, ...]] = None
-        self.__constants: Optional[tuple[GodotBuiltinClassConstant, ...]] = None
-        self.__enums: Optional[tuple[GodotBuiltinClassEnum, ...]] = None
+        self.__methods: Optional[tuple[GodotBuiltInClassMethod, ...]] = None
+        self.__constants: Optional[tuple[GodotBuiltInClassConstant, ...]] = None
+        self.__enums: Optional[tuple[GodotBuiltInClassEnum, ...]] = None
         if methods := data.get("methods"):
             self.__methods = tuple(
-                map(GodotBuiltinClassMethod, methods)
+                map(GodotBuiltInClassMethod, methods)
             )
         if constants := data.get("constants"):
             self.__constants = tuple(
-                map(GodotBuiltinClassConstant, constants)
+                map(GodotBuiltInClassConstant, constants)
             )
         if enums := data.get("enums"):
             self.__enums = tuple(
-                map(GodotBuiltinClassEnum, enums)
+                map(GodotBuiltInClassEnum, enums)
             )
 
     @property
@@ -346,11 +346,11 @@ class GodotBuiltinClass:
         return self.__is_keyed
 
     @property
-    def operators(self) -> tuple[GodotBuiltinClassOperator, ...]:
+    def operators(self) -> tuple[GodotBuiltInClassOperator, ...]:
         return self.__operators
 
     @property
-    def constructors(self) -> tuple[GodotBuiltinClassConstructor, ...]:
+    def constructors(self) -> tuple[GodotBuiltInClassConstructor, ...]:
         return self.__constructors
 
     @property
@@ -362,19 +362,19 @@ class GodotBuiltinClass:
         return self.__indexing_return_type
 
     @property
-    def methods(self) -> Optional[tuple[GodotBuiltinClassMethod, ...]]:
+    def methods(self) -> Optional[tuple[GodotBuiltInClassMethod, ...]]:
         return self.__methods
 
     @property
-    def constants(self) -> Optional[tuple[GodotBuiltinClassConstant, ...]]:
+    def constants(self) -> Optional[tuple[GodotBuiltInClassConstant, ...]]:
         return self.__constants
 
     @property
-    def enums(self) -> Optional[tuple[GodotBuiltinClassEnum, ...]]:
+    def enums(self) -> Optional[tuple[GodotBuiltInClassEnum, ...]]:
         return self.__enums
 
 
-class GodotBuiltinClassOperator:
+class GodotBuiltInClassOperator:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__right_type: Optional[str] = data.get("right_type")
@@ -393,13 +393,13 @@ class GodotBuiltinClassOperator:
         return self.__return_type
 
 
-class GodotBuiltinClassConstructor:
+class GodotBuiltInClassConstructor:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__index: int = data["index"]
-        self.__arguments: Optional[tuple[GodotBuiltinClassConstructorArgument, ...]] = None
+        self.__arguments: Optional[tuple[GodotBuiltInClassConstructorArgument, ...]] = None
         if arguments := data.get("arguments"):
             self.__arguments = tuple(
-                map(GodotBuiltinClassConstructorArgument, arguments)
+                map(GodotBuiltInClassConstructorArgument, arguments)
             )
 
     @property
@@ -407,11 +407,11 @@ class GodotBuiltinClassConstructor:
         return self.__index
 
     @property
-    def arguments(self) -> Optional[tuple[GodotBuiltinClassConstructorArgument, ...]]:
+    def arguments(self) -> Optional[tuple[GodotBuiltInClassConstructorArgument, ...]]:
         return self.__arguments
 
 
-class GodotBuiltinClassConstructorArgument:
+class GodotBuiltInClassConstructorArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
@@ -425,7 +425,7 @@ class GodotBuiltinClassConstructorArgument:
         return self.__type
 
 
-class GodotBuiltinClassMethod:
+class GodotBuiltInClassMethod:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__return_type: Optional[str] = data.get("return_type")
@@ -433,11 +433,11 @@ class GodotBuiltinClassMethod:
         self.__is_const: bool = data["is_const"]
         self.__is_static: bool = data["is_static"]
         self.__hash: int = data["hash"]
-        self.__arguments: Optional[tuple[GodotBuiltinClassMethodArgument, ...]] = None
+        self.__arguments: Optional[tuple[GodotBuiltInClassMethodArgument, ...]] = None
         self.__hash_compatibility: int = data["hash"]
         if arguments := data.get("arguments"):
             self.__arguments = tuple(
-                map(GodotBuiltinClassMethodArgument, arguments)
+                map(GodotBuiltInClassMethodArgument, arguments)
             )
 
     @property
@@ -465,7 +465,7 @@ class GodotBuiltinClassMethod:
         return self.__hash
 
     @property
-    def arguments(self) -> Optional[tuple[GodotBuiltinClassMethodArgument, ...]]:
+    def arguments(self) -> Optional[tuple[GodotBuiltInClassMethodArgument, ...]]:
         return self.__arguments
 
     @property
@@ -473,7 +473,7 @@ class GodotBuiltinClassMethod:
         return self.__hash_compatibility
 
 
-class GodotBuiltinClassMethodArgument:
+class GodotBuiltInClassMethodArgument:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
@@ -492,7 +492,7 @@ class GodotBuiltinClassMethodArgument:
         return self.__default_value
 
 
-class GodotBuiltinClassConstant:
+class GodotBuiltInClassConstant:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__type: str = data["type"]
@@ -511,11 +511,11 @@ class GodotBuiltinClassConstant:
         return self.__value
 
 
-class GodotBuiltinClassEnum:
+class GodotBuiltInClassEnum:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__values: tuple[GodotBuiltinClassEnumValue, ...] = tuple(
-            map(GodotBuiltinClassEnumValue, data["values"])
+        self.__values: tuple[GodotBuiltInClassEnumValue, ...] = tuple(
+            map(GodotBuiltInClassEnumValue, data["values"])
         )
 
     @property
@@ -523,11 +523,11 @@ class GodotBuiltinClassEnum:
         return self.__name
 
     @property
-    def values(self) -> tuple[GodotBuiltinClassEnumValue, ...]:
+    def values(self) -> tuple[GodotBuiltInClassEnumValue, ...]:
         return self.__values
 
 
-class GodotBuiltinClassEnumValue:
+class GodotBuiltInClassEnumValue:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__value: int = data["value"]
