@@ -376,10 +376,9 @@ class CSharpMethod(CSharpMember):
 
     @property
     def modifiers(self) -> str:
-        modifiers: list[str] = [self.access_modifier]
-        if self.is_static:
-            modifiers.append("static")
-        return " ".join(modifiers)
+        access_modifier: tuple[str] = (self.access_modifier,)
+        static_modifier: tuple[str] = ("static",) if self.is_static else ()
+        return " ".join(access_modifier + static_modifier)
 
 
 class CSharpParameter(CSharpElement):
