@@ -6,11 +6,11 @@ from typing import Any, Optional, Union
 class GodotExtensionAPI:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__header: GodotHeader = GodotHeader(data["header"])
-        self.__builtin_class_sizes: tuple[GodotBuiltInClassSize, ...] = tuple(
-            map(GodotBuiltInClassSize, data["builtin_class_sizes"])
+        self.__builtin_class_sizes: tuple[GodotBuiltInClassSizesByBuild, ...] = tuple(
+            map(GodotBuiltInClassSizesByBuild, data["builtin_class_sizes"])
         )
-        self.__builtin_class_member_offsets: tuple[GodotBuiltInClassMemberOffset, ...] = tuple(
-            map(GodotBuiltInClassMemberOffset, data["builtin_class_member_offsets"])
+        self.__builtin_class_member_offsets: tuple[GodotBuiltInClassMemberOffsetsByBuild, ...] = tuple(
+            map(GodotBuiltInClassMemberOffsetsByBuild, data["builtin_class_member_offsets"])
         )
         self.__global_constants: tuple[Any, ...] = tuple(data["global_constants"])
         self.__global_enums: tuple[GodotGlobalEnum, ...] = tuple(
@@ -37,11 +37,11 @@ class GodotExtensionAPI:
         return self.__header
 
     @property
-    def builtin_class_sizes(self) -> tuple[GodotBuiltInClassSize, ...]:
+    def builtin_class_sizes(self) -> tuple[GodotBuiltInClassSizesByBuild, ...]:
         return self.__builtin_class_sizes
 
     @property
-    def builtin_class_member_offsets(self) -> tuple[GodotBuiltInClassMemberOffset, ...]:
+    def builtin_class_member_offsets(self) -> tuple[GodotBuiltInClassMemberOffsetsByBuild, ...]:
         return self.__builtin_class_member_offsets
 
     @property
@@ -73,7 +73,7 @@ class GodotExtensionAPI:
         return self.__native_structures
 
     def dump(self, namespace: str, directory: str) -> None:
-        def field_to_csharp(builds: tuple[GodotBuiltInClassMemberOffsetRecord, GodotBuiltInClassMemberOffsetRecord]) -> CSharpField:
+        def field_to_csharp(builds: tuple[GodotBuiltInClassMemberOffset, GodotBuiltInClassMemberOffset]) -> CSharpField:
             float_build, double_build = builds
             is_real_t: bool = float_build.meta == "float" and double_build.meta == "double"
             return CSharpField(
@@ -81,7 +81,7 @@ class GodotExtensionAPI:
                 type="real_t" if is_real_t else float_build.meta.removesuffix("32").replace("2i", "2I")
             )
 
-        def class_to_csharp(builds: tuple[GodotBuiltInClassMemberOffsetGrouping, GodotBuiltInClassMemberOffsetGrouping]) -> CSharpStructure:
+        def class_to_csharp(builds: tuple[GodotBuiltInClassMemberOffsetsByClass, GodotBuiltInClassMemberOffsetsByClass]) -> CSharpStructure:
             float_build, double_build = builds
             return CSharpStructure(
                 name=pascal(float_build.name),
@@ -141,11 +141,11 @@ class GodotHeader:
         return self.__precision
 
 
-class GodotBuiltInClassSize:
+class GodotBuiltInClassSizesByBuild:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__build_configuration: str = data["build_configuration"]
-        self.__sizes: tuple[GodotBuiltInClassSizeRecord, ...] = tuple(
-            map(GodotBuiltInClassSizeRecord, data["sizes"])
+        self.__sizes: tuple[GodotBuiltInClassSize, ...] = tuple(
+            map(GodotBuiltInClassSize, data["sizes"])
         )
 
     @property
@@ -153,11 +153,11 @@ class GodotBuiltInClassSize:
         return self.__build_configuration
 
     @property
-    def sizes(self) -> tuple[GodotBuiltInClassSizeRecord, ...]:
+    def sizes(self) -> tuple[GodotBuiltInClassSize, ...]:
         return self.__sizes
 
 
-class GodotBuiltInClassSizeRecord:
+class GodotBuiltInClassSize:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
         self.__size: int = data["size"]
@@ -171,11 +171,11 @@ class GodotBuiltInClassSizeRecord:
         return self.__size
 
 
-class GodotBuiltInClassMemberOffset:
+class GodotBuiltInClassMemberOffsetsByBuild:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__build_configuration: str = data["build_configuration"]
-        self.__classes: tuple[GodotBuiltInClassMemberOffsetGrouping, ...] = tuple(
-            map(GodotBuiltInClassMemberOffsetGrouping, data["classes"])
+        self.__classes: tuple[GodotBuiltInClassMemberOffsetsByClass, ...] = tuple(
+            map(GodotBuiltInClassMemberOffsetsByClass, data["classes"])
         )
 
     @property
@@ -183,15 +183,15 @@ class GodotBuiltInClassMemberOffset:
         return self.__build_configuration
 
     @property
-    def classes(self) -> tuple[GodotBuiltInClassMemberOffsetGrouping, ...]:
+    def classes(self) -> tuple[GodotBuiltInClassMemberOffsetsByClass, ...]:
         return self.__classes
 
 
-class GodotBuiltInClassMemberOffsetGrouping:
+class GodotBuiltInClassMemberOffsetsByClass:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__name: str = data["name"]
-        self.__members: tuple[GodotBuiltInClassMemberOffsetRecord, ...] = tuple(
-            map(GodotBuiltInClassMemberOffsetRecord, data["members"])
+        self.__members: tuple[GodotBuiltInClassMemberOffset, ...] = tuple(
+            map(GodotBuiltInClassMemberOffset, data["members"])
         )
 
     @property
@@ -199,11 +199,11 @@ class GodotBuiltInClassMemberOffsetGrouping:
         return self.__name
 
     @property
-    def members(self) -> tuple[GodotBuiltInClassMemberOffsetRecord, ...]:
+    def members(self) -> tuple[GodotBuiltInClassMemberOffset, ...]:
         return self.__members
 
 
-class GodotBuiltInClassMemberOffsetRecord:
+class GodotBuiltInClassMemberOffset:
     def __init__(self, data: dict[str, Any]) -> None:
         self.__member: str = data["member"]
         self.__offset: int = data["offset"]
