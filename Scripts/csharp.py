@@ -273,12 +273,10 @@ class CSharpStructure(CSharpType):
 
     @property
     def modifiers(self) -> str:
-        modifiers: list[str] = [self.access_modifier]
-        if self.is_static:
-            modifiers.append("static")
-        if self.is_unsafe:
-            modifiers.append("unsafe")
-        return " ".join(modifiers)
+        access_modifier: tuple[str] = self.access_modifier,
+        static_modifier: tuple[str] = ("static",) if self.is_static else ()
+        unsafe_modifier: tuple[str] = ("unsafe",) if self.is_unsafe else ()
+        return " ".join(access_modifier + static_modifier + unsafe_modifier)
 
 
 class CSharpField(CSharpMember):
