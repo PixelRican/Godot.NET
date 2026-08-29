@@ -73,19 +73,17 @@ class GodotExtensionAPI:
         return self.__native_structures
 
     def dump(self, namespace: str, directory: str) -> None:
-        def field_to_csharp(builds: tuple[GodotBuiltInClassMemberOffset, GodotBuiltInClassMemberOffset]) -> CSharpField:
-            float_build, double_build = builds
-            is_real_t: bool = float_build.meta == "float" and double_build.meta == "double"
+        def field_to_csharp(float: GodotBuiltInClassMemberOffset, double: GodotBuiltInClassMemberOffset) -> CSharpField:
+            is_real_t: bool = float.meta == "float" and double.meta == "double"
             return CSharpField(
-                name=pascal(float_build.member),
-                type="real_t" if is_real_t else float_build.meta.removesuffix("32").replace("2i", "2I")
+                name=pascal(float.member),
+                type="real_t" if is_real_t else float.meta.removesuffix("32").replace("2i", "2I")
             )
 
-        def class_to_csharp(builds: tuple[GodotBuiltInClassMemberOffsetsByClass, GodotBuiltInClassMemberOffsetsByClass]) -> CSharpStructure:
-            float_build, double_build = builds
+        def class_to_csharp(float: GodotBuiltInClassMemberOffsetsByClass, double: GodotBuiltInClassMemberOffsetsByClass) -> CSharpStructure:
             return CSharpStructure(
-                name=pascal(float_build.name),
-                fields=map(field_to_csharp, zip(float_build.members, double_build.members)),
+                name=pascal(float.name),
+                fields=map(field_to_csharp, float.members, double.members),
                 methods=(),
                 attributes=(
                     CSharpAttribute.struct_layout("Sequential"),
@@ -97,7 +95,7 @@ class GodotExtensionAPI:
             )
 
         types: chain[CSharpType] = chain(
-            map(class_to_csharp, zip(self.builtin_class_member_offsets[1].classes, self.builtin_class_member_offsets[3].classes))
+            map(class_to_csharp, self.builtin_class_member_offsets[1].classes, self.builtin_class_member_offsets[3].classes)
         )
         dump(types, namespace, directory)
 
