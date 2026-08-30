@@ -40,9 +40,10 @@ class GDExtensionStylizer:
         key: str = alias.removeprefix("const ").removesuffix("*")
         if key.endswith(">"):
             return sub(r"(?:<|,\s)((?:const )?\w+\*?)", substitute, key) + pointer
-        if value := self.__expansions.get(key):
-            return (value if value == "char" else self.get_expansion(value)) + pointer
-        return key + pointer
+        value: str = self.__expansions.get(key, key)
+        if value in (key, "char"):
+            return value + pointer
+        return self.get_expansion(value) + pointer
 
     def set_expansion(self, alias: str, value: str) -> None:
         self.__expansions.setdefault(alias, value)
